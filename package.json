@@ -1,0 +1,29 @@
+{
+  "name": "sintonia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gianfrancobarba/SINTONIA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gianfrancobarba/SINTONIA/issues"
+  },
+  "homepage": "https://github.com/gianfrancobarba/SINTONIA#readme",
+  "private": "true",
+  "workspaces": [
+    "backend",
+    "frontend-mobile",
+    "frontend-web"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev:backend": "npm run start:dev --workspace=backend",
+    "dev:mobile": "npm run dev --workspace=frontend-mobile",
+    "dev:web": "npm run dev --workspace=frontend-web"
+  }
+}
