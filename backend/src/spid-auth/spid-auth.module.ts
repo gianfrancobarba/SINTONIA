@@ -17,5 +17,6 @@ import { DrizzleModule } from '../drizzle/drizzle.module.js';
     ],
     controllers: [SpidAuthController],
     providers: [SpidAuthService],
+    exports: [SpidAuthService],
 })
 export class SpidAuthModule { }

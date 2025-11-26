@@ -72,7 +72,7 @@ export class SpidAuthService {
             sesso: 'M',
             residenza: 'Roma',
             dataIngresso: new Date().toISOString().split('T')[0],
-            terms: true,
+            terms: false,
             idPriorita: priorityName,
             idPsicologo: psychologistCod
         } as any).returning();
@@ -118,6 +118,7 @@ export class SpidAuthService {
             role: role,
             name: user.nome,
             familyName: user.cognome,
+            terms: user.terms,
         };
 
         const access_token = this.jwtService.sign(payload);
@@ -130,6 +131,7 @@ export class SpidAuthService {
                 name: user.nome,
                 familyName: user.cognome,
                 role: role,
+                terms: user.terms,
             },
         };
     }
