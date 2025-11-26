@@ -1,0 +1,111 @@
+.data-table-container {
+    background: linear-gradient(180deg, #2B7A7A 0%, #1A545F 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+}
+
+.data-table thead {
+    background-color: #2B7A7A;
+}
+
+.data-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.data-table tbody tr {
+    background-color: #1A545F;
+    transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: #245F6A;
+}
+
+.data-table td {
+    padding: 16px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-approvato {
+    background-color: #7FB77E;
+    color: #ffffff;
+}
+
+.status-in-revisione {
+    background-color: #FFB74D;
+    color: #ffffff;
+}
+
+.status-rifiutato {
+    background-color: #E57373;
+    color: #ffffff;
+}
+
+/* Actions Cell */
+.actions-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.view-btn,
+.edit-btn {
+    background-color: #ffffff;
+    color: #1A5F5F;
+}
+
+.view-btn:hover,
+.edit-btn:hover {
+    background-color: #A5C9C9;
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    background-color: #E57373;
+    color: #ffffff;
+}
+
+.delete-btn:hover {
+    background-color: #D32F2F;
+    transform: scale(1.1);
+}

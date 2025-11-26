@@ -1,0 +1,186 @@
+.psychologist-profile {
+    background-color: #F4FAFB;
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+/* Header Section */
+.profile-header {
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.header-background {
+    background: #0D475D;
+    height: 180px;
+    border-radius: 24px 24px 0 0;
+}
+
+/* Profile Section with Photo and Side Buttons */
+.profile-section {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+/* Side Buttons */
+.side-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: #83B9C1;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.side-btn:hover {
+    background-color: #6FA8AF;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.left-side-btn {
+    margin-right: auto;
+}
+
+.right-side-btn {
+    margin-left: auto;
+}
+
+.side-btn-icon {
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.edit-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.notification-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* Profile Photo - Overlapping */
+.profile-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 6px solid #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Profile Info */
+.profile-info {
+    padding: 8px 20px 10px;
+    text-align: center;
+    background-color: #F4FAFB;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0D475D;
+}
+
+/* Navigation Grid */
+.navigation-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    background-color: #F4FAFB;
+}
+
+.nav-card {
+    background-color: #ffffff;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.nav-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(13, 71, 93, 0.15);
+    background-color: #F9FCFC;
+}
+
+.nav-card:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(13, 71, 93, 0.1);
+}
+
+/* Selected state - persistent */
+.nav-card.selected {
+    background-color: #E2FAFE;
+    border: 2px solid #83B9C1;
+    box-shadow: 0 4px 12px rgba(131, 185, 193, 0.3),
+        inset 0 1px 3px rgba(131, 185, 193, 0.1);
+    transform: translateY(-2px);
+}
+
+.nav-card.selected:hover {
+    background-color: #D5F5FC;
+    box-shadow: 0 6px 16px rgba(131, 185, 193, 0.4),
+        inset 0 1px 3px rgba(131, 185, 193, 0.1);
+}
+
+.nav-icon-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.patient-icon {
+    width: 42px;
+    height: 42px;
+}
+
+.nav-card:hover .nav-icon-img {
+    transform: scale(1.05);
+}
+
+.nav-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0D475D;
+    text-align: center;
+}

@@ -1,0 +1,25 @@
+/**
+ * Type definitions for the Psychologist Dashboard
+ */
+
+export interface Psychologist {
+    name: string;
+    title: string;
+    photo?: string; // Optional - will be added by user in images folder
+}
+
+export type QuestionnaireStatus = 'Approvato' | 'In Revisione' | 'Rifiutato';
+
+export interface Questionnaire {
+    id: string;
+    name: string;
+    author: string;
+    status: QuestionnaireStatus;
+    revisionDate: string; // Format: YYYY-MM-DD
+}
+
+export interface PaginationInfo {
+    currentPage: number;
+    totalPages: number;
+    itemsPerPage: number;
+}
