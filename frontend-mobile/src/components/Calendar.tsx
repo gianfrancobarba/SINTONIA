@@ -9,15 +9,10 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
     const [startDate, setStartDate] = useState(new Date());
     const [displayDays, setDisplayDays] = useState<CalendarDay[]>([]);
 
-    // Create a map of date -> mood from the initial backend data
-    // We use a map for quick lookup when rendering days
+    // Mappa data (YYYY-MM-DD) -> mood, costruita dai giorni con stato d'animo
     const moodMap = React.useMemo(() => {
         const map = new Map<string, string>();
-        initialDays.forEach(day => {
-            if (day.mood) {
-                map.set(day.fullDate, day.mood);
-            }
-        });
+        initialDays.forEach(d => { if (d.mood) map.set(d.fullDate, d.mood); });
         return map;
     }, [initialDays]);
 
@@ -25,27 +20,33 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
         generateDays(startDate);
     }, [startDate, moodMap]);
 
+    const formatLocalDate = (date: Date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    };
+
+    // Genera una finestra continua di 7 giorni a partire da startDate
     const generateDays = (start: Date) => {
         const newDays: CalendarDay[] = [];
-        const todayStr = new Date().toISOString().split('T')[0];
+        const todayStr = formatLocalDate(new Date());
 
         for (let i = 0; i < 7; i++) {
             const date = new Date(start);
             date.setDate(start.getDate() + i);
-            const dateString = date.toISOString().split('T')[0];
+            const dateString = formatLocalDate(date);
             const dayName = date.toLocaleDateString('it-IT', { weekday: 'short' });
             const dayNumber = date.getDate();
 
-            // Check if we have mood data for this date
             const mood = moodMap.get(dateString);
-
             newDays.push({
                 day: dayName.charAt(0).toUpperCase() + dayName.slice(1),
                 date: dayNumber,
                 fullDate: dateString,
                 hasEvent: !!mood,
                 isToday: dateString === todayStr,
-                mood: mood,
+                mood,
             });
         }
         setDisplayDays(newDays);
@@ -72,18 +73,28 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
             </div>
 
             <div className="days-container no-scrollbar">
-                {displayDays.map((day, index) => (
-                    <div key={index} className={`day-item ${day.isToday ? 'active' : ''}`}>
-                        {day.hasEvent && (
-                            <div
-                                className="dot"
-                                style={{ backgroundColor: getMoodColor(day.mood) }}
-                            ></div>
-                        )}
-                        <span className="day-name">{day.day}</span>
-                        <span className="day-number">{day.date}</span>
-                    </div>
-                ))}
+                {displayDays.map((day, index) => {
+                    const moodColor = getMoodColor(day.mood);
+                    const isMoodDay = day.hasEvent && !day.isToday;
+                    const style: React.CSSProperties = isMoodDay
+                        ? {
+                              backgroundColor: hexToRgba(moodColor, 0.15),
+                              boxShadow: `0 4px 10px ${hexToRgba(moodColor, 0.25)}`,
+                          }
+                        : {};
+                    return (
+                        <div key={index} className={`day-item ${day.isToday ? 'active' : ''}`} style={style}>
+                            {day.hasEvent && (
+                                <div
+                                    className="dot"
+                                    style={{ backgroundColor: moodColor }}
+                                ></div>
+                            )}
+                            <span className="day-name">{day.day}</span>
+                            <span className="day-number">{day.date}</span>
+                        </div>
+                    );
+                })}
             </div>
 
             <style>{`
@@ -168,14 +179,37 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
 };
 
 const getMoodColor = (mood?: string): string => {
-    switch (mood?.toLowerCase()) {
+    const m = mood?.toLowerCase();
+    switch (m) {
         case 'felice': return '#4CAF50'; // Green
+        case 'calmo': return '#4CAF50';
+        case 'speranzoso': return '#43A047';
         case 'triste': return '#2196F3'; // Blue
-        case 'ansia': return '#FF9800'; // Orange
+        case 'ansia': return '#FF9800'; // Orange (generic)
+        case 'ansioso': return '#FB8C00';
+        case 'agitato': return '#F57C00';
+        case 'stanco': return '#9E9E9E'; // Gray
+        case 'apatico': return '#9E9E9E';
+        case 'panico': return '#E53935'; // Red deep
         case 'rabbia': return '#F44336'; // Red
+        case 'irritabile': return '#EF5350';
         case 'neutro': return '#9E9E9E'; // Gray
         default: return '#88b7b5'; // Default teal
     }
+};
+
+const hexToRgba = (hex: string, alpha: number): string => {
+    // Expand shorthand form (e.g. "#03F") to full form (e.g. "#0033FF")
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    const fullHex = hex.replace(shorthandRegex, function (_m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+    const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(fullHex);
+    if (!match) return hex;
+    const r = parseInt(match[1], 16);
+    const g = parseInt(match[2], 16);
+    const b = parseInt(match[3], 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
 export default Calendar;

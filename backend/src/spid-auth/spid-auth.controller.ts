@@ -19,18 +19,18 @@ export class SpidAuthController {
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #0066CC 0%, #004C99 100%);
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; padding: 20px; 
           }
           .spid-container { 
             background: white; max-width: 560px; width: 100%; 
-            border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+            border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
             overflow: hidden; 
           }
           .spid-header { 
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
             color: white; padding: 40px 30px; text-align: center; 
             position: relative; overflow: hidden;
           }
@@ -78,17 +78,17 @@ export class SpidAuthController {
             position: absolute;
             top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
             transition: left 0.5s;
           }
           .provider-btn:hover::before {
             left: 100%;
           }
           .provider-btn:hover { 
-            border-color: #667eea; 
+            border-color: #0066CC; 
             background: linear-gradient(to right, #ffffff 0%, #edf2f7 100%);
             transform: translateY(-2px) scale(1.02); 
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.25);
           }
           .provider-btn:active {
             transform: translateY(0) scale(0.98);
@@ -105,7 +105,7 @@ export class SpidAuthController {
             margin-top: 30px; line-height: 1.6; font-weight: 400;
           }
         </style>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;800&display=swap" rel="stylesheet">
       </head>
       <body>
         <div class="spid-container">
@@ -180,20 +180,20 @@ export class SpidAuthController {
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #0066CC 0%, #004C99 100%);
             min-height: 100vh; display: flex; justify-content: center; 
             align-items: center; padding: 20px; 
           }
           
           .login-container { 
             background: white; max-width: 1000px; width: 100%; 
-            border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+            border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
             display: flex; flex-direction: column; overflow: hidden;
           }
           
           .login-header { 
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
             padding: 35px 40px; display: flex; justify-content: space-between; 
             align-items: center; position: relative; overflow: hidden;
           }
@@ -238,7 +238,7 @@ export class SpidAuthController {
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><circle cx="1" cy="1" r="1" fill="rgba(102,126,234,0.05)"/></svg>');
+            background: url('data:image/svg+xml,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><circle cx="1" cy="1" r="1" fill="rgba(0,102,204,0.05)"/></svg>');
             opacity: 0.5;
           }
           
@@ -265,11 +265,12 @@ export class SpidAuthController {
             font-family: inherit; background: #f7fafc;
           }
           .form-input:focus { 
-            outline: none; border-color: #667eea; 
+            outline: none; border-color: #0066CC; 
             background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1); 
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1); 
           }
-          .form-input:readonly {
+          .form-input:read-only,
+          .form-input[readonly] {
             background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
             color: #4a5568;
             cursor: not-allowed;
@@ -279,7 +280,7 @@ export class SpidAuthController {
           
           .readonly-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
             color: white;
             font-size: 10px;
             padding: 3px 8px;
@@ -289,9 +290,9 @@ export class SpidAuthController {
             letter-spacing: 0.5px;
           }
           
-          .button-group { display: flex; gap: 16px; margin-top: 40px; }
+          .button-group { display: flex; gap: 12px; margin-top: 35px; }
           .btn { 
-            padding: 16px 32px; border-radius: 12px; font-size: 15px; 
+            padding: 12px 24px; border-radius: 8px; font-size: 14px; 
             font-weight: 600; cursor: pointer; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             border: none; font-family: inherit; 
@@ -305,19 +306,19 @@ export class SpidAuthController {
             transform: translateY(-1px);
           }
           .btn-submit { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
             color: white; display: flex; align-items: center; 
-            justify-content: center; gap: 10px; flex: 2;
-            box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
+            justify-content: center; gap: 8px; flex: 2;
+            box-shadow: 0 4px 14px rgba(0, 102, 204, 0.4);
           }
           .btn-submit:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.5);
           }
           .btn-submit:active {
             transform: translateY(0);
           }
-          .spid-icon-btn { font-size: 20px; }
+          .spid-icon-btn { font-size: 16px; }
           
           .qr-code { 
             width: 220px; height: 220px; background: white; 
@@ -334,7 +335,7 @@ export class SpidAuthController {
             font-weight: 500;
           }
           .qr-highlight { 
-            color: #667eea; font-weight: 700; 
+            color: #0066CC; font-weight: 700; 
           }
           
           .register-link { 
@@ -342,7 +343,7 @@ export class SpidAuthController {
             color: #718096;
           }
           .register-link a { 
-            color: #667eea; text-decoration: none; font-weight: 600;
+            color: #0066CC; text-decoration: none; font-weight: 600;
           }
           .register-link a:hover { 
             text-decoration: underline; 
@@ -357,7 +358,7 @@ export class SpidAuthController {
             .login-form-section { padding: 40px 30px; }
           }
         </style>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;800&display=swap" rel="stylesheet">
       </head>
       <body>
         <div class="login-container">
@@ -418,17 +419,6 @@ export class SpidAuthController {
               
               <div class="register-link">
                 Non hai ancora SPID? <a href="#">Registrati</a>
-              </div>
-            </div>
-            
-            <div class="qr-section">
-              <div class="qr-code">
-                <div class="qr-placeholder">📱</div>
-              </div>
-              <div class="qr-text">
-                Inquadra il <span class="qr-highlight">QR Code</span> con l'app<br>
-                del tuo Identity Provider per<br>
-                accedere rapidamente
               </div>
             </div>
           </div>

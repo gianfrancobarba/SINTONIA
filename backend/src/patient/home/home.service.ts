@@ -117,36 +117,39 @@ export class HomeService {
     }
 
     private async getCalendarDays(userId: string) {
-        const calendarDays: { day: string; date: number; fullDate: string; hasEvent: boolean; isToday: boolean }[] = [];
-        const today = new Date();
+        // Restituisce SOLO i giorni che hanno almeno uno stato d'animo,
+        // includendo l'ultimo umore inserito per ciascuna data.
+        const todayStr = this.formatLocalDate(new Date());
 
-        // Prendiamo un margine sufficiente (es. 30) per coprire gli ultimi 7 giorni
-        const recentMoods = await db
-            .select({ date: statoAnimo.dataInserimento })
+        const moods = await db
+            .select({ date: statoAnimo.dataInserimento, umore: statoAnimo.umore })
             .from(statoAnimo)
             .where(eq(statoAnimo.idPaziente, userId))
             .orderBy(desc(statoAnimo.dataInserimento));
 
-        const moodDates = new Set(recentMoods.map(m => this.formatLocalDate(new Date(m.date))));
-
-        // Ultimi 7 giorni: da today-6 a today
-        for (let offset = 6; offset >= 0; offset--) {
-            const date = new Date(today);
-            date.setHours(0, 0, 0, 0);
-            date.setDate(today.getDate() - offset);
-
-            const dateString = this.formatLocalDate(date);
-            const dayName = date.toLocaleDateString('it-IT', { weekday: 'short' });
-            const dayNumber = date.getDate();
-
-            calendarDays.push({
-                day: dayName.charAt(0).toUpperCase() + dayName.slice(1),
-                date: dayNumber,
-                fullDate: dateString,
-                hasEvent: moodDates.has(dateString),
-                isToday: offset === 0,
-            });
+        // Mappa per data locale (YYYY-MM-DD) -> ultimo umore della giornata
+        const moodByDate = new Map<string, string>();
+        for (const m of moods) {
+            const key = this.formatLocalDate(new Date(m.date));
+            if (!moodByDate.has(key)) {
+                moodByDate.set(key, m.umore);
+            }
         }
+
+        // Trasforma la mappa in array ordinato per data crescente
+        const sortedDates = Array.from(moodByDate.keys()).sort();
+        const calendarDays = sortedDates.map((dateStr) => {
+            const dateObj = new Date(dateStr + 'T00:00:00');
+            const dayName = dateObj.toLocaleDateString('it-IT', { weekday: 'short' });
+            return {
+                day: dayName.charAt(0).toUpperCase() + dayName.slice(1),
+                date: dateObj.getDate(),
+                fullDate: dateStr,
+                hasEvent: true,
+                isToday: dateStr === todayStr,
+                mood: moodByDate.get(dateStr),
+            };
+        });
 
         return calendarDays;
     }
