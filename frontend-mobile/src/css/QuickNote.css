@@ -1,0 +1,45 @@
+.quick-note-container {
+    padding: 20px;
+    margin-top: -20px;
+    /* Overlap slightly if needed, or just standard spacing */
+}
+
+.quick-note-card {
+    background-color: var(--white);
+    border-radius: 50px;
+    /* Pill shape */
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.note-icon {
+    display: flex;
+    align-items: center;
+    color: var(--text-dark);
+}
+
+.note-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    color: var(--text-gray);
+}
+
+.note-input::placeholder {
+    color: var(--text-gray);
+    opacity: 0.8;
+}
+
+.edit-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-dark);
+}

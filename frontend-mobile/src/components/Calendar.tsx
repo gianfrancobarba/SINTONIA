@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { CalendarDay } from '../types/home';
+import '../css/Calendar.css';
 
 interface CalendarProps {
     days: CalendarDay[]; // Initial data from backend
@@ -78,9 +79,9 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
                     const isMoodDay = day.hasEvent && !day.isToday;
                     const style: React.CSSProperties = isMoodDay
                         ? {
-                              backgroundColor: hexToRgba(moodColor, 0.15),
-                              boxShadow: `0 4px 10px ${hexToRgba(moodColor, 0.25)}`,
-                          }
+                            backgroundColor: hexToRgba(moodColor, 0.15),
+                            boxShadow: `0 4px 10px ${hexToRgba(moodColor, 0.25)}`,
+                        }
                         : {};
                     return (
                         <div key={index} className={`day-item ${day.isToday ? 'active' : ''}`} style={style}>
@@ -96,84 +97,6 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
                     );
                 })}
             </div>
-
-            <style>{`
-                .calendar-section {
-                    margin-bottom: 30px;
-                }
-
-                .calendar-header {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    gap: 20px;
-                    margin-bottom: 20px;
-                }
-
-                .calendar-header h2 {
-                    font-size: 2rem;
-                    font-weight: 800;
-                }
-
-                .nav-arrow {
-                    background: none;
-                    border: none;
-                    font-size: 2rem;
-                    color: var(--text-dark);
-                    cursor: pointer;
-                    padding: 0 10px;
-                }
-
-                .days-container {
-                    display: flex;
-                    justify-content: space-between;
-                    overflow-x: auto;
-                    padding: 0 20px;
-                    gap: 10px;
-                }
-
-                .day-item {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    min-width: 45px;
-                    height: 80px;
-                    border-radius: 25px;
-                    position: relative;
-                    padding-top: 10px;
-                }
-
-                .day-item.active {
-                    background-color: var(--white);
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-                }
-
-                .dot {
-                    width: 6px;
-                    height: 6px;
-                    border-radius: 50%;
-                    background-color: var(--text-gray); /* Default gray */
-                    position: absolute;
-                    top: 10px;
-                }
-                
-                .dot-active {
-                    /* No specific active style needed if color is dynamic, but keeping for structure */
-                }
-
-                .day-name {
-                    font-size: 0.8rem;
-                    color: var(--text-gray);
-                    margin-bottom: 5px;
-                }
-
-                .day-number {
-                    font-size: 1rem;
-                    font-weight: 700;
-                    color: var(--text-dark);
-                }
-            `}</style>
         </div>
     );
 };

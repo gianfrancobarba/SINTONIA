@@ -7,6 +7,7 @@ import SuggestedPosts from '../components/SuggestedPosts';
 import BottomNavigation from '../components/BottomNavigation';
 import { getHomeDashboard } from '../services/home.service';
 import type { HomeDashboardDto } from '../types/home';
+import '../css/Home.css';
 
 const Home: React.FC = () => {
     const [data, setData] = useState<HomeDashboardDto | null>(null);
@@ -43,23 +44,6 @@ const Home: React.FC = () => {
             <Calendar days={data.calendarDays} />
             <SuggestedPosts posts={data.suggestedPosts} />
             <BottomNavigation />
-
-            <style>{`
-                .home-page {
-                    min-height: 100vh;
-                    padding-bottom: 20px;
-                    background-color: var(--secondary-bg);
-                }
-
-                .loading-screen, .error-screen {
-                    height: 100vh;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 1.2rem;
-                    color: var(--text-gray);
-                }
-            `}</style>
         </div>
     );
 };

@@ -1,0 +1,14 @@
+.home-page {
+    min-height: 100vh;
+    padding-bottom: 20px;
+    background-color: var(--secondary-bg);
+}
+
+.loading-screen, .error-screen {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-gray);
+}

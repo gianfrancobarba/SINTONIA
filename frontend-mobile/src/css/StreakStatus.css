@@ -1,0 +1,54 @@
+.streak-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.streak-icon-container {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-light);
+    border-radius: 20px;
+    /* Squircle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fire-icon {
+    color: var(--white);
+}
+
+.streak-content {
+    flex: 1;
+}
+
+.streak-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.progress-bar-container {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.progress-segment {
+    height: 6px;
+    flex: 1;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+}
+
+.progress-segment.active {
+    background-color: var(--primary-light);
+}
+
+.level-text {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
