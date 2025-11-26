@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-
-import { AuthModule } from './auth/auth.module.js';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { SpidAuthModule } from './spid-auth/spid-auth.module.js';
 import { PatientModule } from './patient/patient.module.js';
 
 @Module({
-  imports: [AuthModule, SpidAuthModule, PatientModule],
-  controllers: [],
-  providers: [],
+  imports: [AuthModule, DashboardModule, SpidAuthModule, PatientModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule { }
