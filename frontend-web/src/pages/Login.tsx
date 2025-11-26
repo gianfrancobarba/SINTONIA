@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/auth.service';
+import { login, getUserRole } from '../services/auth.service';
 import { Eye, EyeOff, Edit2, UserRound } from 'lucide-react';
 import '../css/Login.css'; // We'll create this CSS file
 
@@ -18,7 +18,12 @@ const Login = () => {
         e.preventDefault();
         try {
             await login(email, password);
-            navigate('/dashboard');
+            const role = getUserRole();
+            if (role === 'admin') {
+                navigate('/admin-dashboard');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError('Credenziali non valide. Riprova.');
         }

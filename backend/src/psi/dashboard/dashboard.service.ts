@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { eq, and, isNull, sql } from 'drizzle-orm';
-import { db } from '../../drizzle/db';
+import { db } from '../../drizzle/db.js';
 import {
     psicologo,
     alertClinico,
@@ -8,8 +8,8 @@ import {
     domandaForum,
     rispostaForum,
     paziente,
-} from '../../drizzle/schema';
-import { PsiDashboardResponseDto } from '../dto/psi-dashboard.dto';
+} from '../../drizzle/schema.js';
+import { PsiDashboardResponseDto } from '../dto/psi-dashboard.dto.js';
 
 @Injectable()
 export class DashboardService {

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchDashboardData } from '../services/psychologist.service';
+import { getCurrentUser } from '../services/auth.service';
 import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
 import profilePhoto from '../images/psychologist-photo.png';
 import notificationIcon from '../images/psi-notification.png';
@@ -10,7 +11,7 @@ import patientIcon from '../images/paziente-list.png';
 import questionnaireIcon from '../images/questionari.png';
 import alertIcon from '../images/alert-clinico.png';
 import forumIcon from '../images/forum.png';
-import './PsychologistProfile.css';
+import '../css/PsychologistProfile.css';
 
 const PsychologistProfile: React.FC = () => {
     const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
@@ -27,7 +28,13 @@ const PsychologistProfile: React.FC = () => {
     const loadDashboardData = async () => {
         setDashboardState(prev => ({ ...prev, loading: true, error: null }));
         try {
-            const data = await fetchDashboardData();
+            const user = getCurrentUser();
+            const cf = user?.fiscalCode || user?.email; // Fallback or use specific field
+            // Note: backend expects 'cf' query param. 
+            // If user is logged in via SPID, fiscalCode should be in the token/user object.
+            // If logged in via standard login, it might be email or we need to fetch profile first.
+
+            const data = await fetchDashboardData(cf || undefined);
             setDashboardState({ data, loading: false, error: null });
         } catch (error) {
             setDashboardState({

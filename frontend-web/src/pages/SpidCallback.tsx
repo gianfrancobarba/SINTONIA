@@ -1,67 +1,32 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { handleSpidToken } from '../services/auth.service';
 
-const SpidCallback = () => {
+const SpidCallback: React.FC = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = searchParams.get('token');
-
         if (token) {
             try {
-                // Decode token to get role
-                const decoded: any = jwtDecode(token);
-                const role = decoded.role;
-
-                // Salva il token nel localStorage
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify({
-                    ...decoded,
-                    role: role
-                }));
-
-                // Redirect based on role
-                if (role === 'psychologist' || role === 'admin') {
-                    navigate('/dashboard');
-                } else {
-                    navigate('/patient-dashboard');
-                }
+                handleSpidToken(token);
+                navigate('/dashboard');
             } catch (error) {
-                console.error('Invalid token:', error);
-                navigate('/spid-error');
+                console.error('Error handling SPID token:', error);
+                navigate('/login?error=spid_auth_failed');
             }
         } else {
-            // Se non c'è token, errore
-            navigate('/spid-error');
+            navigate('/login?error=no_token');
         }
     }, [searchParams, navigate]);
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-            fontFamily: 'sans-serif'
-        }}>
-            <div style={{ textAlign: 'center' }}>
-                <div style={{
-                    fontSize: '48px',
-                    marginBottom: '20px',
-                    animation: 'spin 1s linear infinite'
-                }}>
-                    ⟳
-                </div>
-                <p style={{ fontSize: '18px', color: '#666' }}>Autenticazione in corso...</p>
+        <div className="login-container">
+            <div className="login-card" style={{ textAlign: 'center', padding: '40px' }}>
+                <h2>Accesso in corso...</h2>
+                <p>Stiamo verificando la tua identità SPID.</p>
             </div>
-            <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
         </div>
     );
 };

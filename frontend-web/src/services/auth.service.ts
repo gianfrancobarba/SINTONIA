@@ -30,6 +30,18 @@ export const login = async (email: string, password: string) => {
     return response.data;
 };
 
+export const handleSpidToken = (token: string) => {
+    const decoded = jwtDecode<JwtPayload>(token);
+    const userData = {
+        access_token: token,
+        role: decoded.role,
+        email: decoded.email,
+        // Add other fields if needed from token
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
+    return userData;
+};
+
 export const logout = () => {
     localStorage.removeItem('user');
 };

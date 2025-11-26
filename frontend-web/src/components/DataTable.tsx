@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { Questionnaire } from '../types/psychologist';
-import './DataTable.css';
+import '../css/DataTable.css';
 
 interface DataTableProps {
     questionnaires: Questionnaire[];

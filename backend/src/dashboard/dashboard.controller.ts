@@ -1,6 +1,6 @@
 import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
-import { DashboardService as AdminDashboardService } from '../amministratore/dashboard/dashboard.service';
-import { DashboardService as PsychologistDashboardService } from '../psi/dashboard/dashboard.service';
+import { DashboardService as AdminDashboardService } from '../amministratore/dashboard/dashboard.service.js';
+import { DashboardService as PsychologistDashboardService } from '../psi/dashboard/dashboard.service.js';
 
 @Controller('dashboard')
 export class DashboardController {

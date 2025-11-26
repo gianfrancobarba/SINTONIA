@@ -4,7 +4,9 @@
  */
 
 import type { Psychologist, Questionnaire, PsychologistDashboardData } from '../types/psychologist';
-import { config } from '../config/config';
+import { getCurrentUser } from './auth.service';
+
+const API_URL = 'http://localhost:3000';
 
 /**
  * Fetch dashboard data from backend API
@@ -13,12 +15,18 @@ import { config } from '../config/config';
  * @throws Error if request fails
  */
 export const fetchDashboardData = async (
-    codiceFiscale: string = config.psychologistCF
+    codiceFiscale: string
 ): Promise<PsychologistDashboardData> => {
     try {
-        const response = await fetch(
-            `${config.apiBaseUrl}/psi/dashboard/me?cf=${encodeURIComponent(codiceFiscale)}`
-        );
+        const url = `${API_URL}/psi/dashboard/me?cf=${encodeURIComponent(codiceFiscale)}`;
+        const token = getCurrentUser()?.access_token as string | undefined;
+
+        const response = await fetch(url, {
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

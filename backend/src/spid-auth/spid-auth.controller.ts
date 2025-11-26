@@ -444,13 +444,19 @@ export class SpidAuthController {
       await new Promise(resolve => setTimeout(resolve, 1200));
 
       // Dati utente da SPID
-      const spidProfile = {
-        fiscalNumber: 'PZT0010SINTONIAA',
-        name: 'Chara',
-        familyName: 'Conti',
-        email: 'chiara.conti@gmail.com',
-        dateOfBirth: '2000-07-05'
-      };
+      const spidProfile: any = userType === 'psychologist'
+        ? {
+          fiscalNumber: 'BRBLCA81L15F205J',
+          name: 'Luca',
+          familyName: 'Bruno'
+        }
+        : {
+          fiscalNumber: 'PZT0010SINTONIAA',
+          name: 'Chiara',
+          familyName: 'Conti',
+          email: 'chiara.conti@gmail.com',
+          dateOfBirth: '2000-07-05'
+        };
 
       console.log(`✓ Autenticazione SPID completata per: ${spidProfile.fiscalNumber} (${userType})`);
 

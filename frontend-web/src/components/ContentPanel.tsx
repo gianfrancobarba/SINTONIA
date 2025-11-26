@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import DataTable from './DataTable';
 import Pagination from './Pagination';
 import { getQuestionnairesPage, getTotalPages } from '../services/psychologist.service';
-import './ContentPanel.css';
+import '../css/ContentPanel.css';
 
 const ContentPanel: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);

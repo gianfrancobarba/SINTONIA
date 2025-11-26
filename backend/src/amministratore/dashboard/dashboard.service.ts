@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { db } from '../../drizzle/db';
-import { amministratore } from '../../drizzle/schema';
+import { db } from '../../drizzle/db.js';
+import { amministratore } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
-import { AdminDashboardDto } from '../dto/AS-dashboard.dto';
+import { AdminDashboardDto } from '../dto/AS-dashboard.dto.js';
 
 @Injectable()
 export class DashboardService {

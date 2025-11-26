@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import PsychologistDashboard from './pages/PsychologistDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import SpidCallback from './pages/SpidCallback';
 import { getCurrentUser } from './services/auth.service';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -22,10 +24,19 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute>
-                <PsychologistDashboard />
+              <PsychologistDashboard />
             </PrivateRoute>
           }
         />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <PrivateRoute>
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/spid-callback" element={<SpidCallback />} />
         {/* Default route */}
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>

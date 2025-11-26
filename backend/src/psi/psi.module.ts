@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DashboardModule } from './dashboard/dashboard.module';
+import { DashboardModule } from './dashboard/dashboard.module.js';
 
 @Module({
     imports: [DashboardModule],
