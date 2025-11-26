@@ -72,7 +72,7 @@ export class SpidAuthService {
             sesso: 'M',
             residenza: 'Roma',
             dataIngresso: new Date().toISOString().split('T')[0],
-            terms: true,
+            terms: false,
             idPriorita: priorityName,
             idPsicologo: psychologistCod
         } as any).returning();
