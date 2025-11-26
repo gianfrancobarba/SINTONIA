@@ -111,6 +111,13 @@
     color: #0D475D;
 }
 
+.profile-role {
+    margin: 4px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #83B9C1;
+}
+
 /* Navigation Grid */
 .navigation-grid {
     padding: 20px;
@@ -121,6 +128,7 @@
 }
 
 .nav-card {
+    position: relative;
     background-color: #ffffff;
     border: 2px solid transparent;
     border-radius: 16px;
@@ -183,4 +191,93 @@
     font-weight: 600;
     color: #0D475D;
     text-align: center;
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 12px;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(255, 107, 107, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 6px rgba(255, 107, 107, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 3px 8px rgba(255, 107, 107, 0.6);
+    }
+}
+
+/* Loading State */
+.profile-loading {
+    padding: 80px 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0D475D;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Error State */
+.profile-error {
+    padding: 60px 20px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.profile-error p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #FF6B6B;
+    margin: 0 0 20px;
+}
+
+.retry-button {
+    background: linear-gradient(135deg, #0D475D 0%, #1a5f7a 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.3);
+}
+
+.retry-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13, 71, 93, 0.4);
+    background: linear-gradient(135deg, #1a5f7a 0%, #0D475D 100%);
+}
+
+.retry-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(13, 71, 93, 0.3);
 }

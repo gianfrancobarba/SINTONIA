@@ -1,18 +1,46 @@
 /**
  * Service layer for psychologist data
- * Currently returns mock data matching the mockup
+ * Handles API calls to backend
  */
 
-import type { Psychologist, Questionnaire } from '../types/psychologist';
+import type { Psychologist, Questionnaire, PsychologistDashboardData } from '../types/psychologist';
+import { config } from '../config/config';
 
 /**
- * Get the current psychologist information
+ * Fetch dashboard data from backend API
+ * @param codiceFiscale - Codice fiscale of the psychologist
+ * @returns Dashboard data with profile info and notification counts
+ * @throws Error if request fails
+ */
+export const fetchDashboardData = async (
+    codiceFiscale: string = config.psychologistCF
+): Promise<PsychologistDashboardData> => {
+    try {
+        const response = await fetch(
+            `${config.apiBaseUrl}/psi/dashboard/me?cf=${encodeURIComponent(codiceFiscale)}`
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data: PsychologistDashboardData = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+        throw error;
+    }
+};
+
+/**
+ * Get the current psychologist information (DEPRECATED - use fetchDashboardData)
+ * @deprecated Use fetchDashboardData() instead for real data from backend
  */
 export const getPsychologistInfo = (): Psychologist => {
     return {
         name: 'Dottor. Pirillo',
         title: 'Psicologo',
-        photo: undefined, // User will add photo to images folder
+        photo: undefined,
     };
 };
 

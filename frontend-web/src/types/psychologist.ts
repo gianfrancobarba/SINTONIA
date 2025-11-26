@@ -8,6 +8,28 @@ export interface Psychologist {
     photo?: string; // Optional - will be added by user in images folder
 }
 
+/**
+ * Dashboard data from backend API
+ * Matches the PsiDashboardResponseDto from backend
+ */
+export interface PsychologistDashboardData {
+    fullName: string;
+    profileImageUrl: string;
+    role: string;
+    alertsCount: number;
+    pendingQuestionnairesCount: number;
+    unreadMessagesCount: number;
+}
+
+/**
+ * Loading state for async operations
+ */
+export interface LoadingState<T> {
+    data: T | null;
+    loading: boolean;
+    error: string | null;
+}
+
 export type QuestionnaireStatus = 'Approvato' | 'In Revisione' | 'Rifiutato';
 
 export interface Questionnaire {

@@ -1,7 +1,8 @@
 /* Profilo psicologo */
 
-import React, { useState } from 'react';
-import { getPsychologistInfo } from '../services/psychologist.service';
+import React, { useState, useEffect } from 'react';
+import { fetchDashboardData } from '../services/psychologist.service';
+import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
 import profilePhoto from '../images/psychologist-photo.png';
 import notificationIcon from '../images/psi-notification.png';
 import editIcon from '../images/psi-edit_profile.png';
@@ -12,19 +13,70 @@ import forumIcon from '../images/forum.png';
 import './PsychologistProfile.css';
 
 const PsychologistProfile: React.FC = () => {
-    const psychologist = getPsychologistInfo();
+    const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
+        data: null,
+        loading: true,
+        error: null,
+    });
     const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
+    useEffect(() => {
+        loadDashboardData();
+    }, []);
+
+    const loadDashboardData = async () => {
+        setDashboardState(prev => ({ ...prev, loading: true, error: null }));
+        try {
+            const data = await fetchDashboardData();
+            setDashboardState({ data, loading: false, error: null });
+        } catch (error) {
+            setDashboardState({
+                data: null,
+                loading: false,
+                error: error instanceof Error ? error.message : 'Failed to load dashboard data',
+            });
+        }
+    };
+
     const handleNavigation = (section: string, event: React.MouseEvent) => {
-        event.stopPropagation(); // Prevent deselection when clicking button
+        event.stopPropagation();
         console.log('Navigate to:', section);
         setSelectedSection(section);
-        // Placeholder - will be implemented in future
     };
 
     const handleBackgroundClick = () => {
-        setSelectedSection(null); // Deselect when clicking outside
+        setSelectedSection(null);
     };
+
+    // Show loading state
+    if (dashboardState.loading) {
+        return (
+            <div className="psychologist-profile">
+                <div className="profile-loading">Loading...</div>
+            </div>
+        );
+    }
+
+    // Show error state
+    if (dashboardState.error) {
+        return (
+            <div className="psychologist-profile">
+                <div className="profile-error">
+                    <p>Errore nel caricamento dei dati</p>
+                    <button onClick={loadDashboardData} className="retry-button">
+                        Riprova
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    // No data available
+    if (!dashboardState.data) {
+        return null;
+    }
+
+    const { fullName, profileImageUrl, role, alertsCount, pendingQuestionnairesCount, unreadMessagesCount } = dashboardState.data;
 
     return (
         <div className="psychologist-profile" onClick={handleBackgroundClick}>
@@ -36,7 +88,13 @@ const PsychologistProfile: React.FC = () => {
                     </button>
 
                     <div className="profile-photo">
-                        <img src={profilePhoto} alt={psychologist.name} />
+                        <img
+                            src={profileImageUrl || profilePhoto}
+                            alt={fullName}
+                            onError={(e) => {
+                                e.currentTarget.src = profilePhoto;
+                            }}
+                        />
                     </div>
 
                     <button className="side-btn right-side-btn" aria-label="Notifications">
@@ -46,7 +104,8 @@ const PsychologistProfile: React.FC = () => {
             </div>
 
             <div className="profile-info">
-                <h2 className="profile-name">{psychologist.name}</h2>
+                <h2 className="profile-name">{fullName}</h2>
+                <p className="profile-role">{role}</p>
             </div>
 
             <div className="navigation-grid">
@@ -64,6 +123,9 @@ const PsychologistProfile: React.FC = () => {
                 >
                     <img src={questionnaireIcon} alt="" className="nav-icon-img" />
                     <span className="nav-label">Questionari</span>
+                    {pendingQuestionnairesCount > 0 && (
+                        <span className="notification-badge">{pendingQuestionnairesCount}</span>
+                    )}
                 </button>
 
                 <button
@@ -72,6 +134,9 @@ const PsychologistProfile: React.FC = () => {
                 >
                     <img src={alertIcon} alt="" className="nav-icon-img" />
                     <span className="nav-label">Alert Clinici</span>
+                    {alertsCount > 0 && (
+                        <span className="notification-badge">{alertsCount}</span>
+                    )}
                 </button>
 
                 <button
@@ -80,6 +145,9 @@ const PsychologistProfile: React.FC = () => {
                 >
                     <img src={forumIcon} alt="" className="nav-icon-img" />
                     <span className="nav-label">Forum</span>
+                    {unreadMessagesCount > 0 && (
+                        <span className="notification-badge">{unreadMessagesCount}</span>
+                    )}
                 </button>
             </div>
         </div>
@@ -87,3 +155,4 @@ const PsychologistProfile: React.FC = () => {
 };
 
 export default PsychologistProfile;
+
