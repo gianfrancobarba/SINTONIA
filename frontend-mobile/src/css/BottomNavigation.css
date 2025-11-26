@@ -1,30 +1,63 @@
+/* Global reset to avoid unintended gaps */
+:root, body, #root {
+    margin: 0;
+    padding: 0;
+}
+
 .bottom-nav-container {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0; /* ensure stretch to both edges */
+    /* Full-bleed to screen edges without 100vw issues */
     width: 100%;
-    max-width: 430px;
-    /* Match #root max-width */
-    height: 90px;
+    max-width: none;
+    /* Match SVG intrinsic height (123) with small cushion for shadows */
+    height: 130px;
     z-index: 100;
     pointer-events: none;
     /* Let clicks pass through container */
+    overflow: visible;
 }
 
 .bottom-nav-background {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    right: 0;
+    width: 100%; /* stretch with container */
     height: 100%;
-    filter: drop-shadow(0 -4px 10px rgba(0, 0, 0, 0.05));
-    pointer-events: auto;
+    pointer-events: none; /* Background is decorative; allow clicks on items above */
+    overflow: visible;
 }
 
 .nav-curve {
     width: 100%;
     height: 100%;
+}
+
+/* Inline SVG variant */
+.nav-curve-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* PNG background used for the bottombar shape */
+.nav-curve-img {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%; /* fill container width */
+    height: 100%;
+    object-fit: fill; /* fill horizontally exactly to edges */
+    object-position: bottom center;
 }
 
 .nav-items {
@@ -33,39 +66,102 @@
     justify-content: space-between;
     align-items: flex-end;
     height: 100%;
-    padding: 0 25px 20px;
+    padding: 0 24px 22px;
     z-index: 101;
     pointer-events: auto;
 }
+
+/* Absolute hit areas aligned with the icon positions in BottomBar.svg (viewBox 375x123) */
+.nav-hit-areas {
+    position: absolute;
+    inset: 0;
+    z-index: 103;
+    pointer-events: none; /* enable per-button only */
+}
+
+.hit-btn {
+    position: absolute;
+    width: 44px; /* do not exceed icon footprint */
+    height: 44px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    pointer-events: auto;
+    cursor: pointer;
+    /* center by both axes */
+    transform: translate(-50%, -50%);
+}
+
+/* Positions derived from SVG centers (viewBox 375x123):
+   leftmost (40,83), left (108,83), center (188,44), right (267,84), rightmost (335,88) */
+.hit-leftmost { left: 10.667%; top: 67.48%; }
+.hit-left     { left: 28.800%; top: 67.48%; }
+.hit-center   { left: 50.133%; top: 35.772%; width: 64px; height: 64px; }
+.hit-right    { left: 71.200%; top: 68.293%; }
+.hit-rightmost{ left: 89.333%; top: 71.545%; }
+
+/* Icon theming via inline SVG currentColor */
+.nav-icon { color: #83B9C1; }
+.nav-icon--center { color: #0D475D; }
 
 .nav-item {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.nav-item img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.7;
+    /* Teal tint approximation for external SVGs */
+    filter: invert(49%) sepia(17%) saturate(743%) hue-rotate(131deg) brightness(95%) contrast(89%);
 }
 
 .fab-container {
     position: absolute;
     left: 50%;
-    bottom: 45px;
-    /* Lifted up further */
+    bottom: 78px;
+    /* Lift up so it clearly floats above the notch */
     transform: translateX(-50%);
+    z-index: 102;
+    height: 84px;
 }
 
 .fab {
-    width: 64px;
-    height: 64px;
-    background-color: #e0f2f1;
-    /* Light teal circle */
+    width: 84px;
+    height: 84px;
+    background-color: #dff2f7; /* light aqua */
     border-radius: 50%;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    position: relative;
+}
+
+.fab img {
+    width: 34px;
+    height: 34px;
+    /* Darker teal for active/home */
+    filter: invert(16%) sepia(12%) saturate(2093%) hue-rotate(152deg) brightness(88%) contrast(96%);
+}
+
+/* Ambient halo under floating FAB */
+.fab::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    filter: blur(8px);
+    z-index: -1;
 }
