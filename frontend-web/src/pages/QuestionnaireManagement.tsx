@@ -3,7 +3,7 @@ import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
-import { fetchQuestionnaires, fetchQuestionnairesByPatient } from '../services/questionnaire.service';
+import { fetchQuestionnaires, requestInvalidation } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
@@ -14,9 +14,7 @@ const QuestionnaireManagement: React.FC = () => {
         error: null,
     });
     const [selectedQuestionnaireId, setSelectedQuestionnaireId] = useState<string | null>(null);
-    const [isFiltered, setIsFiltered] = useState(false);
-    const [currentPatientId, setCurrentPatientId] = useState<string | null>(null);
-    const [viewingQuestionnaireId, setViewingQuestionnaireId] = useState<string | null>(null);
+    const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
 
     const user = getCurrentUser();
     const role = getUserRole();
@@ -56,43 +54,19 @@ const QuestionnaireManagement: React.FC = () => {
 
     const handleSelectQuestionnaire = (id: string) => {
         setSelectedQuestionnaireId(id);
-        // Find the selected questionnaire to get patient ID
-        const selected = questionnairesState.data?.find(q => q.idQuestionario === id);
-        if (selected) {
-            setCurrentPatientId(selected.idPaziente);
-        }
     };
 
-    const handleFilterByPatient = async () => {
-        if (!currentPatientId) return;
 
-        setQuestionnairesState({ data: questionnairesState.data, loading: true, error: null });
-        try {
-            const data = await fetchQuestionnairesByPatient(currentPatientId);
-            setQuestionnairesState({ data, loading: false, error: null });
-            setIsFiltered(true);
-        } catch (error) {
-            setQuestionnairesState({
-                data: questionnairesState.data,
-                loading: false,
-                error: error instanceof Error ? error.message : 'Failed to filter questionnaires',
-            });
-        }
-    };
-
-    const handleClearFilter = () => {
-        setIsFiltered(false);
-        setSelectedQuestionnaireId(null);
-        setCurrentPatientId(null);
-        loadQuestionnaires();
-    };
 
     const handleView = (id: string) => {
-        setViewingQuestionnaireId(id);
+        const questionnaire = questionnairesState.data?.find(q => q.idQuestionario === id);
+        if (questionnaire) {
+            setViewingQuestionnaire(questionnaire);
+        }
     };
 
     const handleCloseModal = () => {
-        setViewingQuestionnaireId(null);
+        setViewingQuestionnaire(null);
     };
 
     const handleReview = (id: string) => {
@@ -101,10 +75,15 @@ const QuestionnaireManagement: React.FC = () => {
         alert(`Revisiona questionario: ${id}`);
     };
 
-    const handleRequestInvalidation = (id: string) => {
-        console.log('Request invalidation:', id);
-        // TODO: Open invalidation request modal
-        alert(`Richiedi invalidazione questionario: ${id}`);
+    const handleRequestInvalidation = async (id: string, notes: string) => {
+        try {
+            await requestInvalidation(id, notes);
+            alert('Richiesta di invalidazione inviata con successo!');
+            loadQuestionnaires();
+        } catch (error) {
+            console.error('Error requesting invalidation:', error);
+            alert('Errore nell\'invio della richiesta di invalidazione');
+        }
     };
 
     const handleUploadNewType = () => {
@@ -129,25 +108,6 @@ const QuestionnaireManagement: React.FC = () => {
                         <h2 className="panel-title">Gestione Questionari</h2>
                         <div className="management-header">
                             <div className="header-actions">
-                                {selectedQuestionnaireId && (
-                                    <button
-                                        className={`filter-btn ${!currentPatientId ? 'disabled' : ''}`}
-                                        onClick={handleFilterByPatient}
-                                        disabled={!currentPatientId}
-                                    >
-                                        🔍 Filtra per Paziente
-                                    </button>
-                                )}
-
-                                {isFiltered && (
-                                    <button
-                                        className="clear-filter-btn"
-                                        onClick={handleClearFilter}
-                                    >
-                                        ✕ Rimuovi Filtro
-                                    </button>
-                                )}
-
                                 {role === 'admin' && (
                                     <button
                                         className="upload-btn"
@@ -157,12 +117,6 @@ const QuestionnaireManagement: React.FC = () => {
                                     </button>
                                 )}
                             </div>
-
-                            {isFiltered && currentPatientId && (
-                                <div className="filter-info">
-                                    Filtrando questionari del paziente: <strong>{currentPatientId}</strong>
-                                </div>
-                            )}
                         </div>
 
                         {questionnairesState.loading && (
@@ -186,7 +140,6 @@ const QuestionnaireManagement: React.FC = () => {
                                 onSelect={handleSelectQuestionnaire}
                                 onView={handleView}
                                 onReview={handleReview}
-                                onRequestInvalidation={handleRequestInvalidation}
                             />
                         )}
                     </div>
@@ -194,10 +147,12 @@ const QuestionnaireManagement: React.FC = () => {
             </div>
 
             {/* Modal for viewing questionnaire details */}
-            {viewingQuestionnaireId && (
+            {viewingQuestionnaire && (
                 <QuestionnaireDetailModal
-                    questionnaireId={viewingQuestionnaireId}
+                    questionnaire={viewingQuestionnaire}
                     onClose={handleCloseModal}
+                    role={role === 'admin' ? 'admin' : 'psychologist'}
+                    onRequestInvalidation={handleRequestInvalidation}
                 />
             )}
         </div>
