@@ -1,12 +1,12 @@
 /* Gnerico per pannelli contenuto */
 
 import React, { useState } from 'react';
-import DataTable from './DataTable';
-import Pagination from './Pagination';
+import DataTableAS from './DataTableAS.tsx';
+import PaginationAS from './PaginationAS.tsx';
 import { getQuestionnairesPage, getTotalPages } from '../services/psychologist.service';
-import './ContentPanel.css';
+import './ContentPanelAS.css';
 
-const ContentPanel: React.FC = () => {
+const ContentPanelAS: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
     const totalPages = getTotalPages(itemsPerPage);
@@ -20,8 +20,8 @@ const ContentPanel: React.FC = () => {
         <div className="content-panel">
             <h2 className="content-panel-title">Gestione Questionari</h2>
             <div className="content-panel-body">
-                <DataTable questionnaires={questionnaires} />
-                <Pagination
+                <DataTableAS questionnaires={questionnaires} />
+                <PaginationAS
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
@@ -31,4 +31,4 @@ const ContentPanel: React.FC = () => {
     );
 };
 
-export default ContentPanel;
+export default ContentPanelAS;

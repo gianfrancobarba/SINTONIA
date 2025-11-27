@@ -2,13 +2,13 @@
 
 import React from 'react';
 import type { Questionnaire } from '../types/psychologist';
-import './DataTable.css';
+import './DataTableAS.css';
 
 interface DataTableProps {
     questionnaires: Questionnaire[];
 }
 
-const DataTable: React.FC<DataTableProps> = ({ questionnaires }) => {
+const DataTableAS: React.FC<DataTableProps> = ({ questionnaires }) => {
     const handleView = (id: string) => {
         console.log('View questionnaire:', id);
         // Placeholder - will be implemented in future
@@ -85,4 +85,4 @@ const DataTable: React.FC<DataTableProps> = ({ questionnaires }) => {
     );
 };
 
-export default DataTable;
+export default DataTableAS;

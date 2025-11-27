@@ -1,9 +1,10 @@
-import PsychologistDashboard from './pages/PsychologistDashboard';
-import './App.css';
+import AdminDashboardPage from './pages/AdminDashboardPage'
+import './App.css'
 
 function App() {
-  return <PsychologistDashboard />;
+  return (
+    <AdminDashboardPage />
+  )
 }
 
-export default App;
-
+export default App
