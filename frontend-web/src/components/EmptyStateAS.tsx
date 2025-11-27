@@ -1,9 +1,9 @@
 /* Dashboard Vuota */
 
 import React from 'react';
-import '../css/EmptyState.css';
+import './EmptyStateAS.css';
 
-const EmptyState: React.FC = () => {
+const EmptyStateAS: React.FC = () => {
     return (
         <div className="empty-state">
             <div className="empty-state-content">
@@ -16,4 +16,4 @@ const EmptyState: React.FC = () => {
     );
 };
 
-export default EmptyState;
+export default EmptyStateAS;

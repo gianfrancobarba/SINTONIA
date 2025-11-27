@@ -1,18 +1,25 @@
 /**
- * Type definitions for the Psychologist Dashboard
+ * Type definitions for the Administrator Dashboard
  */
 
-export interface Psychologist {
+export interface Administrator {
     name: string;
     title: string;
-    photo?: string; // Optional - will be added by user in images folder
+    photo?: string;
+}
+
+/**
+ * Admin data from backend API
+ */
+export interface AdminInfo {
+    nome: string;
+    cognome: string;
 }
 
 /**
  * Dashboard data from backend API
- * Matches the PsiDashboardResponseDto from backend
  */
-export interface PsychologistDashboardData {
+export interface AdministratorDashboardData {
     fullName: string;
     profileImageUrl: string;
     role: string;

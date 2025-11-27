@@ -1,7 +1,7 @@
 /* Generico per paginazione */
 
 import React from 'react';
-import '../css/Pagination.css';
+import './PaginationAS.css';
 
 interface PaginationProps {
     currentPage: number;
@@ -9,7 +9,7 @@ interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+const PaginationAS: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const handlePrevious = () => {
         if (currentPage > 1) {
             onPageChange(currentPage - 1);
@@ -45,4 +45,4 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     );
 };
 
-export default Pagination;
+export default PaginationAS;
