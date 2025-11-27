@@ -1,0 +1,74 @@
+/* QuestionnaireComplete Page Styles */
+
+.questionnaire-complete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 2rem 1.5rem;
+}
+
+.complete-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.complete-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+}
+
+.complete-message {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    margin: 0 0 2rem 0;
+}
+
+.complete-illustration {
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem 0;
+}
+
+.illustration-image {
+    width: 100%;
+    height: auto;
+}
+
+.btn-home {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem 2rem;
+    background-color: #1a5f5e;
+    color: #ffffff;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.btn-home:hover {
+    background-color: #144847;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .complete-title {
+        font-size: 1.75rem;
+    }
+
+    .complete-message {
+        font-size: 0.9375rem;
+    }
+}

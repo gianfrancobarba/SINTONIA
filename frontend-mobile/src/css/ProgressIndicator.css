@@ -1,0 +1,11 @@
+/* Progress Indicator Component Styles */
+
+.progress-indicator {
+    background-color: #0D475D;
+    color: #ffffff;
+    padding: 0.4rem 0.9rem;
+    border-radius: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
