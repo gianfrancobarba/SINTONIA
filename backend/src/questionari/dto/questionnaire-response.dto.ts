@@ -1,13 +1,13 @@
 /**
  * DTO for questionnaire response
- * Maps to frontend QuestionnaireData interface
+ * Includes data from both questionario and tipologia_questionario tables
  */
 export class QuestionnaireResponseDto {
     idQuestionario: string;
     idPaziente: string;
     nomeTipologia: string;
     score: number | null;
-    risposte: any; // JSON data
+    campi: string[]; // Array of field options from tipologia_questionario
     cambiamento: boolean;
     dataCompilazione: string;
     revisionato: boolean;
@@ -17,4 +17,5 @@ export class QuestionnaireResponseDto {
     idPsicologoRevisione: string | null;
     idPsicologoRichiedente: string | null;
     idAmministratoreConferma: string | null;
+    domande: string[]; // Array of questions from tipologia_questionario
 }

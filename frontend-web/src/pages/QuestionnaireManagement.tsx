@@ -16,7 +16,7 @@ const QuestionnaireManagement: React.FC = () => {
     const [selectedQuestionnaireId, setSelectedQuestionnaireId] = useState<string | null>(null);
     const [isFiltered, setIsFiltered] = useState(false);
     const [currentPatientId, setCurrentPatientId] = useState<string | null>(null);
-    const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
+    const [viewingQuestionnaireId, setViewingQuestionnaireId] = useState<string | null>(null);
 
     const user = getCurrentUser();
     const role = getUserRole();
@@ -88,14 +88,11 @@ const QuestionnaireManagement: React.FC = () => {
     };
 
     const handleView = (id: string) => {
-        const questionnaire = questionnairesState.data?.find(q => q.idQuestionario === id);
-        if (questionnaire) {
-            setViewingQuestionnaire(questionnaire);
-        }
+        setViewingQuestionnaireId(id);
     };
 
     const handleCloseModal = () => {
-        setViewingQuestionnaire(null);
+        setViewingQuestionnaireId(null);
     };
 
     const handleReview = (id: string) => {
@@ -197,9 +194,9 @@ const QuestionnaireManagement: React.FC = () => {
             </div>
 
             {/* Modal for viewing questionnaire details */}
-            {viewingQuestionnaire && (
+            {viewingQuestionnaireId && (
                 <QuestionnaireDetailModal
-                    questionnaire={viewingQuestionnaire}
+                    questionnaireId={viewingQuestionnaireId}
                     onClose={handleCloseModal}
                 />
             )}
