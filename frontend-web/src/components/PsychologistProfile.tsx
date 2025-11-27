@@ -1,6 +1,7 @@
 /* Profilo psicologo */
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchDashboardData } from '../services/psychologist.service';
 import { getCurrentUser } from '../services/auth.service';
 import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
@@ -14,6 +15,7 @@ import forumIcon from '../images/forum.png';
 import '../css/PsychologistProfile.css';
 
 const PsychologistProfile: React.FC = () => {
+    const navigate = useNavigate();
     const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
         data: null,
         loading: true,
@@ -49,6 +51,12 @@ const PsychologistProfile: React.FC = () => {
         event.stopPropagation();
         console.log('Navigate to:', section);
         setSelectedSection(section);
+
+        // Navigate to appropriate pages
+        if (section === 'questionari') {
+            navigate('/questionnaires');
+        }
+        // TODO: Add other navigation routes as needed
     };
 
     const handleBackgroundClick = () => {

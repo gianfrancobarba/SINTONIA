@@ -1,7 +1,7 @@
 import React from 'react';
 import PsychologistProfile from '../components/PsychologistProfile';
 import EmptyState from '../components/EmptyState';
-import './PsychologistDashboard.css';
+import '../css/PsychologistDashboard.css';
 
 const PsychologistDashboard: React.FC = () => {
     return (
