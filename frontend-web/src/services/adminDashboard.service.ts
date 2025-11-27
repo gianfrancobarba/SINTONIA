@@ -1,12 +1,18 @@
+import type { Administrator, AdminInfo, Questionnaire } from '../types/adminDashboard.types';
+
 /**
- * Service layer for administrator data
- * Currently returns mock data
+ * Fetch administrator information from backend API
  */
-
-import type { Administrator, Questionnaire } from '../types/adminDashboard.types';
+export const fetchAdministratorInfo = async (email: string): Promise<AdminInfo> => {
+    const response = await fetch(`/api/dashboard?role=admin&email=${encodeURIComponent(email)}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+};
 
 /**
- * Get the current administrator information
+ * Get the current administrator information (mock data)
  */
 export const getAdministratorInfo = (): Administrator => {
     return {

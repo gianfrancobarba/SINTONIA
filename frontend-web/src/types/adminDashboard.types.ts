@@ -9,6 +9,14 @@ export interface Administrator {
 }
 
 /**
+ * Admin data from backend API
+ */
+export interface AdminInfo {
+    nome: string;
+    cognome: string;
+}
+
+/**
  * Dashboard data from backend API
  */
 export interface AdministratorDashboardData {

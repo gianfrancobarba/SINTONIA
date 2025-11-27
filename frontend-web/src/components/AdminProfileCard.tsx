@@ -1,5 +1,6 @@
-import React from 'react';
-import { getAdministratorInfo } from '../services/adminDashboard.service';
+import React, { useState, useEffect } from 'react';
+import { fetchAdministratorInfo } from '../services/adminDashboard.service';
+import type { AdminInfo } from '../types/adminDashboard.types';
 import profilePhoto from '../icons/profile_picture.svg';
 import psychologistIcon from '../icons/pazienti_icon.svg';
 import notificationIcon from '../icons/notification_icon.svg';
@@ -13,10 +14,30 @@ import './AdminProfileCard.css';
 interface AdminProfileCardProps {
     selectedSection: string | null;
     onSelectSection: (section: string) => void;
+    adminEmail: string;
 }
 
-const AdminProfileCard: React.FC<AdminProfileCardProps> = ({ selectedSection, onSelectSection }) => {
-    const administrator = getAdministratorInfo();
+const AdminProfileCard: React.FC<AdminProfileCardProps> = ({ selectedSection, onSelectSection, adminEmail }) => {
+    const [adminInfo, setAdminInfo] = useState<AdminInfo | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                setLoading(true);
+                const data = await fetchAdministratorInfo(adminEmail);
+                setAdminInfo(data);
+                setError(null);
+            } catch (err) {
+                console.error('Errore caricamento admin:', err);
+                setError('Errore caricamento dati');
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadData();
+    }, [adminEmail]);
 
     const handleNavigation = (section: string, event: React.MouseEvent) => {
         event.stopPropagation();
@@ -33,14 +54,18 @@ const AdminProfileCard: React.FC<AdminProfileCardProps> = ({ selectedSection, on
                     </button>
 
                     <div className="profile-photo-container">
-                        <img src={profilePhoto} alt={administrator.name} className="profile-img" />
+                        <img src={profilePhoto} alt="Admin" className="profile-img" />
                     </div>
 
                     <button className="icon-btn right-btn" aria-label="Notifications">
                         <img src={notificationIcon} alt="Notifications" />
                     </button>
                 </div>
-                <h2 className="profile-name">{administrator.name}</h2>
+                <h2 className="profile-name">
+                    {loading && 'Caricamento...'}
+                    {error && error}
+                    {adminInfo && `${adminInfo.nome} ${adminInfo.cognome}`}
+                </h2>
             </div>
 
             <div className="navigation-grid">

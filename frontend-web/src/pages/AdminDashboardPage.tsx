@@ -8,6 +8,9 @@ const AdministratorDashboard: React.FC = () => {
         return localStorage.getItem('adminDashboardSection');
     });
 
+    // TODO: Replace with actual authentication system
+    const adminEmail = localStorage.getItem('adminEmail') || 'admin@sintonia.com';
+
     const handleSectionSelect = (section: string) => {
         setSelectedSection(section);
         localStorage.setItem('adminDashboardSection', section);
@@ -20,6 +23,7 @@ const AdministratorDashboard: React.FC = () => {
                     <AdminProfileCard
                         selectedSection={selectedSection}
                         onSelectSection={handleSectionSelect}
+                        adminEmail={adminEmail}
                     />
                 </div>
                 <div className="dashboard-right">
