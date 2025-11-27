@@ -7,12 +7,26 @@ import { QuestionarioController } from './questionario/questionario.controller.j
 import { QuestionarioService } from './questionario/questionario.service.js';
 import { QuestionariListController } from './questionariList/questionariList.controller.js';
 import { QuestionariListService } from './questionariList/questionariList.service.js';
+import { QuestionariController } from './questionari/questionari.controller.js';
+import { QuestionariService } from './questionari/questionari.service.js';
 
 import { SpidAuthModule } from '../spid-auth/spid-auth.module.js';
 
 @Module({
     imports: [SpidAuthModule],
-    controllers: [HomeController, TermsController, QuestionarioController, QuestionariListController],
-    providers: [HomeService, TermsService, QuestionarioService, QuestionariListService],
+    controllers: [
+        HomeController,
+        TermsController,
+        QuestionarioController,
+        QuestionariListController,
+        QuestionariController,
+    ],
+    providers: [
+        HomeService,
+        TermsService,
+        QuestionarioService,
+        QuestionariListService,
+        QuestionariService,
+    ],
 })
 export class PatientModule { }

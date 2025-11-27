@@ -1,50 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import BottomNavigation from '../components/BottomNavigation';
+import { getStoricoQuestionari } from '../services/questionari.service';
+import type { QuestionarioItemDto } from '../types/questionari';
 import '../css/Questionari.css';
-
-// Mock data per i questionari - da sostituire con chiamate API in futuro
-interface Questionario {
-    id: number;
-    titolo: string;
-    descrizione: string;
-    scadenza?: string;
-    dataCompletamento?: string;
-}
-
-const questionariDaCompilare: Questionario[] = [
-    {
-        id: 1,
-        titolo: "WHO-5",
-        descrizione: "Inserito il 15/12/2025. Clicca per Compilare!",
-        scadenza: "31 Nov 2025"
-    },
-    {
-        id: 2,
-        titolo: "GAD-7",
-        descrizione: "Inserito il 10/12/2025. Clicca per Compilare!",
-        scadenza: "3 Dic 2025"
-    }
-];
-
-const questionariCompletati: Questionario[] = [
-    {
-        id: 3,
-        titolo: "PHQ-9",
-        descrizione: "Compilato il 15/12/2025.",
-        dataCompletamento: "15/12/2025"
-    },
-    {
-        id: 4,
-        titolo: "K10",
-        descrizione: "Compilato il 10/12/2025.",
-        dataCompletamento: "10/12/2025"
-    }
-];
 
 const Questionari: React.FC = () => {
     const navigate = useNavigate();
+    const [questionariDaCompilare, setQuestionariDaCompilare] = useState<QuestionarioItemDto[]>([]);
+    const [questionariCompletati, setQuestionariCompletati] = useState<QuestionarioItemDto[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchQuestionari = async () => {
+            try {
+                setLoading(true);
+                const data = await getStoricoQuestionari();
+                setQuestionariDaCompilare(data.daCompilare);
+                setQuestionariCompletati(data.completati);
+            } catch (err) {
+                console.error('Errore nel caricamento dei questionari:', err);
+                setError('Impossibile caricare i questionari. Riprova più tardi.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchQuestionari();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="questionari-page">
+                <div className="questionari-header">
+                    <button className="back-button" onClick={() => navigate('/home')}>
+                        <ArrowLeft size={20} />
+                    </button>
+                    <h1>Questionari</h1>
+                </div>
+                <div className="questionari-content">
+                    <p style={{ textAlign: 'center', marginTop: '50px' }}>Caricamento...</p>
+                </div>
+                <BottomNavigation />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="questionari-page">
+                <div className="questionari-header">
+                    <button className="back-button" onClick={() => navigate('/home')}>
+                        <ArrowLeft size={20} />
+                    </button>
+                    <h1>Questionari</h1>
+                </div>
+                <div className="questionari-content">
+                    <p style={{ textAlign: 'center', marginTop: '50px', color: 'red' }}>{error}</p>
+                </div>
+                <BottomNavigation />
+            </div>
+        );
+    }
 
     return (
         <div className="questionari-page">
@@ -96,6 +115,13 @@ const Questionari: React.FC = () => {
                         </div>
                     </section>
                 )}
+
+                {/* Messaggio se non ci sono questionari */}
+                {questionariDaCompilare.length === 0 && questionariCompletati.length === 0 && (
+                    <p style={{ textAlign: 'center', marginTop: '50px', color: '#666' }}>
+                        Nessun questionario disponibile al momento.
+                    </p>
+                )}
             </div>
 
             <BottomNavigation />
@@ -104,3 +130,4 @@ const Questionari: React.FC = () => {
 };
 
 export default Questionari;
+
