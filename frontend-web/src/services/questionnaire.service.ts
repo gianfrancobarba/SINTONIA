@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { QuestionnaireData } from '../types/psychologist';
+import { getCurrentUser } from './auth.service';
 
 const API_URL = 'http://localhost:3000';
 
@@ -16,20 +17,26 @@ export const fetchQuestionnaires = async (
         let endpoint = '';
         if (role === 'psychologist') {
             if (!cf) {
-                console.warn('No codice fiscale provided, using mock data');
-                return getMockQuestionnaires(role);
+                throw new Error('Codice fiscale (cf) richiesto per ruolo psychologist');
             }
             endpoint = `/psi/questionnaires?cf=${cf}`;
         } else {
             endpoint = '/admin/questionnaires';
         }
 
-        const response = await axios.get(`${API_URL}${endpoint}`);
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await axios.get(`${API_URL}${endpoint}`,
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
         return response.data;
     } catch (error) {
-        console.warn('Backend not available, using mock data:', error);
-        // Always return mock data as fallback
-        return getMockQuestionnaires(role);
+        console.warn('Errore nel recupero questionari dal backend:', error);
+        throw error;
     }
 };
 
@@ -40,14 +47,19 @@ export const fetchQuestionnairesByPatient = async (
     patientId: string
 ): Promise<QuestionnaireData[]> => {
     try {
-        const response = await axios.get(`${API_URL}/questionnaires/patient/${patientId}`);
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await axios.get(`${API_URL}/questionnaires/patient/${patientId}`,
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
         return response.data;
     } catch (error) {
         console.error('Error fetching questionnaires by patient:', error);
-        // Return mock filtered data
-        return getMockQuestionnaires('psychologist').filter(
-            q => q.idPaziente === patientId
-        );
+        throw error;
     }
 };
 
@@ -56,7 +68,15 @@ export const fetchQuestionnairesByPatient = async (
  */
 export const viewQuestionnaire = async (id: string): Promise<QuestionnaireData> => {
     try {
-        const response = await axios.get(`${API_URL}/questionnaires/${id}`);
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await axios.get(`${API_URL}/questionnaires/${id}`,
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
         return response.data;
     } catch (error) {
         console.error('Error viewing questionnaire:', error);
@@ -72,7 +92,17 @@ export const reviewQuestionnaire = async (
     notes: string
 ): Promise<void> => {
     try {
-        await axios.post(`${API_URL}/psi/questionnaires/${id}/review`, { notes });
+        const token = getCurrentUser()?.access_token as string | undefined;
+        await axios.post(
+            `${API_URL}/psi/questionnaires/${id}/review`,
+            { notes },
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
     } catch (error) {
         console.error('Error reviewing questionnaire:', error);
         throw error;
@@ -87,7 +117,17 @@ export const requestInvalidation = async (
     notes: string
 ): Promise<void> => {
     try {
-        await axios.post(`${API_URL}/psi/questionnaires/${id}/request-invalidation`, { notes });
+        const token = getCurrentUser()?.access_token as string | undefined;
+        await axios.post(
+            `${API_URL}/psi/questionnaires/${id}/request-invalidation`,
+            { notes },
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
     } catch (error) {
         console.error('Error requesting invalidation:', error);
         throw error;
@@ -109,80 +149,4 @@ export const uploadQuestionnaireType = async (data: any): Promise<void> => {
 /**
  * Mock data for development/testing
  */
-function getMockQuestionnaires(role: 'psychologist' | 'admin'): QuestionnaireData[] {
-    const mockData: QuestionnaireData[] = [
-        {
-            idQuestionario: 'q-1',
-            idPaziente: 'p-001',
-            nomeTipologia: 'PHQ-9',
-            score: 12,
-            risposte: {},
-            cambiamento: false,
-            dataCompilazione: '2023-10-26',
-            revisionato: false,
-            invalidato: false,
-            noteInvalidazione: null,
-            dataInvalidazione: null,
-            idPsicologoRevisione: null,
-            idPsicologoRichiedente: null,
-            idAmministratoreConferma: null,
-        },
-        {
-            idQuestionario: 'q-2',
-            idPaziente: 'p-001',
-            nomeTipologia: 'GAD-7',
-            score: 8,
-            risposte: {},
-            cambiamento: false,
-            dataCompilazione: '2023-10-25',
-            revisionato: true,
-            invalidato: false,
-            noteInvalidazione: null,
-            dataInvalidazione: null,
-            idPsicologoRevisione: 'RSSMRA80A01H501Z',
-            idPsicologoRichiedente: null,
-            idAmministratoreConferma: null,
-        },
-        {
-            idQuestionario: 'q-3',
-            idPaziente: 'p-002',
-            nomeTipologia: 'PHQ-9',
-            score: 15,
-            risposte: {},
-            cambiamento: true,
-            dataCompilazione: '2023-10-24',
-            revisionato: true,
-            invalidato: false,
-            noteInvalidazione: null,
-            dataInvalidazione: null,
-            idPsicologoRevisione: 'RSSMRA80A01H501Z',
-            idPsicologoRichiedente: null,
-            idAmministratoreConferma: null,
-        },
-        {
-            idQuestionario: 'q-4',
-            idPaziente: 'p-003',
-            nomeTipologia: 'BDI-II',
-            score: 22,
-            risposte: {},
-            cambiamento: false,
-            dataCompilazione: '2023-10-20',
-            revisionato: false,
-            invalidato: true,
-            noteInvalidazione: 'Dati incongruenti',
-            dataInvalidazione: '2023-10-21',
-            idPsicologoRevisione: null,
-            idPsicologoRichiedente: 'RSSMRA80A01H501Z',
-            idAmministratoreConferma: 'admin@sintonia.it',
-        },
-    ];
-
-    // Filter based on role
-    if (role === 'psychologist') {
-        // Psychologist sees only Compilato and Revisionato
-        return mockData.filter(q => !q.invalidato);
-    }
-
-    // Admin sees all
-    return mockData;
-}
+// Rimosso l'uso dei dati mock per forzare l'uso del backend
