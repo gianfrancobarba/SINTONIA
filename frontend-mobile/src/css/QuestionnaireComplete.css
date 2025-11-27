@@ -21,33 +21,23 @@
 .complete-title {
     font-size: 2rem;
     font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 1rem 0;
+    color: #0D475D;
+    margin-bottom: 1rem;
 }
 
 .complete-message {
-    font-size: 1rem;
+    font-size: 1.125rem;
     color: #666;
-    line-height: 1.5;
-    margin: 0 0 2rem 0;
-}
-
-.complete-illustration {
-    width: 100%;
+    line-height: 1.6;
     max-width: 300px;
-    margin: 2rem 0;
-}
-
-.illustration-image {
-    width: 100%;
-    height: auto;
+    margin: 0 auto;
 }
 
 .btn-home {
     width: 100%;
     max-width: 300px;
-    padding: 1rem 2rem;
-    background-color: #1a5f5e;
+    padding: 1rem;
+    background-color: #0D475D;
     color: #ffffff;
     border: none;
     border-radius: 2rem;
@@ -55,11 +45,13 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-top: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 3rem;
 }
 
 .btn-home:hover {
-    background-color: #144847;
+    background-color: #0a3647;
 }
 
 /* Responsive adjustments */

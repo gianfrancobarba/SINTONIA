@@ -90,7 +90,8 @@ const QuestionnaireCompilationDemo: React.FC = () => {
         <div className="questionnaire-compilation">
             <header className="questionnaire-header">
                 <button className="back-button" onClick={handleBack} aria-label="Indietro">
-                    <ArrowLeft size={24} />
+                    <ArrowLeft size={28} />
+                    <span>Indietro</span>
                 </button>
                 <h1 className="questionnaire-title">{mockQuestionario.nomeTipologia}</h1>
                 <ProgressIndicator
