@@ -19,9 +19,10 @@
     color: #1a1a1a;
     text-align: center;
     padding: 0 1rem;
-    min-height: 3rem;
+    height: 3rem;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
 }
 
 .scale-container {
@@ -31,6 +32,10 @@
     padding: 0.5rem 0;
     position: relative;
     width: 100%;
+    touch-action: pan-y;
+    /* Allow vertical scrolling but enable horizontal drag */
+    user-select: none;
+    /* Prevent text selection during drag */
 }
 
 .scale-point {

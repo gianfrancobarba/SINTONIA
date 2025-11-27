@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import QuestionCard from '../components/questionnaire/QuestionCard';
 import QuestionScale from '../components/questionnaire/QuestionScale';
 import ProgressIndicator from '../components/questionnaire/ProgressIndicator';
-import { getQuestionario, submitQuestionario } from '../services/questionario.service';
 import type { GetQuestionarioDto, Risposta } from '../types/questionario';
 import '../css/QuestionnaireCompilation.css';
 
 const QuestionnaireCompilation: React.FC = () => {
-    const { idQuestionario } = useParams<{ idQuestionario: string }>();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [questionario, setQuestionario] = useState<GetQuestionarioDto | null>(null);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -20,26 +19,40 @@ const QuestionnaireCompilation: React.FC = () => {
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
-        const fetchQuestionario = async () => {
-            if (!idQuestionario) {
-                setError('ID questionario mancante');
-                setLoading(false);
-                return;
-            }
+        console.log('=== QuestionnaireCompilation useEffect ===');
+        console.log('location.state:', location.state);
 
-            try {
-                const data = await getQuestionario(idQuestionario);
-                setQuestionario(data);
-            } catch (err) {
-                console.error('Error fetching questionario:', err);
-                setError('Errore nel caricamento del questionario');
-            } finally {
-                setLoading(false);
-            }
-        };
+        // Load questionnaire data from navigation state
+        const state = location.state as { questionario: GetQuestionarioDto } | undefined;
 
-        fetchQuestionario();
-    }, [idQuestionario]);
+        console.log('Extracted state:', state);
+        console.log('state?.questionario:', state?.questionario);
+
+        if (!state?.questionario) {
+            console.error('NO QUESTIONNAIRE IN STATE!');
+            setError('Nessun questionario da compilare. Torna alla lista.');
+            setLoading(false);
+            return;
+        }
+
+        console.log('=== QUESTIONNAIRE DATA IN COMPILATION PAGE ===');
+        console.log('Full questionario:', JSON.stringify(state.questionario, null, 2));
+        console.log('domande:', state.questionario.domande);
+        console.log('domande length:', state.questionario.domande?.length);
+        console.log('domande is array?', Array.isArray(state.questionario.domande));
+
+        if (!state.questionario.domande || state.questionario.domande.length === 0) {
+            console.error('QUESTIONNAIRE HAS NO QUESTIONS!');
+            console.error('domande value:', state.questionario.domande);
+            setError('Il questionario non contiene domande.');
+            setLoading(false);
+            return;
+        }
+
+        console.log('Setting questionario with', state.questionario.domande.length, 'questions');
+        setQuestionario(state.questionario);
+        setLoading(false);
+    }, [location.state]);
 
     const handleAnswerChange = (value: number) => {
         if (!questionario) return;
@@ -51,12 +64,12 @@ const QuestionnaireCompilation: React.FC = () => {
     };
 
     const handleContinue = async () => {
-        if (!questionario || !idQuestionario) return;
+        if (!questionario) return;
 
         const isLastQuestion = currentQuestionIndex === questionario.domande.length - 1;
 
         if (isLastQuestion) {
-            // Submit questionnaire
+            // Submit questionnaire - create record and save answers
             setSubmitting(true);
             try {
                 const risposte: Risposta[] = Array.from(answers.entries()).map(([idDomanda, valore]) => ({
@@ -64,8 +77,15 @@ const QuestionnaireCompilation: React.FC = () => {
                     valore,
                 }));
 
-                await submitQuestionario(idQuestionario, risposte);
-                navigate('/questionario/complete');
+                // TODO: Need backend endpoint to create questionnaire and submit in one call
+                // For now, we'll need the nomeTipologia from the questionario
+                console.log('Submitting answers for tipologia:', questionario.nomeTipologia);
+                console.log('Risposte:', risposte);
+
+                // This will need to be updated when backend submit endpoint is ready
+                // await submitQuestionario(questionario.nomeTipologia, risposte);
+
+                navigate('/questionari'); // Return to questionnaires list for now
             } catch (err) {
                 console.error('Error submitting questionario:', err);
                 setError('Errore nell\'invio del questionario');
@@ -102,7 +122,7 @@ const QuestionnaireCompilation: React.FC = () => {
     }
 
     const currentQuestion = questionario.domande[currentQuestionIndex];
-    const currentAnswer = answers.get(currentQuestion.id) || null;
+    const currentAnswer = answers.get(currentQuestion.id) ?? null;
     const canContinue = currentAnswer !== null;
 
     return (
@@ -126,7 +146,8 @@ const QuestionnaireCompilation: React.FC = () => {
                     value={currentAnswer}
                     onChange={handleAnswerChange}
                     maxValue={currentQuestion.scalaMax || 5}
-                    minValue={currentQuestion.scalaMin || 1}
+                    minValue={currentQuestion.scalaMin ?? 0}
+                    labels={currentQuestion.opzioni}
                 />
 
                 <button

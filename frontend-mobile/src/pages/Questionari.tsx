@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import BottomNavigation from '../components/BottomNavigation';
 import { getStoricoQuestionari } from '../services/questionari.service';
+import { startQuestionario } from '../services/questionario.service';
 import type { QuestionarioItemDto } from '../types/questionari';
 import '../css/Questionari.css';
 
@@ -12,6 +13,7 @@ const Questionari: React.FC = () => {
     const [questionariCompletati, setQuestionariCompletati] = useState<QuestionarioItemDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [startingId, setStartingId] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchQuestionari = async () => {
@@ -30,6 +32,29 @@ const Questionari: React.FC = () => {
 
         fetchQuestionari();
     }, []);
+
+    const handleCompilaOra = async (q: QuestionarioItemDto) => {
+        try {
+            setStartingId(q.id);
+            console.log('=== STARTING QUESTIONNAIRE ===');
+            console.log('Tipologia:', q.titolo);
+            const questionarioData = await startQuestionario(q.titolo);
+            console.log('=== RECEIVED DATA FROM BACKEND ===');
+            console.log('Full data:', JSON.stringify(questionarioData, null, 2));
+            console.log('idQuestionario:', questionarioData.idQuestionario);
+            console.log('nomeTipologia:', questionarioData.nomeTipologia);
+            console.log('domande:', questionarioData.domande);
+            console.log('domande length:', questionarioData.domande?.length);
+            console.log('domande is array?', Array.isArray(questionarioData.domande));
+            // Navigate to static compilation route with data in state
+            navigate('/compilation', { state: { questionario: questionarioData } });
+        } catch (err) {
+            console.error('Errore nell\'avvio del questionario:', err);
+            setError('Impossibile avviare il questionario. Riprova.');
+        } finally {
+            setStartingId(null);
+        }
+    };
 
     if (loading) {
         return (
@@ -89,7 +114,13 @@ const Questionari: React.FC = () => {
                                     </div>
                                     <p className="descrizione">{q.descrizione}</p>
                                     <div className="card-footer">
-                                        <button className="compila-button">Compila ora</button>
+                                        <button
+                                            className="compila-button"
+                                            onClick={() => handleCompilaOra(q)}
+                                            disabled={startingId === q.id}
+                                        >
+                                            {startingId === q.id ? 'Avvio...' : 'Compila ora'}
+                                        </button>
                                     </div>
                                 </div>
                             ))}
