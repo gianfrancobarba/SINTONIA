@@ -1,7 +1,7 @@
 /* Generico per paginazione */
 
 import React from 'react';
-import './PaginationAS.css';
+import '../css/PaginationAS.css';
 
 interface PaginationProps {
     currentPage: number;

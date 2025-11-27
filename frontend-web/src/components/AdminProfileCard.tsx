@@ -11,7 +11,7 @@ import forumIcon from '../icons/forum_icon.svg';
 
 import supportoIcon from '../icons/supporto_icon.svg';
 import invalidazioneIcon from '../icons/invalidazione_icon.svg';
-import './AdminProfileCard.css';
+import '../css/AdminProfileCard.css';
 
 interface AdminProfileCardProps {
     selectedSection: string | null;
@@ -28,6 +28,11 @@ const AdminProfileCard: React.FC<AdminProfileCardProps> = ({ selectedSection, on
         const loadData = async () => {
             try {
                 setLoading(true);
+                if (!adminEmail) {
+                    setError('Email amministratore non disponibile');
+                    setAdminInfo(null);
+                    return;
+                }
                 const data = await fetchAdministratorInfo(adminEmail);
                 setAdminInfo(data);
                 setError(null);

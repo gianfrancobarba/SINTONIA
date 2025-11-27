@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { QuestionnaireData } from '../types/psychologist';
+import type { QuestionnaireData } from '../types/adminDashboard.types';
 import { getCurrentUser } from './auth.service';
 
 const API_URL = 'http://localhost:3000';

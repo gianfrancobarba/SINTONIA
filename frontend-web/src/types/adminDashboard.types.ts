@@ -86,3 +86,15 @@ export interface PaginationInfo {
     totalPages: number;
     itemsPerPage: number;
 }
+
+/**
+ * Types used by psychologist views/services
+ */
+export interface Psychologist {
+    name: string;
+    title: string;
+    photo?: string;
+}
+
+// The psychologist dashboard data has the same shape as the admin dashboard summary
+export type PsychologistDashboardData = AdministratorDashboardData;

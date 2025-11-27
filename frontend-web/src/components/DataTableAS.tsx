@@ -1,8 +1,8 @@
 /* Generico per Tabelle Dati */
 
 import React from 'react';
-import type { Questionnaire } from '../types/psychologist';
-import './DataTableAS.css';
+import type { Questionnaire } from '../types/adminDashboard.types';
+import '../css/DataTableAS.css';
 
 interface DataTableProps {
     questionnaires: Questionnaire[];

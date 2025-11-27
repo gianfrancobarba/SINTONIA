@@ -1,13 +1,33 @@
 import type { Administrator, AdminInfo, Questionnaire } from '../types/adminDashboard.types';
+import { getCurrentUser } from './auth.service';
+
+const API_URL = 'http://localhost:3000';
 
 /**
  * Fetch administrator information from backend API
  */
 export const fetchAdministratorInfo = async (email: string): Promise<AdminInfo> => {
-    const response = await fetch(`/api/dashboard?role=admin&email=${encodeURIComponent(email)}`);
+    const token = getCurrentUser()?.access_token as string | undefined;
+    const url = `${API_URL}/dashboard?role=admin&email=${encodeURIComponent(email)}`;
+
+    const response = await fetch(url, {
+        headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            'Content-Type': 'application/json',
+        },
+    });
+
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const text = await response.text();
+        throw new Error(`HTTP ${response.status}: ${text.slice(0, 200)}`);
     }
+
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new SyntaxError(`Unexpected content-type '${contentType}'. Response snippet: ${text.slice(0, 200)}`);
+    }
+
     return await response.json();
 };
 

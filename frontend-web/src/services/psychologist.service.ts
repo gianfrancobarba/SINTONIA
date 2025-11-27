@@ -3,7 +3,7 @@
  * Handles API calls to backend
  */
 
-import type { Psychologist, Questionnaire, PsychologistDashboardData } from '../types/psychologist';
+import type { Psychologist, Questionnaire, PsychologistDashboardData } from '../types/adminDashboard.types';
 import { getCurrentUser } from './auth.service';
 
 const API_URL = 'http://localhost:3000';

@@ -4,7 +4,7 @@ import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
 import { fetchQuestionnaires, requestInvalidation } from '../services/questionnaire.service';
-import type { QuestionnaireData, LoadingState } from '../types/psychologist';
+import type { QuestionnaireData, LoadingState } from '../types/adminDashboard.types';
 import '../css/QuestionnaireManagement.css';
 
 const QuestionnaireManagement: React.FC = () => {

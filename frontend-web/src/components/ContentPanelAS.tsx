@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import DataTableAS from './DataTableAS.tsx';
 import PaginationAS from './PaginationAS.tsx';
 import { getQuestionnairesPage, getTotalPages } from '../services/psychologist.service';
-import './ContentPanelAS.css';
+import '../css/ContentPanelAS.css';
 
 const ContentPanelAS: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);

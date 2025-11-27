@@ -1,7 +1,7 @@
 /* Dashboard Vuota */
 
 import React from 'react';
-import './EmptyStateAS.css';
+import '../css/EmptyStateAS.css';
 
 const EmptyStateAS: React.FC = () => {
     return (

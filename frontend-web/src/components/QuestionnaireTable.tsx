@@ -1,6 +1,6 @@
 import React from 'react';
-import type { QuestionnaireData } from '../types/psychologist';
-import { getQuestionnaireStatus } from '../types/psychologist';
+import type { QuestionnaireData } from '../types/adminDashboard.types';
+import { getQuestionnaireStatus } from '../types/adminDashboard.types';
 import '../css/QuestionnaireTable.css';
 
 interface QuestionnaireTableProps {

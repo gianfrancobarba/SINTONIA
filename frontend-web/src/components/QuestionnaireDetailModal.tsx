@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { QuestionnaireData } from '../types/psychologist';
+import type { QuestionnaireData } from '../types/adminDashboard.types';
 import '../css/QuestionnaireDetailModal.css';
 
 interface QuestionnaireDetailModalProps {

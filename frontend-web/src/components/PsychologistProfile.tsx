@@ -4,14 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchDashboardData } from '../services/psychologist.service';
 import { getCurrentUser } from '../services/auth.service';
-import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
-import profilePhoto from '../images/psychologist-photo.png';
-import notificationIcon from '../images/psi-notification.png';
-import editIcon from '../images/psi-edit_profile.png';
-import patientIcon from '../images/paziente-list.png';
-import questionnaireIcon from '../images/questionari.png';
-import alertIcon from '../images/alert-clinico.png';
-import forumIcon from '../images/forum.png';
+import type { PsychologistDashboardData, LoadingState } from '../types/adminDashboard.types';
+import profilePhoto from '../icons/profile_picture.svg';
+import notificationIcon from '../icons/notification_icon.svg';
+import editIcon from '../icons/edit_icon.svg';
+import patientIcon from '../icons/pazienti_icon.svg';
+import questionnaireIcon from '../icons/questionario_icon.svg';
+import alertIcon from '../icons/alert_icon.svg';
+import forumIcon from '../icons/forum_icon.svg';
 import '../css/PsychologistProfile.css';
 
 const PsychologistProfile: React.FC = () => {

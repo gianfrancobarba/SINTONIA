@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import AdminProfileCard from '../components/AdminProfileCard';
 import EmptyStateAS from '../components/EmptyStateAS.tsx';
-import './AdminDashboardPage.css';
+import '../css/AdminDashboardPage.css';
+import { getCurrentUser } from '../services/auth.service';
 
 const AdministratorDashboard: React.FC = () => {
     const [selectedSection, setSelectedSection] = useState<string | null>(() => {
         return localStorage.getItem('adminDashboardSection');
     });
 
-    // TODO: Replace with actual authentication system
-    const adminEmail = localStorage.getItem('adminEmail') || 'admin@sintonia.com';
+    // Use authenticated admin email from JWT
+    const adminEmail = getCurrentUser()?.email || '';
 
     const handleSectionSelect = (section: string) => {
         setSelectedSection(section);
