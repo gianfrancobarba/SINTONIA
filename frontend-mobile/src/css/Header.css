@@ -78,8 +78,19 @@
     height: 20px;
 }
 
+/* Notification Button with 3D Effect */
 .notification-icon {
     position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.notification-icon:hover {
+    transform: translateY(-3px);
+}
+
+.notification-icon:active {
+    transform: translateY(-1px) scale(0.98);
 }
 
 .icon-box {
@@ -90,22 +101,80 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15),
+        0 3px 6px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.notification-icon:hover .icon-box {
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.2),
+        0 5px 10px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.notification-icon:active .icon-box {
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(1px);
+}
+
+.icon-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
+}
+
+.icon-box img {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.notification-icon:hover .icon-box img {
+    transform: scale(1.1);
 }
 
 .badge {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white), #f0f0f0);
     color: var(--primary-dark);
     font-size: 0.75rem;
     font-weight: bold;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--primary-dark);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.notification-icon:hover .badge {
+    transform: scale(1.1);
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.2),
+        0 3px 6px rgba(0, 0, 0, 0.15);
 }

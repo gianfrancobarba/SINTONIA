@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { HomeDashboardDto } from '../types/home';
 import '../css/Header.css';
 import questionnaireIcon from '../assets/icons/questionnaire.svg';
@@ -15,6 +16,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ data }) => {
+    const navigate = useNavigate();
+
     // Generate current date in Italian format
     const getCurrentDate = () => {
         const today = new Date();
@@ -40,6 +43,10 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
             return moodDepressed;
         }
         return moodNeutral;
+    };
+
+    const handleNotificationClick = () => {
+        navigate('/questionari');
     };
 
     return (
@@ -68,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="notification-icon">
+                <div className="notification-icon" onClick={handleNotificationClick}>
                     <div className="icon-box">
                         <img src={questionnaireIcon} alt="Questionnaires" />
                     </div>
