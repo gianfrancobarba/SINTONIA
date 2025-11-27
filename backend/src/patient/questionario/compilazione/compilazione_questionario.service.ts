@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { db } from '../../drizzle/db.js';
-import { questionario, tipologiaQuestionario } from '../../drizzle/schema.js';
+import { db } from '../../../drizzle/db.js';
+import { questionario, tipologiaQuestionario } from '../../../drizzle/schema.js';
 
 @Injectable()
-export class QuestionarioService {
+export class Compilazione_questionarioService {
     // Metodo per ottenere un questionario specifico con le sue domande dalla tipologia_questionario
 
     // Metodo per validare le risposte del questionario

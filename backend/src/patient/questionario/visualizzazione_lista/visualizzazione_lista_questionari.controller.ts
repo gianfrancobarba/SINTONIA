@@ -1,12 +1,12 @@
 import { Controller, Get, UseGuards, Req, Query } from '@nestjs/common';
-import { JwtAuthGuard } from '../../auth/jwt-auth.guard.js';
-import { QuestionariService } from './questionari.service.js';
-import { StoricoQuestionariDto } from '../dto/questionari.dto.js';
+import { JwtAuthGuard } from '../../../auth/jwt-auth.guard.js';
+import { Visualizzazione_lista_questionariService } from './visualizzazione_lista_questionari.service.js';
+import { StoricoQuestionariDto } from '../../home/dto/questionari.dto.js';
 import type { Request } from 'express';
 
 @Controller('paziente/questionari')
-export class QuestionariController {
-    constructor(private readonly questionariService: QuestionariService) { }
+export class Visualizzazione_lista_questionariController {
+    constructor(private readonly questionariService: Visualizzazione_lista_questionariService) { }
 
     @Get()
     @UseGuards(JwtAuthGuard)

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { StoricoQuestionariDto, QuestionarioItemDto } from '../dto/questionari.dto.js';
-import { db } from '../../drizzle/db.js';
-import { paziente, questionario, tipologiaQuestionario } from '../../drizzle/schema.js';
+import { StoricoQuestionariDto, QuestionarioItemDto } from '../../home/dto/questionari.dto.js';
+import { db } from '../../../drizzle/db.js';
+import { paziente, questionario, tipologiaQuestionario } from '../../../drizzle/schema.js';
 import { eq, desc, sql } from 'drizzle-orm';
 
 @Injectable()
-export class QuestionariService {
+export class Visualizzazione_lista_questionariService {
     async getStoricoQuestionari(userId: string, page: number = 1, limit: number = 10): Promise<StoricoQuestionariDto> {
         // 1. Recupera data ingresso paziente
         const patientRow = await db

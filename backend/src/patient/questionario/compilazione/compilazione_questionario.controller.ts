@@ -1,9 +1,9 @@
 import { Controller } from '@nestjs/common';
-import { QuestionarioService } from '../questionario/questionario.service.js';
+import { Compilazione_questionarioService } from './compilazione_questionario.service.js';
 
 @Controller('paziente/questionario')
-export class QuestionarioController {
-    constructor(private readonly questionarioService: QuestionarioService) { }
+export class Compilazione_questionarioController {
+    constructor(private readonly questionarioService: Compilazione_questionarioService) { }
 
     // GET /paziente/questionario/:idQuestionario - Ottiene un questionario specifico da compilare
 
