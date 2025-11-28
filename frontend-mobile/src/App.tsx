@@ -7,6 +7,8 @@ import SPIDInfo from './pages/SPIDInfo';
 import SPIDCallback from './pages/SPIDCallback';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import Questionari from './pages/Questionari';
+import QuestionnaireCompilation from './pages/QuestionnaireCompilation';
 import './App.css';
 
 import Terms from './pages/Terms';
@@ -53,6 +55,22 @@ function App() {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/questionari"
+          element={
+            <PrivateRoute>
+              <Questionari />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/compilation"
+          element={
+            <PrivateRoute>
+              <QuestionnaireCompilation />
             </PrivateRoute>
           }
         />
