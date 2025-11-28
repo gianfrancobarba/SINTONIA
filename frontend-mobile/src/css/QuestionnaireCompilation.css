@@ -1,0 +1,132 @@
+/* QuestionnaireCompilation Page Styles */
+
+.questionnaire-compilation {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #eaf6f8;
+}
+
+.questionnaire-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: transparent;
+}
+
+.questionnaire-compilation .back-button {
+    background: transparent;
+    border: 2px solid #1a1a1a;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.questionnaire-compilation .back-button img {
+    width: 16px;
+    height: 16px;
+}
+
+.questionnaire-compilation .back-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.questionnaire-title {
+    display: none;
+    /* Hide title as per mockup/request implied by layout changes */
+}
+
+.questionnaire-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1.5rem 2rem;
+    gap: 2rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 5rem);
+    /* Account for header */
+}
+
+.btn-continue {
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    background-color: #0D475D;
+    color: #ffffff;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.3);
+    margin-top: auto;
+    /* Push to bottom of flex container */
+    flex-shrink: 0;
+    /* Don't shrink when content is large */
+}
+
+.btn-continue:hover:not(:disabled) {
+    background-color: #0a3647;
+}
+
+.btn-continue:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.loading-screen,
+.error-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+}
+
+.error-screen p {
+    margin-bottom: 1.5rem;
+    color: #666;
+}
+
+.btn-primary {
+    padding: 0.75rem 2rem;
+    background-color: #0D475D;
+    color: #ffffff;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #0a3647;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .questionnaire-content {
+        padding: 1rem 1rem 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .btn-continue {
+        font-size: 1rem;
+        padding: 0.875rem;
+    }
+}

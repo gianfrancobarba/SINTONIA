@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard.js';
 import { HomeService } from './home.service.js';
-import { HomeDashboardDto } from '../dto/home-dashboard.dto.js';
+import { HomeDashboardDto } from './dto/home-dashboard.dto.js';
 import type { Request } from 'express';
 
 @Controller('paziente/home')

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { HomeDashboardDto } from '../dto/home-dashboard.dto.js';
+import { HomeDashboardDto } from './dto/home-dashboard.dto.js';
 import { db } from '../../drizzle/db.js';
 import { paziente, statoAnimo, domandaForum, questionario, tipologiaQuestionario, rispostaForum } from '../../drizzle/schema.js';
-import { eq, desc,} from 'drizzle-orm';
+import { eq, desc, } from 'drizzle-orm';
 
 
 @Injectable()
@@ -30,7 +30,7 @@ export class HomeService {
             suggestedPosts,
         };
     }
-    
+
     // Formatter per ottenere YYYY-MM-DD in timezone locale
     private formatLocalDate(date: Date): string {
         const y = date.getFullYear();
