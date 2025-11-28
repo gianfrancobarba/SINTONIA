@@ -215,7 +215,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
                     <span className="nav-label">Forum</span>
                 </button>
             </div>
-        </div>
+        </div >
     );
 };
 
