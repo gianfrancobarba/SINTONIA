@@ -304,9 +304,9 @@
     gap: 12px;
 }
 
-.btn-close {
+.btn-review {
     padding: 10px 24px;
-    background: var(--color-text-secondary);
+    background: linear-gradient(135deg, var(--color-teal-medium) 0%, var(--color-teal-dark) 100%);
     color: white;
     border: none;
     border-radius: 8px;
@@ -316,7 +316,7 @@
     transition: all 0.2s ease;
 }
 
-.btn-close:hover {
+.btn-review:hover {
     background: var(--color-text-primary);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);

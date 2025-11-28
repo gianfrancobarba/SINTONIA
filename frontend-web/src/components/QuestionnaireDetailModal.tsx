@@ -237,8 +237,8 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                 </div>
 
                 <div className="modal-footer">
-                    <button className="btn-close" onClick={onClose}>
-                        Chiudi
+                    <button className="btn-review" onClick={onClose}>
+                        Revisiona
                     </button>
                 </div>
             </div>
