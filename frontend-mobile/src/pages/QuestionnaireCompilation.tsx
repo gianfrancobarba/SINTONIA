@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import QuestionCard from '../components/questionnaire/QuestionCard';
 import QuestionScale from '../components/questionnaire/QuestionScale';
 import ProgressIndicator from '../components/questionnaire/ProgressIndicator';
@@ -144,8 +144,7 @@ const QuestionnaireCompilation: React.FC = () => {
         <div className="questionnaire-compilation">
             <header className="questionnaire-header">
                 <button className="back-button" onClick={handleBack} aria-label="Indietro">
-                    <ArrowLeft size={28} />
-                    <span>Indietro</span>
+                    <img src={LeftArrowIcon} alt="Back" />
                 </button>
                 <h1 className="questionnaire-title">{questionario.nomeTipologia}</h1>
                 <ProgressIndicator

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import BottomNavigation from '../components/BottomNavigation';
 import { getStoricoQuestionari } from '../services/questionari.service';
 import { startQuestionario } from '../services/questionario.service';
@@ -61,7 +61,7 @@ const Questionari: React.FC = () => {
             <div className="questionari-page">
                 <div className="questionari-header">
                     <button className="back-button" onClick={() => navigate('/home')}>
-                        <ArrowLeft size={20} />
+                        <img src={LeftArrowIcon} alt="Back" />
                     </button>
                     <h1>Questionari</h1>
                 </div>
@@ -78,7 +78,7 @@ const Questionari: React.FC = () => {
             <div className="questionari-page">
                 <div className="questionari-header">
                     <button className="back-button" onClick={() => navigate('/home')}>
-                        <ArrowLeft size={20} />
+                        <img src={LeftArrowIcon} alt="Back" />
                     </button>
                     <h1>Questionari</h1>
                 </div>
@@ -94,7 +94,7 @@ const Questionari: React.FC = () => {
         <div className="questionari-page">
             <div className="questionari-header">
                 <button className="back-button" onClick={() => navigate('/home')}>
-                    <ArrowLeft size={20} />
+                    <img src={LeftArrowIcon} alt="Back" />
                 </button>
                 <h1>Questionari</h1>
             </div>

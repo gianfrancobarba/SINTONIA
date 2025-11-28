@@ -19,8 +19,8 @@
     border-bottom-right-radius: 50px;
 }
 
-.back-button {
-    background: none;
+.questionari-page .back-button {
+    background: transparent;
     border: 2px solid var(--white);
     color: var(--white);
     cursor: pointer;
@@ -31,14 +31,21 @@
     justify-content: center;
     border-radius: 50%;
     transition: all 0.3s ease;
+    padding: 0;
 }
 
-.back-button:hover {
+.questionari-page .back-button img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+}
+
+.questionari-page .back-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: scale(1.05);
 }
 
-.back-button:active {
+.questionari-page .back-button:active {
     transform: scale(0.95);
 }
 

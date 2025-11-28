@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import type { CalendarDay } from '../types/home';
 import '../css/Calendar.css';
+import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
+import RightArrowIcon from '../assets/icons/RightArrow.svg';
 
 interface CalendarProps {
     days: CalendarDay[]; // Initial data from backend
@@ -165,9 +167,13 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
     return (
         <div className="calendar-section">
             <div className="calendar-header">
-                <button className="nav-arrow" onClick={handlePrev}>‹</button>
+                <button className="nav-arrow" onClick={handlePrev}>
+                    <img src={LeftArrowIcon} alt="Previous week" />
+                </button>
                 <h2>{formatWeekRange()}</h2>
-                <button className="nav-arrow" onClick={handleNext}>›</button>
+                <button className="nav-arrow" onClick={handleNext}>
+                    <img src={RightArrowIcon} alt="Next week" />
+                </button>
             </div>
 
             <div
