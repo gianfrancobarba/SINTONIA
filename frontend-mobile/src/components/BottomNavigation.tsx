@@ -14,7 +14,7 @@ const BottomNavigation: React.FC = () => {
 
             {/* Positioned hit areas over the SVG icons */}
             <div className="nav-hit-areas">
-                <button className="hit-btn hit-leftmost" aria-label="Community" />
+                <button className="hit-btn hit-leftmost" aria-label="Community" onClick={() => navigate('/forum')} />
                 <button className="hit-btn hit-left" aria-label="Notes" />
                 <button className="hit-btn hit-center" aria-label="Home" onClick={() => navigate('/home')} />
                 <button className="hit-btn hit-right" aria-label="Notifications" />

@@ -1,0 +1,131 @@
+.create-post-page {
+    background-color: white;
+    min-height: 100vh;
+}
+
+.create-post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 48px 20px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.create-post-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.cancel-button,
+.submit-button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.cancel-button {
+    color: var(--text-gray);
+}
+
+.cancel-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.submit-button {
+    color: var(--primary-dark);
+}
+
+.submit-button:hover:not(:disabled) {
+    background: rgba(13, 71, 93, 0.1);
+}
+
+.submit-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.create-post-form {
+    padding: 24px 20px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    color: var(--text-dark);
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--primary-dark);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--text-gray);
+    opacity: 0.6;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 200px;
+    line-height: 1.6;
+}
+
+.category-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.category-select-btn {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 2px solid;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-select-btn:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+.category-select-btn.selected {
+    transform: scale(1.02);
+}
+
+.category-select-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

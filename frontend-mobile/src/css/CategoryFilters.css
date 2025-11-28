@@ -1,0 +1,74 @@
+.category-filters-container {
+    background: white;
+    padding: 16px 0;
+    margin-bottom: 8px;
+}
+
+.category-filters-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 12px;
+}
+
+.filters-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.filter-icon-button {
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.filter-icon-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.category-chips-scroll {
+    overflow-x: auto;
+    padding: 0 20px;
+}
+
+.category-chips {
+    display: flex;
+    gap: 10px;
+    min-width: min-content;
+}
+
+.category-chip {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 2px solid;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.category-chip:hover {
+    opacity: 0.8;
+}
+
+.category-chip.selected {
+    transform: scale(1.05);
+}
+
+.category-chip:active {
+    transform: scale(0.98);
+}
