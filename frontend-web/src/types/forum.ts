@@ -7,28 +7,29 @@ export type ForumCategory = 'Ansia' | 'Stress' | 'Tristezza' | 'Vita di coppia' 
 
 /**
  * Forum question from database
- * Maps to domanda_forum table
+ * Matches backend ForumQuestionDto
  */
 export interface ForumQuestion {
     idDomanda: string;              // UUID from DB
-    idPaziente: string;             // UUID from DB (not displayed, always "Anonimo")
+    idPaziente?: string;            // UUID from DB (optional, not in backend DTO)
     categoria: ForumCategory;       // categoria from DB
     titolo: string;                 // titolo from DB (displayed in card header)
     testo: string;                  // testo from DB (question body)
     dataInserimento: string;        // ISO 8601 timestamp
-    hasAnswer: boolean;             // Computed: check if risposta exists
-    risposta?: ForumAnswer;         // Join with risposta_forum
+    hasResponse?: boolean;          // Backend flag: check if risposta exists
+    risposte?: ForumAnswer[];       // Array of answers from multiple psychologists
 }
 
 /**
  * Forum answer from database
- * Maps to risposta_forum table
+ * Matches backend ForumAnswerDto
  */
 export interface ForumAnswer {
     idRisposta: string;             // UUID from DB
-    idDomanda: string;              // UUID from DB
-    idPsicologo: string;            // cod_fiscale from DB
-    psychologistName: string;       // Computed from psicologo table
+    idDomanda?: string;             // UUID from DB (optional)
+    idPsicologo?: string;           // cod_fiscale from DB (optional)
+    nomePsicologo: string;          // Nome from psicologo table
+    cognomePsicologo: string;       // Cognome from psicologo table
     testo: string;                  // testo from DB (answer text)
     dataRisposta: string;           // ISO 8601 timestamp
 }

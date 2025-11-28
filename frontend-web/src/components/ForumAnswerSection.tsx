@@ -68,7 +68,7 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
             </div>
 
             <div className="answer-footer">
-                <span className="answer-author">{answer.psychologistName}</span>
+                <span className="answer-author">{answer.nomePsicologo} {answer.cognomePsicologo}</span>
                 <span className="answer-separator">•</span>
                 <span className="answer-time">{getTimeAgo(answer.dataRisposta)}</span>
             </div>

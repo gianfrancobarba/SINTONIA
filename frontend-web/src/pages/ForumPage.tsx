@@ -84,7 +84,9 @@ const ForumPage: React.FC = () => {
     };
 
     const handleEditAnswer = (answerId: string, currentText: string) => {
-        const question = questionsState.data?.find(q => q.risposta?.idRisposta === answerId);
+        const question = questionsState.data?.find(q =>
+            q.risposte?.some(r => r.idRisposta === answerId)
+        );
         if (question) {
             setModalState({
                 isOpen: true,

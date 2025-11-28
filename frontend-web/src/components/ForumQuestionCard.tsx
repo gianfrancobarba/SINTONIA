@@ -66,11 +66,11 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                 <p className="question-text">{question.testo}</p>
             </div>
 
-            {question.hasAnswer && question.risposta ? (
+            {question.hasResponse && question.risposte && question.risposte.length > 0 ? (
                 <ForumAnswerSection
-                    answer={question.risposta}
-                    onEdit={() => onEditAnswer?.(question.risposta!.idRisposta, question.risposta!.testo)}
-                    onDelete={() => onDeleteAnswer?.(question.risposta!.idRisposta)}
+                    answer={question.risposte[0]}
+                    onEdit={() => onEditAnswer?.(question.risposte![0].idRisposta, question.risposte![0].testo)}
+                    onDelete={() => onDeleteAnswer?.(question.risposte![0].idRisposta)}
                 />
             ) : (
                 <div className="card-footer">
