@@ -42,13 +42,22 @@ export const fetchQuestionnaires = async (
 
 /**
  * Fetch questionnaires filtered by patient ID
+ * @param role - 'psychologist' or 'admin'
+ * @param patientId - ID of the patient
  */
 export const fetchQuestionnairesByPatient = async (
+    role: 'psychologist' | 'admin',
     patientId: string
 ): Promise<QuestionnaireData[]> => {
     try {
         const token = getCurrentUser()?.access_token as string | undefined;
-        const response = await axios.get(`${API_URL}/questionnaires/patient/${patientId}`,
+
+        // Different endpoints for psychologist and admin
+        const endpoint = role === 'admin'
+            ? `/admin/questionnaires/patient/${patientId}`
+            : `/psi/questionnaires/patient/${patientId}`;
+
+        const response = await axios.get(`${API_URL}${endpoint}`,
             {
                 headers: {
                     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -145,8 +154,3 @@ export const uploadQuestionnaireType = async (data: any): Promise<void> => {
         throw error;
     }
 };
-
-/**
- * Mock data for development/testing
- */
-// Rimosso l'uso dei dati mock per forzare l'uso del backend
