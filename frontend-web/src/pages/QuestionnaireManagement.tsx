@@ -7,7 +7,11 @@ import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation,
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
-const QuestionnaireManagement: React.FC = () => {
+interface QuestionnaireManagementProps {
+    showProfile?: boolean; // If false, only shows content without profile sidebar
+}
+
+const QuestionnaireManagement: React.FC<QuestionnaireManagementProps> = ({ showProfile = true }) => {
     const [questionnairesState, setQuestionnairesState] = useState<LoadingState<QuestionnaireData[]>>({
         data: null,
         loading: true,
@@ -127,89 +131,80 @@ const QuestionnaireManagement: React.FC = () => {
         return <div className="error-message">Errore: ruolo utente non trovato</div>;
     }
 
-    return (
-        <div className="questionnaire-management-container">
-            <div className="management-grid">
-                <div className="management-sidebar">
-                    <PsychologistProfile />
+    // Content to display (questionnaires table and modals)
+    const questionnaireContent = (
+        <>
+            <h2 className="panel-title">Gestione Questionari</h2>
+            <div className="management-header">
+                <div className="header-actions">
+                    {role === 'admin' && (
+                        <button
+                            className="upload-btn"
+                            onClick={handleUploadNewType}
+                        >
+                            ⬆ Carica Nuova Tipologia
+                        </button>
+                    )}
                 </div>
+            </div>
 
-                <div className="management-content">
-                    <div className="content-panel">
-                        <h2 className="panel-title">Gestione Questionari</h2>
-                        <div className="management-header">
-                            <div className="header-actions">
-                                {role === 'admin' && (
-                                    <button
-                                        className="upload-btn"
-                                        onClick={handleUploadNewType}
-                                    >
-                                        ⬆ Carica Nuova Tipologia
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+            {questionnairesState.loading && (
+                <div className="loading-state">Caricamento questionari...</div>
+            )}
 
-                        {questionnairesState.loading && (
-                            <div className="loading-state">Caricamento questionari...</div>
-                        )}
+            {questionnairesState.error && (
+                <div className="error-state">
+                    <p>Errore: {questionnairesState.error}</p>
+                    <button onClick={() => loadQuestionnaires()} className="retry-btn">
+                        Riprova
+                    </button>
+                </div>
+            )}
 
-                        {questionnairesState.error && (
-                            <div className="error-state">
-                                <p>Errore: {questionnairesState.error}</p>
-                                <button onClick={() => loadQuestionnaires()} className="retry-btn">
-                                    Riprova
+            {questionnairesState.data && !questionnairesState.loading && (
+                <>
+                    <div className="filter-controls">
+                        <button
+                            className="filter-btn"
+                            onClick={handleFilterByPatient}
+                            disabled={!selectedQuestionnaireId}
+                            title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                style={{ marginRight: '8px', verticalAlign: 'middle' }}
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            Filtra per Paziente
+                        </button>
+                        {patientFilter && (
+                            <div className="active-filter">
+                                <span>Filtro attivo</span>
+                                <button className="reset-filter-btn" onClick={handleResetFilter}>
+                                    ✕ Rimuovi Filtro
                                 </button>
                             </div>
                         )}
-
-                        {questionnairesState.data && !questionnairesState.loading && (
-                            <>
-                                <div className="filter-controls">
-                                    <button
-                                        className="filter-btn"
-                                        onClick={handleFilterByPatient}
-                                        disabled={!selectedQuestionnaireId}
-                                        title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
-                                    >
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            style={{ marginRight: '8px', verticalAlign: 'middle' }}
-                                        >
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <path d="m21 21-4.35-4.35"></path>
-                                        </svg>
-                                        Filtra per Paziente
-                                    </button>
-                                    {patientFilter && (
-                                        <div className="active-filter">
-                                            <span>Filtro attivo</span>
-                                            <button className="reset-filter-btn" onClick={handleResetFilter}>
-                                                ✕ Rimuovi Filtro
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                                <QuestionnaireTable
-                                    questionnaires={questionnairesState.data}
-                                    role={role === 'admin' ? 'admin' : 'psychologist'}
-                                    selectedId={selectedQuestionnaireId}
-                                    onSelect={handleSelectQuestionnaire}
-                                    onView={handleView}
-                                    onReview={handleReview}
-                                />
-                            </>
-                        )}
                     </div>
-                </div>
-            </div>
+                    <QuestionnaireTable
+                        questionnaires={questionnairesState.data}
+                        role={role === 'admin' ? 'admin' : 'psychologist'}
+                        selectedId={selectedQuestionnaireId}
+                        onSelect={handleSelectQuestionnaire}
+                        onView={handleView}
+                        onReview={handleReview}
+                    />
+                </>
+            )}
 
             {/* Modal for viewing questionnaire details */}
             {viewingQuestionnaire && (
@@ -221,6 +216,32 @@ const QuestionnaireManagement: React.FC = () => {
                     onReview={handleReview}
                 />
             )}
+        </>
+    );
+
+    // If showProfile is false, render only the content without sidebar
+    if (!showProfile) {
+        return (
+            <div className="content-panel" style={{ height: '100%', boxSizing: 'border-box' }}>
+                {questionnaireContent}
+            </div>
+        );
+    }
+
+    // Full layout with profile sidebar
+    return (
+        <div className="questionnaire-management-container">
+            <div className="management-grid">
+                <div className="management-sidebar">
+                    <PsychologistProfile />
+                </div>
+
+                <div className="management-content">
+                    <div className="content-panel">
+                        {questionnaireContent}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

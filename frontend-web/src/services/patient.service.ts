@@ -22,3 +22,24 @@ export const fetchPatients = async (): Promise<PatientData[]> => {
         throw error;
     }
 };
+
+/**
+ * Fetch patients for a specific psychologist
+ */
+export const fetchPatientsByPsychologist = async (): Promise<PatientData[]> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const cf = getCurrentUser()?.fiscalCode || getCurrentUser()?.email;
+
+        const response = await axios.get(`${API_URL}/psi/patients?cf=${cf}`, {
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching psychologist patients:', error);
+        throw error;
+    }
+};

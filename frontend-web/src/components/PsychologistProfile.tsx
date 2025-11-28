@@ -50,7 +50,11 @@ const LogoutIcon = () => (
     </svg>
 );
 
-const PsychologistProfile: React.FC = () => {
+interface PsychologistProfileProps {
+    onSelectSection?: (section: string) => void;
+}
+
+const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSection }) => {
     const navigate = useNavigate();
     const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
         data: null,
@@ -85,8 +89,9 @@ const PsychologistProfile: React.FC = () => {
         console.log('Navigate to:', section);
         setSelectedSection(section);
 
-        if (section === 'questionari') {
-            navigate('/questionnaires');
+        // Call parent callback to show the selected section
+        if (onSelectSection) {
+            onSelectSection(section);
         }
     };
 
