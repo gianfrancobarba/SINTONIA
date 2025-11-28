@@ -97,14 +97,15 @@ export const viewQuestionnaire = async (id: string): Promise<QuestionnaireData> 
  * Review a questionnaire (psychologist only)
  */
 export const reviewQuestionnaire = async (
-    id: string,
-    notes: string
+    id: string
 ): Promise<void> => {
     try {
         const token = getCurrentUser()?.access_token as string | undefined;
+        const cf = getCurrentUser()?.fiscalCode || getCurrentUser()?.email;
+
         await axios.post(
-            `${API_URL}/psi/questionnaires/${id}/review`,
-            { notes },
+            `${API_URL}/psi/questionnaires/${id}/review?cf=${cf}`,
+            {},
             {
                 headers: {
                     ...(token ? { Authorization: `Bearer ${token}` } : {}),

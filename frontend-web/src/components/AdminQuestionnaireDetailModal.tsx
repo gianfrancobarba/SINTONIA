@@ -136,9 +136,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                 </div>
 
                 <div className="modal-footer">
-                    <button className="btn-close" onClick={onClose}>
-                        Chiudi
-                    </button>
+                    {/* Footer vuoto - chiusura solo tramite X in alto */}
                 </div>
             </div>
         </div>

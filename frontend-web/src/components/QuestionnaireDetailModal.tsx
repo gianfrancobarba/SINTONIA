@@ -7,6 +7,7 @@ interface QuestionnaireDetailModalProps {
     onClose: () => void;
     role?: 'psychologist' | 'admin';
     onRequestInvalidation?: (id: string, notes: string) => void;
+    onReview?: (id: string) => void;
 }
 
 interface Question {
@@ -26,10 +27,12 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     onClose,
     role = 'psychologist',
     onRequestInvalidation,
+    onReview,
 }) => {
     if (!questionnaire) return null;
 
     const [invalidationNotes, setInvalidationNotes] = useState<string>('');
+    const [isReviewing, setIsReviewing] = useState(false);
 
     // Mock questions based on questionnaire type
     const getQuestions = (type: string): Question[] => {
@@ -123,6 +126,21 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
             return question.options[value] || 'N/A';
         }
         return answer.value.toString();
+    };
+
+    const handleReview = async () => {
+        if (window.confirm('Sei sicuro di voler revisionare questo questionario?')) {
+            setIsReviewing(true);
+            try {
+                await onReview?.(questionnaire.idQuestionario);
+                onClose();
+            } catch (error) {
+                console.error('Failed to review questionnaire', error);
+                alert('Errore durante la revisione del questionario');
+            } finally {
+                setIsReviewing(false);
+            }
+        }
     };
 
 
@@ -237,9 +255,15 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                 </div>
 
                 <div className="modal-footer">
-                    <button className="btn-review" onClick={onClose}>
-                        Revisiona
-                    </button>
+                    {role === 'psychologist' && (
+                        <button
+                            className="btn-review"
+                            onClick={handleReview}
+                            disabled={isReviewing}
+                        >
+                            {isReviewing ? 'Attendi...' : 'Revisiona'}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

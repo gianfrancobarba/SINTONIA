@@ -3,7 +3,7 @@ import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
-import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation } from '../services/questionnaire.service';
+import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation, reviewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
@@ -95,10 +95,15 @@ const QuestionnaireManagement: React.FC = () => {
         setViewingQuestionnaire(null);
     };
 
-    const handleReview = (id: string) => {
-        console.log('Review questionnaire:', id);
-        // TODO: Open review modal
-        alert(`Revisiona questionario: ${id}`);
+    const handleReview = async (id: string) => {
+        try {
+            await reviewQuestionnaire(id);
+            alert('Questionario revisionato con successo!');
+            loadQuestionnaires(patientFilter || undefined);
+        } catch (error) {
+            console.error('Error reviewing questionnaire:', error);
+            alert('Errore durante la revisione del questionario');
+        }
     };
 
     const handleRequestInvalidation = async (id: string, notes: string) => {
@@ -213,6 +218,7 @@ const QuestionnaireManagement: React.FC = () => {
                     onClose={handleCloseModal}
                     role={role === 'admin' ? 'admin' : 'psychologist'}
                     onRequestInvalidation={handleRequestInvalidation}
+                    onReview={handleReview}
                 />
             )}
         </div>
