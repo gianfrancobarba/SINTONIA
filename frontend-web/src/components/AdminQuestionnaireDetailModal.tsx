@@ -37,7 +37,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <div className="modal-title-section">
-                        <h2 className="modal-title">Dettagli Questionario (Admin)</h2>
+                        <h2 className="modal-title">Dettagli Questionario</h2>
                     </div>
                     <button className="modal-close-btn" onClick={onClose} aria-label="Chiudi">
                         ✕
