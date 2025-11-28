@@ -127,8 +127,10 @@ export const requestInvalidation = async (
 ): Promise<void> => {
     try {
         const token = getCurrentUser()?.access_token as string | undefined;
+        const cf = getCurrentUser()?.fiscalCode || getCurrentUser()?.email;
+
         await axios.post(
-            `${API_URL}/psi/questionnaires/${id}/request-invalidation`,
+            `${API_URL}/psi/questionnaires/${id}/request-invalidation?cf=${cf}`,
             { notes },
             {
                 headers: {

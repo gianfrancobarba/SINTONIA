@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
 import { paziente, questionario } from '../../drizzle/schema.js';
 
@@ -8,6 +8,7 @@ export class Visualizzazione_questionariService {
   /**
    * Restituisce tutti i questionari NON revisionati dei pazienti assegnati
    * allo psicologo indicato (opzionalmente esclude anche i questionari invalidati)
+   * Esclude anche i questionari per cui è stata richiesta un'invalidazione
    */
   async getNonRevisionatiByPsicologo(cf: string, excludeInvalidati = true) {
     // Verifica presenza del CF nello schema paziente -> evita CF non esistenti
@@ -21,7 +22,11 @@ export class Visualizzazione_questionariService {
       return [];
     }
 
-    const conditions = [eq(paziente.idPsicologo, cf), eq(questionario.revisionato, false)];
+    const conditions = [
+      eq(paziente.idPsicologo, cf),
+      eq(questionario.revisionato, false),
+      isNull(questionario.idPsicologoRichiedente), // Esclude questionari con richiesta di invalidazione
+    ];
     if (excludeInvalidati) {
       conditions.push(eq(questionario.invalidato, false));
     }
@@ -53,6 +58,7 @@ export class Visualizzazione_questionariService {
   /**
    * Restituisce TUTTI i questionari non invalidati E non revisionati
    * (indipendentemente dall' assegnazione del paziente allo psicologo)
+   * Esclude anche i questionari per cui è stata richiesta un'invalidazione
    */
   async getTuttiNonInvalidati() {
     const rows = await db
@@ -76,6 +82,7 @@ export class Visualizzazione_questionariService {
       .where(and(
         eq(questionario.invalidato, false),
         eq(questionario.revisionato, false),
+        isNull(questionario.idPsicologoRichiedente), // Esclude questionari con richiesta di invalidazione
       ));
 
     return rows;
@@ -85,6 +92,7 @@ export class Visualizzazione_questionariService {
   /**
    * Restituisce TUTTI i questionari non invalidati di uno specifico paziente, indipendentemente dall' assegnazione del paziente allo psicologo
    * (Questa ci serve per visualizzare i questionari di un paziente in particolare, requisito UG2)
+   * Esclude anche i questionari per cui è stata richiesta un'invalidazione
    */
   async getQuestionariByPaziente(idPaziente: string) {
     const rows = await db
@@ -107,7 +115,8 @@ export class Visualizzazione_questionariService {
       .from(questionario)
       .where(and(
         eq(questionario.idPaziente, idPaziente),
-        eq(questionario.invalidato, false)
+        eq(questionario.invalidato, false),
+        isNull(questionario.idPsicologoRichiedente), // Esclude questionari con richiesta di invalidazione
       ));
 
     return rows;
