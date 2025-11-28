@@ -27,7 +27,7 @@ export interface ForumQuestion {
 export interface ForumAnswer {
     idRisposta: string;             // UUID from DB
     idDomanda?: string;             // UUID from DB (optional)
-    idPsicologo?: string;           // cod_fiscale from DB (optional)
+    idPsicologo: string;            // cod_fiscale from DB
     nomePsicologo: string;          // Nome from psicologo table
     cognomePsicologo: string;       // Cognome from psicologo table
     testo: string;                  // testo from DB (answer text)

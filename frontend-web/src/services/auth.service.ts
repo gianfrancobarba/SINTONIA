@@ -21,6 +21,7 @@ export const login = async (email: string, password: string) => {
         // Save both token and decoded info
         const userData = {
             ...response.data,
+            id: decoded.sub,
             role: decoded.role,
             email: decoded.email,
         };
@@ -34,6 +35,7 @@ export const handleSpidToken = (token: string) => {
     const decoded = jwtDecode<JwtPayload>(token);
     const userData = {
         access_token: token,
+        id: decoded.sub,
         role: decoded.role,
         email: decoded.email,
         // Add other fields if needed from token
@@ -48,7 +50,21 @@ export const logout = () => {
 
 export const getCurrentUser = () => {
     const userStr = localStorage.getItem('user');
-    if (userStr) return JSON.parse(userStr);
+    if (userStr) {
+        const user = JSON.parse(userStr);
+        // If id is missing but we have a token, try to recover it
+        if (!user.id && user.access_token) {
+            try {
+                const decoded = jwtDecode<JwtPayload>(user.access_token);
+                user.id = decoded.sub;
+                // Update storage to persist the fix
+                localStorage.setItem('user', JSON.stringify(user));
+            } catch (e) {
+                console.error('Error recovering user ID from token:', e);
+            }
+        }
+        return user;
+    }
     return null;
 };
 

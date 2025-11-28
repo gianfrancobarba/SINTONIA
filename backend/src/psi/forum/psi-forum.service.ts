@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
 import { domandaForum, rispostaForum, psicologo } from '../../drizzle/schema.js';
 import { eq, not, exists, and } from 'drizzle-orm';
@@ -154,6 +154,7 @@ export class PsiForumService {
                 if (question && question.risposte) {
                     question.risposte.push({
                         ...a,
+                        idPsicologo: a.idPsicologo,
                         nomePsicologo: p?.nome || 'Sconosciuto',
                         cognomePsicologo: p?.cognome || '',
                     });
@@ -162,5 +163,44 @@ export class PsiForumService {
         }
 
         return Array.from(map.values());
+    }
+
+    async createAnswer(psiId: string, questionId: string, text: string) {
+        const [newAnswer] = await this.db.insert(rispostaForum).values({
+            testo: text,
+            idPsicologo: psiId,
+            idDomanda: questionId,
+        }).returning();
+
+        return newAnswer;
+    }
+
+    async updateAnswer(psiId: string, answerId: string, text: string) {
+        const [updatedAnswer] = await this.db.update(rispostaForum)
+            .set({ testo: text })
+            .where(and(
+                eq(rispostaForum.idRisposta, answerId),
+                eq(rispostaForum.idPsicologo, psiId)
+            ))
+            .returning();
+
+        if (!updatedAnswer) {
+            throw new NotFoundException('Risposta non trovata o non autorizzato');
+        }
+        return updatedAnswer;
+    }
+
+    async deleteAnswer(psiId: string, answerId: string) {
+        const [deletedAnswer] = await this.db.delete(rispostaForum)
+            .where(and(
+                eq(rispostaForum.idRisposta, answerId),
+                eq(rispostaForum.idPsicologo, psiId)
+            ))
+            .returning();
+
+        if (!deletedAnswer) {
+            throw new NotFoundException('Risposta non trovata o non autorizzato');
+        }
+        return deletedAnswer;
     }
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import type { ForumQuestion } from '../types/forum';
 import ForumAnswerSection from './ForumAnswerSection.tsx';
+import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumQuestionCard.css';
 
 interface ForumQuestionCardProps {
     question: ForumQuestion;
-    onAnswer: (questionId: string) => void;
+    onAnswer?: (questionId: string) => void;
     onEditAnswer?: (answerId: string, currentText: string) => void;
     onDeleteAnswer?: (answerId: string) => void;
 }
@@ -44,6 +45,15 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
         }
     };
 
+    const [isExpanded, setIsExpanded] = React.useState(false);
+    const ANSWERS_THRESHOLD = 2;
+
+    const displayedAnswers = question.risposte && question.risposte.length > 0
+        ? (isExpanded ? question.risposte : question.risposte.slice(0, ANSWERS_THRESHOLD))
+        : [];
+
+    const hasMoreAnswers = question.risposte && question.risposte.length > ANSWERS_THRESHOLD;
+
     return (
         <div className="forum-question-card">
             <div className="card-header">
@@ -66,22 +76,50 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                 <p className="question-text">{question.testo}</p>
             </div>
 
-            {question.hasResponse && question.risposte && question.risposte.length > 0 ? (
-                <ForumAnswerSection
-                    answer={question.risposte[0]}
-                    onEdit={() => onEditAnswer?.(question.risposte![0].idRisposta, question.risposte![0].testo)}
-                    onDelete={() => onDeleteAnswer?.(question.risposte![0].idRisposta)}
-                />
-            ) : (
-                <div className="card-footer">
-                    <button
-                        className="answer-button"
-                        onClick={() => onAnswer(question.idDomanda)}
-                    >
-                        💬 Rispondi
-                    </button>
+            {question.risposte && question.risposte.length > 0 && (
+                <div className="answers-list">
+                    {displayedAnswers.map(answer => {
+                        const currentUser = getCurrentUser();
+                        const isMyAnswer = currentUser && answer.idPsicologo === currentUser.id;
+
+                        return (
+                            <ForumAnswerSection
+                                key={answer.idRisposta}
+                                answer={answer}
+                                isMyAnswer={isMyAnswer}
+                                onEdit={isMyAnswer ? () => onEditAnswer?.(answer.idRisposta, answer.testo) : undefined}
+                                onDelete={isMyAnswer ? () => onDeleteAnswer?.(answer.idRisposta) : undefined}
+                            />
+                        );
+                    })}
+
+                    {hasMoreAnswers && (
+                        <button
+                            className="toggle-answers-button"
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        >
+                            {isExpanded
+                                ? 'Mostra meno'
+                                : `Mostra altre ${question.risposte.length - ANSWERS_THRESHOLD} risposte`
+                            }
+                        </button>
+                    )}
                 </div>
             )}
+
+            {(!question.risposte || !question.risposte.some(a => {
+                const currentUser = getCurrentUser();
+                return currentUser && a.idPsicologo === currentUser.id;
+            })) && onAnswer && (
+                    <div className="card-footer">
+                        <button
+                            className="answer-button"
+                            onClick={() => onAnswer(question.idDomanda)}
+                        >
+                            💬 Rispondi
+                        </button>
+                    </div>
+                )}
         </div>
     );
 };

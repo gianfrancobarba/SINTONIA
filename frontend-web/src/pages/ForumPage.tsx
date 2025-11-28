@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PsychologistProfile from '../components/PsychologistProfile';
+import AdminProfile from '../components/AdminProfile';
 import ForumCategoryFilter from '../components/ForumCategoryFilter';
 import ForumQuestionCard from '../components/ForumQuestionCard';
 import ForumReplyModal from '../components/ForumReplyModal';
 import type { ForumQuestion, ForumCategory, ForumStats, LoadingState } from '../types/forum';
 import { fetchForumQuestions, fetchForumStats, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
+import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumPage.css';
 
 const ForumPage: React.FC = () => {
+    const navigate = useNavigate();
     const [questionsState, setQuestionsState] = useState<LoadingState<ForumQuestion[]>>({
         data: null,
         loading: true,
+        error: null
+    });
+    const [allQuestionsState, setAllQuestionsState] = useState<LoadingState<ForumQuestion[]>>({
+        data: null,
+        loading: false,
         error: null
     });
     const [statsState, setStatsState] = useState<LoadingState<ForumStats>>({
@@ -19,6 +28,8 @@ const ForumPage: React.FC = () => {
         error: null
     });
     const [selectedCategory, setSelectedCategory] = useState<ForumCategory | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const QUESTIONS_PER_PAGE = 5;
     const [modalState, setModalState] = useState<{
         isOpen: boolean;
         question: ForumQuestion | null;
@@ -31,17 +42,37 @@ const ForumPage: React.FC = () => {
         isEditing: false
     });
 
+    const currentUser = getCurrentUser();
+    const isReadOnly = currentUser?.role === 'admin';
+
+    const handleAdminSectionSelect = (section: string) => {
+        // When admin selects a non-forum section, navigate back to admin dashboard with the section state
+        if (section !== 'forum') {
+            navigate('/admin-dashboard', { state: { selectedSection: section } });
+        }
+    };
+
+    const handlePsychologistSectionSelect = (section: string) => {
+        // When psychologist selects a non-forum section, navigate back to dashboard with section state
+        if (section === 'questionari') {
+            navigate('/questionnaires');
+        } else if (section !== 'forum') {
+            navigate('/dashboard', { state: { selectedSection: section } });
+        }
+    };
+
     useEffect(() => {
         loadData();
     }, []);
 
     useEffect(() => {
         loadQuestions();
+        setCurrentPage(1); // Reset to page 1 when category changes
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategory]);
 
     const loadData = async () => {
-        await Promise.all([loadQuestions(), loadStats()]);
+        await Promise.all([loadQuestions(), loadStats(), loadAllQuestions()]);
     };
 
     const loadQuestions = async () => {
@@ -51,6 +82,19 @@ const ForumPage: React.FC = () => {
             setQuestionsState({ data: questions, loading: false, error: null });
         } catch (error) {
             setQuestionsState({
+                data: null,
+                loading: false,
+                error: error instanceof Error ? error.message : 'Errore nel caricamento delle domande'
+            });
+        }
+    };
+
+    const loadAllQuestions = async () => {
+        try {
+            const allQuestions = await fetchForumQuestions(); // No category filter
+            setAllQuestionsState({ data: allQuestions, loading: false, error: null });
+        } catch (error) {
+            setAllQuestionsState({
                 data: null,
                 loading: false,
                 error: error instanceof Error ? error.message : 'Errore nel caricamento delle domande'
@@ -128,7 +172,8 @@ const ForumPage: React.FC = () => {
     };
 
     const getCategoryCounts = (): Record<ForumCategory, number> => {
-        if (!questionsState.data) {
+        // Use allQuestionsState to show counts for all questions, not just filtered ones
+        if (!allQuestionsState.data) {
             return {
                 'Ansia': 0,
                 'Stress': 0,
@@ -146,23 +191,50 @@ const ForumPage: React.FC = () => {
             'Altro': 0
         };
 
-        questionsState.data.forEach(q => {
+        allQuestionsState.data.forEach(q => {
             counts[q.categoria] = (counts[q.categoria] || 0) + 1;
         });
 
         return counts;
     };
 
+    const getPaginatedQuestions = (): ForumQuestion[] => {
+        if (!questionsState.data) return [];
+        const startIndex = (currentPage - 1) * QUESTIONS_PER_PAGE;
+        const endIndex = startIndex + QUESTIONS_PER_PAGE;
+        return questionsState.data.slice(startIndex, endIndex);
+    };
+
+    const getTotalPages = (): number => {
+        if (!questionsState.data) return 0;
+        return Math.ceil(questionsState.data.length / QUESTIONS_PER_PAGE);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
     return (
         <div className="forum-page-container">
             <div className="forum-grid">
                 <div className="forum-sidebar">
-                    <PsychologistProfile />
+                    {currentUser?.role === 'admin' ? (
+                        <AdminProfile
+                            onSelectSection={handleAdminSectionSelect}
+                            activeSection="forum"
+                        />
+                    ) : (
+                        <PsychologistProfile
+                            onSelectSection={handlePsychologistSectionSelect}
+                            activeSection="forum"
+                        />
+                    )}
                 </div>
 
                 <div className="forum-content">
-                    <div className="content-panel">
+                    <div className="content-panel fade-in">
                         <div className="forum-header">
+                            <h1 className="forum-title">Forum di Supporto</h1>
                             <div>
                                 <h2 className="panel-title">Forum Pazienti</h2>
                                 <p className="panel-subtitle">Rispondi alle domande dei tuoi pazienti</p>
@@ -221,17 +293,41 @@ const ForumPage: React.FC = () => {
                                         </p>
                                     </div>
                                 ) : (
-                                    <div className="forum-questions-list">
-                                        {questionsState.data.map(question => (
-                                            <ForumQuestionCard
-                                                key={question.idDomanda}
-                                                question={question}
-                                                onAnswer={handleAnswer}
-                                                onEditAnswer={handleEditAnswer}
-                                                onDeleteAnswer={handleDeleteAnswer}
-                                            />
-                                        ))}
-                                    </div>
+                                    <>
+                                        <div className="forum-questions-list">
+                                            {getPaginatedQuestions().map(question => (
+                                                <ForumQuestionCard
+                                                    key={question.idDomanda}
+                                                    question={question}
+                                                    onAnswer={!isReadOnly ? handleAnswer : undefined}
+                                                    onEditAnswer={!isReadOnly ? handleEditAnswer : undefined}
+                                                    onDeleteAnswer={!isReadOnly ? handleDeleteAnswer : undefined}
+                                                />
+                                            ))}
+                                        </div>
+
+                                        {getTotalPages() > 1 && (
+                                            <div className="pagination">
+                                                <button
+                                                    className="pagination-button"
+                                                    onClick={() => handlePageChange(currentPage - 1)}
+                                                    disabled={currentPage === 1}
+                                                >
+                                                    ← Precedente
+                                                </button>
+                                                <div className="pagination-info">
+                                                    Pagina {currentPage} di {getTotalPages()}
+                                                </div>
+                                                <button
+                                                    className="pagination-button"
+                                                    onClick={() => handlePageChange(currentPage + 1)}
+                                                    disabled={currentPage === getTotalPages()}
+                                                >
+                                                    Successiva →
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                             </>
                         )}

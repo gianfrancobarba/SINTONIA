@@ -5,14 +5,16 @@ import '../css/ForumAnswerSection.css';
 
 interface ForumAnswerSectionProps {
     answer: ForumAnswer;
-    onEdit: () => void;
-    onDelete: () => void;
+    onEdit?: () => void;
+    onDelete?: () => void;
+    isMyAnswer?: boolean;
 }
 
 const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
     answer,
     onEdit,
-    onDelete
+    onDelete,
+    isMyAnswer = false
 }) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
@@ -35,7 +37,7 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
 
     const handleDelete = () => {
         setShowDeleteConfirm(false);
-        onDelete();
+        onDelete?.();
     };
 
     return (
@@ -43,24 +45,28 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
             <div className="answer-header">
                 <div className="answer-header-left">
                     <span className="answer-icon">💬</span>
-                    <span className="answer-label">Tua Risposta</span>
+                    <span className="answer-label">
+                        {isMyAnswer ? 'Tua Risposta' : `Risposta di ${answer.nomePsicologo} ${answer.cognomePsicologo}`}
+                    </span>
                 </div>
-                <div className="answer-actions">
-                    <button
-                        className="action-button edit-button"
-                        onClick={onEdit}
-                        title="Modifica risposta"
-                    >
-                        <Pencil size={16} />
-                    </button>
-                    <button
-                        className="action-button delete-button"
-                        onClick={() => setShowDeleteConfirm(true)}
-                        title="Elimina risposta"
-                    >
-                        <Trash2 size={16} />
-                    </button>
-                </div>
+                {isMyAnswer && onEdit && onDelete && (
+                    <div className="answer-actions">
+                        <button
+                            className="action-button edit-button"
+                            onClick={onEdit}
+                            title="Modifica risposta"
+                        >
+                            <Pencil size={16} />
+                        </button>
+                        <button
+                            className="action-button delete-button"
+                            onClick={() => setShowDeleteConfirm(true)}
+                            title="Elimina risposta"
+                        >
+                            <Trash2 size={16} />
+                        </button>
+                    </div>
+                )}
             </div>
 
             <div className="answer-body">

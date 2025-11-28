@@ -87,84 +87,86 @@ export const fetchForumStats = async (): Promise<ForumStats> => {
  * @returns Promise<ForumAnswer>
  */
 export const answerQuestion = async (
-    _questionId: string,
-    _content: string
+    questionId: string,
+    content: string
 ): Promise<ForumAnswer> => {
-    // TODO: Implement when backend endpoint is ready
-    // const token = getCurrentUser()?.access_token;
-    // const role = getCurrentUser()?.role;
-    // const endpoint = role === 'admin' 
-    //     ? `/admin/forum/questions/${questionId}/answer`
-    //     : `/psi/forum/questions/${questionId}/answer`;
-    // const response = await axios.post(
-    //     `${API_URL}${endpoint}`,
-    //     { testo: content },
-    //     {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`,
-    //             'Content-Type': 'application/json',
-    //         },
-    //     }
-    // );
-    // return response.data;
+    const user = getCurrentUser();
+    if (!user) throw new Error('User not authenticated');
 
-    console.warn('answerQuestion: Backend endpoint not implemented yet');
-    throw new Error('Funzionalità non ancora disponibile. Il backend per aggiungere risposte non è ancora implementato.');
+    const token = user.access_token;
+    const role = user.role;
+
+    // Only psychologists can answer for now based on backend implementation
+    const endpoint = role === 'admin'
+        ? `/admin/forum/questions/${questionId}/answer`
+        : `/psi/forum/questions/${questionId}/answer`;
+
+    const response = await axios.post(
+        `${API_URL}${endpoint}`,
+        { testo: content },
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+    return response.data;
 };
 
 /**
  * Update an existing answer
- * TODO: Backend endpoint not implemented yet
  * @param answerId Answer ID
  * @param content New answer content
  * @returns Promise<ForumAnswer>
  */
 export const updateAnswer = async (
-    _answerId: string,
-    _content: string
+    answerId: string,
+    content: string
 ): Promise<ForumAnswer> => {
-    // TODO: Implement when backend endpoint is ready
-    // const token = getCurrentUser()?.access_token;
-    // const role = getCurrentUser()?.role;
-    // const endpoint = role === 'admin'
-    //     ? `/admin/forum/answers/${answerId}`
-    //     : `/psi/forum/answers/${answerId}`;
-    // const response = await axios.put(
-    //     `${API_URL}${endpoint}`,
-    //     { testo: content },
-    //     {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`,
-    //             'Content-Type': 'application/json',
-    //         },
-    //     }
-    // );
-    // return response.data;
+    const user = getCurrentUser();
+    if (!user) throw new Error('User not authenticated');
 
-    console.warn('updateAnswer: Backend endpoint not implemented yet');
-    throw new Error('Funzionalità non ancora disponibile. Il backend per modificare risposte non è ancora implementato.');
+    const token = user.access_token;
+    const role = user.role;
+
+    const endpoint = role === 'admin'
+        ? `/admin/forum/answers/${answerId}`
+        : `/psi/forum/answers/${answerId}`;
+
+    const response = await axios.put(
+        `${API_URL}${endpoint}`,
+        { testo: content },
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+    return response.data;
 };
 
 /**
  * Delete an answer
- * TODO: Backend endpoint not implemented yet
  * @param answerId Answer ID
  * @returns Promise<void>
  */
-export const deleteAnswer = async (_answerId: string): Promise<void> => {
-    // TODO: Implement when backend endpoint is ready
-    // const token = getCurrentUser()?.access_token;
-    // const role = getCurrentUser()?.role;
-    // const endpoint = role === 'admin'
-    //     ? `/admin/forum/answers/${answerId}`
-    //     : `/psi/forum/answers/${answerId}`;
-    // await axios.delete(`${API_URL}${endpoint}`, {
-    //     headers: {
-    //         'Authorization': `Bearer ${token}`,
-    //         'Content-Type': 'application/json',
-    //     },
-    // });
+export const deleteAnswer = async (answerId: string): Promise<void> => {
+    const user = getCurrentUser();
+    if (!user) throw new Error('User not authenticated');
 
-    console.warn('deleteAnswer: Backend endpoint not implemented yet');
-    throw new Error('Funzionalità non ancora disponibile. Il backend per eliminare risposte non è ancora implementato.');
+    const token = user.access_token;
+    const role = user.role;
+
+    const endpoint = role === 'admin'
+        ? `/admin/forum/answers/${answerId}`
+        : `/psi/forum/answers/${answerId}`;
+
+    await axios.delete(`${API_URL}${endpoint}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
 };

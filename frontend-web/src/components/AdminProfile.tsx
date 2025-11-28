@@ -63,11 +63,12 @@ const LogoutIcon = () => (
 
 interface AdminProfileProps {
     onSelectSection?: (section: string) => void;
+    activeSection?: string | null;
 }
 
-const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
+const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSection }) => {
     const navigate = useNavigate();
-    const [selectedSection, setSelectedSection] = useState<string | null>(null);
+    // Internal state removed - controlled by parent
     const [adminInfo, setAdminInfo] = useState<{ name: string; email: string } | null>(null);
 
     useEffect(() => {
@@ -88,15 +89,16 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
 
     const handleNavigation = (section: string, event: React.MouseEvent) => {
         event.stopPropagation();
-        console.log('Navigate to:', section);
-        setSelectedSection(section);
+        // Just notify parent
         if (onSelectSection) {
             onSelectSection(section);
         }
     };
 
     const handleBackgroundClick = () => {
-        setSelectedSection(null);
+        if (onSelectSection) {
+            onSelectSection('');
+        }
     };
 
     return (
@@ -137,7 +139,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
 
             <div className="navigation-grid">
                 <button
-                    className={`nav-card ${selectedSection === 'psicologi' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'psicologi' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('psicologi', e)}
                 >
                     <div className="nav-icon"><PsychologistIcon /></div>
@@ -145,7 +147,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'supporto' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'supporto' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('supporto', e)}
                 >
                     <div className="nav-icon"><TechSupportIcon /></div>
@@ -153,7 +155,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'pazienti' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'pazienti' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('pazienti', e)}
                 >
                     <div className="nav-icon"><PatientIcon /></div>
@@ -161,7 +163,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'questionari' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'questionari' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('questionari', e)}
                 >
                     <div className="nav-icon"><QuestionnaireIcon /></div>
@@ -169,7 +171,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'invalidazione' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'invalidazione' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('invalidazione', e)}
                 >
                     <div className="nav-icon"><InvalidationIcon /></div>
@@ -177,7 +179,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'forum' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'forum' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('forum', e)}
                 >
                     <div className="nav-icon"><ForumIcon /></div>
