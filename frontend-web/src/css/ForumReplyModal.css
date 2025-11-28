@@ -1,0 +1,229 @@
+/* Forum Reply Modal Styles */
+
+.forum-reply-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.forum-reply-modal {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.close-button:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Question Preview */
+.question-preview {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.preview-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.preview-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.preview-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #374151;
+}
+
+/* Reply Section */
+.reply-section {
+    margin-bottom: 16px;
+}
+
+.reply-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.reply-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+.reply-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+.reply-textarea:disabled {
+    background: #f3f4f6;
+    cursor: not-allowed;
+}
+
+.character-count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+.character-count .text-danger {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.min-chars-hint {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.error-message {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #dc2626;
+}
+
+/* Modal Footer */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px 24px 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cancel-modal-button,
+.submit-modal-button {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-modal-button {
+    background: white;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+}
+
+.cancel-modal-button:hover:not(:disabled) {
+    background: #f3f4f6;
+}
+
+.submit-modal-button {
+    background: #3b82f6;
+    border: none;
+    color: white;
+}
+
+.submit-modal-button:hover:not(:disabled) {
+    background: #2563eb;
+}
+
+.submit-modal-button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.cancel-modal-button:active:not(:disabled),
+.submit-modal-button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .forum-reply-modal {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+    }
+
+    .reply-textarea {
+        font-size: 14px;
+    }
+}

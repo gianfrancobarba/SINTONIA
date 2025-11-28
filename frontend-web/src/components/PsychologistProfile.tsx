@@ -87,6 +87,8 @@ const PsychologistProfile: React.FC = () => {
 
         if (section === 'questionari') {
             navigate('/questionnaires');
+        } else if (section === 'forum') {
+            navigate('/forum');
         }
     };
 

@@ -1,0 +1,88 @@
+/* Forum Category Filter Styles */
+
+.forum-category-filter {
+    margin-bottom: 24px;
+}
+
+.filter-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 12px;
+}
+
+.category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 20px;
+    background: white;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-pill:hover {
+    border-color: #d1d5db;
+    background: #f9fafb;
+}
+
+.category-pill.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+/* Category specific colors */
+.category-pill.category-ansia.active {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+.category-pill.category-stress.active {
+    background: #f97316;
+    border-color: #f97316;
+}
+
+.category-pill.category-tristezza.active {
+    background: #eab308;
+    border-color: #eab308;
+}
+
+.category-pill.category-vita-di-coppia.active {
+    background: #ec4899;
+    border-color: #ec4899;
+}
+
+.category-pill.category-altro.active {
+    background: #10b981;
+    border-color: #10b981;
+}
+
+.category-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.category-pill.active .category-count {
+    background: rgba(255, 255, 255, 0.3);
+}
