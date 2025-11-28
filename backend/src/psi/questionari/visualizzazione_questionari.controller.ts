@@ -5,7 +5,7 @@ import { RolesGuard } from '../../auth/roles.guard.js';
 import { Roles } from '../../auth/roles.decorator.js';
 
 @Controller('psi/questionnaires')
-export class Visualizza_questionariController {
+export class Visualizzazione_questionariController {
   constructor(private readonly service: Visualizzazione_questionariService) { }
 
   /**

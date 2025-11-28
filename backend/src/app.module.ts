@@ -7,10 +7,10 @@ import { PsiModule } from './psi/psi.module.js';
 import { SpidAuthModule } from './spid-auth/spid-auth.module.js';
 import { PatientModule } from './patient/patient.module.js';
 import { QuestionnairesModule } from './questionari/questionnaires.module.js';
-import { AdminQuestionariModule } from './amministratore/questionari/admin-questionari.module.js';
+import { Questionari_amministratoreModule } from './amministratore/questionari/questionari_amministratore.module.js';
 
 @Module({
-  imports: [AuthModule, DashboardModule, SpidAuthModule, PatientModule, PsiModule, QuestionnairesModule, AdminQuestionariModule],
+  imports: [AuthModule, DashboardModule, SpidAuthModule, PatientModule, PsiModule, QuestionnairesModule, Questionari_amministratoreModule],
   controllers: [AppController],
   providers: [AppService],
 })
