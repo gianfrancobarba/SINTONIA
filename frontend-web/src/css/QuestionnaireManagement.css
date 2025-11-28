@@ -56,14 +56,16 @@
     box-shadow: 0 2px 6px rgba(26, 95, 95, 0.3);
 }
 
-.filter-btn:hover:not(.disabled) {
+.filter-btn:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(26, 95, 95, 0.4);
 }
 
-.filter-btn.disabled {
+.filter-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(26, 95, 95, 0.2) !important;
 }
 
 .clear-filter-btn {
@@ -96,6 +98,66 @@
 .retry-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(26, 95, 95, 0.4);
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.active-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--color-teal-light) 0%, rgba(26, 95, 95, 0.1) 100%);
+    border: 2px solid var(--color-teal-medium);
+    border-radius: 8px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.active-filter span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-teal-dark);
+}
+
+.reset-filter-btn {
+    padding: 6px 12px;
+    background-color: var(--color-rejected);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reset-filter-btn:hover {
+    background-color: #d32f2f;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(211, 47, 47, 0.3);
 }
 
 /* Filter Info */
@@ -183,6 +245,22 @@
     .filter-btn,
     .clear-filter-btn,
     .upload-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .active-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .reset-filter-btn {
         width: 100%;
         justify-content: center;
     }

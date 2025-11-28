@@ -3,7 +3,7 @@ import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
-import { fetchQuestionnaires, requestInvalidation } from '../services/questionnaire.service';
+import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
@@ -15,6 +15,7 @@ const QuestionnaireManagement: React.FC = () => {
     });
     const [selectedQuestionnaireId, setSelectedQuestionnaireId] = useState<string | null>(null);
     const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
+    const [patientFilter, setPatientFilter] = useState<string | null>(null);
 
     const user = getCurrentUser();
     const role = getUserRole();
@@ -27,7 +28,7 @@ const QuestionnaireManagement: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Intentionally empty - we only want to load once on mount
 
-    const loadQuestionnaires = async () => {
+    const loadQuestionnaires = async (patientIdFilter?: string) => {
         if (!user || !role) {
             setQuestionnairesState({
                 data: null,
@@ -40,8 +41,17 @@ const QuestionnaireManagement: React.FC = () => {
         setQuestionnairesState({ data: null, loading: true, error: null });
         try {
             const userRole = role === 'admin' ? 'admin' : 'psychologist';
-            const cf = user?.fiscalCode || user?.email;
-            const data = await fetchQuestionnaires(userRole, cf);
+            let data: QuestionnaireData[];
+
+            if (patientIdFilter) {
+                // Call backend API with patient filter
+                data = await fetchQuestionnairesByPatient(userRole, patientIdFilter);
+            } else {
+                // Call backend API for all questionnaires
+                const cf = user?.fiscalCode || user?.email;
+                data = await fetchQuestionnaires(userRole, cf);
+            }
+
             setQuestionnairesState({ data, loading: false, error: null });
         } catch (error) {
             setQuestionnairesState({
@@ -56,7 +66,23 @@ const QuestionnaireManagement: React.FC = () => {
         setSelectedQuestionnaireId(id);
     };
 
+    const handleFilterByPatient = () => {
+        if (selectedQuestionnaireId) {
+            const selectedQ = questionnairesState.data?.find(q => q.idQuestionario === selectedQuestionnaireId);
+            if (selectedQ) {
+                setPatientFilter(selectedQ.idPaziente);
+                // Call backend to fetch filtered data
+                loadQuestionnaires(selectedQ.idPaziente);
+            }
+        }
+    };
 
+    const handleResetFilter = () => {
+        setPatientFilter(null);
+        setSelectedQuestionnaireId(null);
+        // Reload all questionnaires from backend
+        loadQuestionnaires();
+    };
 
     const handleView = (id: string) => {
         const questionnaire = questionnairesState.data?.find(q => q.idQuestionario === id);
@@ -126,21 +152,41 @@ const QuestionnaireManagement: React.FC = () => {
                         {questionnairesState.error && (
                             <div className="error-state">
                                 <p>Errore: {questionnairesState.error}</p>
-                                <button onClick={loadQuestionnaires} className="retry-btn">
+                                <button onClick={() => loadQuestionnaires()} className="retry-btn">
                                     Riprova
                                 </button>
                             </div>
                         )}
 
                         {questionnairesState.data && !questionnairesState.loading && (
-                            <QuestionnaireTable
-                                questionnaires={questionnairesState.data}
-                                role={role === 'admin' ? 'admin' : 'psychologist'}
-                                selectedId={selectedQuestionnaireId}
-                                onSelect={handleSelectQuestionnaire}
-                                onView={handleView}
-                                onReview={handleReview}
-                            />
+                            <>
+                                <div className="filter-controls">
+                                    <button
+                                        className="filter-btn"
+                                        onClick={handleFilterByPatient}
+                                        disabled={!selectedQuestionnaireId}
+                                        title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
+                                    >
+                                        🔍 Filtra per Paziente
+                                    </button>
+                                    {patientFilter && (
+                                        <div className="active-filter">
+                                            <span>Filtro attivo: Paziente {patientFilter.substring(0, 8)}...</span>
+                                            <button className="reset-filter-btn" onClick={handleResetFilter}>
+                                                ✕ Rimuovi Filtro
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                <QuestionnaireTable
+                                    questionnaires={questionnairesState.data}
+                                    role={role === 'admin' ? 'admin' : 'psychologist'}
+                                    selectedId={selectedQuestionnaireId}
+                                    onSelect={handleSelectQuestionnaire}
+                                    onView={handleView}
+                                    onReview={handleReview}
+                                />
+                            </>
                         )}
                     </div>
                 </div>
