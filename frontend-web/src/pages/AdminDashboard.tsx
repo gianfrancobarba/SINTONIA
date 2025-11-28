@@ -1,23 +1,31 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../services/auth.service';
-import '../css/Login.css'; // Reusing some styles for now or create new ones if needed
+import React, { useState } from 'react';
+import AdminProfile from '../components/AdminProfile';
+import EmptyState from '../components/EmptyState';
+import AdminQuestionnaireList from './AdminQuestionnaireList';
+import '../css/PsychologistDashboard.css'; // Reuse layout styles
 
 const AdminDashboard: React.FC = () => {
-    const navigate = useNavigate();
+    const [activeSection, setActiveSection] = useState<string | null>(null);
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
+    const renderContent = () => {
+        switch (activeSection) {
+            case 'questionari':
+                return <AdminQuestionnaireList />;
+            default:
+                return <EmptyState />;
+        }
     };
 
     return (
-        <div className="dashboard-container" style={{ padding: '20px' }}>
-            <h1>Admin Dashboard</h1>
-            <p>Benvenuto Amministratore.</p>
-            <button onClick={handleLogout} className="login-button" style={{ width: 'auto', marginTop: '20px' }}>
-                Logout
-            </button>
+        <div className="dashboard-container">
+            <div className="dashboard-grid">
+                <div className="dashboard-left">
+                    <AdminProfile onSelectSection={setActiveSection} />
+                </div>
+                <div className="dashboard-right">
+                    {renderContent()}
+                </div>
+            </div>
         </div>
     );
 };

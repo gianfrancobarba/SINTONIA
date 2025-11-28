@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import PsychologistDashboard from './pages/PsychologistDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import QuestionnaireManagement from './pages/QuestionnaireManagement';
 import SpidCallback from './pages/SpidCallback';
 import { getCurrentUser } from './services/auth.service';
 
@@ -36,6 +37,17 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        {/* Gestione Questionari - accessible by both psychologists and admins */}
+        <Route
+          path="/questionnaires"
+          element={
+            <PrivateRoute>
+              <QuestionnaireManagement />
+            </PrivateRoute>
+          }
+        />
+
         <Route path="/spid-callback" element={<SpidCallback />} />
         {/* Default route */}
         <Route path="/" element={<Navigate to="/login" replace />} />

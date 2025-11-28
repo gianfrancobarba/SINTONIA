@@ -1,16 +1,27 @@
-/* Profilo psicologo */
+/* Profilo amministratore */
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchDashboardData } from '../services/psychologist.service';
 import { getCurrentUser, logout } from '../services/auth.service';
-import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
 import profilePhoto from '../images/psychologist-photo.png';
 import notificationIcon from '../images/psi-notification.png';
 import editIcon from '../images/psi-edit_profile.png';
 import '../css/PsychologistProfile.css';
 
 // Modern SVG Icons
+const PsychologistIcon = () => (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M20 21C20 16.5817 16.4183 13 12 13C7.58172 13 4 16.5817 4 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
+const TechSupportIcon = () => (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 19H11V17H13V19ZM15.07 11.25L14.17 12.17C13.45 12.9 13 13.5 13 15H11V14.5C11 13.4 11.45 12.4 12.17 11.67L13.41 10.41C13.78 10.05 14 9.55 14 9C14 7.9 13.1 7 12 7C10.9 7 10 7.9 10 9H8C8 6.79 9.79 5 12 5C14.21 5 16 6.79 16 9C16 9.88 15.64 10.68 15.07 11.25Z" fill="currentColor" />
+    </svg>
+);
+
 const PatientIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor" />
@@ -26,7 +37,7 @@ const QuestionnaireIcon = () => (
     </svg>
 );
 
-const AlertIcon = () => (
+const InvalidationIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M12 8V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -50,84 +61,43 @@ const LogoutIcon = () => (
     </svg>
 );
 
-const PsychologistProfile: React.FC = () => {
+interface AdminProfileProps {
+    onSelectSection?: (section: string) => void;
+}
+
+const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
     const navigate = useNavigate();
-    const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
-        data: null,
-        loading: true,
-        error: null,
-    });
     const [selectedSection, setSelectedSection] = useState<string | null>(null);
+    const [adminInfo, setAdminInfo] = useState<{ name: string; email: string } | null>(null);
 
     useEffect(() => {
-        loadDashboardData();
-    }, []);
-
-    const loadDashboardData = async () => {
-        setDashboardState(prev => ({ ...prev, loading: true, error: null }));
-        try {
-            const user = getCurrentUser();
-            const cf = user?.fiscalCode || user?.email;
-
-            const data = await fetchDashboardData(cf || undefined);
-            setDashboardState({ data, loading: false, error: null });
-        } catch (error) {
-            setDashboardState({
-                data: null,
-                loading: false,
-                error: error instanceof Error ? error.message : 'Failed to load dashboard data',
+        const user = getCurrentUser();
+        if (user) {
+            const name = user.email ? user.email.split('@')[0] : 'Amministratore';
+            setAdminInfo({
+                name: name.charAt(0).toUpperCase() + name.slice(1),
+                email: user.email || ''
             });
         }
-    };
-
-    const handleNavigation = (section: string, event: React.MouseEvent) => {
-        event.stopPropagation();
-        console.log('Navigate to:', section);
-        setSelectedSection(section);
-
-        if (section === 'questionari') {
-            navigate('/questionnaires');
-        }
-    };
-
-    const handleBackgroundClick = () => {
-        setSelectedSection(null);
-    };
+    }, []);
 
     const handleLogout = () => {
         logout();
         navigate('/login');
     };
 
-    // Show loading state
-    if (dashboardState.loading) {
-        return (
-            <div className="psychologist-profile">
-                <div className="profile-loading">Loading...</div>
-            </div>
-        );
-    }
+    const handleNavigation = (section: string, event: React.MouseEvent) => {
+        event.stopPropagation();
+        console.log('Navigate to:', section);
+        setSelectedSection(section);
+        if (onSelectSection) {
+            onSelectSection(section);
+        }
+    };
 
-    // Show error state
-    if (dashboardState.error) {
-        return (
-            <div className="psychologist-profile">
-                <div className="profile-error">
-                    <p>Errore nel caricamento dei dati</p>
-                    <button onClick={loadDashboardData} className="retry-button">
-                        Riprova
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-    // No data available
-    if (!dashboardState.data) {
-        return null;
-    }
-
-    const { fullName, profileImageUrl, role, alertsCount, pendingQuestionnairesCount, unreadMessagesCount } = dashboardState.data;
+    const handleBackgroundClick = () => {
+        setSelectedSection(null);
+    };
 
     return (
         <div className="psychologist-profile" onClick={handleBackgroundClick}>
@@ -140,11 +110,8 @@ const PsychologistProfile: React.FC = () => {
 
                     <div className="profile-photo">
                         <img
-                            src={profileImageUrl || profilePhoto}
-                            alt={fullName}
-                            onError={(e) => {
-                                e.currentTarget.src = profilePhoto;
-                            }}
+                            src={profilePhoto}
+                            alt={adminInfo?.name || 'Admin'}
                         />
                     </div>
 
@@ -155,8 +122,8 @@ const PsychologistProfile: React.FC = () => {
             </div>
 
             <div className="profile-info">
-                <h2 className="profile-name">{fullName}</h2>
-                <p className="profile-role">{role}</p>
+                <h2 className="profile-name">{adminInfo?.name || 'Caricamento...'}</h2>
+                <p className="profile-role">Amministratore</p>
 
                 {/* Modern Logout Button */}
                 <button
@@ -168,7 +135,23 @@ const PsychologistProfile: React.FC = () => {
                 </button>
             </div>
 
-            <div className="navigation-grid navigation-grid-2col">
+            <div className="navigation-grid">
+                <button
+                    className={`nav-card ${selectedSection === 'psicologi' ? 'selected' : ''}`}
+                    onClick={(e) => handleNavigation('psicologi', e)}
+                >
+                    <div className="nav-icon"><PsychologistIcon /></div>
+                    <span className="nav-label">Psicologi</span>
+                </button>
+
+                <button
+                    className={`nav-card ${selectedSection === 'supporto' ? 'selected' : ''}`}
+                    onClick={(e) => handleNavigation('supporto', e)}
+                >
+                    <div className="nav-icon"><TechSupportIcon /></div>
+                    <span className="nav-label">Supporto Tecnico</span>
+                </button>
+
                 <button
                     className={`nav-card ${selectedSection === 'pazienti' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('pazienti', e)}
@@ -183,20 +166,14 @@ const PsychologistProfile: React.FC = () => {
                 >
                     <div className="nav-icon"><QuestionnaireIcon /></div>
                     <span className="nav-label">Questionari</span>
-                    {pendingQuestionnairesCount > 0 && (
-                        <span className="notification-badge">{pendingQuestionnairesCount}</span>
-                    )}
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'alert' ? 'selected' : ''}`}
-                    onClick={(e) => handleNavigation('alert', e)}
+                    className={`nav-card ${selectedSection === 'invalidazione' ? 'selected' : ''}`}
+                    onClick={(e) => handleNavigation('invalidazione', e)}
                 >
-                    <div className="nav-icon"><AlertIcon /></div>
-                    <span className="nav-label">Alert Clinici</span>
-                    {alertsCount > 0 && (
-                        <span className="notification-badge">{alertsCount}</span>
-                    )}
+                    <div className="nav-icon"><InvalidationIcon /></div>
+                    <span className="nav-label">Richieste</span>
                 </button>
 
                 <button
@@ -205,13 +182,10 @@ const PsychologistProfile: React.FC = () => {
                 >
                     <div className="nav-icon"><ForumIcon /></div>
                     <span className="nav-label">Forum</span>
-                    {unreadMessagesCount > 0 && (
-                        <span className="notification-badge">{unreadMessagesCount}</span>
-                    )}
                 </button>
             </div>
         </div>
     );
 };
 
-export default PsychologistProfile;
+export default AdminProfile;

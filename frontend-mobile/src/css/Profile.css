@@ -1,0 +1,94 @@
+.profile-page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+    padding: 20px 20px 120px 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-header {
+    padding: 40px 0 30px;
+    text-align: center;
+}
+
+.profile-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0;
+}
+
+.profile-content {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.user-info-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.user-info-card h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1E293B;
+    margin: 0 0 8px 0;
+}
+
+.user-fiscal-code {
+    font-size: 14px;
+    color: #64748B;
+    margin: 0;
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 18px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+    width: 100%;
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.logout-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 12px rgba(255, 107, 107, 0.3);
+}
+
+.logout-button svg {
+    width: 22px;
+    height: 22px;
+}

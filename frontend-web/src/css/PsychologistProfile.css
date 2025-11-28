@@ -118,29 +118,81 @@
     color: #83B9C1;
 }
 
-/* Navigation Grid */
+/* Modern Logout Button */
+.modern-logout-btn {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.modern-logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+}
+
+.modern-logout-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+}
+
+.modern-logout-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Navigation Grid - 3 columns (default for admin) */
 .navigation-grid {
-    padding: 20px;
+    padding: 16px 20px 20px 20px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     background-color: #F4FAFB;
+    grid-auto-rows: 1fr;
+}
+
+/* Navigation Grid - 2 columns variant for psychologist */
+.navigation-grid-2col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.navigation-grid-2col .nav-card {
+    padding: 20px 12px;
+    min-height: 100px;
+}
+
+.navigation-grid-2col .nav-label {
+    font-size: 13px;
+    line-height: 1.2;
 }
 
 .nav-card {
     position: relative;
     background-color: #ffffff;
     border: 2px solid transparent;
-    border-radius: 16px;
-    padding: 24px 16px;
+    border-radius: 14px;
+    padding: 16px 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
     cursor: pointer;
     transition: all 0.25s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    min-height: 90px;
+    height: 100%;
 }
 
 .nav-card:hover {
@@ -169,6 +221,32 @@
         inset 0 1px 3px rgba(131, 185, 193, 0.1);
 }
 
+/* SVG Icon Wrapper */
+.nav-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0D475D;
+    transition: all 0.25s ease;
+}
+
+.nav-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.nav-card:hover .nav-icon {
+    color: #83B9C1;
+    transform: scale(1.1);
+}
+
+.nav-card.selected .nav-icon {
+    color: #0D475D;
+}
+
+/* Image Icons (for psychologist profile) */
 .nav-icon-img {
     width: 36px;
     height: 36px;
@@ -187,10 +265,13 @@
 }
 
 .nav-label {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 600;
     color: #0D475D;
     text-align: center;
+    line-height: 1.1;
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
 /* Notification Badge */
