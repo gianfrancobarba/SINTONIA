@@ -113,7 +113,7 @@ const AdminQuestionnaireList: React.FC = () => {
                             disabled={!selectedQuestionnaireId}
                             title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
                         >
-                            🔍 Filtra per Paziente
+                            Filtra per Paziente
                         </button>
                         {patientFilter && (
                             <div className="active-filter">

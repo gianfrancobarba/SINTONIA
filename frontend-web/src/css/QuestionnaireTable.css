@@ -1,5 +1,5 @@
 .questionnaire-table-container {
-    background: linear-gradient(180deg, #2B7A7A 0%, #1A545F 100%);
+    background: #F4FAFB;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -8,47 +8,49 @@
 .questionnaire-table {
     width: 100%;
     border-collapse: collapse;
-    color: #ffffff;
+    color: #333;
 }
 
 .questionnaire-table thead {
-    background-color: #2B7A7A;
+    background-color: #0D475D;
 }
 
 .questionnaire-table th {
     padding: 16px 20px;
     text-align: left;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
+    color: white;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .questionnaire-table tbody tr {
-    background-color: #1A545F;
+    background-color: #F4FAFB;
     transition: background-color 0.2s ease, border 0.2s ease;
     cursor: pointer;
     border: 2px solid transparent;
+    border-bottom: 1px solid #ddd;
 }
 
 .questionnaire-table tbody tr:hover {
-    background-color: #245F6A;
+    background-color: #e8f4f5;
 }
 
 /* Selected row state */
 .questionnaire-table tbody tr.selected {
-    background-color: #2B7A7A;
-    border: 2px solid #A5C9C9;
-    box-shadow: inset 0 0 8px rgba(165, 201, 201, 0.3);
+    background-color: #d4e9eb;
+    border: 2px solid #83B9C1;
+    box-shadow: inset 0 0 8px rgba(131, 185, 193, 0.3);
 }
 
 .questionnaire-table tbody tr.selected:hover {
-    background-color: #357A7A;
+    background-color: #c8e3e6;
 }
 
 .questionnaire-table td {
     padding: 16px 20px;
     font-size: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #333;
 }
 
 .questionnaire-table tbody tr:last-child td {
@@ -101,23 +103,28 @@
     padding: 0;
 }
 
+.action-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
 .view-btn {
-    background-color: #ffffff;
-    color: #1A5F5F;
+    background-color: #0D475D;
+    color: #ffffff;
 }
 
 .view-btn:hover {
-    background-color: #A5C9C9;
+    background-color: #83B9C1;
     transform: scale(1.1);
 }
 
 .review-btn {
-    background-color: #ffffff;
-    color: #1A5F5F;
+    background-color: #0D475D;
+    color: #ffffff;
 }
 
 .review-btn:hover {
-    background-color: #6DA5A5;
+    background-color: #7FB77E;
     transform: scale(1.1);
 }
 
@@ -135,12 +142,12 @@
 .empty-state {
     padding: 40px 20px;
     text-align: center;
-    background-color: #1A545F;
+    background-color: #F4FAFB;
 }
 
 .empty-state p {
     margin: 0;
     font-size: 16px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    color: #666;
 }

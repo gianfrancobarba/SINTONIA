@@ -51,21 +51,22 @@
 }
 
 .filter-btn {
-    background: linear-gradient(135deg, var(--color-teal-medium) 0%, var(--color-teal-dark) 100%);
+    background: #0D475D;
     color: white;
-    box-shadow: 0 2px 6px rgba(26, 95, 95, 0.3);
+    box-shadow: 0 2px 6px rgba(13, 71, 93, 0.3);
 }
 
 .filter-btn:hover:not(:disabled) {
+    background: #83B9C1;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(26, 95, 95, 0.4);
+    box-shadow: 0 4px 12px rgba(131, 185, 193, 0.4);
 }
 
 .filter-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none !important;
-    box-shadow: 0 2px 6px rgba(26, 95, 95, 0.2) !important;
+    box-shadow: 0 2px 6px rgba(13, 71, 93, 0.2) !important;
 }
 
 .clear-filter-btn {
@@ -115,8 +116,8 @@
     align-items: center;
     gap: 12px;
     padding: 8px 16px;
-    background: linear-gradient(135deg, var(--color-teal-light) 0%, rgba(26, 95, 95, 0.1) 100%);
-    border: 2px solid var(--color-teal-medium);
+    background: rgba(13, 71, 93, 0.15);
+    border: 2px solid #0D475D;
     border-radius: 8px;
     animation: slideIn 0.3s ease-out;
 }
@@ -136,7 +137,7 @@
 .active-filter span {
     font-size: 14px;
     font-weight: 600;
-    color: var(--color-teal-dark);
+    color: #0D475D;
 }
 
 .reset-filter-btn {

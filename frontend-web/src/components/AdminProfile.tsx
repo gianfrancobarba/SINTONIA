@@ -71,14 +71,45 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection }) => {
     const [adminInfo, setAdminInfo] = useState<{ name: string; email: string } | null>(null);
 
     useEffect(() => {
-        const user = getCurrentUser();
-        if (user) {
-            const name = user.email ? user.email.split('@')[0] : 'Amministratore';
-            setAdminInfo({
-                name: name.charAt(0).toUpperCase() + name.slice(1),
-                email: user.email || ''
-            });
-        }
+        const fetchAdminData = async () => {
+            const user = getCurrentUser();
+            if (user && user.email) {
+                try {
+                    const token = user.access_token;
+                    const response = await fetch(`http://localhost:3000/admin/dashboard/me?email=${encodeURIComponent(user.email)}`, {
+                        headers: {
+                            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data: { nome: string; cognome: string } = await response.json();
+                        setAdminInfo({
+                            name: `${data.nome} ${data.cognome}`,
+                            email: user.email
+                        });
+                    } else {
+                        // Fallback to email parsing if API fails
+                        const name = user.email.split('@')[0];
+                        setAdminInfo({
+                            name: name.charAt(0).toUpperCase() + name.slice(1),
+                            email: user.email
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error fetching admin data:', error);
+                    // Fallback to email parsing
+                    const name = user.email.split('@')[0];
+                    setAdminInfo({
+                        name: name.charAt(0).toUpperCase() + name.slice(1),
+                        email: user.email
+                    });
+                }
+            }
+        };
+
+        fetchAdminData();
     }, []);
 
     const handleLogout = () => {

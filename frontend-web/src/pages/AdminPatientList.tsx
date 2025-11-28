@@ -223,10 +223,10 @@ const AdminPatientList: React.FC = () => {
                             {totalPages > 1 && (
                                 <div style={{
                                     display: 'flex',
-                                    justifyContent: 'center',
+                                    justifyContent: 'flex-end',
                                     alignItems: 'center',
                                     gap: '8px',
-                                    marginTop: '20px',
+                                    marginTop: '0',
                                     padding: '16px'
                                 }}>
                                     <button
@@ -255,7 +255,7 @@ const AdminPatientList: React.FC = () => {
                                                     padding: '8px 12px',
                                                     border: '1px solid #ddd',
                                                     borderRadius: '4px',
-                                                    background: currentPage === page ? '#7FB77E' : '#fff',
+                                                    background: currentPage === page ? '#0D475D' : '#fff',
                                                     color: currentPage === page ? '#fff' : '#333',
                                                     cursor: 'pointer',
                                                     fontSize: '14px',
