@@ -122,25 +122,25 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                     {isPending && (
                         <div className="invalidation-request-section">
                             <h3 className="section-title">Gestione Richiesta</h3>
-                            <p style={{ marginBottom: '16px', color: '#666' }}>
+                            <p style={{ marginBottom: '20px', color: '#666' }}>
                                 Questa richiesta è in attesa di approvazione. Puoi accettare o rifiutare la richiesta.
                             </p>
-                            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                            <div className="action-buttons-container">
                                 <button
-                                    className="btn-request-invalidation"
-                                    style={{ backgroundColor: '#7FB77E' }}
+                                    className="btn-action btn-accept"
                                     onClick={handleAccept}
                                     disabled={isAccepting || isRejecting}
                                 >
-                                    {isAccepting ? 'Attendi...' : 'Accetta'}
+                                    <span className="btn-icon">✓</span>
+                                    <span className="btn-text">{isAccepting ? 'Accettazione...' : 'Accetta'}</span>
                                 </button>
                                 <button
-                                    className="btn-request-invalidation"
-                                    style={{ backgroundColor: '#E57373' }}
+                                    className="btn-action btn-reject"
                                     onClick={handleReject}
                                     disabled={isAccepting || isRejecting}
                                 >
-                                    {isRejecting ? 'Attendi...' : 'Rifiuta'}
+                                    <span className="btn-icon">✕</span>
+                                    <span className="btn-text">{isRejecting ? 'Rifiuto...' : 'Rifiuta'}</span>
                                 </button>
                             </div>
                         </div>
