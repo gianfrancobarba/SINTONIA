@@ -15,6 +15,13 @@
       "when": 1764172058743,
       "tag": "0001_cooing_doctor_doom",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764375933207,
+      "tag": "0002_watery_ravenous",
+      "breakpoints": true
     }
   ]
 }
