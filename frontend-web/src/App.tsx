@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import PsychologistDashboard from './pages/PsychologistDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import QuestionnaireManagement from './pages/QuestionnaireManagement';
+import ForumPage from './pages/ForumPage';
 import SpidCallback from './pages/SpidCallback';
 import { getCurrentUser } from './services/auth.service';
 
@@ -44,6 +45,16 @@ function App() {
           element={
             <PrivateRoute>
               <QuestionnaireManagement />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Forum - accessible by both psychologists and admins */}
+        <Route
+          path="/forum"
+          element={
+            <PrivateRoute>
+              <ForumPage />
             </PrivateRoute>
           }
         />

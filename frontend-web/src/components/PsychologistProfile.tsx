@@ -52,16 +52,17 @@ const LogoutIcon = () => (
 
 interface PsychologistProfileProps {
     onSelectSection?: (section: string) => void;
+    activeSection?: string | null;
 }
 
-const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSection }) => {
+const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSection, activeSection }) => {
     const navigate = useNavigate();
+    // Internal state and location logic removed - completely controlled by parent
     const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
         data: null,
         loading: true,
         error: null,
     });
-    const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
     useEffect(() => {
         loadDashboardData();
@@ -86,17 +87,17 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
 
     const handleNavigation = (section: string, event: React.MouseEvent) => {
         event.stopPropagation();
-        console.log('Navigate to:', section);
-        setSelectedSection(section);
-
-        // Call parent callback to show the selected section
+        // Just notify parent, do not navigate internally
         if (onSelectSection) {
             onSelectSection(section);
         }
     };
 
     const handleBackgroundClick = () => {
-        setSelectedSection(null);
+        // Optional: notify parent to clear selection if needed
+        if (onSelectSection) {
+            onSelectSection('');
+        }
     };
 
     const handleLogout = () => {
@@ -175,7 +176,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
 
             <div className="navigation-grid navigation-grid-2col">
                 <button
-                    className={`nav-card ${selectedSection === 'pazienti' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'pazienti' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('pazienti', e)}
                 >
                     <div className="nav-icon"><PatientIcon /></div>
@@ -183,7 +184,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'questionari' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'questionari' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('questionari', e)}
                 >
                     <div className="nav-icon"><QuestionnaireIcon /></div>
@@ -191,7 +192,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'alert' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'alert' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('alert', e)}
                 >
                     <div className="nav-icon"><AlertIcon /></div>
@@ -199,7 +200,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                 </button>
 
                 <button
-                    className={`nav-card ${selectedSection === 'forum' ? 'selected' : ''}`}
+                    className={`nav-card ${activeSection === 'forum' ? 'selected' : ''}`}
                     onClick={(e) => handleNavigation('forum', e)}
                 >
                     <div className="nav-icon"><ForumIcon /></div>

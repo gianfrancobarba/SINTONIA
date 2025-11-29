@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AdminProfile from '../components/AdminProfile';
 import EmptyState from '../components/EmptyState';
 import AdminQuestionnaireList from './AdminQuestionnaireList';
@@ -7,7 +8,25 @@ import AdminInvalidationList from './AdminInvalidationList';
 import '../css/PsychologistDashboard.css'; // Reuse layout styles
 
 const AdminDashboard: React.FC = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [activeSection, setActiveSection] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Check if we received a section from navigation state
+        const state = location.state as { selectedSection?: string } | null;
+        if (state?.selectedSection) {
+            setActiveSection(state.selectedSection);
+        }
+    }, [location]);
+
+    const handleSectionSelect = (section: string) => {
+        if (section === 'forum') {
+            navigate('/forum');
+        } else {
+            setActiveSection(section);
+        }
+    };
 
     const renderContent = () => {
         switch (activeSection) {
@@ -26,9 +45,12 @@ const AdminDashboard: React.FC = () => {
         <div className="dashboard-container">
             <div className="dashboard-grid">
                 <div className="dashboard-left">
-                    <AdminProfile onSelectSection={setActiveSection} />
+                    <AdminProfile
+                        onSelectSection={handleSectionSelect}
+                        activeSection={activeSection}
+                    />
                 </div>
-                <div className="dashboard-right">
+                <div className="dashboard-right fade-in" key={activeSection || 'empty'}>
                     {renderContent()}
                 </div>
             </div>

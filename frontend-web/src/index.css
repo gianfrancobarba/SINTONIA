@@ -51,6 +51,59 @@ body {
   width: 100%;
 }
 
+/* CSS Variables for Dashboard */
+:root {
+  /* Teal Colors */
+  --color-teal-dark: #1A5F5F;
+  --color-teal-medium: #2B7A7A;
+  --color-teal-secondary: #1A545F;
+  --color-teal-light: #A5C9C9;
+  --color-teal-accent: #6DA5A5;
+
+  /* Status Colors */
+  --color-approved: #7FB77E;
+  --color-pending: #FFB74D;
+  --color-rejected: #E57373;
+  --color-delete: #D32F2F;
+
+  /* Neutral Colors */
+  --color-background: #F5F5F5;
+  --color-card: #FFFFFF;
+  --color-text-primary: #1A5F5F;
+  --color-text-secondary: #666666;
+
+  /* Typography */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+#root {
+  width: 100%;
+}
+
 button {
   font-family: inherit;
 }
@@ -59,4 +112,21 @@ button {
 button:focus-visible {
   outline: 2px solid var(--color-teal-medium);
   outline-offset: 2px;
+}
+
+/* Global Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }

@@ -2,6 +2,7 @@ export class ForumAnswerDto {
     idRisposta: string;
     testo: string;
     dataRisposta: Date;
+    idPsicologo: string;
     nomePsicologo: string;
     cognomePsicologo: string;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
@@ -7,11 +8,8 @@ import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation,
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
-interface QuestionnaireManagementProps {
-    showProfile?: boolean; // If false, only shows content without profile sidebar
-}
-
-const QuestionnaireManagement: React.FC<QuestionnaireManagementProps> = ({ showProfile = true }) => {
+const QuestionnaireManagement: React.FC = () => {
+    const navigate = useNavigate();
     const [questionnairesState, setQuestionnairesState] = useState<LoadingState<QuestionnaireData[]>>({
         data: null,
         loading: true,
@@ -127,30 +125,44 @@ const QuestionnaireManagement: React.FC<QuestionnaireManagementProps> = ({ showP
         alert('Carica nuova tipologia di questionario');
     };
 
+    const handleSectionSelect = (section: string) => {
+        if (section === 'forum') {
+            navigate('/forum');
+        } else if (section !== 'questionari') {
+            navigate('/dashboard', { state: { selectedSection: section } });
+        }
+    };
+
     if (!role) {
         return <div className="error-message">Errore: ruolo utente non trovato</div>;
     }
 
-    // Content to display (questionnaires table and modals)
-    const questionnaireContent = (
-        <>
-            <h2 className="panel-title">Gestione Questionari</h2>
-            <div className="management-header">
-                <div className="header-actions">
-                    {role === 'admin' && (
-                        <button
-                            className="upload-btn"
-                            onClick={handleUploadNewType}
-                        >
-                            ⬆ Carica Nuova Tipologia
-                        </button>
-                    )}
+    return (
+        <div className="questionnaire-management-container">
+            <div className="management-grid">
+                <div className="management-sidebar">
+                    <PsychologistProfile
+                        onSelectSection={handleSectionSelect}
+                        activeSection="questionari"
+                    />
                 </div>
             </div>
 
-            {questionnairesState.loading && (
-                <div className="loading-state">Caricamento questionari...</div>
-            )}
+                <div className="management-content">
+                    <div className="content-panel fade-in">
+                        <h2 className="panel-title">Gestione Questionari</h2>
+                        <div className="management-header">
+                            <div className="header-actions">
+                                {role === 'admin' && (
+                                    <button
+                                        className="upload-btn"
+                                        onClick={handleUploadNewType}
+                                    >
+                                        ⬆ Carica Nuova Tipologia
+                                    </button>
+                                )}
+                            </div>
+                        </div>
 
             {questionnairesState.error && (
                 <div className="error-state">
