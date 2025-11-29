@@ -7,7 +7,6 @@ import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
 import { getDiaryPages, deleteDiaryPage, getAvailableMonthsYears, type MonthYearOption } from '../services/diary.service';
 import type { DiaryPage } from '../types/diary';
 import '../css/Diary.css';
-import LeftArrow from '../assets/icons/LeftArrow.svg';
 
 const Diary: React.FC = () => {
     const navigate = useNavigate();
@@ -125,10 +124,6 @@ const Diary: React.FC = () => {
         }
     };
 
-    const handleBackClick = () => {
-        navigate('/home');
-    };
-
     const handleAddPage = () => {
         navigate('/new-diary-page');
     };
@@ -194,13 +189,15 @@ const Diary: React.FC = () => {
         return (
             <div className="diary-page">
                 <div className="diary-header">
-                    <button className="back-button" onClick={handleBackClick} aria-label="Indietro">
-                        <img src={LeftArrow} alt="" />
-                    </button>
-                    <h1 className="diary-title">Diario</h1>
-                    <button className="add-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
-                        +
-                    </button>
+                    <div className="diary-header-content">
+                        <div className="diary-title-section">
+                            <h1 className="diary-title">Diario</h1>
+                            <p className="diary-subtitle">0 pagine scritte</p>
+                        </div>
+                        <button className="add-diary-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
+                            +
+                        </button>
+                    </div>
                 </div>
                 <div className="diary-empty">
                     <p>{error}</p>
@@ -215,13 +212,15 @@ const Diary: React.FC = () => {
         return (
             <div className="diary-page">
                 <div className="diary-header">
-                    <button className="back-button" onClick={handleBackClick} aria-label="Indietro">
-                        <img src={LeftArrow} alt="" />
-                    </button>
-                    <h1 className="diary-title">Diario</h1>
-                    <button className="add-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
-                        +
-                    </button>
+                    <div className="diary-header-content">
+                        <div className="diary-title-section">
+                            <h1 className="diary-title">Diario</h1>
+                            <p className="diary-subtitle">0 pagine scritte</p>
+                        </div>
+                        <button className="add-diary-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
+                            +
+                        </button>
+                    </div>
                 </div>
                 <div className="diary-empty">
                     <p>Nessuna pagina nel diario</p>
@@ -235,13 +234,15 @@ const Diary: React.FC = () => {
     return (
         <div className="diary-page">
             <div className="diary-header">
-                <button className="back-button" onClick={handleBackClick} aria-label="Indietro">
-                    <img src={LeftArrow} alt="" />
-                </button>
-                <h1 className="diary-title">Diario</h1>
-                <button className="add-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
-                    +
-                </button>
+                <div className="diary-header-content">
+                    <div className="diary-title-section">
+                        <h1 className="diary-title">Diario</h1>
+                        <p className="diary-subtitle">{pages.length} pagine scritte</p>
+                    </div>
+                    <button className="add-diary-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
+                        +
+                    </button>
+                </div>
             </div>
 
             {dateOptions.length > 1 && (

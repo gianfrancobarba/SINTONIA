@@ -1,80 +1,74 @@
 .diary-page {
-    background-color: #F5F3F0;
+    background-color: var(--secondary-bg);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     padding-bottom: 100px;
 }
 
-/* Header */
+/* Header - matching Home page style */
 .diary-header {
-    background: linear-gradient(135deg, #2C5F6F 0%, #1F4554 100%);
-    padding: 48px 20px 32px;
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.diary-header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 0 0 32px 32px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    position: relative;
-    z-index: 10;
+    gap: 16px;
 }
 
-.back-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.back-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
-.back-button img {
-    width: 20px;
-    height: 20px;
-    filter: brightness(0) invert(1);
+.diary-title-section {
+    flex: 1;
+    text-align: left;
 }
 
 .diary-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: white;
-    margin: 0;
-    letter-spacing: 0.3px;
-}
-
-.add-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.25);
     color: white;
     font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.diary-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 400;
+    margin: 4px 0 0;
+    line-height: 1.2;
+}
+
+/* Add button - matching Forum header style */
+.add-diary-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    color: white;
+    font-size: 32px;
     font-weight: 300;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
     line-height: 1;
+    padding: 0;
 }
 
-.add-button:hover {
+.add-diary-button:hover {
     background: rgba(255, 255, 255, 0.35);
-    transform: scale(1.1);
 }
 
-.add-button:active {
-    transform: scale(0.95);
+.add-diary-button:active {
+    background: rgba(255, 255, 255, 0.45);
 }
 
 /* Content Area */
@@ -95,6 +89,7 @@
     height: 500px;
     position: relative;
     margin-bottom: 32px;
+    margin-top: 0;
 }
 
 /* Page Indicator */
@@ -168,21 +163,22 @@
 @media (max-width: 375px) {
     .diary-header {
         padding: 40px 16px 24px;
-        border-radius: 0 0 24px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
     }
 
     .diary-title {
-        font-size: 22px;
-    }
-
-    .back-button,
-    .add-button {
-        width: 36px;
-        height: 36px;
-    }
-
-    .add-button {
         font-size: 24px;
+    }
+
+    .diary-subtitle {
+        font-size: 13px;
+    }
+
+    .add-diary-button {
+        width: 44px;
+        height: 44px;
+        font-size: 28px;
     }
 
     .diary-cards-container {

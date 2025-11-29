@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/DateFilter.css';
 import type { MonthYearOption } from '../services/diary.service';
+import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
+import RightArrowIcon from '../assets/icons/RightArrow.svg';
 
 interface DateFilterProps {
     options: MonthYearOption[];
@@ -15,43 +17,52 @@ const DateFilter: React.FC<DateFilterProps> = ({
     selectedYear,
     onFilterChange
 }) => {
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value;
-
-        if (value === 'all') {
-            onFilterChange(undefined, undefined);
-        } else {
-            const [month, year] = value.split('-').map(Number);
-            onFilterChange(month, year);
-        }
-    };
-
-    const getCurrentValue = () => {
+    const getCurrentIndex = () => {
         if (selectedMonth === undefined && selectedYear === undefined) {
-            return 'all';
+            return 0;
         }
-        return `${selectedMonth}-${selectedYear}`;
+        return options.findIndex(
+            opt => opt.month === selectedMonth && opt.year === selectedYear
+        );
     };
+
+    const [currentIndex, setCurrentIndex] = useState(getCurrentIndex());
+
+    const handlePrev = () => {
+        const newIndex = Math.max(0, currentIndex - 1);
+        setCurrentIndex(newIndex);
+        const selected = options[newIndex];
+        onFilterChange(selected.month, selected.year);
+    };
+
+    const handleNext = () => {
+        const newIndex = Math.min(options.length - 1, currentIndex + 1);
+        setCurrentIndex(newIndex);
+        const selected = options[newIndex];
+        onFilterChange(selected.month, selected.year);
+    };
+
+    const currentOption = options[currentIndex] || options[0];
 
     return (
-        <div className="date-filter">
-            <select
-                className="date-filter-select"
-                value={getCurrentValue()}
-                onChange={handleChange}
-            >
-                {options.map((option, index) => {
-                    const value = option.month === undefined && option.year === undefined
-                        ? 'all'
-                        : `${option.month}-${option.year}`;
-
-                    return (
-                        <option key={index} value={value}>
-                            {option.label}
-                        </option>
-                    );
-                })}
-            </select>
+        <div className="month-selector">
+            <div className="month-selector-header">
+                <button
+                    className="month-nav-arrow"
+                    onClick={handlePrev}
+                    disabled={currentIndex === 0}
+                >
+                    <img src={LeftArrowIcon} alt="Mese precedente" />
+                </button>
+                <h2 className="month-label">{currentOption.label}</h2>
+                <button
+                    className="month-nav-arrow"
+                    onClick={handleNext}
+                    disabled={currentIndex === options.length - 1}
+                >
+                    <img src={RightArrowIcon} alt="Mese successivo" />
+                </button>
+            </div>
         </div>
     );
 };
