@@ -146,8 +146,6 @@ const QuestionnaireManagement: React.FC = () => {
                         activeSection="questionari"
                     />
                 </div>
-            </div>
-
                 <div className="management-content">
                     <div className="content-panel fade-in">
                         <h2 className="panel-title">Gestione Questionari</h2>
@@ -164,45 +162,48 @@ const QuestionnaireManagement: React.FC = () => {
                             </div>
                         </div>
 
-            {questionnairesState.error && (
-                <div className="error-state">
-                    <p>Errore: {questionnairesState.error}</p>
-                    <button onClick={() => loadQuestionnaires()} className="retry-btn">
-                        Riprova
-                    </button>
-                </div>
-            )}
-
-            {questionnairesState.data && !questionnairesState.loading && (
-                <>
-                    <div className="filter-controls">
-                        <button
-                            className="filter-btn"
-                            onClick={handleFilterByPatient}
-                            disabled={!selectedQuestionnaireId}
-                            title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
-                        >
-                            Filtra per Paziente
-                        </button>
-                        {patientFilter && (
-                            <div className="active-filter">
-                                <span>Filtro attivo</span>
-                                <button className="reset-filter-btn" onClick={handleResetFilter}>
-                                    ✕ Rimuovi Filtro
+                        {questionnairesState.error && (
+                            <div className="error-state">
+                                <p>Errore: {questionnairesState.error}</p>
+                                <button onClick={() => loadQuestionnaires()} className="retry-btn">
+                                    Riprova
                                 </button>
                             </div>
                         )}
+
+                        {questionnairesState.data && !questionnairesState.loading && (
+                            <>
+                                <div className="filter-controls">
+                                    <button
+                                        className="filter-btn"
+                                        onClick={handleFilterByPatient}
+                                        disabled={!selectedQuestionnaireId}
+                                        title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
+                                    >
+                                        Filtra per Paziente
+                                    </button>
+                                    {patientFilter && (
+                                        <div className="active-filter">
+                                            <span>Filtro attivo</span>
+                                            <button className="reset-filter-btn" onClick={handleResetFilter}>
+                                                ✕ Rimuovi Filtro
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                <QuestionnaireTable
+                                    questionnaires={questionnairesState.data}
+                                    role={role === 'admin' ? 'admin' : 'psychologist'}
+                                    selectedId={selectedQuestionnaireId}
+                                    onSelect={handleSelectQuestionnaire}
+                                    onView={handleView}
+                                    onReview={handleReview}
+                                />
+                            </>
+                        )}
                     </div>
-                    <QuestionnaireTable
-                        questionnaires={questionnairesState.data}
-                        role={role === 'admin' ? 'admin' : 'psychologist'}
-                        selectedId={selectedQuestionnaireId}
-                        onSelect={handleSelectQuestionnaire}
-                        onView={handleView}
-                        onReview={handleReview}
-                    />
-                </>
-            )}
+                </div>
+            </div>
 
             {/* Modal for viewing questionnaire details */}
             {viewingQuestionnaire && (
@@ -214,34 +215,9 @@ const QuestionnaireManagement: React.FC = () => {
                     onReview={handleReview}
                 />
             )}
-        </>
-    );
-
-    // If showProfile is false, render only the content without sidebar
-    if (!showProfile) {
-        return (
-            <div className="content-panel" style={{ height: '100%', boxSizing: 'border-box' }}>
-                {questionnaireContent}
-            </div>
-        );
-    }
-
-    // Full layout with profile sidebar
-    return (
-        <div className="questionnaire-management-container">
-            <div className="management-grid">
-                <div className="management-sidebar">
-                    <PsychologistProfile />
-                </div>
-
-                <div className="management-content">
-                    <div className="content-panel">
-                        {questionnaireContent}
-                    </div>
-                </div>
-            </div>
         </div>
     );
+
 };
 
 export default QuestionnaireManagement;
