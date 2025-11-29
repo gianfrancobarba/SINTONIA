@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, MessageCircle, Award, LogOut, ChevronRight } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
-import { logout, getCurrentUser } from '../services/spid-auth.service';
+import {getCurrentPatient, logout} from '../services/spid-auth.service';
 import type { ProfileDto } from '../types/profile';
 import BottomNavigation from '../components/BottomNavigation';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
@@ -61,7 +61,7 @@ const Settings: React.FC = () => {
 
     const userName = profileData?.profilo?.nome || 'Utente';
     const userSurname = profileData?.profilo?.cognome || '';
-    const currentUser = getCurrentUser();
+    const currentUser = getCurrentPatient();
     const userEmail = currentUser?.email || '';
 
     return (
