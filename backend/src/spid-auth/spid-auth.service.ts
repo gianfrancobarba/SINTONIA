@@ -44,23 +44,7 @@ export class SpidAuthService {
             });
         }
 
-        // 3. Assicurati che esista uno psicologo (creane uno dummy se necessario)
-        const psychologistCod = 'PSICOL01P01H501Z';
-        const psychologists = await this.db
-            .select()
-            .from(schema.psicologo)
-            .where(eq(schema.psicologo.codFiscale, psychologistCod));
-
-        if (psychologists.length === 0) {
-            await this.db.insert(schema.psicologo).values({
-                codFiscale: psychologistCod,
-                nome: 'Dottore',
-                cognome: 'Default',
-                aslAppartenenza: 'ASL001',
-                stato: true,
-                immagineProfilo: 'default.jpg'
-            });
-        }
+        // 3. (Rimosso) Non assegniamo più uno psicologo di default
 
         // 4. Crea il nuovo paziente
         const newPatients = await this.db.insert(schema.paziente).values({
@@ -74,7 +58,7 @@ export class SpidAuthService {
             dataIngresso: new Date().toISOString().split('T')[0],
             terms: false,
             idPriorita: priorityName,
-            idPsicologo: psychologistCod
+            idPsicologo: null
         } as any).returning();
 
         console.log('New patient created:', newPatients[0].idPaziente);

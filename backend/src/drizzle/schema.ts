@@ -93,7 +93,6 @@ export const paziente = pgTable('paziente', {
         .notNull()
         .references(() => priorita.nome),
     idPsicologo: char('id_psicologo', { length: 16 })
-        .notNull()
         .references(() => psicologo.codFiscale),
 });
 
