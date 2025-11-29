@@ -1,159 +1,150 @@
 .personal-info-page {
     min-height: 100vh;
-    background-color: #F5F5F5;
-    padding-bottom: 100px;
-    position: relative;
-    overflow-x: hidden;
+    background-color: #F5F7FA;
+    padding-bottom: 40px;
 }
 
 /* ===== Header ===== */
-.personal-info-header {
-    position: relative;
-    z-index: 10;
+.info-header {
     display: flex;
     align-items: center;
-    padding: 50px 20px 20px;
-    background-color: #165A73;
+    gap: 16px;
+    padding: 50px 20px 30px;
 }
 
-.personal-info-back-btn {
+.back-button {
     background: transparent;
-    border: 2px solid white;
+    border: 2.5px solid #2C2C2C;
     cursor: pointer;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    margin-right: 12px;
-    transition: opacity 0.2s;
+    transition: all 0.2s;
+    color: #2C2C2C;
+    flex-shrink: 0;
 }
 
-.personal-info-back-btn img {
-    width: 16px;
-    height: 16px;
-    filter: brightness(0) invert(1);
+.back-button:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 
-.personal-info-back-btn:hover {
-    opacity: 0.8;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.personal-info-title {
+.page-title {
     font-size: 20px;
     font-weight: 700;
-    color: white;
+    color: #2C2C2C;
     margin: 0;
 }
 
-/* ===== Curved Background ===== */
-.personal-info-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: #165A73;
-    z-index: 0;
-    border-radius: 0 0 50% 50% / 0 0 25% 25%;
-}
-
-/* ===== Content ===== */
-.personal-info-content {
-    position: relative;
-    z-index: 5;
-    padding: 20px;
+/* ===== Form ===== */
+.info-form {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     max-width: 430px;
     margin: 0 auto;
 }
 
-/* ===== Info Card ===== */
-.info-card {
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2C2C2C;
+}
+
+.field-input {
     background: white;
     border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-.info-item {
-    margin-bottom: 20px;
+.field-icon {
+    color: #9CA3AF;
+    flex-shrink: 0;
 }
 
-.info-item:last-child {
-    margin-bottom: 0;
-}
-
-.info-label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-}
-
-.info-value {
-    background-color: #f0f0f0;
-    padding: 14px 16px;
-    border-radius: 10px;
+.field-value {
     font-size: 15px;
-    font-weight: 500;
-    color: #2C2C2C;
-    opacity: 0.8;
-    cursor: not-allowed;
-    user-select: none;
-    border: 1px solid #e0e0e0;
+    color: #9CA3AF;
+    flex: 1;
 }
 
-/* ===== Notice ===== */
-.info-notice {
-    background: #FEF3C7;
-    border-left: 4px solid #F59E0B;
-    padding: 14px 16px;
-    border-radius: 8px;
-    margin-top: 16px;
+/* ===== Save Button ===== */
+.save-button {
+    margin: 40px 20px 0;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #1E4A5F 0%, #163A4A 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(30, 74, 95, 0.25);
+    max-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: calc(100% - 40px);
 }
 
-.info-notice p {
-    margin: 0;
-    font-size: 13px;
-    color: #92400E;
-    line-height: 1.5;
+.save-button:hover {
+    background: linear-gradient(135deg, #163A4A 0%, #0D2A35 100%);
+    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.35);
+    transform: translateY(-2px);
 }
 
-/* ===== Loading & Error States ===== */
-.personal-info-loading,
-.personal-info-error {
+.save-button:active {
+    transform: translateY(0);
+}
+
+/* ===== Loading & Error ===== */
+.loading,
+.error {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     font-size: 16px;
+}
+
+.loading {
     color: #666;
 }
 
-.personal-info-error {
+.error {
     color: #DC2626;
     font-weight: 500;
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 380px) {
-    .personal-info-content {
-        padding: 16px;
+    .info-form {
+        padding: 0 16px;
+        gap: 16px;
     }
 
-    .info-card {
-        padding: 20px;
+    .field-input {
+        padding: 14px 18px;
     }
 
-    .info-value {
-        font-size: 14px;
-        padding: 12px 14px;
+    .save-button {
+        margin-top: 32px;
+        padding: 16px 20px;
+        font-size: 16px;
     }
 }

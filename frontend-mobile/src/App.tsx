@@ -21,6 +21,7 @@ import Settings from './pages/Settings';
 import PersonalInfo from './pages/settings/PersonalInfo';
 import TechnicalSupport from './pages/settings/TechnicalSupport';
 import Badges from './pages/settings/Badges';
+import Notifications from './pages/Notifications';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -135,6 +136,14 @@ function App() {
           element={
             <PrivateRoute>
               <Badges />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <PrivateRoute>
+              <Notifications />
             </PrivateRoute>
           }
         />
