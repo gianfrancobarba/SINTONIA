@@ -4,6 +4,7 @@ import PsychologistProfile from '../components/PsychologistProfile';
 import EmptyState from '../components/EmptyState';
 import PsychologistPatientList from './PsychologistPatientList';
 import QuestionnaireManagement from './QuestionnaireManagement';
+import PsychologistPersonalArea from '../components/PsychologistPersonalArea';
 import '../css/PsychologistDashboard.css';
 
 const PsychologistDashboard: React.FC = () => {
@@ -39,6 +40,7 @@ const PsychologistDashboard: React.FC = () => {
                     />
                 </div>
                 <div className="dashboard-right fade-in" key={activeSection || 'empty'}>
+                    {activeSection === 'area-personale' && <PsychologistPersonalArea />}
                     {activeSection === 'pazienti' && <PsychologistPatientList />}
                     {activeSection === 'questionari' && <QuestionnaireManagement />}
                     {activeSection === 'alert' && (

@@ -140,7 +140,11 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
             <div className="profile-header">
                 <div className="header-background" />
                 <div className="profile-section">
-                    <button className="side-btn left-side-btn" aria-label="Edit Profile">
+                    <button
+                        className="side-btn left-side-btn"
+                        aria-label="Edit Profile"
+                        onClick={(e) => handleNavigation('area-personale', e)}
+                    >
                         <img src={editIcon} alt="Edit" className="side-btn-icon edit-icon" />
                     </button>
 
