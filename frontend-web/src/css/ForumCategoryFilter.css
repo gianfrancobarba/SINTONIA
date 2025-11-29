@@ -46,18 +46,18 @@
 
 /* Category specific colors */
 .category-pill.category-ansia.active {
-    background: #8b5cf6;
-    border-color: #8b5cf6;
+    background: #eab308;
+    border-color: #eab308;
 }
 
 .category-pill.category-stress.active {
-    background: #f97316;
-    border-color: #f97316;
+    background: #D32F2F;
+    border-color: #D32F2F;
 }
 
 .category-pill.category-tristezza.active {
-    background: #eab308;
-    border-color: #eab308;
+    background: #8b5cf6;
+    border-color: #8b5cf6;
 }
 
 .category-pill.category-vita-di-coppia.active {

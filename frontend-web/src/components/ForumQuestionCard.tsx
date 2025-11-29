@@ -19,10 +19,10 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
 }) => {
     const getCategoryColor = (categoria: string): string => {
         const colors: Record<string, string> = {
-            'Ansia': '#8B5CF6',
-            'Stress': '#FB923C',
+            'Ansia': '#eab308',
+            'Stress': '#D32F2F',
             'Tristezza': '#8B5CF6',
-            'Vita di coppia': '#10B981',
+            'Vita di coppia': '#ec4899',
         };
         return colors[categoria] || '#61A889';
     };

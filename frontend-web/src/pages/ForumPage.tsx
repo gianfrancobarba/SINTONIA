@@ -5,8 +5,8 @@ import AdminProfile from '../components/AdminProfile';
 import ForumQuestionCard from '../components/ForumQuestionCard';
 import ForumCategoryFilter from '../components/ForumCategoryFilter';
 import ForumReplyModal from '../components/ForumReplyModal';
-import type { ForumQuestion, ForumStats, LoadingState, ForumCategory } from '../types/forum';
-import { fetchForumQuestions, fetchForumStats, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
+import type { ForumQuestion, LoadingState, ForumCategory } from '../types/forum';
+import { fetchForumQuestions, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
 import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumPage.css';
 
@@ -15,11 +15,6 @@ type FilterType = 'all' | 'unanswered' | 'answered';
 const ForumPage: React.FC = () => {
     const navigate = useNavigate();
     const [questionsState, setQuestionsState] = useState<LoadingState<ForumQuestion[]>>({
-        data: null,
-        loading: true,
-        error: null
-    });
-    const [statsState, setStatsState] = useState<LoadingState<ForumStats>>({
         data: null,
         loading: true,
         error: null
@@ -69,7 +64,7 @@ const ForumPage: React.FC = () => {
     }, [filterType]);
 
     const loadData = async () => {
-        await Promise.all([loadQuestions(), loadStats()]);
+        await loadQuestions();
     };
 
     const loadQuestions = async () => {
@@ -86,18 +81,20 @@ const ForumPage: React.FC = () => {
         }
     };
 
-    const loadStats = async () => {
-        setStatsState({ data: null, loading: true, error: null });
-        try {
-            const stats = await fetchForumStats();
-            setStatsState({ data: stats, loading: false, error: null });
-        } catch (error) {
-            setStatsState({
-                data: null,
-                loading: false,
-                error: error instanceof Error ? error.message : 'Errore nel caricamento delle statistiche'
-            });
-        }
+    const getStats = () => {
+        if (!questionsState.data) return null;
+
+        const totalQuestions = questionsState.data.length;
+        const answeredQuestions = questionsState.data.filter(q =>
+            q.risposte && q.risposte.length > 0
+        ).length;
+        const unansweredQuestions = totalQuestions - answeredQuestions;
+
+        return {
+            totalQuestions,
+            answeredQuestions,
+            unansweredQuestions
+        };
     };
 
     const handleAnswer = (questionId: string) => {
@@ -216,27 +213,27 @@ const ForumPage: React.FC = () => {
                             <h1 className="forum-title">Forum</h1>
                         </div>
 
-                        {statsState.data && (
+                        {getStats() && (
                             <div className="forum-stats">
                                 <button
                                     className={`stat-item ${filterType === 'all' ? 'stat-active' : ''}`}
                                     onClick={() => setFilterType('all')}
                                 >
-                                    <span className="stat-value">{statsState.data.totalQuestions}</span>
+                                    <span className="stat-value">{getStats()!.totalQuestions}</span>
                                     <span className="stat-label">Domande Totali</span>
                                 </button>
                                 <button
                                     className={`stat-item stat-unanswered ${filterType === 'unanswered' ? 'stat-active' : ''}`}
                                     onClick={() => setFilterType('unanswered')}
                                 >
-                                    <span className="stat-value">{statsState.data.unansweredQuestions}</span>
+                                    <span className="stat-value">{getStats()!.unansweredQuestions}</span>
                                     <span className="stat-label">Domande Da rispondere</span>
                                 </button>
                                 <button
                                     className={`stat-item stat-answered ${filterType === 'answered' ? 'stat-active' : ''}`}
                                     onClick={() => setFilterType('answered')}
                                 >
-                                    <span className="stat-value">{statsState.data.answeredQuestions}</span>
+                                    <span className="stat-value">{getStats()!.answeredQuestions}</span>
                                     <span className="stat-label">Domande Risposte</span>
                                 </button>
                             </div>
