@@ -45,11 +45,19 @@
 /* Forum Header */
 .forum-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 32px;
-    padding-bottom: 24px;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
     border-bottom: 2px solid #f3f4f6;
+}
+
+.forum-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-teal-dark);
+    text-align: center;
+    margin: 0 0 16px 0;
 }
 
 .panel-title {
@@ -68,51 +76,73 @@
 /* Forum Stats */
 .forum-stats {
     display: flex;
-    gap: 24px;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 20px;
-    background: #f9fafb;
-    border-radius: 12px;
-    border: 2px solid #e5e7eb;
+    padding: 8px 16px;
+    background: var(--color-background);
+    border-radius: 8px;
+    border: 2px solid var(--color-teal-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.stat-item:hover {
+    border-color: var(--color-teal-medium);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(26, 95, 95, 0.15);
+}
+
+.stat-item.stat-active {
+    background: var(--color-teal-medium);
+    border-color: var(--color-teal-dark);
+}
+
+.stat-item.stat-active .stat-value,
+.stat-item.stat-active .stat-label {
+    color: white;
 }
 
 .stat-value {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-teal-dark);
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .stat-label {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-.stat-unanswered {
-    border-color: #fbbf24;
-    background: #fef3c7;
+.stat-unanswered:not(.stat-active) {
+    border-color: var(--color-pending);
+    background: #fff8e6;
 }
 
-.stat-unanswered .stat-value {
-    color: #d97706;
+.stat-unanswered:not(.stat-active) .stat-value {
+    color: var(--color-pending);
 }
 
-.stat-answered {
-    border-color: #34d399;
-    background: #d1fae5;
+.stat-answered:not(.stat-active) {
+    border-color: var(--color-approved);
+    background: #f0f9f4;
 }
 
-.stat-answered .stat-value {
-    color: #059669;
+.stat-answered:not(.stat-active) .stat-value {
+    color: var(--color-approved);
 }
 
 /* Questions List */
@@ -134,7 +164,7 @@
     width: 40px;
     height: 40px;
     border: 4px solid #e5e7eb;
-    border-top-color: #3b82f6;
+    border-top-color: var(--color-teal-medium);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 16px;
@@ -169,7 +199,7 @@
 
 .retry-button {
     padding: 10px 24px;
-    background: #3b82f6;
+    background: var(--color-teal-medium);
     color: white;
     border: none;
     border-radius: 8px;
@@ -180,7 +210,7 @@
 }
 
 .retry-button:hover {
-    background: #2563eb;
+    background: var(--color-teal-dark);
 }
 
 /* Empty State */
@@ -226,7 +256,7 @@
 
 .pagination-button {
     padding: 10px 20px;
-    background: #3b82f6;
+    background: var(--color-teal-medium);
     color: white;
     border: none;
     border-radius: 8px;
@@ -237,7 +267,7 @@
 }
 
 .pagination-button:hover:not(:disabled) {
-    background: #2563eb;
+    background: var(--color-teal-dark);
 }
 
 .pagination-button:disabled {
@@ -312,19 +342,19 @@
     }
 
     .forum-stats {
-        gap: 12px;
+        gap: 8px;
     }
 
     .stat-item {
-        padding: 10px 16px;
+        padding: 6px 12px;
         flex: 1;
     }
 
     .stat-value {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .stat-label {
-        font-size: 11px;
+        font-size: 9px;
     }
 }

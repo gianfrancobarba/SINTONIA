@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PsychologistProfile from '../components/PsychologistProfile';
 import AdminProfile from '../components/AdminProfile';
-import ForumCategoryFilter from '../components/ForumCategoryFilter';
 import ForumQuestionCard from '../components/ForumQuestionCard';
 import ForumReplyModal from '../components/ForumReplyModal';
-import type { ForumQuestion, ForumCategory, ForumStats, LoadingState } from '../types/forum';
+import type { ForumQuestion, ForumStats, LoadingState } from '../types/forum';
 import { fetchForumQuestions, fetchForumStats, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
 import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumPage.css';
+
+type FilterType = 'all' | 'unanswered' | 'answered';
 
 const ForumPage: React.FC = () => {
     const navigate = useNavigate();
@@ -17,17 +18,12 @@ const ForumPage: React.FC = () => {
         loading: true,
         error: null
     });
-    const [allQuestionsState, setAllQuestionsState] = useState<LoadingState<ForumQuestion[]>>({
-        data: null,
-        loading: false,
-        error: null
-    });
     const [statsState, setStatsState] = useState<LoadingState<ForumStats>>({
         data: null,
         loading: true,
         error: null
     });
-    const [selectedCategory, setSelectedCategory] = useState<ForumCategory | null>(null);
+    const [filterType, setFilterType] = useState<FilterType>('all');
     const [currentPage, setCurrentPage] = useState(1);
     const QUESTIONS_PER_PAGE = 5;
     const [modalState, setModalState] = useState<{
@@ -66,35 +62,21 @@ const ForumPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        loadQuestions();
-        setCurrentPage(1); // Reset to page 1 when category changes
+        setCurrentPage(1); // Reset to page 1 when filter changes
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedCategory]);
+    }, [filterType]);
 
     const loadData = async () => {
-        await Promise.all([loadQuestions(), loadStats(), loadAllQuestions()]);
+        await Promise.all([loadQuestions(), loadStats()]);
     };
 
     const loadQuestions = async () => {
         setQuestionsState({ data: null, loading: true, error: null });
         try {
-            const questions = await fetchForumQuestions(selectedCategory || undefined);
+            const questions = await fetchForumQuestions();
             setQuestionsState({ data: questions, loading: false, error: null });
         } catch (error) {
             setQuestionsState({
-                data: null,
-                loading: false,
-                error: error instanceof Error ? error.message : 'Errore nel caricamento delle domande'
-            });
-        }
-    };
-
-    const loadAllQuestions = async () => {
-        try {
-            const allQuestions = await fetchForumQuestions(); // No category filter
-            setAllQuestionsState({ data: allQuestions, loading: false, error: null });
-        } catch (error) {
-            setAllQuestionsState({
                 data: null,
                 loading: false,
                 error: error instanceof Error ? error.message : 'Errore nel caricamento delle domande'
@@ -171,43 +153,30 @@ const ForumPage: React.FC = () => {
         setModalState({ isOpen: false, question: null, isEditing: false });
     };
 
-    const getCategoryCounts = (): Record<ForumCategory, number> => {
-        // Use allQuestionsState to show counts for all questions, not just filtered ones
-        if (!allQuestionsState.data) {
-            return {
-                'Ansia': 0,
-                'Stress': 0,
-                'Tristezza': 0,
-                'Vita di coppia': 0,
-                'Altro': 0
-            };
+    const getFilteredQuestions = (): ForumQuestion[] => {
+        if (!questionsState.data) return [];
+
+        switch (filterType) {
+            case 'unanswered':
+                return questionsState.data.filter(q => !q.risposte || q.risposte.length === 0);
+            case 'answered':
+                return questionsState.data.filter(q => q.risposte && q.risposte.length > 0);
+            case 'all':
+            default:
+                return questionsState.data;
         }
-
-        const counts: Record<ForumCategory, number> = {
-            'Ansia': 0,
-            'Stress': 0,
-            'Tristezza': 0,
-            'Vita di coppia': 0,
-            'Altro': 0
-        };
-
-        allQuestionsState.data.forEach(q => {
-            counts[q.categoria] = (counts[q.categoria] || 0) + 1;
-        });
-
-        return counts;
     };
 
     const getPaginatedQuestions = (): ForumQuestion[] => {
-        if (!questionsState.data) return [];
+        const filtered = getFilteredQuestions();
         const startIndex = (currentPage - 1) * QUESTIONS_PER_PAGE;
         const endIndex = startIndex + QUESTIONS_PER_PAGE;
-        return questionsState.data.slice(startIndex, endIndex);
+        return filtered.slice(startIndex, endIndex);
     };
 
     const getTotalPages = (): number => {
-        if (!questionsState.data) return 0;
-        return Math.ceil(questionsState.data.length / QUESTIONS_PER_PAGE);
+        const filtered = getFilteredQuestions();
+        return Math.ceil(filtered.length / QUESTIONS_PER_PAGE);
     };
 
     const handlePageChange = (page: number) => {
@@ -234,34 +203,34 @@ const ForumPage: React.FC = () => {
                 <div className="forum-content">
                     <div className="content-panel fade-in">
                         <div className="forum-header">
-                            <h1 className="forum-title">Forum di Supporto</h1>
-                            <div>
-                                <h2 className="panel-title">Forum Pazienti</h2>
-                                <p className="panel-subtitle">Rispondi alle domande dei tuoi pazienti</p>
-                            </div>
-                            {statsState.data && (
-                                <div className="forum-stats">
-                                    <div className="stat-item">
-                                        <span className="stat-value">{statsState.data.totalQuestions}</span>
-                                        <span className="stat-label">Totali</span>
-                                    </div>
-                                    <div className="stat-item stat-unanswered">
-                                        <span className="stat-value">{statsState.data.unansweredQuestions}</span>
-                                        <span className="stat-label">Da rispondere</span>
-                                    </div>
-                                    <div className="stat-item stat-answered">
-                                        <span className="stat-value">{statsState.data.answeredQuestions}</span>
-                                        <span className="stat-label">Risposte</span>
-                                    </div>
-                                </div>
-                            )}
+                            <h1 className="forum-title">Forum</h1>
                         </div>
 
-                        <ForumCategoryFilter
-                            selectedCategory={selectedCategory}
-                            onSelectCategory={setSelectedCategory}
-                            questionCounts={getCategoryCounts()}
-                        />
+                        {statsState.data && (
+                            <div className="forum-stats">
+                                <button
+                                    className={`stat-item ${filterType === 'all' ? 'stat-active' : ''}`}
+                                    onClick={() => setFilterType('all')}
+                                >
+                                    <span className="stat-value">{statsState.data.totalQuestions}</span>
+                                    <span className="stat-label">Totali</span>
+                                </button>
+                                <button
+                                    className={`stat-item stat-unanswered ${filterType === 'unanswered' ? 'stat-active' : ''}`}
+                                    onClick={() => setFilterType('unanswered')}
+                                >
+                                    <span className="stat-value">{statsState.data.unansweredQuestions}</span>
+                                    <span className="stat-label">Da rispondere</span>
+                                </button>
+                                <button
+                                    className={`stat-item stat-answered ${filterType === 'answered' ? 'stat-active' : ''}`}
+                                    onClick={() => setFilterType('answered')}
+                                >
+                                    <span className="stat-value">{statsState.data.answeredQuestions}</span>
+                                    <span className="stat-label">Risposte</span>
+                                </button>
+                            </div>
+                        )}
 
                         {questionsState.loading && (
                             <div className="loading-state">
@@ -281,16 +250,11 @@ const ForumPage: React.FC = () => {
 
                         {questionsState.data && !questionsState.loading && (
                             <>
-                                {questionsState.data.length === 0 ? (
+                                {getFilteredQuestions().length === 0 ? (
                                     <div className="empty-state">
                                         <div className="empty-icon">💬</div>
                                         <h3>Nessuna domanda trovata</h3>
-                                        <p>
-                                            {selectedCategory
-                                                ? `Non ci sono domande nella categoria "${selectedCategory}"`
-                                                : 'I tuoi pazienti non hanno ancora fatto domande nel forum'
-                                            }
-                                        </p>
+                                        <p>Non ci sono domande corrispondenti al filtro selezionato</p>
                                     </div>
                                 ) : (
                                     <>
