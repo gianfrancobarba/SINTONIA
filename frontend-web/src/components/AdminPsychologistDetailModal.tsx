@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Search, User, Mail, Building2, IdCard, Edit2, Save, X } from 'lucide-react';
 import '../css/QuestionnaireDetailModal.css';
+import { updatePsychologist } from '../services/psychologist.service';
+import Toast from './Toast';
 
 interface PsychologistData {
     codiceFiscale: string;
@@ -13,35 +15,21 @@ interface PsychologistData {
 interface AdminPsychologistDetailModalProps {
     psychologist: PsychologistData | null;
     onClose: () => void;
-    onUpdate?: () => void;
+    onUpdate?: (updatedData?: Partial<PsychologistData>) => void;
 }
 
 const ASL_OPTIONS = [
-    'ASL Roma 1',
-    'ASL Roma 2',
-    'ASL Roma 3',
-    'ASL Milano 1',
-    'ASL Milano 2',
-    'ASL Milano 3',
-    'ASL Napoli 1',
-    'ASL Napoli 2',
-    'ASL Napoli 3',
-    'ASL Torino 1',
-    'ASL Torino 2',
-    'ASL Torino 3',
-    'ASL Bologna',
-    'ASL Firenze',
-    'ASL Genova',
-    'ASL Venezia',
-    'ASL Verona',
-    'ASL Palermo 1',
-    'ASL Palermo 2',
-    'ASL Bari',
-    'ASL Catania',
-    'ASL Cagliari',
-    'ASL Perugia',
-    'ASL Ancona',
-    'ASL Trieste',
+    'NA-1',
+    'NA-2',
+    'NA-3',
+    'SA-1',
+    'SA-2',
+    'SA-3',
+    'AV-1',
+    'AV-2',
+    'BN-1',
+    'CE-1',
+    'CE-2',
 ];
 
 const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> = ({
@@ -55,6 +43,7 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
     const [editedAsl, setEditedAsl] = useState(psychologist?.aslAppartenenza || '');
     const [aslSearch, setAslSearch] = useState('');
     const [showAslDropdown, setShowAslDropdown] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     React.useEffect(() => {
         if (psychologist) {
@@ -67,14 +56,34 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
         if (!psychologist) return;
         setIsSaving(true);
 
-        setTimeout(() => {
-            alert(`Psicologo aggiornato:\n- Email: ${editedEmail}\n- ASL: ${editedAsl}\n\n(Nota: Modifiche solo simulate, nessun backend)`);
+        try {
+            await updatePsychologist(psychologist.codiceFiscale, {
+                email: editedEmail,
+                aslAppartenenza: editedAsl
+            });
+
+            setToast({
+                message: 'Dati dello psicologo aggiornati con successo!',
+                type: 'success'
+            });
             setIsSaving(false);
             setIsEditing(false);
+
             if (onUpdate) {
-                onUpdate();
+                onUpdate({
+                    email: editedEmail,
+                    aslAppartenenza: editedAsl
+                });
             }
-        }, 500);
+            // Non chiudiamo il modale subito per mostrare il toast e i dati aggiornati
+        } catch (error) {
+            console.error('Failed to update psychologist:', error);
+            setToast({
+                message: 'Si è verificato un errore durante l\'aggiornamento. Riprova più tardi.',
+                type: 'error'
+            });
+            setIsSaving(false);
+        }
     };
 
     const handleCancel = () => {
@@ -563,6 +572,13 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                     )}
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div >
     );
 };

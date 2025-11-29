@@ -179,3 +179,39 @@ export const createPsychologist = async (psychologistData: {
         throw error;
     }
 };
+
+/**
+ * Update an existing psychologist (admin only)
+ * @param codFiscale - Codice Fiscale of the psychologist to update
+ * @param updateData - Data to update (email, aslAppartenenza)
+ */
+export const updatePsychologist = async (
+    codFiscale: string,
+    updateData: {
+        email?: string;
+        aslAppartenenza?: string;
+    }
+): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists/${codFiscale}`, {
+            method: 'PATCH',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating psychologist:', error);
+        throw error;
+    }
+};

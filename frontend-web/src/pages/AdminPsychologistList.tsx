@@ -21,8 +21,8 @@ const normalizePsychologist = (psy: PsychologistOption): PsychologistData => ({
     codiceFiscale: psy.codFiscale,
     nome: psy.nome,
     cognome: psy.cognome,
-    email: psy.email || 'email@example.com', // Fallback for mock data
-    aslAppartenenza: psy.aslAppartenenza || 'N/D',
+    email: psy.email || '',
+    aslAppartenenza: psy.aslAppartenenza || '',
     stato: 'Attivo' // Default status, update when backend provides this field
 });
 
@@ -158,7 +158,10 @@ const AdminPsychologistList: React.FC = () => {
             setShowAddModal(false);
         } catch (err: any) {
             console.error('Error adding psychologist:', err);
-            setError(err.message || 'Errore durante la creazione dello psicologo. Riprova.');
+            const errorMessage = err.message?.includes('localhost') || err.message?.includes('fetch')
+                ? 'Errore di connessione al server.'
+                : (err.message || 'Errore durante la creazione dello psicologo. Riprova.');
+            setError(errorMessage);
             // Keep modal open on error so user can retry
         } finally {
             setLoading(false);
@@ -487,6 +490,29 @@ const AdminPsychologistList: React.FC = () => {
                 <AdminPsychologistDetailModal
                     psychologist={viewingPsychologist}
                     onClose={handleCloseModal}
+                    onUpdate={(updatedData) => {
+                        // Update local state immediately if data is provided
+                        if (updatedData && viewingPsychologist) {
+                            setViewingPsychologist({
+                                ...viewingPsychologist,
+                                ...updatedData
+                            });
+                        }
+
+                        // Refresh the list
+                        const loadPsychologists = async () => {
+                            try {
+                                // Don't show loading spinner for background refresh
+                                // setLoading(true); 
+                                const data = await fetchAllPsychologists();
+                                const normalized = data.map(normalizePsychologist);
+                                setPsychologists(normalized);
+                            } catch (err) {
+                                console.error('Error reloading psychologists:', err);
+                            }
+                        };
+                        loadPsychologists();
+                    }}
                 />
             )}
 

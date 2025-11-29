@@ -14,6 +14,7 @@ export class Visualizzazione_psicologi_amministratoreService {
                 nome: psicologo.nome,
                 cognome: psicologo.cognome,
                 aslAppartenenza: psicologo.aslAppartenenza,
+                email: psicologo.email,
                 stato: psicologo.stato,
                 immagineProfilo: psicologo.immagineProfilo,
             })
