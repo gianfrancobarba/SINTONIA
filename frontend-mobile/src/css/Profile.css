@@ -143,6 +143,7 @@
     min-height: 180px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-header {
@@ -158,6 +159,12 @@
 .badge-card {
     background: linear-gradient(135deg, #7FB99C 0%, #6DA88E 100%);
     color: white;
+    cursor: pointer;
+}
+
+.badge-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
 .badge-progress {
@@ -318,6 +325,12 @@
 .questionnaire-card {
     background: linear-gradient(135deg, #88B7B5 0%, #6DA5A5 100%);
     color: white;
+    cursor: pointer;
+}
+
+.questionnaire-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
 .questionnaire-time {

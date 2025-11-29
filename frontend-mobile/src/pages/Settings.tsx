@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, MessageCircle, Award, LogOut, ChevronRight } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
-import {getCurrentPatient, logout} from '../services/spid-auth.service';
+import { getCurrentPatient, logout } from '../services/spid-auth.service';
 import type { ProfileDto } from '../types/profile';
 import BottomNavigation from '../components/BottomNavigation';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
@@ -12,6 +12,7 @@ const Settings: React.FC = () => {
     const navigate = useNavigate();
     const [profileData, setProfileData] = useState<ProfileDto | null>(null);
     const [loading, setLoading] = useState(true);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,24 +32,29 @@ const Settings: React.FC = () => {
         navigate('/profile');
     };
 
-    const handleLogout = () => {
+    const handleLogoutClick = () => {
+        setShowLogoutModal(true);
+    };
+
+    const handleLogoutConfirm = () => {
         logout();
         navigate('/spid-info');
     };
 
+    const handleLogoutCancel = () => {
+        setShowLogoutModal(false);
+    };
+
     const handlePersonalInfo = () => {
-        // TODO: Navigate to personal info page
-        console.log('Navigate to personal info');
+        navigate('/settings/personal-info');
     };
 
     const handleSupport = () => {
-        // TODO: Navigate to support page
-        console.log('Navigate to support');
+        navigate('/settings/support');
     };
 
     const handleBadges = () => {
-        // TODO: Navigate to badges page
-        console.log('Navigate to badges');
+        navigate('/settings/badges');
     };
 
     if (loading) {
@@ -124,7 +130,7 @@ const Settings: React.FC = () => {
             <div className="settings-section">
                 <h3 className="settings-section-title">Disconnessione</h3>
 
-                <button className="settings-item" onClick={handleLogout}>
+                <button className="settings-item settings-item-logout" onClick={handleLogoutClick}>
                     <div className="settings-item-left">
                         <LogOut size={20} className="settings-item-icon" />
                         <span className="settings-item-text">Esci</span>
@@ -132,6 +138,24 @@ const Settings: React.FC = () => {
                     <ChevronRight size={20} className="settings-item-arrow" />
                 </button>
             </div>
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutModal && (
+                <div className="modal-overlay" onClick={handleLogoutCancel}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2 className="modal-title">Conferma Uscita</h2>
+                        <p className="modal-message">Sei sicuro di voler uscire?</p>
+                        <div className="modal-buttons">
+                            <button className="modal-button modal-button-cancel" onClick={handleLogoutCancel}>
+                                Annulla
+                            </button>
+                            <button className="modal-button modal-button-confirm" onClick={handleLogoutConfirm}>
+                                Esci
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <BottomNavigation />
         </div>

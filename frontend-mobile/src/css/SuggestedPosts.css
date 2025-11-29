@@ -22,6 +22,13 @@
     color: var(--primary-light);
     cursor: pointer;
     letter-spacing: 2px;
+    padding: 8px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.more-options:hover {
+    transform: scale(1.1);
+    opacity: 0.7;
 }
 
 .posts-container {
@@ -46,6 +53,17 @@
     gap: 10px;
     scroll-snap-align: center;
     /* Snap cards to center */
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+.post-card:active {
+    transform: translateY(-2px);
 }
 
 .post-category-tag {

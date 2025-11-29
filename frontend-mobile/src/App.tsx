@@ -18,6 +18,9 @@ import Forum from './pages/Forum';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import Settings from './pages/Settings';
+import PersonalInfo from './pages/settings/PersonalInfo';
+import TechnicalSupport from './pages/settings/TechnicalSupport';
+import Badges from './pages/settings/Badges';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -108,6 +111,30 @@ function App() {
           element={
             <PrivateRoute>
               <Settings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings/personal-info"
+          element={
+            <PrivateRoute>
+              <PersonalInfo />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings/support"
+          element={
+            <PrivateRoute>
+              <TechnicalSupport />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings/badges"
+          element={
+            <PrivateRoute>
+              <Badges />
             </PrivateRoute>
           }
         />

@@ -10,8 +10,7 @@ import { StatoAnimoModule } from './stato-animo/stato-animo.module.js';
 import { DiarioModule } from './diario/diario.module.js';
 import { BadgeModule } from './badge/badge.module.js';
 import { AreaPersonaleModule } from './area-personale/area-personale.module.js';
-
-
+import { SettingsModule } from './settings/settings.module.js';
 
 @Module({
     imports: [
@@ -22,6 +21,7 @@ import { AreaPersonaleModule } from './area-personale/area-personale.module.js';
         DiarioModule,
         BadgeModule,
         AreaPersonaleModule,
+        SettingsModule,
     ],
     controllers: [
         HomeController,

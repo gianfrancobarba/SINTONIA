@@ -123,7 +123,7 @@ const Profile: React.FC = () => {
             {/* Cards Grid */}
             <div className="profile-cards-grid">
                 {/* Badge Card */}
-                <div className="profile-card badge-card">
+                <div className="profile-card badge-card" onClick={() => navigate('/settings/badges')}>
                     <div className="card-header">
                         <Heart size={20} />
                         <span>I Tuoi Badge</span>
@@ -196,7 +196,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Questionnaires Card */}
-                <div className="profile-card questionnaire-card">
+                <div className="profile-card questionnaire-card" onClick={() => navigate('/questionari')}>
                     <div className="card-header">
                         <FileText size={20} />
                         <span>Questionari</span>
