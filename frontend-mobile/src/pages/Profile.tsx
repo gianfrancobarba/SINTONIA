@@ -1,30 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Settings, Heart, Smile, BookOpen, FileText, Clock } from 'lucide-react';
-import { getCurrentPatient, logout } from '../services/spid-auth.service';
+import { logout } from '../services/spid-auth.service';
+import { getProfileData } from '../services/profile.service';
+import type { ProfileDto } from '../types/profile';
 import BottomNavigation from '../components/BottomNavigation';
 import '../css/Profile.css';
-
-// Mock data matching the design
-const mockUserData = {
-    name: "Giuseppe",
-    badges: {
-        total: 80,
-        progress: 0.65  // 65% progress
-    },
-    mood: {
-        current: "Triste",
-        weekData: [3, 5, 2, 6, 4, 7, 3, 5, 2, 4, 1]  // Bar chart heights
-    },
-    diary: {
-        date: "11/10",
-        lastEntry: "Ho trascorso una lunga giornata lavorativa che non mi ha portato a nulla"
-    },
-    questionnaires: {
-        daysAgo: 10,
-        message: "Hai un questionario da compilare"
-    }
-};
 
 // Logout SVG Icon
 const LogoutIcon = () => (
@@ -37,11 +18,77 @@ const LogoutIcon = () => (
 
 const Profile: React.FC = () => {
     const navigate = useNavigate();
-    const { name, badges, mood, diary, questionnaires } = mockUserData;
+    const [profileData, setProfileData] = useState<ProfileDto | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    // Fetch profile data on component mount
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getProfileData();
+                setProfileData(data);
+            } catch (err) {
+                setError('Errore nel caricamento dei dati');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     const handleLogout = () => {
         logout();
         navigate('/spid-info');
+    };
+
+    // Loading state
+    if (loading) {
+        return (
+            <div className="profile-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div>Caricamento...</div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (error || !profileData) {
+        return (
+            <div className="profile-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div>Errore: {error || 'Dati non disponibili'}</div>
+            </div>
+        );
+    }
+
+    // Map backend data to UI format
+    const { profilo, badge, statoAnimo, diario, questionari } = profileData;
+
+    const name = profilo.nome;
+    const badges = {
+        total: badge.numeroBadge,
+        progress: Math.min(badge.numeroBadge / 100, 1)  // Progress calcolato (max 100%)
+    };
+
+    // Mood data with placeholder if null
+    const hasMoodData = statoAnimo !== null && statoAnimo.storicoRecente.length > 0;
+    const mood = {
+        current: statoAnimo?.umore || 'Nessun dato',
+        weekData: hasMoodData
+            ? statoAnimo.storicoRecente.map(entry => entry.intensita || 5)
+            : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  // Placeholder vuoto
+    };
+
+    // Diary data
+    const diaryData = diario ? {
+        date: diario.ultimaEntryData,
+        lastEntry: diario.ultimaEntryAnteprima
+    } : null;
+
+    // Questionnaires data
+    const questionnairesData = {
+        daysAgo: 10,  // TODO: Calcolare dalla data ultimo questionario
+        message: questionari.messaggioPromemoria || `Hai ${questionari.numeroDaCompilare} questionari da completare`
     };
 
     // Calculate circle progress for badges
@@ -50,7 +97,7 @@ const Profile: React.FC = () => {
     const strokeDashoffset = circumference - (badges.progress * circumference);
 
     // Normalize mood data for chart (0-10 scale)
-    const maxHeight = Math.max(...mood.weekData);
+    const maxHeight = Math.max(...mood.weekData, 1);  // Evita divisione per 0
     const normalizedData = mood.weekData.map(val => (val / maxHeight) * 100);
 
     return (
@@ -117,7 +164,7 @@ const Profile: React.FC = () => {
                         <span>Stato D'Animo</span>
                     </div>
                     <div className="mood-title">{mood.current}</div>
-                    <div className="mood-chart">
+                    <div className="mood-chart" style={{ opacity: hasMoodData ? 1 : 0.3 }}>
                         {normalizedData.map((height, index) => (
                             <div
                                 key={index}
@@ -131,6 +178,11 @@ const Profile: React.FC = () => {
                             <div key={index} className="mood-dot"></div>
                         ))}
                     </div>
+                    {!hasMoodData && (
+                        <div style={{ textAlign: 'center', fontSize: '12px', color: '#888', marginTop: '8px' }}>
+                            Nessun dato recente
+                        </div>
+                    )}
                 </div>
 
                 {/* Diary Card */}
@@ -139,8 +191,16 @@ const Profile: React.FC = () => {
                         <BookOpen size={20} />
                         <span>Diario</span>
                     </div>
-                    <div className="diary-date">{diary.date}</div>
-                    <p className="diary-text">{diary.lastEntry}</p>
+                    {diaryData ? (
+                        <>
+                            <div className="diary-date">{diaryData.date}</div>
+                            <p className="diary-text">{diaryData.lastEntry}</p>
+                        </>
+                    ) : (
+                        <p className="diary-text" style={{ color: '#888', fontStyle: 'italic' }}>
+                            Inizia a scrivere il tuo diario
+                        </p>
+                    )}
                 </div>
 
                 {/* Questionnaires Card */}
@@ -151,9 +211,9 @@ const Profile: React.FC = () => {
                     </div>
                     <div className="questionnaire-time">
                         <Clock size={16} />
-                        <span>-{questionnaires.daysAgo} giorni fa...</span>
+                        <span>~{questionnairesData.daysAgo} giorni fa...</span>
                     </div>
-                    <p className="questionnaire-message">{questionnaires.message}</p>
+                    <p className="questionnaire-message">{questionnairesData.message}</p>
                 </div>
             </div>
 
