@@ -1,4 +1,9 @@
+import axios from 'axios';
 import type { DiaryPage, CreateDiaryPageDto, UpdateDiaryPageDto } from '../types/diary';
+
+// Toggle per passare da mock a API reale
+const USE_MOCK_DATA = false;
+const API_URL = 'http://localhost:3000/paziente/diario';
 
 // Mock data - simulazione di pagine di diario
 const mockDiaryPages: DiaryPage[] = [
@@ -29,68 +34,136 @@ const mockDiaryPages: DiaryPage[] = [
 ];
 
 /**
+ * Get authentication headers with JWT token
+ */
+const getAuthHeaders = () => {
+    const token = localStorage.getItem('patient_token');
+    return {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+};
+
+/**
  * Get all diary pages ordered by date (most recent first)
  */
 export const getDiaryPages = async (): Promise<DiaryPage[]> => {
-    // Simula un delay di rete
-    await new Promise(resolve => setTimeout(resolve, 300));
+    if (USE_MOCK_DATA) {
+        // Simula un delay di rete
+        await new Promise(resolve => setTimeout(resolve, 300));
+        // Ritorna le pagine ordinate dalla più recente alla più vecchia
+        return [...mockDiaryPages].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    }
 
-    // Ritorna le pagine ordinate dalla più recente alla più vecchia
-    return [...mockDiaryPages].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    try {
+        const response = await axios.get<DiaryPage[]>(API_URL, getAuthHeaders());
+        // Convert date strings to Date objects
+        return response.data.map(page => ({
+            ...page,
+            createdAt: new Date(page.createdAt),
+            updatedAt: page.updatedAt ? new Date(page.updatedAt) : undefined,
+        }));
+    } catch (error) {
+        console.error('Error fetching diary pages:', error);
+        throw new Error('Impossibile caricare le pagine del diario');
+    }
 };
 
 /**
  * Get a single diary page by ID
  */
 export const getDiaryPage = async (id: string): Promise<DiaryPage | null> => {
-    await new Promise(resolve => setTimeout(resolve, 200));
+    if (USE_MOCK_DATA) {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        const page = mockDiaryPages.find(p => p.id === id);
+        return page || null;
+    }
 
-    const page = mockDiaryPages.find(p => p.id === id);
-    return page || null;
-};
-
-/**
- * Create a new diary page (MOCK - verrà implementato con backend)
- */
-export const createDiaryPage = async (data: CreateDiaryPageDto): Promise<DiaryPage> => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    const newPage: DiaryPage = {
-        id: String(mockDiaryPages.length + 1),
-        title: data.title,
-        content: data.content,
-        createdAt: new Date(),
-    };
-
-    mockDiaryPages.unshift(newPage);
-    return newPage;
-};
-
-/**
- * Update an existing diary page (MOCK - verrà implementato con backend)
- */
-export const updateDiaryPage = async (id: string, data: UpdateDiaryPageDto): Promise<void> => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    const pageIndex = mockDiaryPages.findIndex(p => p.id === id);
-    if (pageIndex !== -1) {
-        mockDiaryPages[pageIndex] = {
-            ...mockDiaryPages[pageIndex],
-            ...data,
-            updatedAt: new Date(),
+    try {
+        const response = await axios.get<DiaryPage>(`${API_URL}/${id}`, getAuthHeaders());
+        return {
+            ...response.data,
+            createdAt: new Date(response.data.createdAt),
+            updatedAt: response.data.updatedAt ? new Date(response.data.updatedAt) : undefined,
         };
+    } catch (error) {
+        console.error('Error fetching diary page:', error);
+        return null;
     }
 };
 
 /**
- * Delete a diary page (MOCK - verrà implementato con backend)
+ * Create a new diary page
+ */
+export const createDiaryPage = async (data: CreateDiaryPageDto): Promise<DiaryPage> => {
+    if (USE_MOCK_DATA) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        const newPage: DiaryPage = {
+            id: String(mockDiaryPages.length + 1),
+            title: data.title,
+            content: data.content,
+            createdAt: new Date(),
+        };
+        mockDiaryPages.unshift(newPage);
+        return newPage;
+    }
+
+    try {
+        const response = await axios.post<DiaryPage>(API_URL, data, getAuthHeaders());
+        return {
+            ...response.data,
+            createdAt: new Date(response.data.createdAt),
+        };
+    } catch (error) {
+        console.error('Error creating diary page:', error);
+        throw new Error('Impossibile creare la pagina del diario');
+    }
+};
+
+/**
+ * Update an existing diary page
+ */
+export const updateDiaryPage = async (id: string, data: UpdateDiaryPageDto): Promise<void> => {
+    if (USE_MOCK_DATA) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        const pageIndex = mockDiaryPages.findIndex(p => p.id === id);
+        if (pageIndex !== -1) {
+            mockDiaryPages[pageIndex] = {
+                ...mockDiaryPages[pageIndex],
+                ...data,
+                updatedAt: new Date(),
+            };
+        }
+        return;
+    }
+
+    try {
+        await axios.patch(`${API_URL}/${id}`, data, getAuthHeaders());
+    } catch (error) {
+        console.error('Error updating diary page:', error);
+        throw new Error('Impossibile aggiornare la pagina del diario');
+    }
+};
+
+/**
+ * Delete a diary page
  */
 export const deleteDiaryPage = async (id: string): Promise<void> => {
-    await new Promise(resolve => setTimeout(resolve, 300));
+    if (USE_MOCK_DATA) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        const pageIndex = mockDiaryPages.findIndex(p => p.id === id);
+        if (pageIndex !== -1) {
+            mockDiaryPages.splice(pageIndex, 1);
+        }
+        return;
+    }
 
-    const pageIndex = mockDiaryPages.findIndex(p => p.id === id);
-    if (pageIndex !== -1) {
-        mockDiaryPages.splice(pageIndex, 1);
+    try {
+        await axios.delete(`${API_URL}/${id}`, getAuthHeaders());
+    } catch (error) {
+        console.error('Error deleting diary page:', error);
+        throw new Error('Impossibile eliminare la pagina del diario');
     }
 };
 
@@ -104,44 +177,49 @@ export interface MonthYearOption {
 }
 
 export const getAvailableMonthsYears = async (): Promise<MonthYearOption[]> => {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    try {
+        const pages = await getDiaryPages();
 
-    const monthYearSet = new Set<string>();
+        const monthYearSet = new Set<string>();
 
-    mockDiaryPages.forEach(page => {
-        const date = new Date(page.createdAt);
-        const key = `${date.getFullYear()}-${date.getMonth()}`;
-        monthYearSet.add(key);
-    });
-
-    const options: MonthYearOption[] = [
-        { label: 'Tutti', month: undefined, year: undefined }
-    ];
-
-    // Converti il set in array e ordina
-    const sorted = Array.from(monthYearSet)
-        .map(key => {
-            const [year, month] = key.split('-').map(Number);
-            return { year, month };
-        })
-        .sort((a, b) => {
-            if (a.year !== b.year) return b.year - a.year; // Anno decrescente
-            return b.month - a.month; // Mese decrescente
+        pages.forEach(page => {
+            const date = new Date(page.createdAt);
+            const key = `${date.getFullYear()}-${date.getMonth()}`;
+            monthYearSet.add(key);
         });
 
-    sorted.forEach(({ year, month }) => {
-        const monthNames = [
-            'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-            'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+        const options: MonthYearOption[] = [
+            { label: 'Tutti', month: undefined, year: undefined }
         ];
-        options.push({
-            month,
-            year,
-            label: `${monthNames[month]} ${year}`
-        });
-    });
 
-    return options;
+        // Converti il set in array e ordina
+        const sorted = Array.from(monthYearSet)
+            .map(key => {
+                const [year, month] = key.split('-').map(Number);
+                return { year, month };
+            })
+            .sort((a, b) => {
+                if (a.year !== b.year) return b.year - a.year; // Anno decrescente
+                return b.month - a.month; // Mese decrescente
+            });
+
+        sorted.forEach(({ year, month }) => {
+            const monthNames = [
+                'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+                'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+            ];
+            options.push({
+                month,
+                year,
+                label: `${monthNames[month]} ${year}`
+            });
+        });
+
+        return options;
+    } catch (error) {
+        console.error('Error getting available months/years:', error);
+        return [{ label: 'Tutti', month: undefined, year: undefined }];
+    }
 };
 
 /**

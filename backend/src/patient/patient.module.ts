@@ -6,10 +6,11 @@ import { TermsService } from './terms/terms.service.js';
 import { ForumModule } from './forum/forum.module.js';
 import { SpidAuthModule } from '../spid-auth/spid-auth.module.js';
 import { QuestionarioModule } from './questionario/questionario.module.js';
+import { DiaryModule } from './diary/diary.module.js';
 
 
 @Module({
-    imports: [SpidAuthModule, QuestionarioModule, ForumModule],
+    imports: [SpidAuthModule, QuestionarioModule, ForumModule, DiaryModule],
     controllers: [
         HomeController,
         TermsController,
