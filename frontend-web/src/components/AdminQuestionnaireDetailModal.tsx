@@ -37,7 +37,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <div className="modal-title-section">
-                        <h2 className="modal-title">Dettagli Questionario (Admin)</h2>
+                        <h2 className="modal-title">Dettagli Questionario</h2>
                     </div>
                     <button className="modal-close-btn" onClick={onClose} aria-label="Chiudi">
                         ✕
@@ -61,7 +61,13 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                             </div>
                             <div className="info-item">
                                 <label>Data Compilazione:</label>
-                                <span>{questionnaire.dataCompilazione}</span>
+                                <span>{new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}</span>
                             </div>
                             {questionnaire.score !== null && (
                                 <div className="info-item">

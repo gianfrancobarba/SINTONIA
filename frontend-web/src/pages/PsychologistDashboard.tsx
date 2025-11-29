@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PsychologistProfile from '../components/PsychologistProfile';
 import EmptyState from '../components/EmptyState';
+import PsychologistPatientList from './PsychologistPatientList';
+import QuestionnaireManagement from './QuestionnaireManagement';
 import '../css/PsychologistDashboard.css';
 
 const PsychologistDashboard: React.FC = () => {

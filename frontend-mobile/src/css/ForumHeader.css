@@ -1,0 +1,93 @@
+.forum-header {
+    background: linear-gradient(135deg, #0D475D 0%, #165A73 100%);
+    padding: 48px 20px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.forum-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 430px;
+    margin: 0 auto;
+    gap: 16px;
+}
+
+.back-button {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 28px;
+    font-weight: 300;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.back-button img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+}
+
+.forum-title-section {
+    flex: 1;
+    text-align: left;
+}
+
+.forum-title {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.forum-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 400;
+    margin: 4px 0 0;
+    line-height: 1.2;
+}
+
+.add-post-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    color: white;
+    font-size: 32px;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+    line-height: 1;
+    padding: 0;
+}
+
+.add-post-button:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.add-post-button:active {
+    background: rgba(255, 255, 255, 0.45);
+}

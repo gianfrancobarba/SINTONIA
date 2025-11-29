@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AdminProfile from '../components/AdminProfile';
 import EmptyState from '../components/EmptyState';
 import AdminQuestionnaireList from './AdminQuestionnaireList';
+import AdminPatientList from './AdminPatientList';
+import AdminInvalidationList from './AdminInvalidationList';
 import '../css/PsychologistDashboard.css'; // Reuse layout styles
 
 const AdminDashboard: React.FC = () => {
@@ -30,6 +32,10 @@ const AdminDashboard: React.FC = () => {
         switch (activeSection) {
             case 'questionari':
                 return <AdminQuestionnaireList />;
+            case 'pazienti':
+                return <AdminPatientList />;
+            case 'invalidazione':
+                return <AdminInvalidationList />;
             default:
                 return <EmptyState />;
         }

@@ -268,6 +268,116 @@
     opacity: 0.6;
 }
 
+/* Action Buttons Container */
+.action-buttons-container {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* Base Action Button Styles */
+.btn-action {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    min-width: 140px;
+    opacity: 0.6;
+    filter: brightness(0.85);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-icon {
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+    z-index: 1;
+}
+
+.btn-text {
+    z-index: 1;
+}
+
+/* Accept Button */
+.btn-accept {
+    background: linear-gradient(135deg, #7FB77E 0%, #5fa05d 100%);
+    color: white;
+}
+
+.btn-accept:hover:not(:disabled) {
+    opacity: 1;
+    filter: brightness(1);
+    box-shadow: 0 4px 16px rgba(127, 183, 126, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-accept:hover:not(:disabled) .btn-icon {
+    transform: scale(1.1);
+}
+
+.btn-accept:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(127, 183, 126, 0.25);
+}
+
+/* Reject Button */
+.btn-reject {
+    background: linear-gradient(135deg, #E57373 0%, #d64545 100%);
+    color: white;
+}
+
+.btn-reject:hover:not(:disabled) {
+    opacity: 1;
+    filter: brightness(1);
+    box-shadow: 0 4px 16px rgba(229, 115, 115, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-reject:hover:not(:disabled) .btn-icon {
+    transform: scale(1.1);
+}
+
+.btn-reject:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(229, 115, 115, 0.25);
+}
+
+/* Disabled State */
+.btn-action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Loading Animation for Text */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.btn-action:disabled .btn-text {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Old button style for backwards compatibility */
 .btn-request-invalidation {
     padding: 12px 24px;
     background-color: #FFB74D;
@@ -293,7 +403,6 @@
     cursor: not-allowed;
     transform: none;
 }
-
 
 /* Modal Footer */
 .modal-footer {
@@ -343,6 +452,52 @@
 .modal-title-section .status-invalidato {
     background-color: #E57373;
     color: white;
+}
+
+/* Form Elements */
+.modal-input,
+.modal-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 2px solid #E0E0E0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--color-text-primary);
+    background-color: white;
+    transition: all 0.2s ease;
+}
+
+.modal-input:focus,
+.modal-select:focus {
+    outline: none;
+    border-color: var(--color-teal-medium);
+    box-shadow: 0 0 0 3px rgba(127, 183, 126, 0.1);
+}
+
+.modal-input:disabled,
+.modal-select:disabled {
+    background-color: #F5F5F5;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.modal-input::placeholder {
+    color: #999;
+    opacity: 0.7;
+}
+
+.modal-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+.modal-select:disabled {
+    cursor: not-allowed;
 }
 
 /* Responsive */

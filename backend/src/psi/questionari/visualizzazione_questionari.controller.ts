@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, Query, Param, UseGuards } from '@nestjs/common';
 import { Visualizzazione_questionariService } from './visualizzazione_questionari.service.js';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard.js';
 import { RolesGuard } from '../../auth/roles.guard.js';
@@ -18,7 +18,6 @@ export class Visualizzazione_questionariController {
     // Restituisce tutti i questionari non invalidati a prescindere dal CF
     return this.service.getTuttiNonInvalidati();
   }
-
 
   /**
    * Ritorna i questionari non invalidati di uno specifico paziente

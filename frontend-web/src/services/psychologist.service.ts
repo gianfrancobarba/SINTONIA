@@ -99,3 +99,38 @@ export const getTotalPages = (itemsPerPage: number = 3): number => {
     const allQuestionnaires = getQuestionnaires();
     return Math.ceil(allQuestionnaires.length / itemsPerPage);
 };
+
+/**
+ * Psychologist option for dropdown
+ */
+export interface PsychologistOption {
+    codFiscale: string;
+    nome: string;
+    cognome: string;
+}
+
+/**
+ * Fetch all psychologists (admin only)
+ * Used for dropdown selection when assigning psychologists to patients
+ */
+export const fetchAllPsychologists = async (): Promise<PsychologistOption[]> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists`, {
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data: PsychologistOption[] = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching psychologists:', error);
+        throw error;
+    }
+};

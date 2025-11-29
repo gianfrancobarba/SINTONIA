@@ -9,14 +9,17 @@ body,
 .bottom-nav-container {
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
     /* ensure stretch to both edges */
     /* Full-bleed to screen edges without 100vw issues */
     width: 100%;
-    max-width: none;
-    /* Match SVG intrinsic height (123) with small cushion for shadows */
-    height: 130px;
+    max-width: 500px;
+    /* Use aspect-ratio to ensure the SVG scales uniformly. 
+       This keeps the percentage-based button positions accurate on all screen sizes.
+       Ratio is 375 / 123 (from SVG viewBox) */
+    aspect-ratio: 375 / 123;
+    height: auto;
     z-index: 100;
     pointer-events: none;
     /* Let clicks pass through container */
@@ -62,7 +65,7 @@ body,
     width: 100%;
     /* fill container width */
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
     /* fill horizontally exactly to edges */
     object-position: bottom center;
 }
@@ -99,6 +102,23 @@ body,
     cursor: pointer;
     /* center by both axes */
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hit-btn img {
+    width: 24px;
+    height: 24px;
+    /* Apply teal tint to match design */
+    filter: invert(49%) sepia(17%) saturate(743%) hue-rotate(131deg) brightness(95%) contrast(89%);
+}
+
+.hit-center img {
+    width: 32px;
+    height: 32px;
+    /* Darker teal for home */
+    filter: invert(16%) sepia(12%) saturate(2093%) hue-rotate(152deg) brightness(88%) contrast(96%);
 }
 
 /* Positions derived from SVG centers (viewBox 375x123):
