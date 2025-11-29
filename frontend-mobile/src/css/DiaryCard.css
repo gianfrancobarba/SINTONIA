@@ -1,0 +1,236 @@
+.diary-card {
+    position: absolute;
+    width: 85%;
+    max-width: 340px;
+    min-height: 420px;
+    border-radius: 24px;
+    padding: 28px 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    left: 50%;
+    top: 50%;
+    touch-action: none;
+    /* Necessario per i touch gestures */
+}
+
+.diary-card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Posizioni delle carte */
+.diary-card-center {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.diary-card-left {
+    transform: translate(-90%, -50%) scale(0.90) rotate(-8deg);
+    opacity: 0.6;
+    pointer-events: none;
+    filter: brightness(0.9);
+}
+
+.diary-card-right {
+    transform: translate(-10%, -50%) scale(0.90) rotate(8deg);
+    opacity: 0.6;
+    pointer-events: none;
+    filter: brightness(0.9);
+}
+
+.diary-card-hidden {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Header della carta */
+.diary-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.diary-card-title-section {
+    flex: 1;
+}
+
+.diary-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.diary-card-date {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(31, 41, 55, 0.6);
+}
+
+/* Action buttons */
+.diary-card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.diary-action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.diary-action-btn:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(1.1);
+}
+
+.diary-action-btn:active {
+    transform: scale(0.95);
+}
+
+.diary-action-btn img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) saturate(100%);
+}
+
+.edit-btn img {
+    filter: brightness(0) saturate(100%) invert(40%) sepia(90%) saturate(800%) hue-rotate(170deg);
+}
+
+.delete-btn {
+    opacity: 0.9;
+}
+
+/* Contenuto testuale */
+.diary-card-text {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #1F2937;
+    overflow-y: auto;
+    margin-bottom: 24px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Nasconde scrollbar ma mant iene funzionalità */
+.diary-card-text::-webkit-scrollbar {
+    width: 4px;
+}
+
+.diary-card-text::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+}
+
+.diary-card-text::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+
+/* Navigazione con frecce */
+.diary-card-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+.diary-nav-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.diary-nav-arrow img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(16%) sepia(9%) saturate(1217%) hue-rotate(169deg);
+}
+
+.diary-nav-arrow.arrow-left img {
+    transform: rotate(180deg);
+}
+
+.diary-nav-arrow:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+}
+
+.diary-nav-arrow:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.diary-nav-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Animazioni hover sulla carta centrale */
+.diary-card-center:hover {
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 375px) {
+    .diary-card {
+        width: 90%;
+        max-width: none;
+        padding: 24px 20px;
+        min-height: 380px;
+    }
+
+    .diary-card-title {
+        font-size: 18px;
+    }
+
+    .diary-card-text {
+        font-size: 14px;
+    }
+
+    .diary-nav-arrow {
+        width: 42px;
+        height: 42px;
+    }
+
+    .diary-nav-arrow img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .diary-action-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .diary-action-btn img {
+        width: 16px;
+        height: 16px;
+    }
+}
