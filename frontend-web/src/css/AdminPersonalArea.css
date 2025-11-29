@@ -224,6 +224,39 @@
     border-color: #6DA5A5;
 }
 
+/* Change Password Button */
+.change-password-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #0D475D 0%, #0A3A4A 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.25);
+}
+
+.change-password-button:hover {
+    background: linear-gradient(135deg, #0A3A4A 0%, #082E38 100%);
+    box-shadow: 0 6px 16px rgba(13, 71, 93, 0.35);
+    transform: translateY(-2px);
+}
+
+.change-password-button:active {
+    transform: translateY(0);
+}
+
+.change-password-button svg {
+    flex-shrink: 0;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .personal-area-header {

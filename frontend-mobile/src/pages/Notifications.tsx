@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, FileText, MessageSquare, Smile, ChevronRight } from 'lucide-react';
+import BottomNavigation from '../components/BottomNavigation';
 import '../css/Notifications.css';
 
 interface Notification {
@@ -24,22 +25,6 @@ const Notifications: React.FC = () => {
             description: 'C\'è un questionario da compilare',
             hasAction: true,
             actionRoute: '/questionari'
-        },
-        {
-            id: '2',
-            icon: 'message',
-            title: 'Risposta dal Dr. Pirillo alla tua domanda',
-            description: '',
-            hasAction: true,
-            actionRoute: '/forum'
-        },
-        {
-            id: '3',
-            icon: 'mood',
-            title: 'Come ti senti oggi?',
-            description: 'Inserisci il tuo stato d\'animo.',
-            hasAction: true,
-            actionRoute: '/home'
         }
     ];
 
@@ -118,6 +103,8 @@ const Notifications: React.FC = () => {
                     </div>
                 ))}
             </div>
+
+            <BottomNavigation />
         </div>
     );
 };
