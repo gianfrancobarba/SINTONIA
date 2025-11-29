@@ -136,7 +136,11 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSect
             <div className="profile-header">
                 <div className="header-background" />
                 <div className="profile-section">
-                    <button className="side-btn left-side-btn" aria-label="Edit Profile">
+                    <button
+                        className="side-btn left-side-btn"
+                        aria-label="Edit Profile"
+                        onClick={(e) => handleNavigation('area-personale', e)}
+                    >
                         <svg
                             width="24"
                             height="24"
