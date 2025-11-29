@@ -3,7 +3,7 @@
  * Matches backend database schema (domanda_forum, risposta_forum)
  */
 
-export type ForumCategory = 'Ansia' | 'Stress' | 'Tristezza' | 'Vita di coppia' | 'Altro';
+export type ForumCategory = 'Ansia' | 'Stress' | 'Tristezza' | 'Vita di coppia';
 
 /**
  * Forum question from database

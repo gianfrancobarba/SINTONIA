@@ -18,8 +18,7 @@ const ForumCategoryFilter: React.FC<ForumCategoryFilterProps> = ({
         'Ansia',
         'Stress',
         'Tristezza',
-        'Vita di coppia',
-        'Altro'
+        'Vita di coppia'
     ];
 
     const getCategoryLabel = (category: ForumCategory | null): string => {

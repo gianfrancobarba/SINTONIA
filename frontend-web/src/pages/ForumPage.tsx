@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import PsychologistProfile from '../components/PsychologistProfile';
 import AdminProfile from '../components/AdminProfile';
 import ForumQuestionCard from '../components/ForumQuestionCard';
+import ForumCategoryFilter from '../components/ForumCategoryFilter';
 import ForumReplyModal from '../components/ForumReplyModal';
-import type { ForumQuestion, ForumStats, LoadingState } from '../types/forum';
+import type { ForumQuestion, ForumStats, LoadingState, ForumCategory } from '../types/forum';
 import { fetchForumQuestions, fetchForumStats, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
 import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumPage.css';
@@ -24,6 +25,7 @@ const ForumPage: React.FC = () => {
         error: null
     });
     const [filterType, setFilterType] = useState<FilterType>('all');
+    const [selectedCategory, setSelectedCategory] = useState<ForumCategory | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const QUESTIONS_PER_PAGE = 5;
     const [modalState, setModalState] = useState<{
@@ -156,14 +158,22 @@ const ForumPage: React.FC = () => {
     const getFilteredQuestions = (): ForumQuestion[] => {
         if (!questionsState.data) return [];
 
+        let filtered = questionsState.data;
+
+        // Filter by category if selected
+        if (selectedCategory) {
+            filtered = filtered.filter(q => q.categoria === selectedCategory);
+        }
+
+        // Filter by answer status
         switch (filterType) {
             case 'unanswered':
-                return questionsState.data.filter(q => !q.risposte || q.risposte.length === 0);
+                return filtered.filter(q => !q.risposte || q.risposte.length === 0);
             case 'answered':
-                return questionsState.data.filter(q => q.risposte && q.risposte.length > 0);
+                return filtered.filter(q => q.risposte && q.risposte.length > 0);
             case 'all':
             default:
-                return questionsState.data;
+                return filtered;
         }
     };
 
@@ -213,24 +223,29 @@ const ForumPage: React.FC = () => {
                                     onClick={() => setFilterType('all')}
                                 >
                                     <span className="stat-value">{statsState.data.totalQuestions}</span>
-                                    <span className="stat-label">Totali</span>
+                                    <span className="stat-label">Domande Totali</span>
                                 </button>
                                 <button
                                     className={`stat-item stat-unanswered ${filterType === 'unanswered' ? 'stat-active' : ''}`}
                                     onClick={() => setFilterType('unanswered')}
                                 >
                                     <span className="stat-value">{statsState.data.unansweredQuestions}</span>
-                                    <span className="stat-label">Da rispondere</span>
+                                    <span className="stat-label">Domande Da rispondere</span>
                                 </button>
                                 <button
                                     className={`stat-item stat-answered ${filterType === 'answered' ? 'stat-active' : ''}`}
                                     onClick={() => setFilterType('answered')}
                                 >
                                     <span className="stat-value">{statsState.data.answeredQuestions}</span>
-                                    <span className="stat-label">Risposte</span>
+                                    <span className="stat-label">Domande Risposte</span>
                                 </button>
                             </div>
                         )}
+
+                        <ForumCategoryFilter
+                            selectedCategory={selectedCategory}
+                            onSelectCategory={setSelectedCategory}
+                        />
 
                         {questionsState.loading && (
                             <div className="loading-state">
