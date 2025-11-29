@@ -107,7 +107,8 @@
 }
 
 .stat-item.stat-active .stat-value,
-.stat-item.stat-active .stat-label {
+.stat-item.stat-active .stat-label,
+.stat-item.stat-active .stat-icon {
     color: white;
 }
 
@@ -125,6 +126,13 @@
     color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+.stat-icon {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 4px;
+    stroke-width: 2.5;
 }
 
 .stat-unanswered:not(.stat-active) {

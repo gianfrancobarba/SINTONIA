@@ -192,13 +192,13 @@
 }
 
 .submit-modal-button {
-    background: #3b82f6;
+    background: #2B7A7A;
     border: none;
     color: white;
 }
 
 .submit-modal-button:hover:not(:disabled) {
-    background: #2563eb;
+    background: #236262;
 }
 
 .submit-modal-button:disabled {

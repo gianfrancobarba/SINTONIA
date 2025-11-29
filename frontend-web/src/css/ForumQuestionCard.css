@@ -92,7 +92,7 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: #3b82f6;
+    background: var(--color-teal-medium);
     color: white;
     border: none;
     border-radius: 8px;
@@ -103,11 +103,17 @@
 }
 
 .answer-button:hover {
-    background: #2563eb;
+    background: var(--color-teal-dark);
 }
 
 .answer-button:active {
     transform: scale(0.98);
+}
+
+.button-icon {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
 }
 
 /* Responsive */

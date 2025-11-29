@@ -44,9 +44,11 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
         <div className="forum-answer-section">
             <div className="answer-header">
                 <div className="answer-header-left">
-                    <span className="answer-icon">💬</span>
+                    <svg className="answer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
                     <span className="answer-label">
-                        {isMyAnswer ? 'Tua Risposta' : `Risposta di ${answer.nomePsicologo} ${answer.cognomePsicologo}`}
+                        {isMyAnswer ? 'Tua Risposta' : `Risposta di Dr. ${answer.nomePsicologo} ${answer.cognomePsicologo}`}
                     </span>
                 </div>
                 {isMyAnswer && onEdit && onDelete && (
@@ -74,7 +76,6 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
             </div>
 
             <div className="answer-footer">
-                <span className="answer-author">{answer.nomePsicologo} {answer.cognomePsicologo}</span>
                 <span className="answer-separator">•</span>
                 <span className="answer-time">{getTimeAgo(answer.dataRisposta)}</span>
             </div>
