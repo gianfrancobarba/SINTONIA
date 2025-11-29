@@ -108,7 +108,7 @@ export interface PsychologistOption {
     nome: string;
     cognome: string;
     aslAppartenenza?: string;
-    stato?: 'attivo' | 'sospeso';
+    stato?: boolean | 'attivo' | 'sospeso';
     immagineProfilo?: string | null;
 }
 
@@ -134,6 +134,47 @@ export const fetchAllPsychologists = async (): Promise<PsychologistOption[]> => 
         return data;
     } catch (error) {
         console.error('Error fetching psychologists:', error);
+        throw error;
+    }
+};
+
+/**
+ * Create a new psychologist (admin only)
+ * @param psychologistData - Psychologist data to create
+ */
+export const createPsychologist = async (psychologistData: {
+    codFiscale: string;
+    nome: string;
+    cognome: string;
+    email: string;
+    aslAppartenenza: string;
+}): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists`, {
+            method: 'POST',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                codFiscale: psychologistData.codFiscale,
+                nome: psychologistData.nome,
+                cognome: psychologistData.cognome,
+                email: psychologistData.email,
+                aslAppartenenza: psychologistData.aslAppartenenza,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error creating psychologist:', error);
         throw error;
     }
 };
