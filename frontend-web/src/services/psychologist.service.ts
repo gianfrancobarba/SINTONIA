@@ -154,10 +154,58 @@ export const createPsychologist = async (psychologistData: {
         const token = getCurrentUser()?.access_token as string | undefined;
         const response = await fetch(`${API_URL}/admin/psychologists`, {
             method: 'POST',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(psychologistData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-      }catch{}
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating psychologist:', error);
+        throw error;
+    }
 };
-                                     
+
+/**
+ * Update an existing psychologist (admin only)
+ * @param codiceFiscale - Codice fiscale of the psychologist to update
+ * @param updateData - Data to update (email and/or aslAppartenenza)
+ */
+export const updatePsychologist = async (
+    codiceFiscale: string,
+    updateData: {
+        email?: string;
+        aslAppartenenza?: string;
+    }
+): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists/${encodeURIComponent(codiceFiscale)}`, {
+            method: 'PATCH',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error updating psychologist:', error);
+        throw error;
+    }
+};
+
 /**
  * Fetch psychologist profile
  */
