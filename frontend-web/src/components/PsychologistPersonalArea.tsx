@@ -224,10 +224,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
 
                     <div className="form-row">
                         <div className="form-field">
-                            <label className="field-label">
-                                Email
-                                {isEditing && <span className="field-editable-badge">modificabile</span>}
-                            </label>
+                            <label className="field-label">Email</label>
                             <input
                                 type="email"
                                 value={formData.email}
