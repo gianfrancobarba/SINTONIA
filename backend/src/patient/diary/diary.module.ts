@@ -21,5 +21,8 @@ import { DeleteDiaryPageService } from './delete-diary-page.service.js';
         UpdateDiaryPageService,
         DeleteDiaryPageService,
     ],
+    exports: [
+        DiaryService,
+    ],
 })
 export class DiaryModule { }
