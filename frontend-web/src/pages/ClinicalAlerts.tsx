@@ -136,35 +136,28 @@ const ClinicalAlerts: React.FC = () => {
                                     </p>
                                 </div>
 
-                                {/* Confirmation Message */}
-                                {confirmingAlertId && (
-                                    <div className="confirmation-banner">
-                                        <div className="confirmation-content">
-                                            <p className="confirmation-text">
-                                                Sei sicuro di voler accettare questo alert clinico?
-                                            </p>
-                                            <p className="confirmation-id">
-                                                <strong>ID Alert:</strong> {confirmingAlertId}
-                                            </p>
-                                            <p className="confirmation-warning">
-                                                Una volta accettato, l'alert verrà preso in carico e rimosso dalla lista.
-                                            </p>
-                                        </div>
-                                        <div className="confirmation-actions">
-                                            <button className="cancel-btn" onClick={handleCancelAccept}>
-                                                Annulla
-                                            </button>
-                                            <button className="confirm-btn" onClick={handleConfirmAccept}>
-                                                Conferma
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
+                                {/* Table area with confirmation overlay */}
+                                <div className="table-overlay-wrapper">
+                                    <ClinicalAlertsTable
+                                        alerts={getPaginatedAlerts()}
+                                        onAccept={handleAcceptClick}
+                                    />
 
-                                <ClinicalAlertsTable
-                                    alerts={getPaginatedAlerts()}
-                                    onAccept={handleAcceptClick}
-                                />
+                                    {confirmingAlertId && (
+                                        <div className="alerts-overlay" role="dialog" aria-modal="true" aria-labelledby="alerts-overlay-title">
+                                            <div className="alerts-overlay-backdrop" onClick={handleCancelAccept} />
+                                            <div className="alerts-overlay-card" role="document">
+                                                <h3 id="alerts-overlay-title" className="overlay-title">Conferma accettazione</h3>
+                                                <p className="overlay-text">Sei sicuro di voler accettare questo alert clinico?</p>
+                                                <p className="overlay-id"><strong>ID Alert:</strong> {confirmingAlertId}</p>
+                                                <div className="overlay-actions">
+                                                    <button className="cancel-btn" onClick={handleCancelAccept}>Annulla</button>
+                                                    <button className="confirm-btn" onClick={handleConfirmAccept}>Conferma</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
 
                                 {getTotalPages() > 1 && (
                                     <div className="pagination">
