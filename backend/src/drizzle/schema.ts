@@ -43,6 +43,7 @@ export const psicologo = pgTable('psicologo', {
     codFiscale: char('cod_fiscale', { length: 16 }).primaryKey(),
     nome: varchar('nome', { length: 64 }).notNull(),
     cognome: varchar('cognome', { length: 64 }).notNull(),
+    email: varchar('email', { length: 64 }).notNull(),
     aslAppartenenza: char('asl_appartenenza', { length: 6 }).notNull(),
     stato: boolean('stato').default(true).notNull(),
     immagineProfilo: varchar('immagine_profilo', { length: 256 }).notNull()

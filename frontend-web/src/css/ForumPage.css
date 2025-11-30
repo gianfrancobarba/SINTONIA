@@ -85,72 +85,74 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px 16px;
-    background: var(--color-background);
-    border-radius: 8px;
-    border: 2px solid var(--color-teal-light);
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    border: 2px solid #e5e7eb;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     font-family: inherit;
+    opacity: 0.7;
 }
 
 .stat-item:hover {
-    border-color: var(--color-teal-medium);
-    background: white;
+    opacity: 0.9;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(26, 95, 95, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Active state - All questions (Blue) */
 .stat-item.stat-active {
-    background: var(--color-teal-medium);
-    border-color: var(--color-teal-dark);
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    border-color: #1E40AF;
+    opacity: 1;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
 }
 
 .stat-item.stat-active .stat-value,
-.stat-item.stat-active .stat-label,
-.stat-item.stat-active .stat-icon {
+.stat-item.stat-active .stat-label {
+    color: white;
+}
+
+/* Unanswered questions (Yellow) */
+.stat-unanswered.stat-active {
+    background: linear-gradient(135deg, #FDE047 0%, #FACC15 100%);
+    border-color: #CA8A04;
+    box-shadow: 0 6px 16px rgba(250, 204, 21, 0.3);
+}
+
+.stat-unanswered.stat-active .stat-value,
+.stat-unanswered.stat-active .stat-label {
+    color: #78350F;
+}
+
+/* Answered questions (Green) */
+.stat-answered.stat-active {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    border-color: #059669;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.stat-answered.stat-active .stat-value,
+.stat-answered.stat-active .stat-label {
     color: white;
 }
 
 .stat-value {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--color-teal-dark);
+    color: #374151;
     line-height: 1;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
 
 .stat-label {
     font-size: 10px;
     font-weight: 600;
-    color: var(--color-text-secondary);
+    color: #6B7280;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-}
-
-.stat-icon {
-    width: 16px;
-    height: 16px;
-    margin-bottom: 4px;
-    stroke-width: 2.5;
-}
-
-.stat-unanswered:not(.stat-active) {
-    border-color: var(--color-pending);
-    background: #fff8e6;
-}
-
-.stat-unanswered:not(.stat-active) .stat-value {
-    color: var(--color-pending);
-}
-
-.stat-answered:not(.stat-active) {
-    border-color: var(--color-approved);
-    background: #f0f9f4;
-}
-
-.stat-answered:not(.stat-active) .stat-value {
-    color: var(--color-approved);
+    text-align: center;
 }
 
 /* Questions List */

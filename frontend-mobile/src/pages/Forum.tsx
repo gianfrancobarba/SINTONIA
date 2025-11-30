@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import ForumHeader from '../components/ForumHeader';
 import CategoryFilters from '../components/CategoryFilters';
 import ForumPostCard from '../components/ForumPostCard';
@@ -11,6 +11,7 @@ import '../css/Forum.css';
 const Forum: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [myQuestions, setMyQuestions] = useState<ForumPost[]>([]);
     const [publicQuestions, setPublicQuestions] = useState<ForumPost[]>([]);
     const [loading, setLoading] = useState(true);
@@ -19,6 +20,25 @@ const Forum: React.FC = () => {
     useEffect(() => {
         fetchPosts();
     }, [location.key]); // Ricarica quando la location cambia (es. tornando da CreatePost)
+
+    // Scroll automatico al post specifico quando viene passato postId
+    useEffect(() => {
+        const postId = searchParams.get('postId');
+        if (postId && !loading) {
+            // Timeout per assicurarsi che il DOM sia renderizzato
+            setTimeout(() => {
+                const element = document.getElementById(`post-${postId}`);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    // Rimuove il parametro dalla URL dopo lo scroll
+                    setSearchParams({});
+                }
+            }, 300);
+        }
+    }, [loading, searchParams, setSearchParams]);
 
     const fetchPosts = async () => {
         try {
@@ -81,13 +101,14 @@ const Forum: React.FC = () => {
                         <h2 className="section-title">Le Mie Domande</h2>
                         <div className="posts-list">
                             {filteredMyQuestions.map(post => (
-                                <ForumPostCard
-                                    key={post.id}
-                                    post={post}
-                                    isOwnPost={true}
-                                    onEdit={handleEditPost}
-                                    onDelete={handleDeletePost}
-                                />
+                                <div key={post.id} id={`post-${post.id}`}>
+                                    <ForumPostCard
+                                        post={post}
+                                        isOwnPost={true}
+                                        onEdit={handleEditPost}
+                                        onDelete={handleDeletePost}
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -99,11 +120,12 @@ const Forum: React.FC = () => {
                         <h2 className="section-title">Domande Pubbliche</h2>
                         <div className="posts-list">
                             {filteredPublicQuestions.map(post => (
-                                <ForumPostCard
-                                    key={post.id}
-                                    post={post}
-                                    isOwnPost={false}
-                                />
+                                <div key={post.id} id={`post-${post.id}`}>
+                                    <ForumPostCard
+                                        post={post}
+                                        isOwnPost={false}
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>

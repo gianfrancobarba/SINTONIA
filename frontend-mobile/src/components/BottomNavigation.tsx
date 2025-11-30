@@ -17,7 +17,7 @@ const BottomNavigation: React.FC = () => {
                 <button className="hit-btn hit-leftmost" aria-label="Community" onClick={() => navigate('/forum')} />
                 <button className="hit-btn hit-left" aria-label="Notes" />
                 <button className="hit-btn hit-center" aria-label="Home" onClick={() => navigate('/home')} />
-                <button className="hit-btn hit-right" aria-label="Notifications" />
+                <button className="hit-btn hit-right" aria-label="Notifications" onClick={() => navigate('/notifications')} />
                 <button className="hit-btn hit-rightmost" aria-label="Profile" onClick={() => navigate('/profile')} />
             </div>
 

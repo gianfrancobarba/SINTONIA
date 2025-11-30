@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { SuggestedPost } from '../types/home';
 import '../css/SuggestedPosts.css';
 
@@ -7,6 +8,7 @@ interface SuggestedPostsProps {
 }
 
 const SuggestedPosts: React.FC<SuggestedPostsProps> = ({ posts }) => {
+    const navigate = useNavigate();
     const [activeIndex, setActiveIndex] = useState(0);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -23,11 +25,20 @@ const SuggestedPosts: React.FC<SuggestedPostsProps> = ({ posts }) => {
         }
     };
 
+    const handleMoreOptions = () => {
+        navigate('/forum');
+    };
+
+    const handlePostClick = (postId: string) => {
+        // Navigate to forum with the specific post ID in the URL
+        navigate(`/forum?postId=${postId}`);
+    };
+
     return (
         <div className="suggested-posts-section">
             <div className="section-header">
                 <h3>Post che potrebbero interessarti</h3>
-                <button className="more-options">•••</button>
+                <button className="more-options" onClick={handleMoreOptions}>•••</button>
             </div>
 
             <div
@@ -36,7 +47,11 @@ const SuggestedPosts: React.FC<SuggestedPostsProps> = ({ posts }) => {
                 onScroll={handleScroll}
             >
                 {posts.map((post) => (
-                    <div key={post.id} className="post-card">
+                    <div
+                        key={post.id}
+                        className="post-card"
+                        onClick={() => handlePostClick(post.id)}
+                    >
                         <div className="post-category-tag">
                             {post.category}
                         </div>

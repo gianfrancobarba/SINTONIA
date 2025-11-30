@@ -134,3 +134,62 @@ export const fetchAllPsychologists = async (): Promise<PsychologistOption[]> => 
         throw error;
     }
 };
+/**
+ * Fetch psychologist profile
+ */
+export const getProfile = async (codiceFiscale: string): Promise<any> => {
+    try {
+        const url = `${API_URL}/psi/area-personale/me?cf=${encodeURIComponent(codiceFiscale)}`;
+        const token = getCurrentUser()?.access_token as string | undefined;
+
+        const response = await fetch(url, {
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to fetch profile:', error);
+        throw error;
+    }
+};
+
+/**
+ * Update psychologist profile
+ */
+export const updateProfile = async (codiceFiscale: string, data: { email: string; immagineProfilo?: File | null }): Promise<any> => {
+    try {
+        const url = `${API_URL}/psi/area-personale/me?cf=${encodeURIComponent(codiceFiscale)}`;
+        const token = getCurrentUser()?.access_token as string | undefined;
+
+        const formData = new FormData();
+        formData.append('email', data.email);
+        if (data.immagineProfilo) {
+            formData.append('immagineProfilo', data.immagineProfilo);
+        }
+
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                // Content-Type is automatically set with boundary for FormData
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to update profile:', error);
+        throw error;
+    }
+};

@@ -87,7 +87,8 @@ export class SpidAuthService {
             cognome: spidProfile.familyName,
             aslAppartenenza: 'ASL001', // Default ASL
             stato: true,
-            immagineProfilo: 'default-profile.jpg'
+            immagineProfilo: 'default-profile.jpg',
+            email: spidProfile.email || ''
         }).returning();
 
         console.log('New psychologist created:', newPsychologists[0].codFiscale);
