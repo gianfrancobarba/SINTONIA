@@ -12,9 +12,12 @@ import {
     pgEnum,
     primaryKey,
     date,
+    check,
 } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
-// Enums
+// --- ENUMS ---
+
 export const nomePrioritaEnum = pgEnum('nome_priorita', [
     'Urgente',
     'Breve',
@@ -30,7 +33,21 @@ export const statoTicketEnum = pgEnum('stato_ticket', [
     'In elaborazione',
 ]);
 
-// Tables
+// Nuovo Enum per Mood Tracking
+export const umoreEnum = pgEnum('umore', [
+    'Felice',
+    'Sereno',
+    'Energico',
+    'Neutro',
+    'Stanco',
+    'Triste',
+    'Ansioso',
+    'Arrabbiato',
+    'Spaventato',
+    'Confuso',
+]);
+
+// --- TABLES ---
 
 export const priorita = pgTable('priorita', {
     nome: nomePrioritaEnum('nome').primaryKey(),
@@ -64,13 +81,6 @@ export const tipologiaQuestionario = pgTable('tipologia_questionario', {
     tempoSomministrazione: integer('tempo_somministrazione').notNull(),
 });
 
-export const notifica = pgTable('notifica', {
-    idNotifica: uuid('id_notifica').defaultRandom().primaryKey(),
-    titolo: varchar('titolo', { length: 128 }).notNull(),
-    tipologia: varchar('tipologia', { length: 32 }),
-    descrizione: text('descrizione').notNull(),
-});
-
 export const badge = pgTable('badge', {
     nome: varchar('nome', { length: 64 }).primaryKey(),
     descrizione: text('descrizione').notNull(),
@@ -88,7 +98,11 @@ export const paziente = pgTable('paziente', {
     residenza: varchar('residenza', { length: 64 }).notNull(),
     sesso: tipoSessoEnum('sesso').notNull(),
     dataIngresso: date('data_ingresso', { mode: 'string' }).notNull(),
-    score: doublePrecision('score'),
+
+    // Modificato: Score default a 0
+    score: doublePrecision('score').default(0),
+    // Aggiunto: Stato default a true
+    stato: boolean('stato').default(true).notNull(),
 
     idPriorita: nomePrioritaEnum('id_priorita')
         .notNull()
@@ -96,6 +110,31 @@ export const paziente = pgTable('paziente', {
     idPsicologo: char('id_psicologo', { length: 16 })
         .references(() => psicologo.codFiscale),
 });
+
+// Modificato: Centralizzazione notifiche + Check constraint
+export const notifica = pgTable('notifica', {
+    idNotifica: uuid('id_notifica').defaultRandom().primaryKey(),
+    titolo: varchar('titolo', { length: 128 }).notNull(),
+    tipologia: varchar('tipologia', { length: 32 }),
+    descrizione: text('descrizione').notNull(),
+
+    // Nuovi campi di stato
+    dataInvio: timestamp('data_invio').defaultNow(),
+    letto: boolean('letto').default(false),
+
+    // Foreign Keys (Tutte opzionali singolarmente)
+    idPaziente: uuid('id_paziente')
+        .references(() => paziente.idPaziente),
+    idPsicologo: char('id_psicologo', { length: 16 })
+        .references(() => psicologo.codFiscale),
+    idAmministratore: varchar('id_amministratore', { length: 64 })
+        .references(() => amministratore.email),
+}, (t) => ({
+    // Vincolo: Almeno uno dei tre destinatari deve essere presente
+    checkDestinatario: check('check_destinatario_notifica',
+        sql`${t.idPaziente} IS NOT NULL OR ${t.idPsicologo} IS NOT NULL OR ${t.idAmministratore} IS NOT NULL`
+    ),
+}));
 
 export const domandaForum = pgTable('domanda_forum', {
     idDomanda: uuid('id_domanda').defaultRandom().primaryKey(),
@@ -111,7 +150,10 @@ export const domandaForum = pgTable('domanda_forum', {
 
 export const statoAnimo = pgTable('stato_animo', {
     idStatoAnimo: uuid('id_stato_animo').defaultRandom().primaryKey(),
-    umore: varchar('umore', { length: 16 }).notNull(),
+
+    // Modificato: Uso dell'enum specifico
+    umore: umoreEnum('umore').notNull(),
+
     intensita: integer('intensita'),
     note: text('note'),
     dataInserimento: timestamp('data_inserimento').defaultNow().notNull(),
@@ -145,38 +187,6 @@ export const acquisizioneBadge = pgTable(
     },
     (t) => ({
         pk: primaryKey({ columns: [t.idPaziente, t.nomeBadge, t.dataAcquisizione] }),
-    }),
-);
-
-export const ricezioneNotificaPaziente = pgTable(
-    'ricezione_notifica_paziente',
-    {
-        dataRicezione: timestamp('data_ricezione').defaultNow(),
-        idPaziente: uuid('id_paziente')
-            .notNull()
-            .references(() => paziente.idPaziente),
-        idNotifica: uuid('id_notifica')
-            .notNull()
-            .references(() => notifica.idNotifica),
-    },
-    (t) => ({
-        pk: primaryKey({ columns: [t.idPaziente, t.idNotifica, t.dataRicezione] }),
-    }),
-);
-
-export const ricezioneNotificaPsicologo = pgTable(
-    'ricezione_notifica_psicologo',
-    {
-        dataRicezione: timestamp('data_ricezione').defaultNow(),
-        idNotifica: uuid('id_notifica')
-            .notNull()
-            .references(() => notifica.idNotifica),
-        idPsicologo: char('id_psicologo', { length: 16 })
-            .notNull()
-            .references(() => psicologo.codFiscale),
-    },
-    (t) => ({
-        pk: primaryKey({ columns: [t.idPsicologo, t.idNotifica, t.dataRicezione] }),
     }),
 );
 
