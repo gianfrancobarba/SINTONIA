@@ -1,13 +1,9 @@
 .category-filters-container {
-    background: white;
-    padding: 16px 0;
-    margin-bottom: 8px;
+    background-color: var(--secondary-bg);
+    padding: 20px 0 16px;
 }
 
 .category-filters-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0 20px 12px;
 }
 
@@ -16,25 +12,6 @@
     font-weight: 700;
     color: var(--text-dark);
     margin: 0;
-}
-
-.filter-icon-button {
-    background: transparent;
-    border: none;
-    color: var(--text-dark);
-    cursor: pointer;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    transition: background 0.2s ease;
-}
-
-.filter-icon-button:hover {
-    background: rgba(0, 0, 0, 0.05);
 }
 
 .category-chips-scroll {
@@ -55,6 +32,7 @@
     background: transparent;
     font-size: 13px;
     font-weight: 600;
+    font-family: var(--font-family);
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
+import EditPenIcon from '../assets/icons/edit-pen.svg';
 import { createDiaryPage } from '../services/diary.service';
 import '../css/NewDiaryPage.css';
 
@@ -36,19 +37,18 @@ const NewDiaryPage: React.FC = () => {
     return (
         <div className="new-diary-page">
             <div className="new-diary-header">
-                <button className="back-button" onClick={handleBack} aria-label="Indietro">
-                    <img src={LeftArrow} alt="" />
-                </button>
-                <h1 className="page-subtitle">Indietro</h1>
+                <div className="header-content">
+                    <button className="back-button" onClick={handleBack} aria-label="Indietro">
+                        <img src={LeftArrow} alt="" />
+                    </button>
+                    <h1 className="header-title">Nuova Pagina</h1>
+                </div>
             </div>
 
             <div className="new-diary-content">
-                <h2 className="main-title">Cosa succede oggi?</h2>
-
                 <div className="form-section">
                     <label className="form-label">Titolo pagina</label>
                     <div className="title-input-container">
-                        <span className="input-icon">📄</span>
                         <input
                             type="text"
                             className="title-input"
@@ -57,13 +57,11 @@ const NewDiaryPage: React.FC = () => {
                             onChange={(e) => setTitle(e.target.value)}
                             maxLength={50}
                         />
-                        <button className="edit-icon" aria-label="Modifica">
-                            ✏️
-                        </button>
                     </div>
                 </div>
 
                 <div className="form-section">
+                    <label className="form-label">Contenuto</label>
                     <div className="textarea-container">
                         <textarea
                             className="content-textarea"
@@ -73,7 +71,7 @@ const NewDiaryPage: React.FC = () => {
                             maxLength={maxContentLength}
                         />
                         <div className="char-counter">
-                            <span className="counter-icon">📝</span>
+                            <img src={EditPenIcon} alt="" className="counter-icon" />
                             <span className="counter-text">
                                 {content.length}/{maxContentLength}
                             </span>
@@ -86,7 +84,7 @@ const NewDiaryPage: React.FC = () => {
                     onClick={handleSubmit}
                     disabled={!isFormValid || isLoading}
                 >
-                    {isLoading ? 'Salvataggio...' : 'Continua →'}
+                    {isLoading ? 'Salvataggio...' : 'Salva Pagina'}
                 </button>
             </div>
         </div>

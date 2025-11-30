@@ -1,24 +1,31 @@
 .new-diary-page {
-    background-color: #f4fafb;
+    background-color: var(--secondary-bg);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Header */
+/* Header - matching Diary page style */
 .new-diary-header {
-    padding: 48px 20px 24px;
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.new-diary-header .header-content {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
 .new-diary-header .back-button {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid #0D475D;
-    background: #f4fafb;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,45 +34,35 @@
     flex-shrink: 0;
 }
 
-
 .new-diary-header .back-button img {
     width: 20px;
     height: 20px;
-    filter: brightness(0);
+    filter: brightness(0) invert(1);
 }
 
-
 .new-diary-header .back-button:hover {
-    background: #e0e8e9;
+    background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
 
-.new-diary-header .back-button img {
-    width: 20px;
-    height: 20px;
+.new-diary-header .back-button:active {
+    transform: scale(0.95);
 }
 
-.page-subtitle {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1F1F1F;
+.header-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
     margin: 0;
+    flex: 1;
 }
 
 /* Content */
 .new-diary-content {
     flex: 1;
-    padding: 0 20px 40px;
+    padding: 20px 20px 40px;
     display: flex;
     flex-direction: column;
-}
-
-.main-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1F1F1F;
-    margin: 0 0 40px 0;
-    line-height: 1.2;
 }
 
 /* Form Section */
@@ -75,10 +72,10 @@
 
 .form-label {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     color: #1F1F1F;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 /* Title Input */
@@ -88,19 +85,21 @@
     background: white;
     border: 2px solid #E5E5E5;
     border-radius: 16px;
-    padding: 14px 16px;
-    gap: 12px;
+    padding: 14px 20px;
     transition: all 0.2s ease;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .title-input-container:focus-within {
     border-color: #2C5F6F;
-    box-shadow: 0 0 0 3px rgba(44, 95, 111, 0.1);
-}
-
-.input-icon {
-    font-size: 20px;
-    flex-shrink: 0;
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .title-input {
@@ -110,84 +109,97 @@
     font-size: 16px;
     color: #1F1F1F;
     background: transparent;
+    font-weight: 600;
 }
 
 .title-input::placeholder {
     color: #9CA3AF;
+    font-weight: 400;
+    font-family: var(--font-family);
 }
 
-.edit-icon {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px;
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-
-.edit-icon:hover {
-    transform: scale(1.1);
-}
-
-.edit-icon:active {
-    transform: scale(0.95);
-}
-
-/* Textarea */
-.textarea-container {
+/* Textarea - with specific page selector to override CreatePost/EditPost CSS */
+.new-diary-page .textarea-container {
     position: relative;
     background: white;
     border: 2px solid #E5E5E5;
     border-radius: 24px;
-    padding: 24px;
+    padding: 24px 24px 60px 24px;
     transition: all 0.2s ease;
-    min-height: 280px;
+    min-height: 320px !important;
     display: flex;
     flex-direction: column;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.textarea-container:focus-within {
+.new-diary-page .textarea-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.02) 100%);
+    pointer-events: none;
+}
+
+.new-diary-page .textarea-container:focus-within {
     border-color: #2C5F6F;
-    box-shadow: 0 0 0 3px rgba(44, 95, 111, 0.1);
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.content-textarea {
+.new-diary-page .content-textarea {
     flex: 1;
     border: none;
     outline: none;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
     color: #1F1F1F;
     line-height: 1.6;
     resize: none;
     background: transparent;
     font-family: inherit;
-    margin-bottom: 16px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
 }
 
-.content-textarea::placeholder {
+.new-diary-page .content-textarea::placeholder {
     color: #9CA3AF;
+    font-weight: 400;
 }
 
 .char-counter {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: #F9FAFB;
-    border-radius: 12px;
-    align-self: center;
+    gap: 6px;
+    z-index: 2;
 }
 
 .counter-icon {
-    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
 }
 
 .counter-text {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     color: #6B7280;
 }
 
@@ -195,12 +207,13 @@
 .submit-button {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(135deg, #2C5F6F 0%, #1F4554 100%);
+    background: var(--primary-dark);
     color: white;
     border: none;
     border-radius: 20px;
     font-size: 18px;
     font-weight: 600;
+    font-family: var(--font-family);
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: auto;
@@ -225,24 +238,29 @@
 /* Responsive */
 @media (max-width: 375px) {
     .new-diary-header {
-        padding: 40px 16px 20px;
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
     }
 
-    .main-title {
-        font-size: 28px;
-        margin-bottom: 32px;
+    .header-title {
+        font-size: 20px;
+    }
+
+    .form-label {
+        font-size: 16px;
     }
 
     .title-input-container {
-        padding: 12px 14px;
+        padding: 12px 16px;
     }
 
-    .textarea-container {
-        padding: 20px;
-        min-height: 240px;
+    .new-diary-page .textarea-container {
+        padding: 20px 20px 55px 20px;
+        min-height: 260px !important;
     }
 
-    .content-textarea {
+    .new-diary-page .content-textarea {
         font-size: 16px;
     }
 
