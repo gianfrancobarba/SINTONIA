@@ -7,7 +7,7 @@ import { existsSync } from 'fs';
 export class UploadsController {
     @Get(':filename')
     serveFile(@Param('filename') filename: string, @Res() res: Response) {
-        const filePath = join(process.cwd(), 'backend/uploads', filename);
+        const filePath = join(process.cwd(), 'uploads', filename);
         if (!existsSync(filePath)) {
             throw new NotFoundException('File not found');
         }

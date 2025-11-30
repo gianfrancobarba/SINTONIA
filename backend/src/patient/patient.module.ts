@@ -7,7 +7,7 @@ import { ForumModule } from './forum/forum.module.js';
 import { SpidAuthModule } from '../spid-auth/spid-auth.module.js';
 import { QuestionarioModule } from './questionario/questionario.module.js';
 import { StatoAnimoModule } from './stato-animo/stato-animo.module.js';
-import { DiarioModule } from './diario/diario.module.js';
+import { DiaryModule } from './diary/diary.module.js';
 import { BadgeModule } from './badge/badge.module.js';
 import { AreaPersonaleModule } from './area-personale/area-personale.module.js';
 import { SettingsModule } from './settings/settings.module.js';
@@ -18,7 +18,7 @@ import { SettingsModule } from './settings/settings.module.js';
         QuestionarioModule,
         ForumModule,
         StatoAnimoModule,
-        DiarioModule,
+        DiaryModule,
         BadgeModule,
         AreaPersonaleModule,
         SettingsModule,

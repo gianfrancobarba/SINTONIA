@@ -303,7 +303,7 @@
 }
 
 /* ===== Diary Card ===== */
-.diary-card {
+.profile-diary-card {
     background: linear-gradient(135deg, #1A5F5F 0%, #0F3E4D 100%);
     color: white;
 }

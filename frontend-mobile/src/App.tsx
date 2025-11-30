@@ -22,6 +22,9 @@ import PersonalInfo from './pages/settings/PersonalInfo';
 import TechnicalSupport from './pages/settings/TechnicalSupport';
 import Badges from './pages/settings/Badges';
 import Notifications from './pages/Notifications';
+import Diary from './pages/Diary';
+import NewDiaryPage from './pages/NewDiaryPage';
+import EditDiaryPage from './pages/EditDiaryPage';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -144,6 +147,30 @@ function App() {
           element={
             <PrivateRoute>
               <Notifications />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/diary"
+          element={
+            <PrivateRoute>
+              <Diary />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/new-diary-page"
+          element={
+            <PrivateRoute>
+              <NewDiaryPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit-diary-page"
+          element={
+            <PrivateRoute>
+              <EditDiaryPage />
             </PrivateRoute>
           }
         />

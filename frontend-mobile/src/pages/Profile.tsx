@@ -178,7 +178,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Diary Card */}
-                <div className="profile-card diary-card">
+                <div className="profile-card profile-diary-card">
                     <div className="card-header">
                         <BookOpen size={20} />
                         <span>Diario</span>
