@@ -4,7 +4,9 @@ import AdminProfile from '../components/AdminProfile';
 import EmptyState from '../components/EmptyState';
 import AdminQuestionnaireList from './AdminQuestionnaireList';
 import AdminPatientList from './AdminPatientList';
+import AdminPsychologistList from './AdminPsychologistList';
 import AdminInvalidationList from './AdminInvalidationList';
+import AdminPersonalArea from '../components/AdminPersonalArea';
 import '../css/PsychologistDashboard.css'; // Reuse layout styles
 
 const AdminDashboard: React.FC = () => {
@@ -30,10 +32,14 @@ const AdminDashboard: React.FC = () => {
 
     const renderContent = () => {
         switch (activeSection) {
+            case 'area-personale':
+                return <AdminPersonalArea />;
             case 'questionari':
                 return <AdminQuestionnaireList />;
             case 'pazienti':
                 return <AdminPatientList />;
+            case 'psicologi':
+                return <AdminPsychologistList />;
             case 'invalidazione':
                 return <AdminInvalidationList />;
             default:

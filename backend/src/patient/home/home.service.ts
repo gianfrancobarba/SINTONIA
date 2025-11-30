@@ -58,7 +58,7 @@ export class HomeService {
         return rows[0]?.umore ?? 'Neutro';
     }
     //Ottieni numero questionari non compilati
-    private async getPendingQuestionnairesCount(userId: string): Promise<number> {
+    async getPendingQuestionnairesCount(userId: string): Promise<number> {
         const patientRow = await db
             .select({ dataIngresso: paziente.dataIngresso })
             .from(paziente)

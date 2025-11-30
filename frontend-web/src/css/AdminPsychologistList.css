@@ -1,0 +1,61 @@
+/* Stylesheet for Admin Psychologist List - mirrors AdminPatientList.css */
+
+.psychologist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+    flex: 1;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.psychologist-card {
+    background-color: #0D475D;
+    border-radius: 16px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.psychologist-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.psychologist-avatar {
+    width: 64px;
+    height: 64px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: #0D475D;
+}
+
+.psychologist-info {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.psychologist-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    line-height: 1.4;
+}
+
+.psychologist-specialization {
+    font-size: 12px;
+    opacity: 0.8;
+    margin: 0;
+}

@@ -68,7 +68,7 @@ export class AuthService {
   }
 
   async resetAdminPassword() {
-    const email = 'admin@sintonia.it';
+    const email = 'alessio.delsorbo@gmail.com';
     const password = '123';
     const hash = await bcrypt.hash(password, 10);
 

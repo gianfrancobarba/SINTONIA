@@ -1,0 +1,150 @@
+.personal-info-page {
+    min-height: 100vh;
+    background-color: #F5F7FA;
+    padding-bottom: 40px;
+}
+
+/* ===== Header ===== */
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 50px 20px 30px;
+}
+
+.back-button {
+    background: transparent;
+    border: 2.5px solid #2C2C2C;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    color: #2C2C2C;
+    flex-shrink: 0;
+}
+
+.back-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2C2C2C;
+    margin: 0;
+}
+
+/* ===== Form ===== */
+.info-form {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2C2C2C;
+}
+
+.field-input {
+    background: white;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.field-icon {
+    color: #9CA3AF;
+    flex-shrink: 0;
+}
+
+.field-value {
+    font-size: 15px;
+    color: #9CA3AF;
+    flex: 1;
+}
+
+/* ===== Save Button ===== */
+.save-button {
+    margin: 40px 20px 0;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #1E4A5F 0%, #163A4A 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(30, 74, 95, 0.25);
+    max-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: calc(100% - 40px);
+}
+
+.save-button:hover {
+    background: linear-gradient(135deg, #163A4A 0%, #0D2A35 100%);
+    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.35);
+    transform: translateY(-2px);
+}
+
+.save-button:active {
+    transform: translateY(0);
+}
+
+/* ===== Loading & Error ===== */
+.loading,
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 16px;
+}
+
+.loading {
+    color: #666;
+}
+
+.error {
+    color: #DC2626;
+    font-weight: 500;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 380px) {
+    .info-form {
+        padding: 0 16px;
+        gap: 16px;
+    }
+
+    .field-input {
+        padding: 14px 18px;
+    }
+
+    .save-button {
+        margin-top: 32px;
+        padding: 16px 20px;
+        font-size: 16px;
+    }
+}

@@ -10,6 +10,7 @@ interface JwtPayload {
     role: 'admin' | 'psychologist';
     iat: number;
     exp: number;
+    fiscalCode?: string; // Add fiscalCode to payload interface
 }
 
 export const login = async (email: string, password: string) => {
@@ -24,6 +25,7 @@ export const login = async (email: string, password: string) => {
             id: decoded.sub,
             role: decoded.role,
             email: decoded.email,
+            fiscalCode: decoded.fiscalCode, // Extract fiscalCode
         };
 
         localStorage.setItem('user', JSON.stringify(userData));
@@ -38,6 +40,7 @@ export const handleSpidToken = (token: string) => {
         id: decoded.sub,
         role: decoded.role,
         email: decoded.email,
+        fiscalCode: decoded.fiscalCode, // Extract fiscalCode
         // Add other fields if needed from token
     };
     localStorage.setItem('user', JSON.stringify(userData));
@@ -48,15 +51,25 @@ export const logout = () => {
     localStorage.removeItem('user');
 };
 
-export const getCurrentUser = () => {
+interface User {
+    id: string;
+    email: string;
+    role: 'admin' | 'psychologist';
+    access_token: string;
+    fiscalCode?: string;
+    [key: string]: any;
+}
+
+export const getCurrentUser = (): User | null => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
-        const user = JSON.parse(userStr);
-        // If id is missing but we have a token, try to recover it
-        if (!user.id && user.access_token) {
+        const user: User = JSON.parse(userStr);
+        // If id or fiscalCode is missing but we have a token, try to recover it
+        if ((!user.id || !user.fiscalCode) && user.access_token) {
             try {
                 const decoded = jwtDecode<JwtPayload>(user.access_token);
                 user.id = decoded.sub;
+                user.fiscalCode = decoded.fiscalCode; // Recover fiscalCode
                 // Update storage to persist the fix
                 localStorage.setItem('user', JSON.stringify(user));
             } catch (e) {

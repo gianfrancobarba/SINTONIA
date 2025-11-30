@@ -1,0 +1,206 @@
+.badges-page {
+    min-height: 100vh;
+    background-color: #F5F5F5;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ===== Header Section ===== */
+.badges-header {
+    position: relative;
+    background: linear-gradient(135deg, #7FB3BE 0%, #6FA5B0 100%);
+    padding: 50px 20px 90px;
+    overflow: hidden;
+}
+
+/* ===== Organic Shapes ===== */
+.organic-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.organic-shape-1 {
+    width: 180px;
+    height: 180px;
+    top: -90px;
+    right: -40px;
+}
+
+.organic-shape-2 {
+    width: 120px;
+    height: 120px;
+    top: -20px;
+    left: -50px;
+}
+
+.organic-shape-3 {
+    width: 220px;
+    height: 220px;
+    bottom: -60px;
+    left: -80px;
+}
+
+.organic-shape-4 {
+    width: 160px;
+    height: 160px;
+    bottom: 40px;
+    right: -50px;
+}
+
+.organic-shape-5 {
+    width: 80px;
+    height: 80px;
+    bottom: 120px;
+    right: 60px;
+}
+
+/* ===== Back Button ===== */
+.badges-back-btn {
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    border: 2.5px solid white;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+    color: white;
+}
+
+.badges-back-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== Title ===== */
+.badges-title {
+    position: relative;
+    z-index: 10;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 40px 0;
+}
+
+/* ===== Badge Count ===== */
+.badges-count {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.badges-number {
+    font-size: 120px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.badges-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    margin: 12px 0 0 0;
+    opacity: 0.95;
+}
+
+/* ===== Content Section ===== */
+.badges-content {
+    position: relative;
+    background: white;
+    margin-top: -40px;
+    border-radius: 40px 40px 0 0;
+    padding: 40px 20px 100px;
+    min-height: 60vh;
+}
+
+.badges-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: white;
+}
+
+/* ===== Badge History ===== */
+.badges-history {
+    position: relative;
+    z-index: 5;
+}
+
+.badges-history-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #7FB3BE;
+    margin: 0 0 24px 0;
+}
+
+/* ===== Badge Grid ===== */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 14px;
+    max-width: 100%;
+}
+
+.badge-circle {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.badge-circle:hover {
+    transform: scale(1.05);
+}
+
+/* ===== Loading & Error States ===== */
+.badges-loading,
+.badges-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 16px;
+    color: #666;
+}
+
+.badges-error {
+    color: #DC2626;
+    font-weight: 500;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 380px) {
+    .badges-number {
+        font-size: 100px;
+    }
+
+    .badges-grid {
+        gap: 10px;
+    }
+
+    .badges-subtitle {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 430px) {
+    .badges-content {
+        max-width: 430px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

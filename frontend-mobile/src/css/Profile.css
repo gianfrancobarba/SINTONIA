@@ -1,94 +1,365 @@
 .profile-page {
     min-height: 100vh;
-    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
-    padding: 20px 20px 120px 20px;
-    animation: fadeIn 0.3s ease-in-out;
+    background-color: #F5F5F5;
+    padding-bottom: 120px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ===== Organic Background ===== */
+.organic-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    background: linear-gradient(180deg, #A5D6A7 0%, #88B7B5 100%);
+    overflow: hidden;
+    z-index: 0;
+    border-radius: 0 0 50% 50% / 0 0 20% 20%;
 }
 
-.profile-header {
-    padding: 40px 0 30px;
-    text-align: center;
+.organic-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.profile-header h1 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1E293B;
-    margin: 0;
+.shape-1 {
+    width: 280px;
+    height: 280px;
+    top: -100px;
+    left: -80px;
+    background: rgba(255, 255, 255, 0.25);
 }
 
-.profile-content {
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    top: -40px;
+    right: -20px;
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.user-info-card {
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    top: 80px;
+    left: -30px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.shape-4 {
+    width: 180px;
+    height: 180px;
+    top: 120px;
+    right: -60px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== Settings Button ===== */
+.settings-button {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    z-index: 10;
     background: white;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    text-align: center;
-}
-
-.user-info-card h2 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #1E293B;
-    margin: 0 0 8px 0;
-}
-
-.user-fiscal-code {
-    font-size: 14px;
-    color: #64748B;
-    margin: 0;
-    font-family: monospace;
-    letter-spacing: 0.5px;
-}
-
-.logout-button {
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    padding: 18px 32px;
-    font-size: 16px;
-    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #1A5F5F;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+}
+
+.settings-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Avatar Section ===== */
+.avatar-section {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding-top: 150px;
+    margin-bottom: 30px;
+}
+
+.avatar-circle {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 16px;
+    background: white;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-placeholder {
     width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E89B78 0%, #E8C578 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.logout-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+.avatar-placeholder svg {
+    width: 70%;
+    height: 70%;
 }
 
-.logout-button:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 12px rgba(255, 107, 107, 0.3);
+.user-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2C2C2C;
+    margin: 0;
+    text-shadow: none;
 }
 
-.logout-button svg {
-    width: 22px;
-    height: 22px;
+/* ===== Cards Grid ===== */
+.profile-cards-grid {
+    position: relative;
+    z-index: 5;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ===== Badge Card ===== */
+.badge-card {
+    background: linear-gradient(135deg, #7FB99C 0%, #6DA88E 100%);
+    color: white;
+    cursor: pointer;
+}
+
+.badge-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3);
+}
+
+.badge-progress {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.progress-circle {
+    width: 100px;
+    height: 100px;
+}
+
+.progress-background {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 8;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: white;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-value {
+    position: absolute;
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+}
+
+/* ===== Mood Card ===== */
+.mood-card {
+    background: linear-gradient(135deg, #1A5F5F 0%, #0F3E4D 100%);
+    color: white;
+}
+
+.mood-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.mood-chart {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 0 12px;
+    height: 60px;
+    margin-bottom: 8px;
+}
+
+.mood-bar {
+    flex: 1;
+    max-width: 16px;
+    background: white;
+    border-radius: 2px 2px 0 0;
+    min-height: 10%;
+    animation: barGrow 0.6s ease-out backwards;
+}
+
+.mood-bar:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.mood-bar:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.mood-bar:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.mood-bar:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.mood-bar:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.mood-bar:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.mood-bar:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.mood-bar:nth-child(8) {
+    animation-delay: 0.4s;
+}
+
+.mood-bar:nth-child(9) {
+    animation-delay: 0.45s;
+}
+
+.mood-bar:nth-child(10) {
+    animation-delay: 0.5s;
+}
+
+.mood-bar:nth-child(11) {
+    animation-delay: 0.55s;
+}
+
+@keyframes barGrow {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+.mood-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.mood-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* ===== Diary Card ===== */
+.diary-card {
+    background: linear-gradient(135deg, #1A5F5F 0%, #0F3E4D 100%);
+    color: white;
+}
+
+.diary-date {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.diary-text {
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.95;
+    margin: 0;
+}
+
+/* ===== Questionnaire Card ===== */
+.questionnaire-card {
+    background: linear-gradient(135deg, #88B7B5 0%, #6DA5A5 100%);
+    color: white;
+    cursor: pointer;
+}
+
+.questionnaire-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3);
+}
+
+.questionnaire-time {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.questionnaire-message {
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 380px) {
+    .profile-cards-grid {
+        gap: 12px;
+    }
+
+    .profile-card {
+        padding: 16px;
+        min-height: 160px;
+    }
+
+    .user-name {
+        font-size: 22px;
+    }
 }

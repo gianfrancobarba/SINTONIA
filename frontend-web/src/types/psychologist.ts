@@ -22,6 +22,18 @@ export interface PsychologistDashboardData {
 }
 
 /**
+ * Psychologist data for admin management
+ * Matches the database schema
+ */
+export interface PsychologistData {
+    codiceFiscale: string;
+    nome: string;
+    cognome: string;
+    aslAppartenenza: string;
+    stato: 'Attivo' | 'Disattivato';
+}
+
+/**
  * Loading state for async operations
  */
 export interface LoadingState<T> {

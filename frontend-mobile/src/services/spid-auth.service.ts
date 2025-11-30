@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const API_URL = 'http://localhost:3000/spid-auth';
 
 export const startSPIDLogin = () => {
@@ -36,7 +34,7 @@ export const isAuthenticated = () => {
     return !!localStorage.getItem('patient_token');
 };
 
-export const updateLocalTerms = (status: boolean) => {
+export const updateLocalTerms = (_status: boolean) => {
     const token = localStorage.getItem('patient_token');
     if (!token) return;
 

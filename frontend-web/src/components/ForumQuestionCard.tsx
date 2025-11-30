@@ -79,7 +79,7 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                 <div className="answers-list">
                     {displayedAnswers.map(answer => {
                         const currentUser = getCurrentUser();
-                        const isMyAnswer = currentUser && answer.idPsicologo === currentUser.id;
+                        const isMyAnswer = !!(currentUser && answer.idPsicologo === currentUser.id);
 
                         return (
                             <ForumAnswerSection

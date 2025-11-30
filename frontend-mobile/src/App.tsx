@@ -17,9 +17,11 @@ import { getCurrentPatient } from './services/spid-auth.service';
 import Forum from './pages/Forum';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
-import Diary from './pages/Diary';
-import NewDiaryPage from './pages/NewDiaryPage';
-import EditDiaryPage from './pages/EditDiaryPage';
+import Settings from './pages/Settings';
+import PersonalInfo from './pages/settings/PersonalInfo';
+import TechnicalSupport from './pages/settings/TechnicalSupport';
+import Badges from './pages/settings/Badges';
+import Notifications from './pages/Notifications';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -106,26 +108,42 @@ function App() {
           }
         />
         <Route
-          path="/diary"
+          path="/settings"
           element={
             <PrivateRoute>
-              <Diary />
+              <Settings />
             </PrivateRoute>
           }
         />
         <Route
-          path="/new-diary-page"
+          path="/settings/personal-info"
           element={
             <PrivateRoute>
-              <NewDiaryPage />
+              <PersonalInfo />
             </PrivateRoute>
           }
         />
         <Route
-          path="/edit-diary-page"
+          path="/settings/support"
           element={
             <PrivateRoute>
-              <EditDiaryPage />
+              <TechnicalSupport />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings/badges"
+          element={
+            <PrivateRoute>
+              <Badges />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <PrivateRoute>
+              <Notifications />
             </PrivateRoute>
           }
         />
