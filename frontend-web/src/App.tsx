@@ -4,6 +4,7 @@ import PsychologistDashboard from './pages/PsychologistDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import QuestionnaireManagement from './pages/QuestionnaireManagement';
 import ForumPage from './pages/ForumPage';
+import ClinicalAlerts from './pages/ClinicalAlerts';
 import SpidCallback from './pages/SpidCallback';
 import { getCurrentUser } from './services/auth.service';
 
@@ -55,6 +56,16 @@ function App() {
           element={
             <PrivateRoute>
               <ForumPage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Clinical Alerts - accessible by psychologists */}
+        <Route
+          path="/clinical-alerts"
+          element={
+            <PrivateRoute>
+              <ClinicalAlerts />
             </PrivateRoute>
           }
         />

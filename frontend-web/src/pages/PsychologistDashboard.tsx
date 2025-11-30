@@ -26,6 +26,8 @@ const PsychologistDashboard: React.FC = () => {
             navigate('/forum');
         } else if (section === 'questionari') {
             navigate('/questionnaires');
+        } else if (section === 'alert') {
+            navigate('/clinical-alerts');
         } else {
             setActiveSection(section);
         }
@@ -49,18 +51,6 @@ const PsychologistDashboard: React.FC = () => {
                     {activeSection === 'area-personale' && <PsychologistPersonalArea onProfileUpdate={handleProfileUpdate} />}
                     {activeSection === 'pazienti' && <PsychologistPatientList />}
                     {activeSection === 'questionari' && <QuestionnaireManagement />}
-                    {activeSection === 'alert' && (
-                        <div className="content-panel-flex">
-                            <h2 className="panel-title">Alert Clinici</h2>
-                            <div style={{
-                                textAlign: 'center',
-                                padding: '40px',
-                                color: '#666'
-                            }}>
-                                Sezione in fase di sviluppo
-                            </div>
-                        </div>
-                    )}
                     {(!activeSection || activeSection === '') && <EmptyState />}
                 </div>
             </div>
