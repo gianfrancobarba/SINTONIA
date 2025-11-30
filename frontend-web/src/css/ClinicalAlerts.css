@@ -228,7 +228,7 @@
 
 .alerts-table th {
     padding: 16px 20px;
-    text-align: left;
+    text-align: center;
     font-weight: 700;
     font-size: 14px;
     color: white;
@@ -255,6 +255,7 @@
     padding: 16px 20px;
     font-size: 14px;
     color: #333;
+    text-align: center;
 }
 
 /* Table Cells */
@@ -278,7 +279,7 @@
 }
 
 .alert-status {
-    text-align: left;
+    text-align: center;
 }
 
 .status-badge {
@@ -298,10 +299,11 @@
 }
 
 .alert-actions {
-    text-align: left;
+    text-align: center;
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: center;
 }
 
 .accept-btn {
