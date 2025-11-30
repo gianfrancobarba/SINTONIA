@@ -22,7 +22,7 @@ services:
       # Cross-platform bind mount (works on macOS and Windows)
       - ./backend:/app
       - /app/node_modules
-      - /app/dist
+      # - /app/dist # Removed to fix EBUSY error on build clean
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "node -e \"require('net').connect(3000, '127.0.0.1').on('connect',()=>process.exit(0)).on('error',()=>process.exit(1))\" "]
