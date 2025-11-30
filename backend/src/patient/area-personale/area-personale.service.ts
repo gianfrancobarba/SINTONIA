@@ -4,7 +4,7 @@ import { paziente } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { AreaPersonaleDto } from './dto/area-personale.dto.js';
 import { StatoAnimoService } from '../stato-animo/stato-animo.service.js';
-import { DiarioService } from '../diario/diario.service.js';
+import { DiaryService } from '../diary/diary.service.js';
 import { BadgeService } from '../badge/badge.service.js';
 import { HomeService } from '../home/home.service.js';
 
@@ -12,7 +12,7 @@ import { HomeService } from '../home/home.service.js';
 export class AreaPersonaleService {
     constructor(
         private readonly statoAnimoService: StatoAnimoService,
-        private readonly diarioService: DiarioService,
+        private readonly diarioService: DiaryService,
         private readonly badgeService: BadgeService,
         private readonly homeService: HomeService,
     ) { }
@@ -43,7 +43,7 @@ export class AreaPersonaleService {
                 this.badgeService.getBadgeUtente(userId),
                 this.statoAnimoService.getUltimoStatoAnimo(userId),
                 this.statoAnimoService.getStoricoStatoAnimo(userId, 7), // Ultimi 7 giorni per grafico
-                this.diarioService.getUltimaPaginaDiario(userId),
+                this.diarioService.getLastDiaryPage(userId),
                 this.homeService.getPendingQuestionnairesCount(userId),
             ]);
 
