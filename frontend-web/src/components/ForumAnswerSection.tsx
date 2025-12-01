@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { ForumAnswer } from '../types/forum';
 import { Pencil, Trash2 } from 'lucide-react';
 import '../css/ForumAnswerSection.css';
@@ -16,8 +16,6 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
     onDelete,
     isMyAnswer = false
 }) => {
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
     const getTimeAgo = (dateString: string): string => {
         const date = new Date(dateString);
         const now = new Date();
@@ -33,11 +31,6 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
         } else {
             return `${diffDays}g fa`;
         }
-    };
-
-    const handleDelete = () => {
-        setShowDeleteConfirm(false);
-        onDelete?.();
     };
 
     return (
@@ -62,7 +55,7 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
                         </button>
                         <button
                             className="action-button delete-button"
-                            onClick={() => setShowDeleteConfirm(true)}
+                            onClick={onDelete}
                             title="Elimina risposta"
                         >
                             <Trash2 size={16} />
@@ -79,29 +72,6 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
                 <span className="answer-separator">•</span>
                 <span className="answer-time">{getTimeAgo(answer.dataRisposta)}</span>
             </div>
-
-            {showDeleteConfirm && (
-                <div className="delete-confirm-overlay" onClick={() => setShowDeleteConfirm(false)}>
-                    <div className="delete-confirm-dialog" onClick={(e) => e.stopPropagation()}>
-                        <h3>Conferma eliminazione</h3>
-                        <p>Sei sicuro di voler eliminare questa risposta? L'azione non può essere annullata.</p>
-                        <div className="delete-confirm-actions">
-                            <button
-                                className="cancel-button"
-                                onClick={() => setShowDeleteConfirm(false)}
-                            >
-                                Annulla
-                            </button>
-                            <button
-                                className="confirm-delete-button"
-                                onClick={handleDelete}
-                            >
-                                Elimina
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

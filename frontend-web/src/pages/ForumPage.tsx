@@ -38,6 +38,14 @@ const ForumPage: React.FC = () => {
     });
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+    const [deleteModalState, setDeleteModalState] = useState<{
+        isOpen: boolean;
+        answerId: string | null;
+    }>({
+        isOpen: false,
+        answerId: null
+    });
+
     const currentUser = getCurrentUser();
     const isReadOnly = currentUser?.role === 'admin';
 
@@ -128,11 +136,21 @@ const ForumPage: React.FC = () => {
         }
     };
 
-    const handleDeleteAnswer = async (answerId: string) => {
+    const handleDeleteRequest = (answerId: string) => {
+        setDeleteModalState({
+            isOpen: true,
+            answerId
+        });
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!deleteModalState.answerId) return;
+
         try {
-            await deleteAnswer(answerId);
+            await deleteAnswer(deleteModalState.answerId);
             await loadData();
             setToast({ message: 'Risposta eliminata con successo!', type: 'success' });
+            setDeleteModalState({ isOpen: false, answerId: null });
         } catch (error) {
             console.error('Error deleting answer:', error);
             setToast({ message: 'Errore durante l\'eliminazione della risposta', type: 'error' });
@@ -217,104 +235,110 @@ const ForumPage: React.FC = () => {
 
                 <div className="forum-content">
                     <div className="content-panel fade-in">
-                        <div className="forum-header">
-                            <h1 className="forum-title">Forum</h1>
+                        {/* Fixed Header Section */}
+                        <div className="forum-fixed-header">
+                            <h2 className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                Forum
+                            </h2>
+
+                            {getStats() && (
+                                <div className="forum-stats">
+                                    <button
+                                        className={`stat-item ${filterType === 'all' ? 'stat-active' : ''}`}
+                                        onClick={() => setFilterType('all')}
+                                    >
+                                        <span className="stat-value">{getStats()!.totalQuestions}</span>
+                                        <span className="stat-label">Domande Totali</span>
+                                    </button>
+                                    <button
+                                        className={`stat-item stat-unanswered ${filterType === 'unanswered' ? 'stat-active' : ''}`}
+                                        onClick={() => setFilterType('unanswered')}
+                                    >
+                                        <span className="stat-value">{getStats()!.unansweredQuestions}</span>
+                                        <span className="stat-label">Domande Da rispondere</span>
+                                    </button>
+                                    <button
+                                        className={`stat-item stat-answered ${filterType === 'answered' ? 'stat-active' : ''}`}
+                                        onClick={() => setFilterType('answered')}
+                                    >
+                                        <span className="stat-value">{getStats()!.answeredQuestions}</span>
+                                        <span className="stat-label">Domande Risposte</span>
+                                    </button>
+                                </div>
+                            )}
+
+                            <ForumCategoryFilter
+                                selectedCategory={selectedCategory}
+                                onSelectCategory={setSelectedCategory}
+                            />
                         </div>
 
-                        {getStats() && (
-                            <div className="forum-stats">
-                                <button
-                                    className={`stat-item ${filterType === 'all' ? 'stat-active' : ''}`}
-                                    onClick={() => setFilterType('all')}
-                                >
-                                    <span className="stat-value">{getStats()!.totalQuestions}</span>
-                                    <span className="stat-label">Domande Totali</span>
-                                </button>
-                                <button
-                                    className={`stat-item stat-unanswered ${filterType === 'unanswered' ? 'stat-active' : ''}`}
-                                    onClick={() => setFilterType('unanswered')}
-                                >
-                                    <span className="stat-value">{getStats()!.unansweredQuestions}</span>
-                                    <span className="stat-label">Domande Da rispondere</span>
-                                </button>
-                                <button
-                                    className={`stat-item stat-answered ${filterType === 'answered' ? 'stat-active' : ''}`}
-                                    onClick={() => setFilterType('answered')}
-                                >
-                                    <span className="stat-value">{getStats()!.answeredQuestions}</span>
-                                    <span className="stat-label">Domande Risposte</span>
-                                </button>
-                            </div>
-                        )}
+                        {/* Scrollable Content Section */}
+                        <div className="forum-scroll-container">
+                            {questionsState.loading && (
+                                <div className="loading-state">
+                                    <div className="spinner"></div>
+                                    <p>Caricamento domande...</p>
+                                </div>
+                            )}
 
-                        <ForumCategoryFilter
-                            selectedCategory={selectedCategory}
-                            onSelectCategory={setSelectedCategory}
-                        />
+                            {questionsState.error && (
+                                <div className="error-state">
+                                    <p>❌ {questionsState.error}</p>
+                                    <button onClick={loadQuestions} className="retry-button">
+                                        Riprova
+                                    </button>
+                                </div>
+                            )}
 
-                        {questionsState.loading && (
-                            <div className="loading-state">
-                                <div className="spinner"></div>
-                                <p>Caricamento domande...</p>
-                            </div>
-                        )}
-
-                        {questionsState.error && (
-                            <div className="error-state">
-                                <p>❌ {questionsState.error}</p>
-                                <button onClick={loadQuestions} className="retry-button">
-                                    Riprova
-                                </button>
-                            </div>
-                        )}
-
-                        {questionsState.data && !questionsState.loading && (
-                            <>
-                                {getFilteredQuestions().length === 0 ? (
-                                    <div className="empty-state">
-                                        <div className="empty-icon">💬</div>
-                                        <h3>Nessuna domanda trovata</h3>
-                                        <p>Non ci sono domande corrispondenti al filtro selezionato</p>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <div className="forum-questions-list">
-                                            {getPaginatedQuestions().map(question => (
-                                                <ForumQuestionCard
-                                                    key={question.idDomanda}
-                                                    question={question}
-                                                    onAnswer={!isReadOnly ? handleAnswer : undefined}
-                                                    onEditAnswer={!isReadOnly ? handleEditAnswer : undefined}
-                                                    onDeleteAnswer={!isReadOnly ? handleDeleteAnswer : undefined}
-                                                />
-                                            ))}
+                            {questionsState.data && !questionsState.loading && (
+                                <>
+                                    {getFilteredQuestions().length === 0 ? (
+                                        <div className="empty-state">
+                                            <div className="empty-icon">💬</div>
+                                            <h3>Nessuna domanda trovata</h3>
+                                            <p>Non ci sono domande corrispondenti al filtro selezionato</p>
                                         </div>
-
-                                        {getTotalPages() > 1 && (
-                                            <div className="pagination">
-                                                <button
-                                                    className="pagination-button"
-                                                    onClick={() => handlePageChange(currentPage - 1)}
-                                                    disabled={currentPage === 1}
-                                                >
-                                                    ← Precedente
-                                                </button>
-                                                <div className="pagination-info">
-                                                    Pagina {currentPage} di {getTotalPages()}
-                                                </div>
-                                                <button
-                                                    className="pagination-button"
-                                                    onClick={() => handlePageChange(currentPage + 1)}
-                                                    disabled={currentPage === getTotalPages()}
-                                                >
-                                                    Successiva →
-                                                </button>
+                                    ) : (
+                                        <>
+                                            <div className="forum-questions-list">
+                                                {getPaginatedQuestions().map(question => (
+                                                    <ForumQuestionCard
+                                                        key={question.idDomanda}
+                                                        question={question}
+                                                        onAnswer={!isReadOnly ? handleAnswer : undefined}
+                                                        onEditAnswer={!isReadOnly ? handleEditAnswer : undefined}
+                                                        onDeleteAnswer={!isReadOnly ? handleDeleteRequest : undefined}
+                                                    />
+                                                ))}
                                             </div>
-                                        )}
-                                    </>
-                                )}
-                            </>
-                        )}
+
+                                            {getTotalPages() > 1 && (
+                                                <div className="pagination">
+                                                    <button
+                                                        className="pagination-button"
+                                                        onClick={() => handlePageChange(currentPage - 1)}
+                                                        disabled={currentPage === 1}
+                                                    >
+                                                        ← Precedente
+                                                    </button>
+                                                    <div className="pagination-info">
+                                                        Pagina {currentPage} di {getTotalPages()}
+                                                    </div>
+                                                    <button
+                                                        className="pagination-button"
+                                                        onClick={() => handlePageChange(currentPage + 1)}
+                                                        disabled={currentPage === getTotalPages()}
+                                                    >
+                                                        Successiva →
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -334,6 +358,29 @@ const ForumPage: React.FC = () => {
                     type={toast.type}
                     onClose={() => setToast(null)}
                 />
+            )}
+
+            {deleteModalState.isOpen && (
+                <div className="delete-confirm-overlay" onClick={() => setDeleteModalState({ isOpen: false, answerId: null })}>
+                    <div className="delete-confirm-dialog" onClick={(e) => e.stopPropagation()}>
+                        <h3>Conferma eliminazione</h3>
+                        <p>Sei sicuro di voler eliminare questa risposta? L'azione non può essere annullata.</p>
+                        <div className="delete-confirm-actions">
+                            <button
+                                className="cancel-button"
+                                onClick={() => setDeleteModalState({ isOpen: false, answerId: null })}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                className="confirm-delete-button"
+                                onClick={handleConfirmDelete}
+                            >
+                                Elimina
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
