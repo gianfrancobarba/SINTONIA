@@ -28,4 +28,14 @@ export class Visualizzazione_questionariController {
   async listByPaziente(@Param('idPaziente') idPaziente: string) {
     return this.service.getQuestionariByPaziente(idPaziente);
   }
+
+  /**
+   * Ritorna il dettaglio completo di un questionario singolo con domande e risposte
+   */
+  @Get(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('psychologist')
+  async getQuestionarioById(@Param('id') id: string) {
+    return this.service.getQuestionarioById(id);
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminQuestionnaireTable from '../components/AdminQuestionnaireTable';
 import AdminQuestionnaireDetailModal from '../components/AdminQuestionnaireDetailModal';
-import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision } from '../services/questionnaire.service';
+import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision, viewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 
@@ -58,10 +58,13 @@ const AdminQuestionnaireList: React.FC = () => {
         loadQuestionnaires();
     };
 
-    const handleView = (id: string) => {
-        const questionnaire = questionnairesState.data?.find(q => q.idQuestionario === id);
-        if (questionnaire) {
-            setViewingQuestionnaire(questionnaire);
+    const handleView = async (id: string) => {
+        try {
+            const questionnaireDetails = await viewQuestionnaire(id, 'admin');
+            setViewingQuestionnaire(questionnaireDetails);
+        } catch (error) {
+            console.error('Error loading questionnaire details:', error);
+            alert('Errore nel caricamento dei dettagli del questionario');
         }
     };
 

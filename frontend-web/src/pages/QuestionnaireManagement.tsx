@@ -4,7 +4,7 @@ import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
-import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation, reviewQuestionnaire } from '../services/questionnaire.service';
+import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation, reviewQuestionnaire, viewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
@@ -86,10 +86,14 @@ const QuestionnaireManagement: React.FC = () => {
         loadQuestionnaires();
     };
 
-    const handleView = (id: string) => {
-        const questionnaire = questionnairesState.data?.find(q => q.idQuestionario === id);
-        if (questionnaire) {
-            setViewingQuestionnaire(questionnaire);
+    const handleView = async (id: string) => {
+        try {
+            const userRole = role === 'admin' ? 'admin' : 'psychologist';
+            const questionnaireDetails = await viewQuestionnaire(id, userRole);
+            setViewingQuestionnaire(questionnaireDetails);
+        } catch (error) {
+            console.error('Error loading questionnaire details:', error);
+            alert('Errore nel caricamento dei dettagli del questionario');
         }
     };
 

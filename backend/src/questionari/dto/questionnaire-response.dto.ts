@@ -7,6 +7,7 @@ export class QuestionnaireResponseDto {
     idPaziente: string;
     nomeTipologia: string;
     score: number | null;
+    risposte: any; // Patient answers as JSON
     campi: string[]; // Array of field options from tipologia_questionario
     cambiamento: boolean;
     dataCompilazione: string;

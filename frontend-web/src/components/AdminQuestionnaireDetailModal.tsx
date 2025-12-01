@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { QuestionnaireData } from '../types/psychologist';
+import type { QuestionnaireData } from '../types/questionnaire';
 import '../css/QuestionnaireDetailModal.css'; // Reuse existing styles
 
 interface AdminQuestionnaireDetailModalProps {
@@ -16,6 +16,28 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
     if (!questionnaire) return null;
 
     const [isCancelling, setIsCancelling] = useState(false);
+
+    // Get questions from questionnaire data (from backend)
+    const questions = questionnaire.domande || [];
+    const answerOptions = questionnaire.campi || [];
+    const answers = questionnaire.risposte || {};
+
+    const getAnswerText = (questionIndex: number): string => {
+        const questionId = `q${questionIndex + 1}`;
+        const answerValue = answers[questionId];
+
+        if (answerValue === undefined || answerValue === null) {
+            return 'Nessuna risposta';
+        }
+
+        // If we have answer options (scale questionnaire), map the value to the option text
+        if (answerOptions.length > 0 && typeof answerValue === 'number') {
+            return answerOptions[answerValue] || `Valore: ${answerValue}`;
+        }
+
+        // Otherwise return the value as string
+        return String(answerValue);
+    };
 
     const handleCancelRevision = async () => {
         if (window.confirm('Sei sicuro di voler annullare la revisione di questo questionario?')) {
@@ -112,6 +134,31 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                                 </>
                             )}
                         </div>
+                    </div>
+
+                    {/* Questions and Answers Section */}
+                    <div className="questions-section">
+                        <h3 className="section-title">Domande e Risposte</h3>
+                        {questions.length > 0 ? (
+                            <div className="questions-list">
+                                {questions.map((question, index) => (
+                                    <div key={index} className="question-item">
+                                        <div className="question-number">Domanda {index + 1}</div>
+                                        <div className="question-text">{question}</div>
+                                        <div className="answer-box">
+                                            <label>Risposta del paziente:</label>
+                                            <div className="answer-value">
+                                                {getAnswerText(index)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p style={{ color: '#666', fontStyle: 'italic' }}>
+                                Nessuna domanda disponibile per questo questionario.
+                            </p>
+                        )}
                     </div>
 
                     {/* Note section - visible if notes exist */}
