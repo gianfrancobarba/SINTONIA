@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
+import { FileText, Calendar, User, Hash, Award, CheckCircle, AlertCircle, X, XCircle } from 'lucide-react';
 import type { QuestionnaireData } from '../types/questionnaire';
-import '../css/QuestionnaireDetailModal.css'; // Reuse existing styles
+import Toast from './Toast';
 
 interface AdminQuestionnaireDetailModalProps {
     questionnaire: QuestionnaireData | null;
     onClose: () => void;
     onCancelRevision: (id: string) => void;
 }
-
-import Toast from './Toast';
 
 const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps> = ({
     questionnaire,
@@ -43,114 +42,265 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
     };
 
     const handleCancelRevision = async () => {
-        if (window.confirm('Sei sicuro di voler annullare la revisione di questo questionario?')) {
-            setIsCancelling(true);
-            try {
-                await onCancelRevision(questionnaire.idQuestionario);
-                onClose();
-            } catch (error) {
-                console.error('Failed to cancel revision', error);
-                setToast({ message: 'Errore durante l\'annullamento della revisione', type: 'error' });
-            } finally {
-                setIsCancelling(false);
-            }
+        setIsCancelling(true);
+        try {
+            await onCancelRevision(questionnaire.idQuestionario);
+            setToast({ message: 'Revisione annullata con successo', type: 'success' });
+            setTimeout(() => onClose(), 1000);
+        } catch (error) {
+            console.error('Failed to cancel revision', error);
+            setToast({ message: 'Errore durante l\'annullamento della revisione', type: 'error' });
+        } finally {
+            setIsCancelling(false);
         }
     };
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <div className="modal-title-section">
-                        <h2 className="modal-title">Dettagli Questionario</h2>
+        <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+            <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                    maxWidth: '1100px',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+                }}
+            >
+                {/* Modern Header with Gradient */}
+                <div style={{
+                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
+                    padding: '32px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}>
+                    <div style={{
+                        position: 'absolute',
+                        top: '-50%',
+                        right: '-10%',
+                        width: '300px',
+                        height: '300px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        borderRadius: '50%',
+                        filter: 'blur(40px)'
+                    }}></div>
+
+                    <div style={{ position: 'relative', zIndex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div>
+                                <h2 style={{
+                                    margin: '0 0 8px 0',
+                                    fontSize: '28px',
+                                    fontWeight: '700',
+                                    color: 'white',
+                                    letterSpacing: '-0.5px'
+                                }}>
+                                    Dettagli Questionario
+                                </h2>
+                                <p style={{
+                                    margin: 0,
+                                    fontSize: '14px',
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    fontWeight: '500'
+                                }}>
+                                    {questionnaire.nomeTipologia}
+                                </p>
+                            </div>
+                            <button
+                                onClick={onClose}
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.15)',
+                                    backdropFilter: 'blur(10px)',
+                                    border: 'none',
+                                    color: 'white',
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '50%',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'all 0.3s ease',
+                                    fontSize: '20px'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
+                                }}
+                            >
+                                ✕
+                            </button>
+                        </div>
                     </div>
-                    <button className="modal-close-btn" onClick={onClose} aria-label="Chiudi">
-                        ✕
-                    </button>
                 </div>
 
-                <div className="modal-body">
-                    <div className="questionnaire-info">
-                        <div className="info-grid">
-                            <div className="info-item">
-                                <label>ID Questionario:</label>
-                                <span>{questionnaire.idQuestionario}</span>
-                            </div>
-                            <div className="info-item">
-                                <label>Tipologia:</label>
-                                <span>{questionnaire.nomeTipologia}</span>
-                            </div>
-                            <div className="info-item">
-                                <label>ID Paziente:</label>
-                                <span>{questionnaire.idPaziente}</span>
-                            </div>
-                            <div className="info-item">
-                                <label>Data Compilazione:</label>
-                                <span>{new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                })}</span>
-                            </div>
-                            {questionnaire.score !== null && (
-                                <div className="info-item">
-                                    <label>Punteggio:</label>
-                                    <span className="score-value">{questionnaire.score}</span>
-                                </div>
-                            )}
-                            <div className="info-item">
-                                <label>Stato Revisione:</label>
-                                <span style={{
-                                    color: questionnaire.revisionato ? '#7FB77E' : '#FFB74D',
-                                    fontWeight: 'bold'
-                                }}>
-                                    {questionnaire.revisionato ? 'REVISIONATO' : 'DA REVISIONARE'}
-                                </span>
-                            </div>
-                            {questionnaire.revisionato && (
-                                <div className="info-item">
-                                    <label>Revisionato da:</label>
-                                    <span>{questionnaire.idPsicologoRevisione || 'N/A'}</span>
-                                </div>
-                            )}
-                            <div className="info-item">
-                                <label>Stato Invalidazione:</label>
-                                <span style={{
-                                    color: questionnaire.invalidato ? '#E57373' : '#7FB77E',
-                                    fontWeight: 'bold'
-                                }}>
-                                    {questionnaire.invalidato ? 'INVALIDATO' : 'VALIDO'}
-                                </span>
-                            </div>
-                            {questionnaire.invalidato && (
-                                <>
-                                    <div className="info-item">
-                                        <label>Data Invalidazione:</label>
-                                        <span>{questionnaire.dataInvalidazione || 'N/A'}</span>
-                                    </div>
-                                    <div className="info-item">
-                                        <label>Richiesta da:</label>
-                                        <span>{questionnaire.idPsicologoRichiedente || 'N/A'}</span>
-                                    </div>
-                                </>
-                            )}
-                        </div>
+                {/* Body with Modern Cards */}
+                <div style={{
+                    padding: '32px',
+                    background: '#f8f9fa',
+                    maxHeight: 'calc(90vh - 200px)',
+                    overflowY: 'auto'
+                }}>
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gap: '16px',
+                        marginBottom: '24px'
+                    }}>
+                        {/* ID Questionario Card */}
+                        <InfoCard
+                            icon={<Hash size={16} />}
+                            label="ID Questionario"
+                            value={questionnaire.idQuestionario}
+                            iconColor="#0D475D"
+                        />
+
+                        {/* Tipologia Card */}
+                        <InfoCard
+                            icon={<FileText size={16} />}
+                            label="Tipologia"
+                            value={questionnaire.nomeTipologia}
+                            iconColor="#83B9C1"
+                        />
+
+                        {/* ID Paziente Card */}
+                        <InfoCard
+                            icon={<User size={16} />}
+                            label="ID Paziente"
+                            value={questionnaire.idPaziente}
+                            iconColor="#5a9aa5"
+                        />
+
+                        {/* Data Compilazione Card */}
+                        <InfoCard
+                            icon={<Calendar size={16} />}
+                            label="Data Compilazione"
+                            value={new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}
+                            iconColor="#7FB77E"
+                        />
+
+                        {/* Punteggio Card */}
+                        {questionnaire.score !== null && (
+                            <InfoCard
+                                icon={<Award size={16} />}
+                                label="Punteggio"
+                                value={String(questionnaire.score)}
+                                iconColor="#FFB74D"
+                            />
+                        )}
+
+                        {/* Stato Revisione Card */}
+                        <InfoCard
+                            icon={questionnaire.revisionato ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                            label="Stato Revisione"
+                            value={questionnaire.revisionato ? 'REVISIONATO' : 'DA REVISIONARE'}
+                            iconColor={questionnaire.revisionato ? '#7FB77E' : '#FFB74D'}
+                            valueColor={questionnaire.revisionato ? '#7FB77E' : '#FFB74D'}
+                        />
+
+                        {/* Revisionato da */}
+                        {questionnaire.revisionato && (
+                            <InfoCard
+                                icon={<User size={16} />}
+                                label="Revisionato da"
+                                value={questionnaire.idPsicologoRevisione || 'N/A'}
+                                iconColor="#83B9C1"
+                            />
+                        )}
+
+                        {/* Stato Invalidazione Card */}
+                        <InfoCard
+                            icon={questionnaire.invalidato ? <XCircle size={16} /> : <CheckCircle size={16} />}
+                            label="Stato Invalidazione"
+                            value={questionnaire.invalidato ? 'INVALIDATO' : 'VALIDO'}
+                            iconColor={questionnaire.invalidato ? '#E57373' : '#7FB77E'}
+                            valueColor={questionnaire.invalidato ? '#E57373' : '#7FB77E'}
+                        />
+
+                        {/* Invalidation details */}
+                        {questionnaire.invalidato && (
+                            <>
+                                <InfoCard
+                                    icon={<Calendar size={16} />}
+                                    label="Data Invalidazione"
+                                    value={questionnaire.dataInvalidazione || 'N/A'}
+                                    iconColor="#E57373"
+                                />
+                                <InfoCard
+                                    icon={<User size={16} />}
+                                    label="Richiesta da"
+                                    value={questionnaire.idPsicologoRichiedente || 'N/A'}
+                                    iconColor="#E57373"
+                                />
+                            </>
+                        )}
                     </div>
 
                     {/* Questions and Answers Section */}
-                    <div className="questions-section">
-                        <h3 className="section-title">Domande e Risposte</h3>
+                    <div style={{
+                        background: 'white',
+                        borderRadius: '16px',
+                        padding: '24px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                        marginBottom: '16px'
+                    }}>
+                        <h3 style={{
+                            margin: '0 0 20px 0',
+                            fontSize: '18px',
+                            fontWeight: '700',
+                            color: '#1a1a1a'
+                        }}>Domande e Risposte</h3>
                         {questions.length > 0 ? (
-                            <div className="questions-list">
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {questions.map((question, index) => (
-                                    <div key={index} className="question-item">
-                                        <div className="question-number">Domanda {index + 1}</div>
-                                        <div className="question-text">{question}</div>
-                                        <div className="answer-box">
-                                            <label>Risposta del paziente:</label>
-                                            <div className="answer-value">
+                                    <div key={index} style={{
+                                        background: '#f8f9fa',
+                                        borderRadius: '12px',
+                                        padding: '16px',
+                                        border: '1px solid #e8e8e8'
+                                    }}>
+                                        <div style={{
+                                            fontSize: '12px',
+                                            fontWeight: '700',
+                                            color: '#83B9C1',
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.5px',
+                                            marginBottom: '8px'
+                                        }}>Domanda {index + 1}</div>
+                                        <div style={{
+                                            fontSize: '15px',
+                                            fontWeight: '500',
+                                            color: '#333',
+                                            marginBottom: '12px'
+                                        }}>{question}</div>
+                                        <div style={{
+                                            background: 'white',
+                                            borderRadius: '8px',
+                                            padding: '12px',
+                                            borderLeft: '3px solid #7FB77E'
+                                        }}>
+                                            <div style={{
+                                                fontSize: '11px',
+                                                fontWeight: '600',
+                                                color: '#666',
+                                                textTransform: 'uppercase',
+                                                marginBottom: '6px'
+                                            }}>Risposta del paziente:</div>
+                                            <div style={{
+                                                fontSize: '14px',
+                                                fontWeight: '600',
+                                                color: '#1a1a1a'
+                                            }}>
                                                 {getAnswerText(index)}
                                             </div>
                                         </div>
@@ -158,7 +308,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                                 ))}
                             </div>
                         ) : (
-                            <p style={{ color: '#666', fontStyle: 'italic' }}>
+                            <p style={{ color: '#666', fontStyle: 'italic', margin: 0 }}>
                                 Nessuna domanda disponibile per questo questionario.
                             </p>
                         )}
@@ -166,32 +316,86 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
 
                     {/* Note section - visible if notes exist */}
                     {questionnaire.noteInvalidazione && (
-                        <div className="notes-section">
-                            <h3 className="section-title">Note Invalidazione</h3>
-                            <div className="notes-content">{questionnaire.noteInvalidazione}</div>
+                        <div style={{
+                            background: 'white',
+                            borderRadius: '16px',
+                            padding: '24px',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                            marginBottom: '16px'
+                        }}>
+                            <h3 style={{
+                                margin: '0 0 16px 0',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#1a1a1a'
+                            }}>Note Invalidazione</h3>
+                            <div style={{
+                                fontSize: '14px',
+                                color: '#666',
+                                lineHeight: '1.6'
+                            }}>{questionnaire.noteInvalidazione}</div>
                         </div>
                     )}
 
                     {/* Cancel Revision Action */}
                     {questionnaire.revisionato && (
-                        <div className="invalidation-request-section">
-                            <h3 className="section-title">Gestione Revisione</h3>
-                            <p style={{ marginBottom: '16px', color: '#666' }}>
+                        <div style={{
+                            background: 'white',
+                            borderRadius: '16px',
+                            padding: '24px',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
+                        }}>
+                            <h3 style={{
+                                margin: '0 0 16px 0',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#1a1a1a'
+                            }}>Gestione Revisione</h3>
+                            <p style={{ marginBottom: '16px', color: '#666', fontSize: '14px' }}>
                                 Questo questionario è stato revisionato. Puoi annullare la revisione se necessario.
                             </p>
                             <button
-                                className="btn-request-invalidation" // Reusing class for style
-                                style={{ backgroundColor: '#E57373' }} // Override color for danger action
                                 onClick={handleCancelRevision}
                                 disabled={isCancelling}
+                                style={{
+                                    padding: '12px 24px',
+                                    borderRadius: '12px',
+                                    border: 'none',
+                                    background: 'linear-gradient(135deg, #E57373 0%, #d55353 100%)',
+                                    color: 'white',
+                                    cursor: isCancelling ? 'not-allowed' : 'pointer',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    transition: 'all 0.2s ease',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    boxShadow: '0 4px 12px rgba(229, 115, 115, 0.3)'
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!isCancelling) {
+                                        e.currentTarget.style.transform = 'translateY(-2px)';
+                                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(229, 115, 115, 0.4)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(229, 115, 115, 0.3)';
+                                }}
                             >
+                                <X size={18} />
                                 {isCancelling ? 'Attendi...' : 'Annulla Revisione'}
                             </button>
                         </div>
                     )}
                 </div>
 
-                <div className="modal-footer">
+                {/* Modern Footer */}
+                <div style={{
+                    padding: '24px 32px',
+                    background: 'white',
+                    borderTop: '1px solid #e8e8e8'
+                }}>
                     {/* Footer vuoto - chiusura solo tramite X in alto */}
                 </div>
             </div>
@@ -202,6 +406,66 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                     onClose={() => setToast(null)}
                 />
             )}
+        </div>
+    );
+};
+
+// Info Card Component
+const InfoCard: React.FC<{
+    icon: React.ReactNode;
+    label: string;
+    value: string;
+    iconColor: string;
+    valueColor?: string;
+}> = ({ icon, label, value, iconColor, valueColor }) => {
+    return (
+        <div style={{
+            background: 'white',
+            borderRadius: '12px',
+            padding: '14px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+            border: '1px solid #e8e8e8',
+            transition: 'all 0.3s ease'
+        }}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
+                e.currentTarget.style.transform = 'translateY(0)';
+            }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '10px',
+                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white'
+                }}>
+                    {icon}
+                </div>
+                <span style={{
+                    fontSize: '10px',
+                    fontWeight: '600',
+                    color: '#666',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                }}>
+                    {label}
+                </span>
+            </div>
+            <p style={{
+                margin: 0,
+                fontSize: '14px',
+                fontWeight: '600',
+                color: valueColor || '#1a1a1a'
+            }}>
+                {value}
+            </p>
         </div>
     );
 };
