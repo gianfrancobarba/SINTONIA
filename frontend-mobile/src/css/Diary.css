@@ -1,9 +1,7 @@
 .diary-page {
     background-color: var(--secondary-bg);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-bottom: 100px;
 }
 
 /* Header - matching Home page style */

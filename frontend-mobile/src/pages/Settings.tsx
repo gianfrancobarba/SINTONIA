@@ -4,7 +4,6 @@ import { User, MessageCircle, Award, LogOut, ChevronRight } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
 import { getCurrentPatient, logout } from '../services/spid-auth.service';
 import type { ProfileDto } from '../types/profile';
-import BottomNavigation from '../components/BottomNavigation';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import '../css/Settings.css';
 
@@ -157,7 +156,7 @@ const Settings: React.FC = () => {
                 </div>
             )}
 
-            <BottomNavigation />
+
         </div>
     );
 };

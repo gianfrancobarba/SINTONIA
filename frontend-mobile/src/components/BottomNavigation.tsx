@@ -1,28 +1,54 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Home, BookOpen, Users, Bell, User } from 'lucide-react';
 import '../css/BottomNavigation.css';
-import bottomBarSvg from '../assets/images/BottomBar.svg';
+
+interface NavItem {
+    path: string;
+    icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
+    label: string;
+    isCenter?: boolean;
+}
 
 const BottomNavigation: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const navItems: NavItem[] = [
+        { path: '/forum', icon: Users, label: 'Forum' },
+        { path: '/diary', icon: BookOpen, label: 'Diario' },
+        { path: '/home', icon: Home, label: 'Home', isCenter: true },
+        { path: '/notifications', icon: Bell, label: 'Notifiche' },
+        { path: '/profile', icon: User, label: 'Profilo' }
+    ];
+
+    const isActive = (path: string) => location.pathname === path;
 
     return (
-        <div className="bottom-nav-container" role="navigation" aria-label="Bottom navigation">
-            <div className="bottom-nav-background">
-                <img src={bottomBarSvg} alt="" aria-hidden="true" className="nav-curve-img" />
+        <nav className="bottom-nav" role="navigation" aria-label="Navigazione principale">
+            <div className="bottom-nav-background" />
+            <div className="bottom-nav-items">
+                {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.path);
+
+                    return (
+                        <button
+                            key={item.path}
+                            className={`nav-item ${item.isCenter ? 'nav-item-center' : ''} ${active ? 'active' : ''}`}
+                            onClick={() => navigate(item.path)}
+                            aria-label={item.label}
+                            aria-current={active ? 'page' : undefined}
+                        >
+                            <Icon
+                                size={item.isCenter ? 28 : 24}
+                                strokeWidth={active ? 2.5 : 2}
+                            />
+                        </button>
+                    );
+                })}
             </div>
-
-            {/* Positioned buttons with explicit icons */}
-            <div className="nav-hit-areas">
-                <button className="hit-btn hit-leftmost" aria-label="Community" onClick={() => navigate('/forum')} />
-                <button className="hit-btn hit-left" aria-label="Notes" onClick={() => navigate('/diary')} />
-                <button className="hit-btn hit-center" aria-label="Home" onClick={() => navigate('/home')} />
-                <button className="hit-btn hit-right" aria-label="Notifications" onClick={() => navigate('/notifications')} />
-                <button className="hit-btn hit-rightmost" aria-label="Profile" onClick={() => navigate('/profile')} />
-            </div>
-
-
-        </div>
+        </nav>
     );
 };
 

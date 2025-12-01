@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import '../../css/QuestionScale.css';
+import '../css/QuestionScale.css';
 
 interface QuestionScaleProps {
     value: number | null;

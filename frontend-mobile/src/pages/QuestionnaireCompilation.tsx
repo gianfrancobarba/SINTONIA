@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
-import QuestionCard from '../components/questionnaire/QuestionCard';
-import QuestionScale from '../components/questionnaire/QuestionScale';
-import ProgressIndicator from '../components/questionnaire/ProgressIndicator';
+import QuestionCard from '../components/QuestionCard.tsx';
+import QuestionScale from '../components/QuestionScale.tsx';
+import ProgressIndicator from '../components/ProgressIndicator.tsx';
 import type { GetQuestionarioDto, Risposta } from '../types/questionario';
 import '../css/QuestionnaireCompilation.css';
 

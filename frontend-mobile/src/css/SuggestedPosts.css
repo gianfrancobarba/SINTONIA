@@ -1,13 +1,8 @@
-.suggested-posts-section {
-    margin-bottom: 100px;
-}
-
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    margin-bottom: 15px;
 }
 
 .section-header h3 {
@@ -35,7 +30,7 @@
     display: flex;
     gap: 15px;
     overflow-x: auto;
-    padding: 0 20px 40px;
+    padding: 15px 20px 40px;
     /* Increased bottom padding to accommodate deep shadow */
     scroll-snap-type: x mandatory;
     /* Snap effect for better UX */

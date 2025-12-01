@@ -1,6 +1,5 @@
 .edit-diary-page {
     background-color: var(--secondary-bg);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }

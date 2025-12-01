@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ArrowRight } from 'lucide-react';
-import { submitSupportRequest } from '../../services/settings.service';
-import '../../css/settings/TechnicalSupport.css';
+import { submitSupportRequest } from '../services/settings.service.ts';
+import '../css/TechnicalSupport.css';
 
 const TechnicalSupport: React.FC = () => {
     const navigate = useNavigate();

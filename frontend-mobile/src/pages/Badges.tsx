@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
-import '../../css/settings/Badges.css';
+import '../css/Badges.css';
 
 interface Badge {
     nome: string;

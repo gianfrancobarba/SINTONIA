@@ -3,7 +3,6 @@ import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import ForumHeader from '../components/ForumHeader';
 import CategoryFilters from '../components/CategoryFilters';
 import ForumPostCard from '../components/ForumPostCard';
-import BottomNavigation from '../components/BottomNavigation';
 import { getForumPosts, deletePost } from '../services/forum.service';
 import type { ForumPost, ForumCategory } from '../types/forum';
 import '../css/Forum.css';
@@ -143,7 +142,7 @@ const Forum: React.FC = () => {
                     </div>
                 )}
             </div>
-            <BottomNavigation />
+
         </div>
     );
 };

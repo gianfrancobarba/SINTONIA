@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Settings, Heart, Smile, BookOpen, FileText, Clock } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
 import type { ProfileDto } from '../types/profile';
-import BottomNavigation from '../components/BottomNavigation';
 import '../css/Profile.css';
 
 
@@ -209,7 +208,7 @@ const Profile: React.FC = () => {
                 </div>
             </div>
 
-            <BottomNavigation />
+
         </div>
     );
 };

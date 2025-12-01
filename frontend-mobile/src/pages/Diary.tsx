@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DiaryCard from '../components/DiaryCard';
 import DateFilter from '../components/DateFilter';
-import BottomNavigation from '../components/BottomNavigation';
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
 import { getDiaryPages, deleteDiaryPage, getAvailableMonthsYears, type MonthYearOption } from '../services/diary.service';
 import type { DiaryPage } from '../types/diary';
@@ -32,8 +31,27 @@ const Diary: React.FC = () => {
     const minSwipeDistance = 50;
 
     useEffect(() => {
-        loadDiaryPages();
-        loadDateOptions();
+        const fetchAllData = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const [diaryPages, options] = await Promise.all([
+                    getDiaryPages(),
+                    getAvailableMonthsYears()
+                ]);
+
+                setPages(diaryPages);
+                setDateOptions(options);
+            } catch (err) {
+                console.error('Error loading diary data:', err);
+                setError('Errore nel caricamento delle pagine');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllData();
     }, []);
 
     useEffect(() => {
@@ -52,15 +70,6 @@ const Diary: React.FC = () => {
             setError('Errore nel caricamento delle pagine');
         } finally {
             setLoading(false);
-        }
-    };
-
-    const loadDateOptions = async () => {
-        try {
-            const options = await getAvailableMonthsYears();
-            setDateOptions(options);
-        } catch (err) {
-            console.error('Error loading date options:', err);
         }
     };
 
@@ -203,7 +212,7 @@ const Diary: React.FC = () => {
                     <p>{error}</p>
                     <button onClick={loadDiaryPages} className="retry-btn">Riprova</button>
                 </div>
-                <BottomNavigation />
+
             </div>
         );
     }
@@ -226,7 +235,7 @@ const Diary: React.FC = () => {
                     <p>Nessuna pagina nel diario</p>
                     <p className="diary-empty-hint">Inizia a scrivere il tuo primo pensiero</p>
                 </div>
-                <BottomNavigation />
+
             </div>
         );
     }
@@ -291,7 +300,7 @@ const Diary: React.FC = () => {
                 </>
             )}
 
-            <BottomNavigation />
+
 
             {showDeleteModal && (
                 <ConfirmDeleteModal

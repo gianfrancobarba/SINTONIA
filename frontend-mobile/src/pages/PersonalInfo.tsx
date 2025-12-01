@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, User, Cake, MapPin, Mail } from 'lucide-react';
-import { getPersonalInfo } from '../../services/settings.service';
-import type { PersonalInfoDto } from '../../types/settings';
-import '../../css/settings/PersonalInfo.css';
+import { getPersonalInfo } from '../services/settings.service.ts';
+import type { PersonalInfoDto } from '../types/settings.ts';
+import '../css/PersonalInfo.css';
 
 const PersonalInfo: React.FC = () => {
     const navigate = useNavigate();

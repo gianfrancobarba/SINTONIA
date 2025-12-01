@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, FileText, MessageSquare, Smile, ChevronRight } from 'lucide-react';
-import BottomNavigation from '../components/BottomNavigation';
 import '../css/Notifications.css';
 
 interface Notification {
@@ -104,7 +103,7 @@ const Notifications: React.FC = () => {
                 ))}
             </div>
 
-            <BottomNavigation />
+
         </div>
     );
 };

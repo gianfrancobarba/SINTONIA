@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
-import BottomNavigation from '../components/BottomNavigation';
 import { getStoricoQuestionari } from '../services/questionari.service';
 import { startQuestionario } from '../services/questionario.service';
 import type { QuestionarioItemDto } from '../types/questionari';
@@ -68,7 +67,7 @@ const Questionari: React.FC = () => {
                 <div className="questionari-content">
                     <p style={{ textAlign: 'center', marginTop: '50px' }}>Caricamento...</p>
                 </div>
-                <BottomNavigation />
+
             </div>
         );
     }
@@ -85,7 +84,7 @@ const Questionari: React.FC = () => {
                 <div className="questionari-content">
                     <p style={{ textAlign: 'center', marginTop: '50px', color: 'red' }}>{error}</p>
                 </div>
-                <BottomNavigation />
+
             </div>
         );
     }
@@ -155,7 +154,7 @@ const Questionari: React.FC = () => {
                 )}
             </div>
 
-            <BottomNavigation />
+
         </div>
     );
 };

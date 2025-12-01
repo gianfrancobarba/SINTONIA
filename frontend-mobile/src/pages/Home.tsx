@@ -4,7 +4,6 @@ import QuickNote from '../components/QuickNote';
 import StreakStatus from '../components/StreakStatus';
 import Calendar from '../components/Calendar';
 import SuggestedPosts from '../components/SuggestedPosts';
-import BottomNavigation from '../components/BottomNavigation';
 import { getHomeDashboard } from '../services/home.service';
 import type { HomeDashboardDto } from '../types/home';
 import '../css/Home.css';
@@ -43,7 +42,7 @@ const Home: React.FC = () => {
             <StreakStatus data={data} />
             <Calendar days={data.calendarDays} />
             <SuggestedPosts posts={data.suggestedPosts} />
-            <BottomNavigation />
+
         </div>
     );
 };
