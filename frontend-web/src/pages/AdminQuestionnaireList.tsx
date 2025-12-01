@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
 import AdminQuestionnaireTable from '../components/AdminQuestionnaireTable';
 import AdminQuestionnaireDetailModal from '../components/AdminQuestionnaireDetailModal';
 import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision, viewQuestionnaire } from '../services/questionnaire.service';
@@ -121,8 +122,9 @@ const AdminQuestionnaireList: React.FC = () => {
                         {patientFilter && (
                             <div className="active-filter">
                                 <span>Filtro attivo: Paziente {patientFilter.substring(0, 8)}...</span>
-                                <button className="reset-filter-btn" onClick={handleResetFilter}>
-                                    ✕ Rimuovi Filtro
+                                <button className="reset-filter-btn" onClick={handleResetFilter} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <X size={14} />
+                                    Rimuovi Filtro
                                 </button>
                             </div>
                         )}

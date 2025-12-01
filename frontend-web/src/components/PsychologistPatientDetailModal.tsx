@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Check, X } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
 import { getPatientDetailsByPsychologist } from '../services/patient.service';
@@ -192,9 +193,12 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                                                             <td style={{ padding: '10px', textAlign: 'center' }}>
                                                                 <span style={{
                                                                     color: q.revisionato ? '#7FB77E' : '#E57373',
-                                                                    fontWeight: 'bold'
+                                                                    fontWeight: 'bold',
+                                                                    display: 'inline-flex',
+                                                                    alignItems: 'center',
+                                                                    gap: '4px'
                                                                 }}>
-                                                                    {q.revisionato ? '✓ Sì' : '✗ No'}
+                                                                    {q.revisionato ? <><Check size={14} /> Sì</> : <><X size={14} /> No</>}
                                                                 </span>
                                                             </td>
                                                         </tr>

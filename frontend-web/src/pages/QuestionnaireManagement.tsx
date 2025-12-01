@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { X } from 'lucide-react';
 import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
@@ -191,8 +192,9 @@ const QuestionnaireManagement: React.FC = () => {
                                     {patientFilter && (
                                         <div className="active-filter">
                                             <span>Filtro attivo</span>
-                                            <button className="reset-filter-btn" onClick={handleResetFilter}>
-                                                ✕ Rimuovi Filtro
+                                            <button className="reset-filter-btn" onClick={handleResetFilter} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                                <X size={14} />
+                                                Rimuovi Filtro
                                             </button>
                                         </div>
                                     )}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Edit2, Loader2 } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import { getPatientDetails, updatePatient } from '../services/patient.service';
 import { fetchAllPsychologists, type PsychologistOption } from '../services/psychologist.service';
@@ -212,7 +213,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                                             ? psychologists.find(p => p.codFiscale === editedPsicologo)
                                                                 ? `${psychologists.find(p => p.codFiscale === editedPsicologo)!.codFiscale} - Dr. ${psychologists.find(p => p.codFiscale === editedPsicologo)!.nome} ${psychologists.find(p => p.codFiscale === editedPsicologo)!.cognome}`
                                                                 : 'Non assegnato'
-                                                            : '🔍 Cerca per codice fiscale o nome...'
+                                                            : 'Cerca per codice fiscale o nome...'
                                                     }
                                                     disabled={loadingPsychologists}
                                                     className="modal-input"
@@ -322,10 +323,13 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                                         fontSize: '12px',
                                                         color: '#7FB77E',
                                                         fontStyle: 'italic',
-                                                        display: 'block',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '6px',
                                                         marginTop: '4px'
                                                     }}>
-                                                        ⏳ Caricamento psicologi...
+                                                        <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} />
+                                                        Caricamento psicologi...
                                                     </span>
                                                 )}
 
@@ -415,10 +419,14 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                         color: '#fff',
                                         cursor: 'pointer',
                                         fontSize: '14px',
-                                        fontWeight: 'bold'
+                                        fontWeight: 'bold',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
                                     }}
                                 >
-                                    ✏️ Modifica
+                                    <Edit2 size={16} />
+                                    Modifica
                                 </button>
                             )}
                         </div>
