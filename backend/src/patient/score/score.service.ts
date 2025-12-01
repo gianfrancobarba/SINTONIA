@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq, and, sql, lte } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
 import { paziente, questionario, tipologiaQuestionario } from '../../drizzle/schema.js';
 import { PatientScoreDto } from './dto/score.dto.js';
@@ -53,7 +53,7 @@ export class ScoreService {
      * 
      * Restituisce null se lo screening non è completo o non ci sono questionari
      */
-    async calculatePatientScore(idPaziente: string): Promise<number | null> {
+    async calculatePatientScore(idPaziente: string, dataRiferimento: Date = new Date()): Promise<number | null> {
         const PESO_MINIMO = 0.20;
         const N_CICLI_DECADIMENTO = 3;
 
@@ -72,7 +72,12 @@ export class ScoreService {
                 invalidato: questionario.invalidato,
             })
             .from(questionario)
-            .where(eq(questionario.idPaziente, idPaziente))
+            .where(
+                and(
+                    eq(questionario.idPaziente, idPaziente),
+                    lte(questionario.dataCompilazione, dataRiferimento) // Filtra per data riferimento
+                )
+            )
             .orderBy(questionario.dataCompilazione);
 
         // 3. Filtra solo questionari con score valido e NON invalidati
@@ -97,7 +102,7 @@ export class ScoreService {
 
         // 5. Calcola score ponderato per ogni tipologia
         const scorePerTipologia: number[] = [];
-        const oggi = new Date();
+        const oggi = dataRiferimento; // Usa dataRiferimento come 'oggi'
 
         for (const [nomeTipologia, questionariTipo] of perTipologia.entries()) {
             // Ottieni tempo di somministrazione per questa tipologia
@@ -121,7 +126,8 @@ export class ScoreService {
             let sommaPesi = 0;
 
             for (const q of questionariTipo) {
-                // Calcola giorni dalla data più recente
+                // Calcola giorni dalla data più recente (che è dataRiferimento o vicina)
+                // Nota: se dataCompilazione > oggi (non dovrebbe accadere col filtro), giorni sarà negativo.
                 const giorniDaUltimo = Math.floor(
                     (oggi.getTime() - q.dataCompilazione.getTime()) / (1000 * 60 * 60 * 24)
                 );
