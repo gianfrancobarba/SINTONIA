@@ -3,6 +3,8 @@ import profilePhoto from '../images/psychologist-photo.png';
 import ChangePasswordModal from './ChangePasswordModal';
 import '../css/AdminPersonalArea.css';
 
+import Toast from './Toast';
+
 // Mock data for admin personal info
 const MOCK_ADMIN_DATA = {
     nome: 'Alessio',
@@ -13,11 +15,12 @@ const MOCK_ADMIN_DATA = {
 
 const AdminPersonalArea: React.FC = () => {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     const handlePasswordChange = (oldPassword: string, newPassword: string) => {
         // In a real app, this would make an API call
         console.log('Changing password from:', oldPassword, 'to:', newPassword);
-        alert('Password modificata con successo!');
+        setToast({ message: 'Password modificata con successo!', type: 'success' });
     };
 
     return (
@@ -99,6 +102,13 @@ const AdminPersonalArea: React.FC = () => {
                 <ChangePasswordModal
                     onClose={() => setShowPasswordModal(false)}
                     onConfirm={handlePasswordChange}
+                />
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>

@@ -9,6 +9,8 @@ import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation,
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
+import Toast from '../components/Toast';
+
 const QuestionnaireManagement: React.FC = () => {
     const navigate = useNavigate();
     const [questionnairesState, setQuestionnairesState] = useState<LoadingState<QuestionnaireData[]>>({
@@ -19,6 +21,7 @@ const QuestionnaireManagement: React.FC = () => {
     const [selectedQuestionnaireId, setSelectedQuestionnaireId] = useState<string | null>(null);
     const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
     const [patientFilter, setPatientFilter] = useState<string | null>(null);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     const user = getCurrentUser();
     const role = getUserRole();
@@ -94,7 +97,7 @@ const QuestionnaireManagement: React.FC = () => {
             setViewingQuestionnaire(questionnaireDetails);
         } catch (error) {
             console.error('Error loading questionnaire details:', error);
-            alert('Errore nel caricamento dei dettagli del questionario');
+            setToast({ message: 'Errore nel caricamento dei dettagli del questionario', type: 'error' });
         }
     };
 
@@ -105,29 +108,29 @@ const QuestionnaireManagement: React.FC = () => {
     const handleReview = async (id: string) => {
         try {
             await reviewQuestionnaire(id);
-            alert('Questionario revisionato con successo!');
+            setToast({ message: 'Questionario revisionato con successo!', type: 'success' });
             loadQuestionnaires(patientFilter || undefined);
         } catch (error) {
             console.error('Error reviewing questionnaire:', error);
-            alert('Errore durante la revisione del questionario');
+            setToast({ message: 'Errore durante la revisione del questionario', type: 'error' });
         }
     };
 
     const handleRequestInvalidation = async (id: string, notes: string) => {
         try {
             await requestInvalidation(id, notes);
-            alert('Richiesta di invalidazione inviata con successo!');
+            setToast({ message: 'Richiesta di invalidazione inviata con successo!', type: 'success' });
             loadQuestionnaires();
         } catch (error) {
             console.error('Error requesting invalidation:', error);
-            alert('Errore nell\'invio della richiesta di invalidazione');
+            setToast({ message: 'Errore nell\'invio della richiesta di invalidazione', type: 'error' });
         }
     };
 
     const handleUploadNewType = () => {
         console.log('Upload new questionnaire type');
         // TODO: Open upload modal
-        alert('Carica nuova tipologia di questionario');
+        setToast({ message: 'Carica nuova tipologia di questionario', type: 'success' });
     };
 
     const handleSectionSelect = (section: string) => {
@@ -223,9 +226,15 @@ const QuestionnaireManagement: React.FC = () => {
                     onReview={handleReview}
                 />
             )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
-
 };
 
 export default QuestionnaireManagement;

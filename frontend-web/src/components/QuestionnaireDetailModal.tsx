@@ -10,6 +10,8 @@ interface QuestionnaireDetailModalProps {
     onReview?: (id: string) => void;
 }
 
+import Toast from './Toast';
+
 const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     questionnaire,
     onClose,
@@ -17,6 +19,8 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     onRequestInvalidation,
     onReview,
 }) => {
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
     if (!questionnaire) return null;
 
     const [invalidationNotes, setInvalidationNotes] = useState<string>('');
@@ -52,7 +56,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                 onClose();
             } catch (error) {
                 console.error('Failed to review questionnaire', error);
-                alert('Errore durante la revisione del questionario');
+                setToast({ message: 'Errore durante la revisione del questionario', type: 'error' });
             } finally {
                 setIsReviewing(false);
             }
@@ -189,6 +193,13 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                     )}
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

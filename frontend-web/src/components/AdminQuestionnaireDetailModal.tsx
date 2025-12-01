@@ -8,6 +8,8 @@ interface AdminQuestionnaireDetailModalProps {
     onCancelRevision: (id: string) => void;
 }
 
+import Toast from './Toast';
+
 const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps> = ({
     questionnaire,
     onClose,
@@ -16,6 +18,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
     if (!questionnaire) return null;
 
     const [isCancelling, setIsCancelling] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     // Get questions from questionnaire data (from backend)
     const questions = questionnaire.domande || [];
@@ -47,7 +50,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                 onClose();
             } catch (error) {
                 console.error('Failed to cancel revision', error);
-                alert('Errore durante l\'annullamento della revisione');
+                setToast({ message: 'Errore durante l\'annullamento della revisione', type: 'error' });
             } finally {
                 setIsCancelling(false);
             }
@@ -192,6 +195,13 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                     {/* Footer vuoto - chiusura solo tramite X in alto */}
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

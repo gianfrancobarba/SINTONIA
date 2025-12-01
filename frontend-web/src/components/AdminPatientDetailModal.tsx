@@ -11,6 +11,8 @@ interface AdminPatientDetailModalProps {
     onUpdate?: () => void; // Callback to refresh list after update
 }
 
+import Toast from './Toast';
+
 const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
     patient,
     onClose,
@@ -20,6 +22,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
     const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     // Psychologists list
     const [psychologists, setPsychologists] = useState<PsychologistOption[]>([]);
@@ -63,7 +66,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
             setEditedPsicologo(details.idPsicologo || '');
         } catch (error) {
             console.error('Error loading patient details:', error);
-            alert('Errore nel caricamento dei dettagli del paziente');
+            setToast({ message: 'Errore nel caricamento dei dettagli del paziente', type: 'error' });
         } finally {
             setLoading(false);
         }
@@ -79,7 +82,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                 residenza: editedResidenza,
                 idPsicologo: editedPsicologo,
             });
-            alert('Paziente aggiornato con successo!');
+            setToast({ message: 'Paziente aggiornato con successo!', type: 'success' });
             setIsEditing(false);
             // Reload details
             await loadPatientDetails();
@@ -89,7 +92,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
             }
         } catch (error) {
             console.error('Error updating patient:', error);
-            alert('Errore nell\'aggiornamento del paziente');
+            setToast({ message: 'Errore nell\'aggiornamento del paziente', type: 'error' });
         } finally {
             setIsSaving(false);
         }
@@ -433,6 +436,13 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                     )}
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

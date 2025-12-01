@@ -12,6 +12,8 @@ interface PsychologistPatientDetailModalProps {
     onClose: () => void;
 }
 
+import Toast from './Toast';
+
 const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalProps> = ({
     patient,
     onClose,
@@ -21,6 +23,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
     const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
     const [loading, setLoading] = useState(true);
     const [loadingQuestionnaires, setLoadingQuestionnaires] = useState(true);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     useEffect(() => {
         if (patient) {
@@ -38,7 +41,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
             setPatientDetails(details);
         } catch (error) {
             console.error('Error loading patient details:', error);
-            alert('Errore nel caricamento dei dettagli del paziente');
+            setToast({ message: 'Errore nel caricamento dei dettagli del paziente', type: 'error' });
         } finally {
             setLoading(false);
         }
@@ -257,6 +260,13 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                         {/* Footer vuoto - solo chiusura tramite X */}
                     </div>
                 </div>
+                {toast && (
+                    <Toast
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={() => setToast(null)}
+                    />
+                )}
             </div>
 
             {/* Questionnaire Detail Modal */}

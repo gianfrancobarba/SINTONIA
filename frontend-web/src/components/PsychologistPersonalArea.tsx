@@ -8,8 +8,11 @@ interface PsychologistPersonalAreaProps {
     onProfileUpdate?: () => void;
 }
 
+import Toast from './Toast';
+
 const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onProfileUpdate }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [formData, setFormData] = useState<{
         codiceFiscale: string;
         nome: string;
@@ -89,7 +92,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
                 // Refresh data or update state
                 setOriginalData({ ...formData, profileImageFile: null });
                 setIsEditing(false);
-                alert('Dati salvati con successo!');
+                setToast({ message: 'Dati salvati con successo!', type: 'success' });
 
                 // Notify parent to refresh profile
                 if (onProfileUpdate) {
@@ -98,7 +101,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
             }
         } catch (error) {
             console.error('Error updating profile:', error);
-            alert('Errore durante il salvataggio dei dati');
+            setToast({ message: 'Errore durante il salvataggio dei dati', type: 'error' });
         }
     };
 
@@ -237,6 +240,13 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
                     </div>
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

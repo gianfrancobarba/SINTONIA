@@ -9,12 +9,16 @@ interface AdminInvalidationDetailModalProps {
     onReject: (id: string) => void;
 }
 
+import Toast from './Toast';
+
 const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> = ({
     request,
     onClose,
     onAccept,
     onReject,
 }) => {
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
     if (!request) return null;
 
     const [isAccepting, setIsAccepting] = useState(false);
@@ -30,7 +34,7 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                 onClose();
             } catch (error) {
                 console.error('Failed to accept invalidation request', error);
-                alert('Errore durante l\'accettazione della richiesta');
+                setToast({ message: 'Errore durante l\'accettazione della richiesta', type: 'error' });
             } finally {
                 setIsAccepting(false);
             }
@@ -45,7 +49,7 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                 onClose();
             } catch (error) {
                 console.error('Failed to reject invalidation request', error);
-                alert('Errore durante il rifiuto della richiesta');
+                setToast({ message: 'Errore durante il rifiuto della richiesta', type: 'error' });
             } finally {
                 setIsRejecting(false);
             }
@@ -163,6 +167,13 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                     {/* Footer vuoto - chiusura solo tramite X in alto */}
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

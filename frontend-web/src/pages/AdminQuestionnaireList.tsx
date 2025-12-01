@@ -6,6 +6,8 @@ import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision, view
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 
+import Toast from '../components/Toast';
+
 const AdminQuestionnaireList: React.FC = () => {
     const [questionnairesState, setQuestionnairesState] = useState<LoadingState<QuestionnaireData[]>>({
         data: null,
@@ -15,6 +17,7 @@ const AdminQuestionnaireList: React.FC = () => {
     const [selectedQuestionnaireId, setSelectedQuestionnaireId] = useState<string | null>(null);
     const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
     const [patientFilter, setPatientFilter] = useState<string | null>(null);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     useEffect(() => {
         loadQuestionnaires();
@@ -65,7 +68,7 @@ const AdminQuestionnaireList: React.FC = () => {
             setViewingQuestionnaire(questionnaireDetails);
         } catch (error) {
             console.error('Error loading questionnaire details:', error);
-            alert('Errore nel caricamento dei dettagli del questionario');
+            setToast({ message: 'Errore nel caricamento dei dettagli del questionario', type: 'error' });
         }
     };
 
@@ -76,12 +79,12 @@ const AdminQuestionnaireList: React.FC = () => {
     const handleCancelRevision = async (id: string) => {
         try {
             await cancelRevision(id);
-            alert('Revisione annullata con successo');
+            setToast({ message: 'Revisione annullata con successo', type: 'success' });
             // Reload with current filter if active
             loadQuestionnaires(patientFilter || undefined);
         } catch (error) {
             console.error('Error cancelling revision:', error);
-            alert('Errore durante l\'annullamento della revisione');
+            setToast({ message: 'Errore durante l\'annullamento della revisione', type: 'error' });
         }
     };
 
@@ -145,6 +148,13 @@ const AdminQuestionnaireList: React.FC = () => {
                     questionnaire={viewingQuestionnaire}
                     onClose={handleCloseModal}
                     onCancelRevision={handleCancelRevision}
+                />
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>

@@ -12,6 +12,8 @@ import '../css/ForumPage.css';
 
 type FilterType = 'all' | 'unanswered' | 'answered';
 
+import Toast from '../components/Toast';
+
 const ForumPage: React.FC = () => {
     const navigate = useNavigate();
     const [questionsState, setQuestionsState] = useState<LoadingState<ForumQuestion[]>>({
@@ -34,6 +36,7 @@ const ForumPage: React.FC = () => {
         question: null,
         isEditing: false
     });
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     const currentUser = getCurrentUser();
     const isReadOnly = currentUser?.role === 'admin';
@@ -129,9 +132,10 @@ const ForumPage: React.FC = () => {
         try {
             await deleteAnswer(answerId);
             await loadData();
+            setToast({ message: 'Risposta eliminata con successo!', type: 'success' });
         } catch (error) {
             console.error('Error deleting answer:', error);
-            alert('Errore durante l\'eliminazione della risposta');
+            setToast({ message: 'Errore durante l\'eliminazione della risposta', type: 'error' });
         }
     };
 
@@ -139,14 +143,16 @@ const ForumPage: React.FC = () => {
         try {
             if (modalState.isEditing && modalState.answerId) {
                 await updateAnswer(modalState.answerId, content);
+                setToast({ message: 'Risposta modificata con successo!', type: 'success' });
             } else if (modalState.question) {
                 await answerQuestion(modalState.question.idDomanda, content);
+                setToast({ message: 'Risposta pubblicata con successo!', type: 'success' });
             }
             await loadData();
             setModalState({ isOpen: false, question: null, isEditing: false });
         } catch (error) {
             console.error('Error submitting answer:', error);
-            throw error;
+            setToast({ message: 'Errore durante il salvataggio della risposta', type: 'error' });
         }
     };
 
@@ -320,6 +326,13 @@ const ForumPage: React.FC = () => {
                     isEditing={modalState.isEditing}
                     onClose={handleCloseModal}
                     onSubmit={handleModalSubmit}
+                />
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>
