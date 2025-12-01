@@ -20,4 +20,17 @@ export class Visualizzazione_lista_questionariController {
         const limitNum = limit ? Number(limit) : 10;
         return this.questionariService.getStoricoQuestionari(userId, pageNum, limitNum);
     }
+
+    /**
+     * Verifica se il paziente ha compilato tutti e 4 i questionari iniziali
+     * GET /paziente/questionari/initial-check
+     * Ritorna: { hasCompleted: boolean }
+     */
+    @Get('initial-check')
+    @UseGuards(JwtAuthGuard)
+    async checkInitialQuestionnaires(@Req() req: Request): Promise<{ hasCompleted: boolean }> {
+        const userId = (req as any).user?.id;
+        const hasCompleted = await this.questionariService.hasCompletedInitialQuestionnaires(userId);
+        return { hasCompleted };
+    }
 }

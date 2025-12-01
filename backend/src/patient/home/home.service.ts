@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HomeDashboardDto } from './dto/home-dashboard.dto.js';
 import { db } from '../../drizzle/db.js';
 import { paziente, statoAnimo, domandaForum, questionario, tipologiaQuestionario, rispostaForum } from '../../drizzle/schema.js';
-import { eq, desc, } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 
 
 @Injectable()
@@ -57,35 +57,56 @@ export class HomeService {
             .limit(1);
         return rows[0]?.umore ?? 'Neutro';
     }
-    //Ottieni numero questionari non compilati
+    // Ottieni numero questionari da compilare
+    // Logica: conta questionari mai compilati + questionari oltre tempo_somministrazione
     async getPendingQuestionnairesCount(userId: string): Promise<number> {
-        const patientRow = await db
-            .select({ dataIngresso: paziente.dataIngresso })
-            .from(paziente)
-            .where(eq(paziente.idPaziente, userId))
-            .limit(1);
-
-        const dataIngressoStr = patientRow[0]?.dataIngresso;
-        if (!dataIngressoStr) return 0;
-
-        const dataIngressoDate = new Date(dataIngressoStr);
         const today = new Date();
         const msPerDay = 1000 * 60 * 60 * 24;
-        const daysSinceIngresso = Math.floor((today.getTime() - dataIngressoDate.getTime()) / msPerDay);
 
+        // Ottieni tutte le tipologie di questionari
         const allTypes = await db
-            .select({ nome: tipologiaQuestionario.nome, tempo: tipologiaQuestionario.tempoSomministrazione })
+            .select({
+                nome: tipologiaQuestionario.nome,
+                tempoSomministrazione: tipologiaQuestionario.tempoSomministrazione,
+            })
             .from(tipologiaQuestionario);
 
-        const dueTypeNames = allTypes.filter(t => t.tempo <= daysSinceIngresso).map(t => t.nome);
+        let count = 0;
 
-        const compiled = await db
-            .select({ nome: questionario.nomeTipologia })
-            .from(questionario)
-            .where(eq(questionario.idPaziente, userId));
+        // Per ogni tipologia, verifica se è da compilare
+        for (const tipo of allTypes) {
+            const lastCompilation = await db
+                .select({
+                    dataCompilazione: questionario.dataCompilazione,
+                })
+                .from(questionario)
+                .where(
+                    and(
+                        eq(questionario.idPaziente, userId),
+                        eq(questionario.nomeTipologia, tipo.nome)
+                    )
+                )
+                .orderBy(desc(questionario.dataCompilazione))
+                .limit(1);
 
-        const compiledSet = new Set(compiled.map(c => c.nome));
-        return dueTypeNames.filter(n => !compiledSet.has(n)).length;
+            if (lastCompilation.length === 0) {
+                // Mai compilato -> conta
+                count++;
+            } else {
+                // Già compilato -> verifica se è passato abbastanza tempo
+                const lastDate = new Date(lastCompilation[0].dataCompilazione);
+                const daysSinceLastCompilation = Math.floor(
+                    (today.getTime() - lastDate.getTime()) / msPerDay
+                );
+
+                if (daysSinceLastCompilation >= tipo.tempoSomministrazione) {
+                    // È passato abbastanza tempo -> conta
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
     //Ottieni i post suggeriti
     private async getSuggestedPosts() {

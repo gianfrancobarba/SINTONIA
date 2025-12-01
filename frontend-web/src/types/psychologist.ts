@@ -42,11 +42,13 @@ export interface LoadingState<T> {
     error: string | null;
 }
 
-// Legacy status type - kept for backward compatibility
-export type QuestionnaireStatus = 'Approvato' | 'In Revisione' | 'Rifiutato';
-
-// New status type for management page
-export type QuestionnaireManagementStatus = 'Compilato' | 'Revisionato' | 'Invalidato';
+// Re-export questionnaire types for backward compatibility
+export type {
+    QuestionnaireData,
+    QuestionnaireStatus,
+    QuestionnaireManagementStatus,
+} from './questionnaire';
+export { getQuestionnaireStatus } from './questionnaire';
 
 export interface Questionnaire {
     id: string;
@@ -54,36 +56,6 @@ export interface Questionnaire {
     author: string;
     status: QuestionnaireStatus;
     revisionDate: string; // Format: YYYY-MM-DD
-}
-
-/**
- * Detailed questionnaire data for management page
- * Maps to backend questionario table schema
- */
-export interface QuestionnaireData {
-    idQuestionario: string;
-    idPaziente: string;
-    nomeTipologia: string;
-    score: number | null;
-    risposte: any; // JSON data
-    cambiamento: boolean;
-    dataCompilazione: string;
-    revisionato: boolean;
-    invalidato: boolean;
-    noteInvalidazione: string | null;
-    dataInvalidazione: string | null;
-    idPsicologoRevisione: string | null;
-    idPsicologoRichiedente: string | null;
-    idAmministratoreConferma: string | null;
-}
-
-/**
- * Computed status based on flags
- */
-export function getQuestionnaireStatus(q: QuestionnaireData): QuestionnaireManagementStatus {
-    if (q.invalidato) return 'Invalidato';
-    if (q.revisionato) return 'Revisionato';
-    return 'Compilato';
 }
 
 export interface PaginationInfo {

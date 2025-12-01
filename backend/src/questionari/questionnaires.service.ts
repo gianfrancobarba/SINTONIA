@@ -56,6 +56,7 @@ export class QuestionnairesService {
             idPaziente: result.idPaziente,
             nomeTipologia: result.nomeTipologia,
             score: result.score,
+            risposte: result.risposte, // Include patient answers
             campi: parseDomandeOCampi(tipologia.campi), // Parse campi to array
             cambiamento: result.cambiamento ?? false,
             dataCompilazione: result.dataCompilazione.toISOString(),

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { QuestionnaireData } from '../types/psychologist';
+import type { QuestionnaireData } from '../types/questionnaire';
 import '../css/QuestionnaireDetailModal.css';
 
 interface QuestionnaireDetailModalProps {
@@ -8,18 +8,6 @@ interface QuestionnaireDetailModalProps {
     role?: 'psychologist' | 'admin';
     onRequestInvalidation?: (id: string, notes: string) => void;
     onReview?: (id: string) => void;
-}
-
-interface Question {
-    id: string;
-    text: string;
-    type: 'single' | 'multiple' | 'text' | 'scale';
-    options?: string[];
-}
-
-interface Answer {
-    questionId: string;
-    value: string | string[] | number;
 }
 
 const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
@@ -34,98 +22,26 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     const [invalidationNotes, setInvalidationNotes] = useState<string>('');
     const [isReviewing, setIsReviewing] = useState(false);
 
-    // Mock questions based on questionnaire type
-    const getQuestions = (type: string): Question[] => {
-        if (type === 'PHQ-9') {
-            return [
-                {
-                    id: 'q1',
-                    text: 'Poco interesse o piacere nel fare le cose',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-                {
-                    id: 'q2',
-                    text: 'Sentirsi giù, depresso o senza speranza',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-                {
-                    id: 'q3',
-                    text: 'Difficoltà ad addormentarsi o a restare addormentato, o dormire troppo',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-                {
-                    id: 'q4',
-                    text: 'Sentirsi stanco o avere poca energia',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-                {
-                    id: 'q5',
-                    text: 'Poco appetito o mangiare troppo',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-            ];
-        } else if (type === 'GAD-7') {
-            return [
-                {
-                    id: 'q1',
-                    text: 'Sentirsi nervoso, ansioso o molto teso',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-                {
-                    id: 'q2',
-                    text: 'Non riuscire a fermare o controllare le preoccupazioni',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-                {
-                    id: 'q3',
-                    text: 'Preoccuparsi troppo di cose diverse',
-                    type: 'scale',
-                    options: ['Per niente', 'Diversi giorni', 'Più della metà dei giorni', 'Quasi ogni giorno']
-                },
-            ];
-        } else {
-            // BDI-II or other
-            return [
-                {
-                    id: 'q1',
-                    text: 'Come ti senti ultimamente?',
-                    type: 'scale',
-                    options: ['Non mi sento triste', 'Mi sento triste', 'Sono sempre triste', 'Sono così triste che non posso sopportarlo']
-                },
-                {
-                    id: 'q2',
-                    text: 'Come vedi il futuro?',
-                    type: 'scale',
-                    options: ['Non sono scoraggiato', 'Mi sento scoraggiato', 'Sento di non avere nulla da aspettarmi', 'Il futuro è senza speranza']
-                },
-            ];
+    // Get questions from questionnaire data (from backend)
+    const questions = questionnaire.domande || [];
+    const answerOptions = questionnaire.campi || [];
+    const answers = questionnaire.risposte || {};
+
+    const getAnswerText = (questionIndex: number): string => {
+        const questionId = `q${questionIndex + 1}`;
+        const answerValue = answers[questionId];
+
+        if (answerValue === undefined || answerValue === null) {
+            return 'Nessuna risposta';
         }
-    };
 
-    // Mock answers - in real implementation, these would come from questionnaire.risposte
-    const getMockAnswers = (questions: Question[]): Answer[] => {
-        return questions.map((q, index) => ({
-            questionId: q.id,
-            value: index % 4, // Random scale value 0-3
-        }));
-    };
-
-    const questions = getQuestions(questionnaire.nomeTipologia);
-    const answers = getMockAnswers(questions);
-
-    const getAnswerText = (question: Question, answer: Answer): string => {
-        if (question.type === 'scale' && question.options) {
-            const value = answer.value as number;
-            return question.options[value] || 'N/A';
+        // If we have answer options (scale questionnaire), map the value to the option text
+        if (answerOptions.length > 0 && typeof answerValue === 'number') {
+            return answerOptions[answerValue] || `Valore: ${answerValue}`;
         }
-        return answer.value.toString();
+
+        // Otherwise return the value as string
+        return String(answerValue);
     };
 
     const handleReview = async () => {
@@ -142,8 +58,6 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
             }
         }
     };
-
-
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -189,23 +103,26 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
 
                     <div className="questions-section">
                         <h3 className="section-title">Domande e Risposte</h3>
-                        <div className="questions-list">
-                            {questions.map((question, index) => {
-                                const answer = answers.find(a => a.questionId === question.id);
-                                return (
-                                    <div key={question.id} className="question-item">
+                        {questions.length > 0 ? (
+                            <div className="questions-list">
+                                {questions.map((question, index) => (
+                                    <div key={index} className="question-item">
                                         <div className="question-number">Domanda {index + 1}</div>
-                                        <div className="question-text">{question.text}</div>
+                                        <div className="question-text">{question}</div>
                                         <div className="answer-box">
                                             <label>Risposta del paziente:</label>
                                             <div className="answer-value">
-                                                {answer ? getAnswerText(question, answer) : 'Nessuna risposta'}
+                                                {getAnswerText(index)}
                                             </div>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p style={{ color: '#666', fontStyle: 'italic' }}>
+                                Nessuna domanda disponibile per questo questionario.
+                            </p>
+                        )}
                     </div>
 
                     {questionnaire.noteInvalidazione && (

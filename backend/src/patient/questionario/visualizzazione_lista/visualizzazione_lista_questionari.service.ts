@@ -2,20 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { StoricoQuestionariDto, QuestionarioItemDto } from '../../home/dto/questionari.dto.js';
 import { db } from '../../../drizzle/db.js';
 import { paziente, questionario, tipologiaQuestionario } from '../../../drizzle/schema.js';
-import { eq, desc, sql } from 'drizzle-orm';
+import { eq, desc, sql, and } from 'drizzle-orm';
 
 @Injectable()
 export class Visualizzazione_lista_questionariService {
     async getStoricoQuestionari(userId: string, page: number = 1, limit: number = 10): Promise<StoricoQuestionariDto> {
-        // 1. Recupera data ingresso paziente
+        // 1. Verifica che il paziente esista
         const patientRow = await db
             .select({ dataIngresso: paziente.dataIngresso })
             .from(paziente)
             .where(eq(paziente.idPaziente, userId))
             .limit(1);
 
-        const dataIngressoStr = patientRow[0]?.dataIngresso;
-        if (!dataIngressoStr) {
+        if (!patientRow[0]) {
             return {
                 daCompilare: [],
                 completati: [],
@@ -25,23 +24,82 @@ export class Visualizzazione_lista_questionariService {
             };
         }
 
-        // 2. Calcola giorni da ingresso
-        const dataIngressoDate = new Date(dataIngressoStr);
         const today = new Date();
         const msPerDay = 1000 * 60 * 60 * 24;
-        const daysSinceIngresso = Math.floor((today.getTime() - dataIngressoDate.getTime()) / msPerDay);
 
-        // 3. Ottieni tutte le tipologie questionari e filtra quelle dovute
+        // 2. Ottieni tutte le tipologie di questionari disponibili
         const allTypes = await db
             .select({
                 nome: tipologiaQuestionario.nome,
-                tempo: tipologiaQuestionario.tempoSomministrazione,
+                tempoSomministrazione: tipologiaQuestionario.tempoSomministrazione,
             })
             .from(tipologiaQuestionario);
 
-        const dueTypes = allTypes.filter(t => t.tempo <= daysSinceIngresso);
+        // 3. Per ogni tipologia, trova l'ultima compilazione del paziente
+        const lastCompilationByType = new Map<string, { date: Date, id: string, score: number | null }>();
 
-        // 4. Conta il totale dei questionari compilati
+        for (const tipo of allTypes) {
+            const lastCompilation = await db
+                .select({
+                    idQuestionario: questionario.idQuestionario,
+                    dataCompilazione: questionario.dataCompilazione,
+                    score: questionario.score,
+                })
+                .from(questionario)
+                .where(
+                    and(
+                        eq(questionario.idPaziente, userId),
+                        eq(questionario.nomeTipologia, tipo.nome)
+                    )
+                )
+                .orderBy(desc(questionario.dataCompilazione))
+                .limit(1);
+
+            if (lastCompilation.length > 0) {
+                lastCompilationByType.set(tipo.nome, {
+                    date: new Date(lastCompilation[0].dataCompilazione),
+                    id: lastCompilation[0].idQuestionario,
+                    score: lastCompilation[0].score,
+                });
+            }
+        }
+
+        // 4. Determina quali questionari sono da compilare
+        const daCompilare: QuestionarioItemDto[] = [];
+
+        for (const tipo of allTypes) {
+            const lastCompilation = lastCompilationByType.get(tipo.nome);
+
+            if (!lastCompilation) {
+                // Caso 1: Mai compilato -> mostra sempre
+                daCompilare.push({
+                    id: tipo.nome,
+                    titolo: tipo.nome,
+                    descrizione: `Questionario mai compilato. Clicca per compilare!`,
+                    scadenza: undefined,
+                });
+            } else {
+                // Caso 2: Già compilato -> verifica se è passato abbastanza tempo
+                const daysSinceLastCompilation = Math.floor(
+                    (today.getTime() - lastCompilation.date.getTime()) / msPerDay
+                );
+
+                if (daysSinceLastCompilation >= tipo.tempoSomministrazione) {
+                    // È passato abbastanza tempo -> mostra di nuovo
+                    const nextAvailableDate = new Date(lastCompilation.date);
+                    nextAvailableDate.setDate(nextAvailableDate.getDate() + tipo.tempoSomministrazione);
+
+                    daCompilare.push({
+                        id: tipo.nome,
+                        titolo: tipo.nome,
+                        descrizione: `Ultima compilazione: ${this.formatDate(lastCompilation.date)}. Disponibile per ricompilazione!`,
+                        scadenza: undefined,
+                    });
+                }
+            }
+        }
+
+        // 5. Conta il totale dei questionari compilati
         const totalCountResult = await db
             .select({ count: sql<number>`count(*)::int` })
             .from(questionario)
@@ -50,7 +108,7 @@ export class Visualizzazione_lista_questionariService {
         const totalCompletati = totalCountResult[0]?.count || 0;
         const totalPages = Math.ceil(totalCompletati / limit);
 
-        // 5. Ottieni questionari compilati con paginazione
+        // 6. Ottieni questionari completati con paginazione (tutti, non solo l'ultimo per tipologia)
         const offset = (page - 1) * limit;
         const compiled = await db
             .select({
@@ -65,36 +123,11 @@ export class Visualizzazione_lista_questionariService {
             .limit(limit)
             .offset(offset);
 
-        // 6. Crea set di tipologie già compilate
-        const compiledSet = new Set(compiled.map(c => c.nomeTipologia));
-
-        // 7. Filtra le tipologie dovute rimuovendo quelle già compilate
-        const pendingTypes = dueTypes.filter(t => !compiledSet.has(t.nome));
-
-        // 8. Formatta i dati per il DTO
-
-        // Questionari da compilare
-        const daCompilare: QuestionarioItemDto[] = pendingTypes.map((tipo) => {
-            const dataInserimento = new Date(dataIngressoDate);
-            dataInserimento.setDate(dataInserimento.getDate() + tipo.tempo);
-
-            // Calcola una scadenza suggerita (es. 30 giorni dalla data di disponibilità)
-            const scadenzaDate = new Date(dataInserimento);
-            scadenzaDate.setDate(scadenzaDate.getDate() + 30);
-
-            return {
-                id: tipo.nome, // Usiamo il nome come ID per i questionari da compilare
-                titolo: tipo.nome,
-                descrizione: `Inserito il ${this.formatDate(dataInserimento)}. Clicca per Compilare!`,
-                scadenza: this.formatDate(scadenzaDate),
-            };
-        });
-
-        // Questionari completati
+        // 7. Formatta i questionari completati
         const completati: QuestionarioItemDto[] = compiled.map((q) => ({
             id: q.idQuestionario,
             titolo: q.nomeTipologia,
-            descrizione: `Compilato il ${this.formatDate(q.dataCompilazione)}.`,
+            descrizione: `Compilato il ${this.formatDate(q.dataCompilazione)}`,
             dataCompletamento: this.formatDate(q.dataCompilazione),
         }));
 
@@ -114,5 +147,37 @@ export class Visualizzazione_lista_questionariService {
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const year = d.getFullYear();
         return `${day}/${month}/${year}`;
+    }
+
+    /**
+     * Verifica se il paziente ha compilato almeno una volta tutti e 4 i questionari iniziali
+     * I questionari iniziali sono: PHQ-9, GAD-7, WHO-5, PC-PTSD-5
+     * @param userId - ID del paziente
+     * @returns true se ha compilato tutti e 4, false altrimenti
+     */
+    async hasCompletedInitialQuestionnaires(userId: string): Promise<boolean> {
+        const INITIAL_QUESTIONNAIRES = ['PHQ-9', 'GAD-7', 'WHO-5', 'PC-PTSD-5'];
+
+        // Per ogni questionario iniziale, verifica se esiste almeno una compilazione
+        for (const questionnaireName of INITIAL_QUESTIONNAIRES) {
+            const compilations = await db
+                .select({ id: questionario.idQuestionario })
+                .from(questionario)
+                .where(
+                    and(
+                        eq(questionario.idPaziente, userId),
+                        eq(questionario.nomeTipologia, questionnaireName)
+                    )
+                )
+                .limit(1);
+
+            // Se anche solo uno dei questionari non è mai stato compilato, ritorna false
+            if (compilations.length === 0) {
+                return false;
+            }
+        }
+
+        // Tutti e 4 i questionari sono stati compilati almeno una volta
+        return true;
     }
 }

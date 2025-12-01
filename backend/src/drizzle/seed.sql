@@ -31,34 +31,34 @@ INSERT INTO badge (nome, descrizione, immagine_badge) VALUES
 -- =================================================================================
 INSERT INTO tipologia_questionario (nome, domande, punteggio, campi, tempo_somministrazione)
 VALUES
-(
-    'PHQ-9',
-    '"Scarso interesse o piacere nel fare le cose;Sentirsi ''giù'', di cattivo umore, disperato;Soffrire d''insonnia o dormire troppo;Sentirsi stanco o con poche energie;Avere scarso appetito o perso peso o essere bulimico;Sentirsi contrariato, ''un fallito'', lasciarsi andare o sentirsi abbandonato dalla famiglia;Difficoltà nel concentrarsi sulle cose, per es. nel leggere il giornale o nel guardare la TV;Muoversi o parlare lentamente tanto da non essere compreso da altri. Oppure, sentirsi agitato e muoversi più del solito;Pensare che sarebbe meglio morire o ferirsi in qualche modo"'::jsonb,
-    '{}'::jsonb,
-    '"Mai;Alcuni giorni;Più della metà dei giorni;Quasi tutti i giorni"'::jsonb,
-    30
-),
-(
-    'GAD-7',
-    '"Sentirsi nervoso/a, ansioso/a o teso/a;Non riuscire a smettere di preoccuparsi o a tenere sotto controllo le preoccupazioni;Preoccuparsi troppo per varie cose;Avere difficoltà a rilassarsi;Essere talmente irrequieto/a da far fatica a stare seduto/a fermo/a;Infastidirsi o irritarsi facilmente;Avere paura che possa succedere qualcosa di terribile"'::jsonb,
-    '{}'::jsonb,
-    '"Mai;Alcuni giorni;Più della metà dei giorni;Quasi ogni giorno"'::jsonb,
-    30
-),
-(
-    'WHO-5',
-    '"Mi sono sentito/a allegro/a e di buon umore;Mi sono sentito/a calmo/a e rilassato/a;Mi sono sentito/a attivo/a ed energico/a;Mi sono svegliato/a sentendomi fresco/a e riposato/a;La mia vita di tutti i giorni è stata piena di cose che mi interessano"'::jsonb,
-    '{}'::jsonb,
-    '"Mai;A volte;Meno della metà del tempo;Più della metà del tempo;La maggior parte del tempo;Sempre"'::jsonb,
-    14
-),
-(
-    'PC-PTSD-5',
-    '"Fatto incubi sull''evento o sugli eventi, o ci hai pensato quando non volevi?;Cercato con forza di non pensare all''evento o agli eventi, o evitato situazioni che te li ricordavano?;Stato costantemente in allerta, vigile o facilmente spaventato?;Provato sensazioni di distacco o insensibilità verso le persone, le attività o l''ambiente circostante?;Provato senso di colpa o non essere riuscito a smettere di incolparti o di incolpare altri per l''evento o per eventuali problemi che l''evento ha potuto causare?"'::jsonb,
-    '{}'::jsonb,
-    '"Sì;No"'::jsonb,
-    90
-);
+    (
+        'PHQ-9',
+        '"Scarso interesse o piacere nel fare le cose;Sentirsi ''giù'', di cattivo umore, disperato;Soffrire d''insonnia o dormire troppo;Sentirsi stanco o con poche energie;Avere scarso appetito o perso peso o essere bulimico;Sentirsi contrariato, ''un fallito'', lasciarsi andare o sentirsi abbandonato dalla famiglia;Difficoltà nel concentrarsi sulle cose, per es. nel leggere il giornale o nel guardare la TV;Muoversi o parlare lentamente tanto da non essere compreso da altri. Oppure, sentirsi agitato e muoversi più del solito;Pensare che sarebbe meglio morire o ferirsi in qualche modo"'::jsonb,
+        '[0, 1, 2, 3]'::jsonb,
+        '"Mai;Alcuni giorni;Più della metà dei giorni;Quasi tutti i giorni"'::jsonb,
+        30
+    ),
+    (
+        'GAD-7',
+        '"Sentirsi nervoso/a, ansioso/a o teso/a;Non riuscire a smettere di preoccuparsi o a tenere sotto controllo le preoccupazioni;Preoccuparsi troppo per varie cose;Avere difficoltà a rilassarsi;Essere talmente irrequieto/a da far fatica a stare seduto/a fermo/a;Infastidirsi o irritarsi facilmente;Avere paura che possa succedere qualcosa di terribile"'::jsonb,
+        '[0, 1, 2, 3]'::jsonb,
+        '"Mai;Alcuni giorni;Più della metà dei giorni;Quasi ogni giorno"'::jsonb,
+        30
+    ),
+    (
+        'WHO-5',
+        '"Mi sono sentito/a allegro/a e di buon umore;Mi sono sentito/a calmo/a e rilassato/a;Mi sono sentito/a attivo/a ed energico/a;Mi sono svegliato/a sentendomi fresco/a e riposato/a;La mia vita di tutti i giorni è stata piena di cose che mi interessano"'::jsonb,
+        '[0, 1, 2, 3, 4, 5]'::jsonb,
+        '"Mai;A volte;Meno della metà del tempo;Più della metà del tempo;La maggior parte del tempo;Sempre"'::jsonb,
+        14
+    ),
+    (
+        'PC-PTSD-5',
+        '"Fatto incubi sull''evento o sugli eventi, o ci hai pensato quando non volevi?;Cercato con forza di non pensare all''evento o agli eventi, o evitato situazioni che te li ricordavano?;Stato costantemente in allerta, vigile o facilmente spaventato?;Provato sensazioni di distacco o insensibilità verso le persone, le attività o l''ambiente circostante?;Provato senso di colpa o non essere riuscito a smettere di incolparti o di incolpare altri per l''evento o per eventuali problemi che l''evento ha potuto causare?"'::jsonb,
+        '[1, 0]'::jsonb,
+        '"Sì;No"'::jsonb,
+        90
+    );
 
 -- =================================================================================
 -- 4. AMMINISTRATORE

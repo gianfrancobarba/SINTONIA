@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { QuestionnaireData } from '../types/psychologist';
+import type { QuestionnaireData } from '../types/questionnaire';
 import { getCurrentUser } from './auth.service';
 
 const API_URL = 'http://localhost:3000';
@@ -74,11 +74,18 @@ export const fetchQuestionnairesByPatient = async (
 
 /**
  * Fetch single questionnaire details
+ * Uses role-specific endpoints: /psi/questionnaires/:id or /admin/questionnaires/:id
  */
-export const viewQuestionnaire = async (id: string): Promise<QuestionnaireData> => {
+export const viewQuestionnaire = async (id: string, role: 'psychologist' | 'admin'): Promise<QuestionnaireData> => {
     try {
         const token = getCurrentUser()?.access_token as string | undefined;
-        const response = await axios.get(`${API_URL}/questionnaires/${id}`,
+
+        // Use role-specific endpoint
+        const endpoint = role === 'admin'
+            ? `/admin/questionnaires/${id}`
+            : `/psi/questionnaires/${id}`;
+
+        const response = await axios.get(`${API_URL}${endpoint}`,
             {
                 headers: {
                     ...(token ? { Authorization: `Bearer ${token}` } : {}),

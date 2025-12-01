@@ -36,3 +36,33 @@ export const getStoricoQuestionari = async (page: number = 1, limit: number = 10
         throw error;
     }
 };
+
+/**
+ * Check if patient has completed all 4 initial questionnaires
+ * Returns true if all initial questionnaires are completed, false otherwise
+ */
+export const checkInitialQuestionnaires = async (): Promise<boolean> => {
+    try {
+        const token = localStorage.getItem('patient_token');
+        if (!token) {
+            return true; // Don't show modal if not authenticated
+        }
+
+        const response = await fetch(`${API_BASE_URL}/paziente/questionari/initial-check`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            console.error('Error checking initial questionnaires:', response.status);
+            return true; // Don't show modal on error
+        }
+
+        const data = await response.json();
+        return data.hasCompleted;
+    } catch (error) {
+        console.error('Error checking initial questionnaires:', error);
+        return true; // Don't show modal on error
+    }
+};
