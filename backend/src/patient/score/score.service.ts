@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { eq, and, sql } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
-import { paziente, questionario } from '../../drizzle/schema.js';
+import { paziente, questionario, tipologiaQuestionario } from '../../drizzle/schema.js';
 import { PatientScoreDto } from './dto/score.dto.js';
 
 @Injectable()
@@ -35,35 +35,116 @@ export class ScoreService {
     }
 
     /**
-     * Calcola lo score del paziente come media di tutti i questionari compilati
+     * Calcola lo score del paziente usando decadimento esponenziale
+     * 
+     * Algoritmo:
+     * 1. Raggruppa questionari per tipologia
+     * 2. Per ogni tipologia, calcola λ basato su tempoSomministrazione
+     * 3. Applica peso esponenziale con peso minimo 20%
+     * 4. Calcola media ponderata per tipologia
+     * 5. Aggrega con media semplice tra tipologie
+     * 
+     * Parametri:
+     * - PESO_MINIMO = 0.20 (20%)
+     * - N_CICLI_DECADIMENTO = 3 (raggiunge peso minimo dopo 3 compilazioni)
+     * 
      * Restituisce null se lo screening non è completo o non ci sono questionari
      */
     async calculatePatientScore(idPaziente: string): Promise<number | null> {
+        const PESO_MINIMO = 0.20;
+        const N_CICLI_DECADIMENTO = 3;
+
         // 1. Verifica che lo screening sia completo
         const screeningCompleto = await this.hasCompletedScreening(idPaziente);
         if (!screeningCompleto) {
             return null;
         }
 
-        // 2. Ottieni tutti gli score dei questionari compilati
+        // 2. Ottieni tutti i questionari con tipologia e data
         const questionari = await db
-            .select({ score: questionario.score })
+            .select({
+                score: questionario.score,
+                nomeTipologia: questionario.nomeTipologia,
+                dataCompilazione: questionario.dataCompilazione,
+            })
             .from(questionario)
-            .where(eq(questionario.idPaziente, idPaziente));
+            .where(eq(questionario.idPaziente, idPaziente))
+            .orderBy(questionario.dataCompilazione);
 
-        // 3. Filtra solo gli score non null
-        const scores = questionari
-            .filter(q => q.score !== null)
-            .map(q => q.score as number);
+        // 3. Filtra solo questionari con score valido
+        const questionariValidi = questionari.filter(q => q.score !== null);
 
-        if (scores.length === 0) {
+        if (questionariValidi.length === 0) {
             return null;
         }
 
-        // 4. Calcola la media
-        const media = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+        // 4. Raggruppa per tipologia
+        const perTipologia = new Map<string, Array<{ score: number; dataCompilazione: Date }>>();
 
-        return media;
+        for (const q of questionariValidi) {
+            if (!perTipologia.has(q.nomeTipologia)) {
+                perTipologia.set(q.nomeTipologia, []);
+            }
+            perTipologia.get(q.nomeTipologia)!.push({
+                score: q.score as number,
+                dataCompilazione: new Date(q.dataCompilazione),
+            });
+        }
+
+        // 5. Calcola score ponderato per ogni tipologia
+        const scorePerTipologia: number[] = [];
+        const oggi = new Date();
+
+        for (const [nomeTipologia, questionariTipo] of perTipologia.entries()) {
+            // Ottieni tempo di somministrazione per questa tipologia
+            const tipologia = await db.query.tipologiaQuestionario.findFirst({
+                where: eq(tipologiaQuestionario.nome, nomeTipologia),
+            });
+
+            if (!tipologia) continue;
+
+            const tempoSomministrazione = tipologia.tempoSomministrazione;
+
+            // Calcola λ per questa tipologia
+            // λ = ln(PESO_MINIMO) / (-N_CICLI_DECADIMENTO * tempoSomministrazione)
+            const lambda = Math.log(PESO_MINIMO) / (-N_CICLI_DECADIMENTO * tempoSomministrazione);
+
+            // Ordina questionari dal più recente al più vecchio
+            questionariTipo.sort((a, b) => b.dataCompilazione.getTime() - a.dataCompilazione.getTime());
+
+            // Calcola media ponderata per questa tipologia
+            let sommaPonderata = 0;
+            let sommaPesi = 0;
+
+            for (const q of questionariTipo) {
+                // Calcola giorni dalla data più recente
+                const giorniDaUltimo = Math.floor(
+                    (oggi.getTime() - q.dataCompilazione.getTime()) / (1000 * 60 * 60 * 24)
+                );
+
+                // Calcola peso con decadimento esponenziale
+                let peso = Math.exp(-lambda * giorniDaUltimo);
+
+                // Applica peso minimo
+                peso = Math.max(peso, PESO_MINIMO);
+
+                sommaPonderata += q.score * peso;
+                sommaPesi += peso;
+            }
+
+            // Media ponderata per questa tipologia
+            const scoreTipologia = sommaPesi > 0 ? sommaPonderata / sommaPesi : 0;
+            scorePerTipologia.push(scoreTipologia);
+        }
+
+        // 6. Calcola media semplice tra tutte le tipologie
+        if (scorePerTipologia.length === 0) {
+            return null;
+        }
+
+        const scoreFinale = scorePerTipologia.reduce((sum, s) => sum + s, 0) / scorePerTipologia.length;
+
+        return Math.round(scoreFinale * 100) / 100; // Arrotonda a 2 decimali
     }
 
     /**

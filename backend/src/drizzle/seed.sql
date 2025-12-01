@@ -48,7 +48,7 @@ VALUES
     (
         'WHO-5',
         '"Mi sono sentito/a allegro/a e di buon umore;Mi sono sentito/a calmo/a e rilassato/a;Mi sono sentito/a attivo/a ed energico/a;Mi sono svegliato/a sentendomi fresco/a e riposato/a;La mia vita di tutti i giorni è stata piena di cose che mi interessano"'::jsonb,
-        '[0, 1, 2, 3, 4, 5]'::jsonb,
+        '[5, 4, 3, 2, 1, 0]'::jsonb,
         '"Mai;A volte;Meno della metà del tempo;Più della metà del tempo;La maggior parte del tempo;Sempre"'::jsonb,
         14
     ),
