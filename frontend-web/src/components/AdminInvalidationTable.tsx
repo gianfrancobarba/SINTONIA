@@ -17,14 +17,31 @@ interface AdminInvalidationTableProps {
 }
 
 const AdminInvalidationTable: React.FC<AdminInvalidationTableProps> = ({
-    requests,
-    selectedId,
-    onSelect,
-    onView,
-}) => {
+                                                                           requests,
+                                                                           selectedId,
+                                                                           onSelect,
+                                                                           onView,
+                                                                       }) => {
     const formatDate = (dateString: string | null) => {
         if (!dateString) return '-';
-        return dateString;
+
+        try {
+            const date = new Date(dateString);
+
+            // Format date as dd/mm/yy
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = String(date.getFullYear()).slice(-2);
+
+            // Format time as HH:mm
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return dateString;
+        }
     };
 
     const getStatusLabel = (stato: string) => {
@@ -44,29 +61,29 @@ const AdminInvalidationTable: React.FC<AdminInvalidationTableProps> = ({
         <div className="questionnaire-table-container">
             <table className="questionnaire-table">
                 <thead>
-                    <tr>
-                        <th>Nome Questionario</th>
-                        <th>Richiedente</th>
-                        <th>Stato</th>
-                        <th>Note</th>
-                        <th>Data Richiesta</th>
-                        <th>Azioni</th>
-                    </tr>
+                <tr>
+                    <th>Nome Questionario</th>
+                    <th>Richiedente</th>
+                    <th>Stato</th>
+                    <th>Note</th>
+                    <th>Data Richiesta</th>
+                    <th>Azioni</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {requests.map((req) => {
-                        const isSelected = selectedId === req.idRichiesta;
-                        const statusInfo = getStatusLabel(req.stato);
+                {requests.map((req) => {
+                    const isSelected = selectedId === req.idRichiesta;
+                    const statusInfo = getStatusLabel(req.stato);
 
-                        return (
-                            <tr
-                                key={req.idRichiesta}
-                                className={isSelected ? 'selected' : ''}
-                                onClick={() => onSelect(req.idRichiesta)}
-                            >
-                                <td>{req.nomeQuestionario}</td>
-                                <td>{req.nomePsicologoRichiedente}</td>
-                                <td>
+                    return (
+                        <tr
+                            key={req.idRichiesta}
+                            className={isSelected ? 'selected' : ''}
+                            onClick={() => onSelect(req.idRichiesta)}
+                        >
+                            <td>{req.nomeQuestionario}</td>
+                            <td>{req.nomePsicologoRichiedente}</td>
+                            <td>
                                     <span style={{
                                         padding: '4px 12px',
                                         borderRadius: '12px',
@@ -78,32 +95,32 @@ const AdminInvalidationTable: React.FC<AdminInvalidationTableProps> = ({
                                     }}>
                                         {statusInfo.text}
                                     </span>
-                                </td>
-                                <td style={{
-                                    maxWidth: '200px',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap'
-                                }} title={req.note}>
-                                    {req.note}
-                                </td>
-                                <td>{formatDate(req.dataRichiesta)}</td>
-                                <td className="actions-cell">
-                                    <button
-                                        className="action-btn view-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onView(req.idRichiesta);
-                                        }}
-                                        aria-label="Visualizza"
-                                        title="Visualizza"
-                                    >
-                                        <ViewIcon />
-                                    </button>
-                                </td>
-                            </tr>
-                        );
-                    })}
+                            </td>
+                            <td style={{
+                                maxWidth: '200px',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap'
+                            }} title={req.note}>
+                                {req.note}
+                            </td>
+                            <td>{formatDate(req.dataRichiesta)}</td>
+                            <td className="actions-cell">
+                                <button
+                                    className="action-btn view-btn"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onView(req.idRichiesta);
+                                    }}
+                                    aria-label="Visualizza"
+                                    title="Visualizza"
+                                >
+                                    <ViewIcon />
+                                </button>
+                            </td>
+                        </tr>
+                    );
+                })}
                 </tbody>
             </table>
 
