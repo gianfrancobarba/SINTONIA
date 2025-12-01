@@ -240,8 +240,8 @@ export class Compilazione_questionarioService {
         }
 
         // Aggiorna lo score del paziente (media di tutti i questionari)
-        // Solo se ha completato lo screening iniziale
-        await this.scoreService.updatePatientScore(idPaziente);
+        // e la priorità (se necessario)
+        await this.scoreService.updatePatientScore(idPaziente, id);
 
         return { idQuestionario: id, score };
     }

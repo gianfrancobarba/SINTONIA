@@ -3,9 +3,12 @@ import { eq, and, sql } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
 import { paziente, questionario, tipologiaQuestionario } from '../../drizzle/schema.js';
 import { PatientScoreDto } from './dto/score.dto.js';
+import { PrioritaService } from '../priorita/priorita.service.js';
 
 @Injectable()
 export class ScoreService {
+    constructor(private readonly prioritaService: PrioritaService) { }
+
     // Questionari di screening richiesti
     private readonly SCREENING_QUESTIONNAIRES = ['PHQ-9', 'GAD-7', 'WHO-5', 'PC-PTSD-5'];
 
@@ -148,10 +151,11 @@ export class ScoreService {
     }
 
     /**
-     * Aggiorna lo score del paziente nel database
+     * Aggiorna lo score del paziente nel database e la priorità se necessario
      * Calcola la media e la salva nel campo score della tabella paziente
+     * Poi chiama il servizio di gestione priorità
      */
-    async updatePatientScore(idPaziente: string): Promise<void> {
+    async updatePatientScore(idPaziente: string, idQuestionario: string): Promise<void> {
         const score = await this.calculatePatientScore(idPaziente);
 
         // Aggiorna il campo score del paziente
@@ -159,6 +163,9 @@ export class ScoreService {
             .update(paziente)
             .set({ score: score })
             .where(eq(paziente.idPaziente, idPaziente));
+
+        // Aggiorna la priorità del paziente (se necessario)
+        await this.prioritaService.updatePrioritaPaziente(idPaziente, idQuestionario);
     }
 
     /**

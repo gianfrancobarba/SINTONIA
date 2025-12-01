@@ -12,6 +12,7 @@ import { BadgeModule } from './badge/badge.module.js';
 import { AreaPersonaleModule } from './area-personale/area-personale.module.js';
 import { SettingsModule } from './settings/settings.module.js';
 import { ScoreModule } from './score/score.module.js';
+import { PrioritaModule } from './priorita/priorita.module.js';
 
 @Module({
     imports: [
@@ -22,6 +23,7 @@ import { ScoreModule } from './score/score.module.js';
         DiaryModule,
         BadgeModule,
         ScoreModule,
+        PrioritaModule,
         AreaPersonaleModule,
         SettingsModule,
     ],
