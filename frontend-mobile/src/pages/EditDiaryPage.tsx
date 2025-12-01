@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
 import EditPenIcon from '../assets/icons/edit-pen.svg';
 import { updateDiaryPage } from '../services/diary.service';
+import Toast from '../components/Toast';
 import '../css/EditDiaryPage.css';
 
 interface LocationState {
@@ -21,6 +22,7 @@ const EditDiaryPage: React.FC = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [showToast, setShowToast] = useState(false);
     const maxContentLength = 2000;
 
     useEffect(() => {
@@ -43,12 +45,13 @@ const EditDiaryPage: React.FC = () => {
         setIsLoading(true);
         try {
             await updateDiaryPage(state.page.id, { title, content });
-            alert('Pagina modificata con successo!');
-            navigate('/diary');
+            setShowToast(true);
+            setTimeout(() => {
+                navigate('/diary');
+            }, 2000);
         } catch (error) {
             console.error('Error updating diary page:', error);
             alert('Errore durante la modifica. Riprova.');
-        } finally {
             setIsLoading(false);
         }
     };
@@ -100,14 +103,22 @@ const EditDiaryPage: React.FC = () => {
                     </div>
                 </div>
 
-                <button
-                    className="submit-button"
-                    onClick={handleSubmit}
-                    disabled={!isFormValid || isLoading}
-                >
-                    {isLoading ? 'Salvataggio...' : 'Salva Modifiche'}
-                </button>
             </div>
+
+            <button
+                className="publish-button-fixed"
+                onClick={handleSubmit}
+                disabled={!isFormValid || isLoading}
+            >
+                {isLoading ? 'Salvataggio...' : 'Salva Modifiche'}
+            </button>
+
+            {showToast && (
+                <Toast
+                    message="Pagina modificata con successo!"
+                    onClose={() => setShowToast(false)}
+                />
+            )}
         </div>
     );
 };

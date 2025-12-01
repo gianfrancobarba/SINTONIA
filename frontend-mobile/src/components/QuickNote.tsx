@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../css/QuickNote.css';
-import noteIcon from '../assets/icons/sintonia-mockup-monotone.svg';
+import noteIcon from '../assets/icons/diary.svg';
 import editIcon from '../assets/icons/edit-pen.svg';
 import { getDiaryPages, createDiaryPage, updateDiaryPage } from '../services/diary.service';
 import Toast from './Toast';

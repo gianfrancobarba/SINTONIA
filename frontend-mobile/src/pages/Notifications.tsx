@@ -65,17 +65,15 @@ const Notifications: React.FC = () => {
 
     return (
         <div className="notifications-page">
-            {/* Header */}
+            {/* Header - Matching app style */}
             <div className="notifications-header">
-                <button className="notifications-back-btn" onClick={handleBack} aria-label="Indietro">
-                    <ChevronLeft size={24} strokeWidth={2.5} />
-                </button>
-            </div>
+                <div className="notifications-header-content">
+                    <div className="notifications-title-section">
+                        <h1 className="notifications-title">Notifiche</h1>
 
-            {/* Title with Badge */}
-            <div className="notifications-title-section">
-                <h1 className="notifications-title">Notifiche</h1>
-                <span className="notifications-badge">+{notifications.length}</span>
+                    </div>
+
+                </div>
             </div>
 
             {/* Notifications List */}

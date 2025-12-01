@@ -1,9 +1,9 @@
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.66667 5.00004L6.66667 3.33337" stroke="#83B9C1" stroke-width="1.33333" stroke-linejoin="round"/>
-<path d="M13.3333 5.00004L13.3333 3.33337" stroke="#83B9C1" stroke-width="1.33333" stroke-linejoin="round"/>
-<path d="M16.6667 8.33337H3.33334" stroke="#83B9C1" stroke-width="1.33333" stroke-linejoin="round"/>
-<rect x="2.5" y="5" width="15" height="11.6667" rx="5.83333" stroke="#83B9C1" stroke-width="1.33333" stroke-linejoin="round"/>
-<rect x="9.16667" y="10.8334" width="1.66667" height="1.66667" rx="0.833333" fill="#83B9C1"/>
-<rect x="12.5" y="10.8334" width="1.66667" height="1.66667" rx="0.833333" fill="#83B9C1"/>
-<rect x="5.83333" y="10.8334" width="1.66667" height="1.66667" rx="0.833333" fill="#83B9C1"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 6L8 4" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path d="M16 6L16 4" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path d="M20 10L4 10" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<rect x="3" y="6" width="18" height="14" rx="4" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<rect x="11" y="13" width="2" height="2" rx="1" fill="black"/>
+<rect x="15" y="13" width="2" height="2" rx="1" fill="black"/>
+<rect x="7" y="13" width="2" height="2" rx="1" fill="black"/>
 </svg>

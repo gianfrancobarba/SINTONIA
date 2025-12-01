@@ -1,156 +1,118 @@
 .badges-page {
-    background-color: #F5F5F5;
-    position: relative;
-    overflow-x: hidden;
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* ===== Header Section ===== */
+/* Header - matching NewDiaryPage style */
 .badges-header {
-    position: relative;
-    background: linear-gradient(135deg, #7FB3BE 0%, #6FA5B0 100%);
-    padding: 50px 20px 90px;
-    overflow: hidden;
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* ===== Organic Shapes ===== */
-.organic-shape {
-    position: absolute;
+.badges-header .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.badges-header .back-button {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.organic-shape-1 {
-    width: 180px;
-    height: 180px;
-    top: -90px;
-    right: -40px;
-}
-
-.organic-shape-2 {
-    width: 120px;
-    height: 120px;
-    top: -20px;
-    left: -50px;
-}
-
-.organic-shape-3 {
-    width: 220px;
-    height: 220px;
-    bottom: -60px;
-    left: -80px;
-}
-
-.organic-shape-4 {
-    width: 160px;
-    height: 160px;
-    bottom: 40px;
-    right: -50px;
-}
-
-.organic-shape-5 {
-    width: 80px;
-    height: 80px;
-    bottom: 120px;
-    right: 60px;
-}
-
-/* ===== Back Button ===== */
-.badges-back-btn {
-    position: relative;
-    z-index: 10;
-    background: transparent;
-    border: 2.5px solid white;
-    cursor: pointer;
-    padding: 0;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    transition: all 0.2s;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.badges-header .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.badges-header .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.badges-header .back-button:active {
+    transform: scale(0.95);
+}
+
+.header-title {
     color: white;
-}
-
-.badges-back-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-/* ===== Title ===== */
-.badges-title {
-    position: relative;
-    z-index: 10;
     font-size: 24px;
     font-weight: 700;
-    color: white;
-    margin: 0 0 40px 0;
-}
-
-/* ===== Badge Count ===== */
-.badges-count {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.badges-number {
-    font-size: 120px;
-    font-weight: 700;
-    color: white;
-    line-height: 1;
     margin: 0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+/* Content */
+.badges-content {
+    flex: 1;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Summary Section */
+.badges-summary {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.badges-count {
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin-bottom: 8px;
 }
 
 .badges-subtitle {
     font-size: 16px;
+    color: #6B7280;
     font-weight: 500;
-    color: white;
-    margin: 12px 0 0 0;
-    opacity: 0.95;
 }
 
-/* ===== Content Section ===== */
-.badges-content {
-    position: relative;
+/* History Card */
+.badges-history-card {
     background: white;
-    margin-top: -40px;
-    border-radius: 40px 40px 0 0;
-    padding: 40px 20px 100px;
-    min-height: 60vh;
-}
-
-.badges-wave {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: white;
-}
-
-/* ===== Badge History ===== */
-.badges-history {
-    position: relative;
-    z-index: 5;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #E5E5E5;
 }
 
 .badges-history-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #7FB3BE;
-    margin: 0 0 24px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 20px 0;
 }
 
-/* ===== Badge Grid ===== */
+/* Grid */
 .badges-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 14px;
-    max-width: 100%;
+    gap: 12px;
+    justify-items: center;
 }
 
 .badge-circle {
@@ -158,16 +120,15 @@
     aspect-ratio: 1;
     border-radius: 50%;
     transition: transform 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .badge-circle:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
-/* ===== Loading & Error States ===== */
-.badges-loading,
-.badges-error {
+/* Loading & Error */
+.loading,
+.error {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -176,30 +137,13 @@
     color: #666;
 }
 
-.badges-error {
+.error {
     color: #DC2626;
-    font-weight: 500;
 }
 
-/* ===== Responsive ===== */
+/* Responsive */
 @media (max-width: 380px) {
-    .badges-number {
-        font-size: 100px;
-    }
-
     .badges-grid {
-        gap: 10px;
-    }
-
-    .badges-subtitle {
-        font-size: 14px;
-    }
-}
-
-@media (min-width: 430px) {
-    .badges-content {
-        max-width: 430px;
-        margin-left: auto;
-        margin-right: auto;
+        gap: 8px;
     }
 }

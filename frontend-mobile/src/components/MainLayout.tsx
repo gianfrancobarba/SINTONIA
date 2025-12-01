@@ -5,7 +5,7 @@ import BottomNavigation from './BottomNavigation';
 const MainLayout: React.FC = () => {
     return (
         <div className="main-layout">
-            <div className="content-wrapper" style={{ paddingBottom: '80px' }}>
+            <div className="content-wrapper" style={{ paddingBottom: '85px' }}>
                 <Outlet />
             </div>
             <BottomNavigation />

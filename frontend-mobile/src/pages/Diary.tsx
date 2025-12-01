@@ -5,7 +5,9 @@ import DateFilter from '../components/DateFilter';
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
 import { getDiaryPages, deleteDiaryPage, getAvailableMonthsYears, type MonthYearOption } from '../services/diary.service';
 import type { DiaryPage } from '../types/diary';
+import Toast from '../components/Toast';
 import '../css/Diary.css';
+import NewForumQuestionIcon from '../assets/icons/NewForumQuestion.svg';
 
 const Diary: React.FC = () => {
     const navigate = useNavigate();
@@ -23,6 +25,7 @@ const Diary: React.FC = () => {
     // Delete modal
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [pageToDelete, setPageToDelete] = useState<string | null>(null);
+    const [showToast, setShowToast] = useState(false);
 
     // Touch gesture state
     const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -164,6 +167,7 @@ const Diary: React.FC = () => {
 
             setShowDeleteModal(false);
             setPageToDelete(null);
+            setShowToast(true);
         } catch (err) {
             console.error('Error deleting page:', err);
         }
@@ -201,7 +205,7 @@ const Diary: React.FC = () => {
                     <div className="diary-header-content">
                         <div className="diary-title-section">
                             <h1 className="diary-title">Diario</h1>
-                            <p className="diary-subtitle">0 pagine scritte</p>
+
                         </div>
                         <button className="add-diary-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
                             +
@@ -224,7 +228,7 @@ const Diary: React.FC = () => {
                     <div className="diary-header-content">
                         <div className="diary-title-section">
                             <h1 className="diary-title">Diario</h1>
-                            <p className="diary-subtitle">0 pagine scritte</p>
+
                         </div>
                         <button className="add-diary-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
                             +
@@ -246,59 +250,66 @@ const Diary: React.FC = () => {
                 <div className="diary-header-content">
                     <div className="diary-title-section">
                         <h1 className="diary-title">Diario</h1>
-                        <p className="diary-subtitle">{pages.length} pagine scritte</p>
+
                     </div>
-                    <button className="add-diary-button" onClick={handleAddPage} aria-label="Aggiungi pagina">
-                        +
-                    </button>
                 </div>
             </div>
 
-            {dateOptions.length > 1 && (
-                <DateFilter
-                    options={dateOptions}
-                    selectedMonth={selectedMonth}
-                    selectedYear={selectedYear}
-                    onFilterChange={handleDateFilterChange}
-                />
-            )}
+            <div className="diary-main-card">
+                {dateOptions.length > 1 && (
+                    <DateFilter
+                        options={dateOptions}
+                        selectedMonth={selectedMonth}
+                        selectedYear={selectedYear}
+                        onFilterChange={handleDateFilterChange}
+                    />
+                )}
 
-            {filteredPages.length === 0 ? (
-                <div className="diary-empty">
-                    <p>Nessuna pagina trovata per questo periodo</p>
-                    <p className="diary-empty-hint">Prova a selezionare un altro mese</p>
-                </div>
-            ) : (
-                <>
-                    <div
-                        className="diary-content"
-                        onTouchStart={onTouchStart}
-                        onTouchMove={onTouchMove}
-                        onTouchEnd={onTouchEnd}
-                    >
-                        <div className="diary-cards-container">
-                            {filteredPages.map((page, index) => (
-                                <DiaryCard
-                                    key={page.id}
-                                    page={page}
-                                    position={getCardPosition(index)}
-                                    zIndex={getCardZIndex(index)}
-                                    onSwipeLeft={currentIndex < filteredPages.length - 1 ? handleSwipeLeft : undefined}
-                                    onSwipeRight={currentIndex > 0 ? handleSwipeRight : undefined}
-                                    onEdit={handleEdit}
-                                    onDelete={handleDelete}
-                                />
-                            ))}
-                        </div>
-
-                        <div className="diary-indicator">
-                            <span className="diary-page-counter">
-                                {currentIndex + 1} / {filteredPages.length}
-                            </span>
-                        </div>
+                {filteredPages.length === 0 ? (
+                    <div className="diary-empty">
+                        <p>Nessuna pagina trovata per questo periodo</p>
+                        <p className="diary-empty-hint">Prova a selezionare un altro mese</p>
                     </div>
-                </>
-            )}
+                ) : (
+                    <>
+                        <div
+                            className="diary-content"
+                            onTouchStart={onTouchStart}
+                            onTouchMove={onTouchMove}
+                            onTouchEnd={onTouchEnd}
+                        >
+                            <div className="diary-cards-container">
+                                {filteredPages.map((page, index) => (
+                                    <DiaryCard
+                                        key={page.id}
+                                        page={page}
+                                        position={getCardPosition(index)}
+                                        zIndex={getCardZIndex(index)}
+                                        onSwipeLeft={currentIndex < filteredPages.length - 1 ? handleSwipeLeft : undefined}
+                                        onSwipeRight={currentIndex > 0 ? handleSwipeRight : undefined}
+                                        onEdit={handleEdit}
+                                        onDelete={handleDelete}
+                                    />
+                                ))}
+                            </div>
+
+                            <div className="diary-indicator">
+                                <span className="diary-page-counter">
+                                    {currentIndex + 1} / {filteredPages.length}
+                                </span>
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                <button
+                    className="diary-fab"
+                    onClick={handleAddPage}
+                    aria-label="Nuova pagina"
+                >
+                    <img src={NewForumQuestionIcon} alt="" />
+                </button>
+            </div>
 
 
 
@@ -306,6 +317,13 @@ const Diary: React.FC = () => {
                 <ConfirmDeleteModal
                     onConfirm={handleConfirmDelete}
                     onCancel={handleCancelDelete}
+                />
+            )}
+
+            {showToast && (
+                <Toast
+                    message="Pagina eliminata con successo!"
+                    onClose={() => setShowToast(false)}
                 />
             )}
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, User, Cake, MapPin, Mail } from 'lucide-react';
+import LeftArrow from '../assets/icons/LeftArrow.svg';
+import { User, Cake, MapPin, Mail } from 'lucide-react';
 import { getPersonalInfo } from '../services/settings.service.ts';
 import type { PersonalInfoDto } from '../types/settings.ts';
 import '../css/PersonalInfo.css';
@@ -31,11 +32,6 @@ const PersonalInfo: React.FC = () => {
         navigate('/settings');
     };
 
-    const handleSave = () => {
-        // Per ora il bottone "Salva" non fa nulla perché i dati sono read-only
-        navigate('/settings');
-    };
-
     const formatDate = (dateString: string): string => {
         const date = new Date(dateString);
         return date.toLocaleDateString('it-IT', {
@@ -63,61 +59,72 @@ const PersonalInfo: React.FC = () => {
 
     return (
         <div className="personal-info-page">
-            {/* Header */}
-            <div className="info-header">
-                <button className="back-button" onClick={handleBack} aria-label="Indietro">
-                    <ChevronLeft size={24} strokeWidth={2.5} />
+            <div className="personal-info-header">
+                <div className="header-content">
+                    <button className="back-button" onClick={handleBack} aria-label="Indietro">
+                        <img src={LeftArrow} alt="" />
+                    </button>
+                    <h1 className="header-title">Informazioni Personali</h1>
+                </div>
+            </div>
+
+            <div className="personal-info-content">
+                <div className="form-section">
+                    <label className="form-label">Nome e Cognome</label>
+                    <div className="title-input-container">
+                        <User size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
+                        <input
+                            type="text"
+                            className="title-input"
+                            value={`${personalData.nome} ${personalData.cognome}`}
+                            readOnly
+                        />
+                    </div>
+                </div>
+
+                <div className="form-section">
+                    <label className="form-label">Email</label>
+                    <div className="title-input-container">
+                        <Mail size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
+                        <input
+                            type="text"
+                            className="title-input"
+                            value={personalData.email}
+                            readOnly
+                        />
+                    </div>
+                </div>
+
+                <div className="form-section">
+                    <label className="form-label">Data di Nascita</label>
+                    <div className="title-input-container">
+                        <Cake size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
+                        <input
+                            type="text"
+                            className="title-input"
+                            value={formatDate(personalData.dataNascita)}
+                            readOnly
+                        />
+                    </div>
+                </div>
+
+                <div className="form-section">
+                    <label className="form-label">Indirizzo</label>
+                    <div className="title-input-container">
+                        <MapPin size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
+                        <input
+                            type="text"
+                            className="title-input"
+                            value={personalData.indirizzo || 'Non specificato'}
+                            readOnly
+                        />
+                    </div>
+                </div>
+
+                <button className="submit-button" onClick={handleBack}>
+                    Torna alle Impostazioni
                 </button>
-                <h1 className="page-title">Informazioni Personali</h1>
             </div>
-
-            {/* Form Fields */}
-            <div className="info-form">
-                <div className="form-field">
-                    <label className="field-label">Nome</label>
-                    <div className="field-input">
-                        <User size={20} className="field-icon" />
-                        <span className="field-value">{personalData.nome}</span>
-                    </div>
-                </div>
-
-                <div className="form-field">
-                    <label className="field-label">Cognome</label>
-                    <div className="field-input">
-                        <User size={20} className="field-icon" />
-                        <span className="field-value">{personalData.cognome}</span>
-                    </div>
-                </div>
-
-                <div className="form-field">
-                    <label className="field-label">Data di nascita</label>
-                    <div className="field-input">
-                        <Cake size={20} className="field-icon" />
-                        <span className="field-value">{formatDate(personalData.dataNascita)}</span>
-                    </div>
-                </div>
-
-                <div className="form-field">
-                    <label className="field-label">Comune di residenza</label>
-                    <div className="field-input">
-                        <MapPin size={20} className="field-icon" />
-                        <span className="field-value">{personalData.residenza}</span>
-                    </div>
-                </div>
-
-                <div className="form-field">
-                    <label className="field-label">Email</label>
-                    <div className="field-input">
-                        <Mail size={20} className="field-icon" />
-                        <span className="field-value">{personalData.email}</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Save Button */}
-            <button className="save-button" onClick={handleSave}>
-                Salva
-            </button>
         </div>
     );
 };

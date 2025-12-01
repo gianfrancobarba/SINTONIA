@@ -73,26 +73,10 @@ function App() {
             }
           />
           <Route
-            path="/questionari"
-            element={
-              <PrivateRoute>
-                <Questionari />
-              </PrivateRoute>
-            }
-          />
-          <Route
             path="/forum"
             element={
               <PrivateRoute>
                 <Forum />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <PrivateRoute>
-                <Settings />
               </PrivateRoute>
             }
           />
@@ -114,6 +98,32 @@ function App() {
           />
         </Route>
 
+        {/* Routes without BottomNavigation */}
+        <Route
+          path="/questionari"
+          element={
+            <PrivateRoute>
+              <Questionari />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/badges"
+          element={
+            <PrivateRoute>
+              <Badges />
+            </PrivateRoute>
+          }
+        />
+
         {/* Sub-pages without BottomNavigation */}
         <Route
           path="/settings/personal-info"
@@ -128,14 +138,6 @@ function App() {
           element={
             <PrivateRoute>
               <TechnicalSupport />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/settings/badges"
-          element={
-            <PrivateRoute>
-              <Badges />
             </PrivateRoute>
           }
         />

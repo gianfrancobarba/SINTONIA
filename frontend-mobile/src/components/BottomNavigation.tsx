@@ -1,13 +1,18 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Users, Bell, User } from 'lucide-react';
 import '../css/BottomNavigation.css';
+
+// Import SVG icons
+import forumIcon from '../assets/icons/forum.svg';
+import diaryIcon from '../assets/icons/diary.svg';
+import homeIcon from '../assets/icons/home.svg';
+import notificationIcon from '../assets/icons/notification.svg';
+import userIcon from '../assets/icons/user.svg';
 
 interface NavItem {
     path: string;
-    icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
+    icon: string;
     label: string;
-    isCenter?: boolean;
 }
 
 const BottomNavigation: React.FC = () => {
@@ -15,11 +20,11 @@ const BottomNavigation: React.FC = () => {
     const location = useLocation();
 
     const navItems: NavItem[] = [
-        { path: '/forum', icon: Users, label: 'Forum' },
-        { path: '/diary', icon: BookOpen, label: 'Diario' },
-        { path: '/home', icon: Home, label: 'Home', isCenter: true },
-        { path: '/notifications', icon: Bell, label: 'Notifiche' },
-        { path: '/profile', icon: User, label: 'Profilo' }
+        { path: '/forum', icon: forumIcon, label: 'Forum' },
+        { path: '/diary', icon: diaryIcon, label: 'Diario' },
+        { path: '/home', icon: homeIcon, label: 'Home' },
+        { path: '/notifications', icon: notificationIcon, label: 'Notifiche' },
+        { path: '/profile', icon: userIcon, label: 'Profilo' }
     ];
 
     const isActive = (path: string) => location.pathname === path;
@@ -29,20 +34,20 @@ const BottomNavigation: React.FC = () => {
             <div className="bottom-nav-background" />
             <div className="bottom-nav-items">
                 {navItems.map((item) => {
-                    const Icon = item.icon;
                     const active = isActive(item.path);
 
                     return (
                         <button
                             key={item.path}
-                            className={`nav-item ${item.isCenter ? 'nav-item-center' : ''} ${active ? 'active' : ''}`}
+                            className={`nav-item ${active ? 'active' : ''}`}
                             onClick={() => navigate(item.path)}
                             aria-label={item.label}
                             aria-current={active ? 'page' : undefined}
                         >
-                            <Icon
-                                size={item.isCenter ? 28 : 24}
-                                strokeWidth={active ? 2.5 : 2}
+                            <img
+                                src={item.icon}
+                                alt={item.label}
+                                className="nav-icon"
                             />
                         </button>
                     );
@@ -52,4 +57,4 @@ const BottomNavigation: React.FC = () => {
     );
 };
 
-export default BottomNavigation;
+export default React.memo(BottomNavigation);

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
 import EditPenIcon from '../assets/icons/edit-pen.svg';
 import { createDiaryPage } from '../services/diary.service';
+import Toast from '../components/Toast';
 import '../css/NewDiaryPage.css';
 
 const NewDiaryPage: React.FC = () => {
@@ -10,6 +11,7 @@ const NewDiaryPage: React.FC = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [showToast, setShowToast] = useState(false);
     const maxContentLength = 2000;
 
     const handleBack = () => {
@@ -22,12 +24,13 @@ const NewDiaryPage: React.FC = () => {
         setIsLoading(true);
         try {
             await createDiaryPage({ title, content });
-            alert('Pagina salvata con successo!');
-            navigate('/diary');
+            setShowToast(true);
+            setTimeout(() => {
+                navigate('/diary');
+            }, 2000);
         } catch (error) {
             console.error('Error saving diary page:', error);
             alert('Errore durante il salvataggio. Riprova.');
-        } finally {
             setIsLoading(false);
         }
     };
@@ -79,14 +82,22 @@ const NewDiaryPage: React.FC = () => {
                     </div>
                 </div>
 
-                <button
-                    className="submit-button"
-                    onClick={handleSubmit}
-                    disabled={!isFormValid || isLoading}
-                >
-                    {isLoading ? 'Salvataggio...' : 'Salva Pagina'}
-                </button>
             </div>
+
+            <button
+                className="publish-button-fixed"
+                onClick={handleSubmit}
+                disabled={!isFormValid || isLoading}
+            >
+                {isLoading ? 'Salvataggio...' : 'Salva Pagina'}
+            </button>
+
+            {showToast && (
+                <Toast
+                    message="Pagina salvata con successo!"
+                    onClose={() => setShowToast(false)}
+                />
+            )}
         </div>
     );
 };

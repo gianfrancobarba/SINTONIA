@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 14C21 13.3434 20.8707 12.6932 20.6194 12.0866C20.3681 11.48 19.9998 10.9288 19.5355 10.4645C19.0712 10.0002 18.52 9.63188 17.9134 9.3806C17.3068 9.12933 16.6566 9 16 9" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<rect x="14" y="5" width="4" height="4" rx="2" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path d="M3 14C3 13.3434 3.12933 12.6932 3.3806 12.0866C3.63188 11.48 4.00017 10.9288 4.46447 10.4645C4.92876 10.0002 5.47996 9.63188 6.08658 9.3806C6.69321 9.12933 7.34339 9 8 9" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<rect width="4" height="4" rx="2" transform="matrix(-1 0 0 1 10 5)" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path d="M7 21C7 20.3434 7.12933 19.6932 7.3806 19.0866C7.63188 18.48 8.00017 17.9288 8.46447 17.4645C8.92876 17.0002 9.47996 16.6319 10.0866 16.3806C10.6932 16.1293 11.3434 16 12 16C12.6566 16 13.3068 16.1293 13.9134 16.3806C14.52 16.6319 15.0712 17.0002 15.5355 17.4645C15.9998 17.9288 16.3681 18.48 16.6194 19.0866C16.8707 19.6932 17 20.3434 17 21" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<rect x="10" y="11" width="4" height="4" rx="2" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+</svg>

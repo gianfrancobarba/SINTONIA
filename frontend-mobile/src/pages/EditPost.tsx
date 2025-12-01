@@ -6,6 +6,7 @@ import CategoryModal from '../components/CategoryModal';
 import type { ForumCategory, UpdatePostDto } from '../types/forum';
 import '../css/EditPost.css';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
+import Toast from '../components/Toast';
 
 const EditPost: React.FC = () => {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ const EditPost: React.FC = () => {
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [showToast, setShowToast] = useState(false);
 
     useEffect(() => {
         loadPost();
@@ -70,11 +72,13 @@ const EditPost: React.FC = () => {
                 category,
             };
             await updatePost(id, updateData);
-            navigate('/forum');
+            setShowToast(true);
+            setTimeout(() => {
+                navigate('/forum');
+            }, 2000);
         } catch (error) {
             console.error('Error updating post:', error);
             alert('Errore nella modifica del post');
-        } finally {
             setIsSubmitting(false);
         }
     };
@@ -175,6 +179,13 @@ const EditPost: React.FC = () => {
                         setShowCategoryModal(false);
                     }}
                     onClose={() => setShowCategoryModal(false)}
+                />
+            )}
+
+            {showToast && (
+                <Toast
+                    message="Domanda modificata con successo!"
+                    onClose={() => setShowToast(false)}
                 />
             )}
         </div>

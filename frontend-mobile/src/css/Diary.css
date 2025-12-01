@@ -16,13 +16,13 @@
 .diary-header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
     gap: 16px;
 }
 
 .diary-title-section {
-    flex: 1;
-    text-align: left;
+    text-align: center;
 }
 
 .diary-title {
@@ -43,6 +43,8 @@
 
 /* Add button - matching Forum header style */
 .add-diary-button {
+    position: absolute;
+    right: 0;
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -69,6 +71,22 @@
     background: rgba(255, 255, 255, 0.45);
 }
 
+/* Main Card Container */
+.diary-main-card {
+    background-color: white;
+    border-radius: 20px;
+    margin: 20px 20px 80px;
+    /* Added bottom margin for spacing */
+    padding: 20px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    /* Ensure content stays within rounded corners */
+}
+
 /* Content Area */
 .diary-content {
     flex: 1;
@@ -77,7 +95,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 40px 20px;
+    padding: 20px;
 }
 
 /* Cards Container */
@@ -187,15 +205,242 @@
         bottom: 60px;
     }
 
-    .diary-page-counter {
-        font-size: 13px;
-        padding: 6px 16px;
-    }
-}
+    .diary-page-counter {}
 
-@media (min-width: 768px) {
-    .diary-cards-container {
-        max-width: 450px;
-        height: 550px;
+    .diary-header-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        gap: 16px;
     }
-}
+
+    .diary-title-section {
+        text-align: center;
+    }
+
+    .diary-title {
+        color: white;
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .diary-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        font-weight: 400;
+        margin: 4px 0 0;
+        line-height: 1.2;
+    }
+
+    /* Add button - matching Forum header style */
+    .add-diary-button {
+        position: absolute;
+        right: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+        border: none;
+        color: white;
+        font-size: 32px;
+        font-weight: 300;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background 0.2s ease;
+        line-height: 1;
+        padding: 0;
+    }
+
+    .add-diary-button:hover {
+        background: rgba(255, 255, 255, 0.35);
+    }
+
+    .add-diary-button:active {
+        background: rgba(255, 255, 255, 0.45);
+    }
+
+    /* Main Card Container */
+    .diary-main-card {
+        background-color: white;
+        border-radius: 20px;
+        margin: 20px 20px 80px;
+        /* Added bottom margin for spacing */
+        padding: 20px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        /* Ensure content stays within rounded corners */
+    }
+
+    /* Content Area */
+    .diary-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 20px;
+    }
+
+    /* Cards Container */
+    .diary-cards-container {
+        width: 100%;
+        max-width: 400px;
+        height: 500px;
+        position: relative;
+        margin-bottom: 32px;
+        margin-top: 0;
+    }
+
+    /* Page Indicator */
+    .diary-indicator {
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 5;
+    }
+
+    .diary-page-counter {
+        background: rgba(44, 95, 111, 0.9);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Loading State */
+    .loading-screen {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-size: 18px;
+        font-weight: 600;
+        color: #6B7280;
+    }
+
+    /* Empty State */
+    .diary-empty {
+        text-align: center;
+        padding: 80px 40px;
+        color: #6B7280;
+    }
+
+    .diary-empty p {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .diary-empty-hint {
+        font-size: 15px;
+        font-weight: 400;
+        opacity: 0.7;
+    }
+
+    .retry-btn {
+        margin-top: 16px;
+        padding: 10px 24px;
+        background: #2C5F6F;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .retry-btn:hover {
+        background: #1F4554;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 375px) {
+        .diary-header {
+            padding: 40px 16px 24px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .diary-title {
+            font-size: 24px;
+        }
+
+        .diary-subtitle {
+            font-size: 13px;
+        }
+
+        .add-diary-button {
+            width: 44px;
+            height: 44px;
+            font-size: 28px;
+        }
+
+        .diary-cards-container {
+            height: 450px;
+        }
+
+        .diary-indicator {
+            bottom: 60px;
+        }
+
+        .diary-page-counter {
+            font-size: 13px;
+            padding: 6px 16px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .diary-cards-container {
+            max-width: 450px;
+            height: 550px;
+        }
+    }
+
+    .diary-fab {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #2C5F6F;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 200;
+        box-shadow: 0 4px 12px rgba(44, 95, 111, 0.3);
+        transition: all 0.2s ease;
+        padding: 0;
+    }
+
+    .diary-fab img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .diary-fab:hover {
+        transform: scale(1.05);
+        background: #1F4554;
+    }
+
+    .diary-fab:active {
+        transform: scale(0.95);
+    }

@@ -144,6 +144,9 @@
     position: relative;
     z-index: 1;
     transition: transform 0.3s ease;
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
 }
 
 .notification-icon:hover .icon-box img {

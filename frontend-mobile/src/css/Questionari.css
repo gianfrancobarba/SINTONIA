@@ -1,15 +1,16 @@
 .questionari-page {
     background-color: var(--secondary-bg);
+    min-height: 100vh;
 }
 
 .questionari-header {
     background-color: var(--primary-dark);
     color: var(--white);
-    padding: 50px 20px 30px;
+    padding: 48px 20px 30px;
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -18,28 +19,28 @@
 }
 
 .questionari-page .back-button {
-    background: transparent;
-    border: 2px solid var(--white);
-    color: var(--white);
-    cursor: pointer;
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
     padding: 0;
 }
 
 .questionari-page .back-button img {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     filter: brightness(0) invert(1);
 }
 
 .questionari-page .back-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
 

@@ -1,116 +1,147 @@
 .personal-info-page {
-    background-color: #F5F7FA;
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* ===== Header ===== */
-.info-header {
+/* Header - matching NewDiaryPage style */
+.personal-info-header {
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.personal-info-header .header-content {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 50px 20px 30px;
 }
 
-.back-button {
-    background: transparent;
-    border: 2.5px solid #2C2C2C;
-    cursor: pointer;
-    padding: 0;
+.personal-info-header .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transition: all 0.2s;
-    color: #2C2C2C;
+    cursor: pointer;
+    transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
-.back-button:hover {
-    background: rgba(0, 0, 0, 0.05);
+.personal-info-header .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
 }
 
-.page-title {
-    font-size: 20px;
+.personal-info-header .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.personal-info-header .back-button:active {
+    transform: scale(0.95);
+}
+
+.header-title {
+    color: white;
+    font-size: 24px;
     font-weight: 700;
-    color: #2C2C2C;
     margin: 0;
-}
-
-/* ===== Form ===== */
-.info-form {
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 430px;
-    margin: 0 auto;
-}
-
-.form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.field-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #2C2C2C;
-}
-
-.field-input {
-    background: white;
-    border-radius: 16px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-}
-
-.field-icon {
-    color: #9CA3AF;
-    flex-shrink: 0;
-}
-
-.field-value {
-    font-size: 15px;
-    color: #9CA3AF;
     flex: 1;
 }
 
-/* ===== Save Button ===== */
-.save-button {
-    margin: 40px 20px 0;
-    padding: 18px 24px;
-    background: linear-gradient(135deg, #1E4A5F 0%, #163A4A 100%);
-    border: none;
-    border-radius: 50px;
-    color: white;
-    font-size: 17px;
+/* Content */
+.personal-info-content {
+    flex: 1;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Form Section */
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-size: 18px;
     font-weight: 700;
+    color: #1F1F1F;
+    margin-bottom: 12px;
+}
+
+/* Input Container matching NewDiaryPage */
+.title-input-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #E5E5E5;
+    border-radius: 16px;
+    padding: 14px 20px;
+    transition: all 0.2s ease;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.title-input-container:focus-within {
+    border-color: #2C5F6F;
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.title-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #1F1F1F;
+    background: transparent;
+    font-weight: 600;
+}
+
+/* Submit Button matching NewDiaryPage */
+.submit-button {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary-dark);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: var(--font-family);
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(30, 74, 95, 0.25);
-    max-width: 390px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: calc(100% - 40px);
+    margin-top: auto;
+    box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
 }
 
-.save-button:hover {
-    background: linear-gradient(135deg, #163A4A 0%, #0D2A35 100%);
-    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.35);
+.submit-button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }
 
-.save-button:active {
+.submit-button:active {
     transform: translateY(0);
 }
 
-/* ===== Loading & Error ===== */
+/* Loading & Error */
 .loading,
 .error {
     display: flex;
@@ -118,31 +149,9 @@
     align-items: center;
     height: 100vh;
     font-size: 16px;
-}
-
-.loading {
     color: #666;
 }
 
 .error {
     color: #DC2626;
-    font-weight: 500;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 380px) {
-    .info-form {
-        padding: 0 16px;
-        gap: 16px;
-    }
-
-    .field-input {
-        padding: 14px 18px;
-    }
-
-    .save-button {
-        margin-top: 32px;
-        padding: 16px 20px;
-        font-size: 16px;
-    }
 }

@@ -1,179 +1,203 @@
 .technical-support-page {
-    background-color: #F5F7FA;
-    position: relative;
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* ===== Header ===== */
+/* Header - matching NewDiaryPage style */
 .technical-support-header {
-    position: relative;
-    z-index: 10;
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.technical-support-header .header-content {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 50px 20px 30px;
-    background-color: #F5F7FA;
 }
 
-.technical-support-back-btn {
-    background: transparent;
-    border: 2.5px solid #2C2C2C;
-    cursor: pointer;
-    padding: 0;
+.technical-support-header .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transition: all 0.2s;
-    color: #2C2C2C;
+    cursor: pointer;
+    transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
-.technical-support-back-btn:hover {
-    background: rgba(0, 0, 0, 0.05);
+.technical-support-header .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
 }
 
-.technical-support-title {
-    font-size: 20px;
+.technical-support-header .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.technical-support-header .back-button:active {
+    transform: scale(0.95);
+}
+
+.header-title {
+    color: white;
+    font-size: 24px;
     font-weight: 700;
-    color: #2C2C2C;
     margin: 0;
+    flex: 1;
 }
 
-/* ===== Content ===== */
+/* Content */
 .technical-support-content {
-    padding: 20px;
-    max-width: 430px;
-    margin: 0 auto;
-}
-
-/* ===== Form ===== */
-.support-form {
+    flex: 1;
+    padding: 20px 20px 40px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .form-header {
     text-align: center;
-    margin-bottom: 8px;
-}
-
-.form-title {
-    font-size: 36px;
-    font-weight: 700;
-    color: #2C2C2C;
-    margin: 0 0 16px 0;
+    margin-bottom: 24px;
 }
 
 .form-subtitle {
-    font-size: 15px;
+    font-size: 16px;
     color: #6B7280;
     line-height: 1.6;
     margin: 0;
-    padding: 0 20px;
 }
 
-/* ===== Title Input ===== */
-.form-input-title {
-    width: 100%;
-    padding: 18px 24px;
-    font-size: 17px;
-    font-family: inherit;
-    color: #2C2C2C;
-    background: white;
-    border: 2.5px solid #2C2C2C;
-    border-radius: 20px;
-    outline: none;
-    transition: all 0.2s;
-    font-weight: 500;
+/* Form Section */
+.form-section {
+    margin-bottom: 24px;
 }
 
-.form-input-title::placeholder {
-    color: #D1D5DB;
-    font-weight: 400;
-}
-
-.form-input-title:focus {
-    border-color: #1E4A5F;
-    box-shadow: 0 0 0 4px rgba(30, 74, 95, 0.1);
-}
-
-.form-input-title:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: #F9FAFB;
-}
-
-/* ===== Main Textarea ===== */
-.form-textarea-main {
-    width: 100%;
-    padding: 20px 24px;
-    font-size: 17px;
-    font-family: inherit;
-    color: #2C2C2C;
-    background: white;
-    border: 2.5px solid #2C2C2C;
-    border-radius: 24px;
-    outline: none;
-    transition: all 0.2s;
-    resize: vertical;
-    min-height: 200px;
-    line-height: 1.5;
-}
-
-.form-textarea-main::placeholder {
-    color: #D1D5DB;
-    font-size: 17px;
-}
-
-.form-textarea-main:focus {
-    border-color: #1E4A5F;
-    box-shadow: 0 0 0 4px rgba(30, 74, 95, 0.1);
-}
-
-.form-textarea-main:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: #F9FAFB;
-}
-
-/* ===== Submit Button ===== */
-.submit-button-main {
-    width: 100%;
-    padding: 18px 24px;
-    font-size: 17px;
+.form-label {
+    display: block;
+    font-size: 18px;
     font-weight: 700;
-    color: white;
-    background: linear-gradient(135deg, #1E4A5F 0%, #163A4A 100%);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(30, 74, 95, 0.25);
+    color: #1F1F1F;
+    margin-bottom: 12px;
+}
+
+/* Input Container matching NewDiaryPage */
+.title-input-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    background: white;
+    border: 2px solid #E5E5E5;
+    border-radius: 16px;
+    padding: 14px 20px;
+    transition: all 0.2s ease;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.submit-button-main:hover:not(:disabled) {
-    background: linear-gradient(135deg, #163A4A 0%, #0D2A35 100%);
-    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.35);
+.title-input-container:focus-within {
+    border-color: #2C5F6F;
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.title-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #1F1F1F;
+    background: transparent;
+    font-weight: 600;
+}
+
+/* Textarea Container matching NewDiaryPage */
+.textarea-container {
+    background: white;
+    border: 2px solid #E5E5E5;
+    border-radius: 24px;
+    padding: 24px;
+    transition: all 0.2s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.textarea-container:focus-within {
+    border-color: #2C5F6F;
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.content-textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1F1F1F;
+    line-height: 1.6;
+    resize: none;
+    background: transparent;
+    font-family: inherit;
+}
+
+/* Submit Button matching NewDiaryPage */
+.submit-button {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary-dark);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
+}
+
+.submit-button:hover:not(:disabled) {
     transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }
 
-.submit-button-main:active:not(:disabled) {
+.submit-button:active:not(:disabled) {
     transform: translateY(0);
 }
 
-.submit-button-main:disabled {
-    opacity: 0.6;
+.submit-button:disabled {
+    background: #D1D5DB;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
-/* ===== Error Message ===== */
+/* Messages */
 .error-message {
     display: flex;
     align-items: center;
@@ -185,19 +209,16 @@
     font-size: 14px;
     color: #991B1B;
     font-weight: 500;
+    margin-bottom: 24px;
 }
 
-.error-icon {
-    font-size: 18px;
-}
-
-/* ===== Success Message ===== */
 .success-message {
     background: white;
     border-radius: 24px;
     padding: 48px 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     text-align: center;
+    margin-top: 40px;
 }
 
 .success-icon {
@@ -219,37 +240,4 @@
     font-weight: 700;
     color: #2C2C2C;
     margin: 0 0 12px 0;
-}
-
-.success-message p {
-    font-size: 15px;
-    color: #666;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 380px) {
-    .technical-support-content {
-        padding: 16px;
-    }
-
-    .form-title {
-        font-size: 32px;
-    }
-
-    .form-subtitle {
-        font-size: 14px;
-        padding: 0 10px;
-    }
-
-    .form-textarea-main {
-        padding: 18px 20px;
-        font-size: 15px;
-    }
-
-    .submit-button-main {
-        padding: 16px 20px;
-        font-size: 16px;
-    }
 }
