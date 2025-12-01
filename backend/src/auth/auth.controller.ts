@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UnauthorizedException, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
+import { JwtAuthGuard } from './jwt-auth.guard.js';
 import { CreateAuthDto } from './dto/create-auth.dto.js';
 import { UpdateAuthDto } from './dto/update-auth.dto.js';
 
@@ -31,5 +32,14 @@ export class AuthController {
   @Get('reset-admin')
   async resetAdminPassword() {
     return this.authService.resetAdminPassword();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('change-password')
+  async changePassword(@Request() req, @Body() body: { newPassword: string }) {
+    // req.user is populated by JwtStrategy (from the token payload)
+    // The payload structure in AuthService.login is { email: ..., sub: ..., role: ... }
+    const email = req.user.email;
+    return this.authService.changePassword(email, body.newPassword);
   }
 }

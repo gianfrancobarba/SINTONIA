@@ -78,4 +78,12 @@ export class AuthService {
 
     return { message: 'Password reset successfully', hashLength: hash.length };
   }
+
+  async changePassword(email: string, newPass: string) {
+    const hash = await bcrypt.hash(newPass, 10);
+    await this.db.update(schema.amministratore)
+      .set({ pw: hash })
+      .where(eq(schema.amministratore.email, email));
+    return { message: 'Password updated successfully' };
+  }
 }
