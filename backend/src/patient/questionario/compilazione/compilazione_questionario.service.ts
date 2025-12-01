@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { db } from '../../../drizzle/db.js';
 import { questionario, tipologiaQuestionario } from '../../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
+import { ScoreService } from '../../score/score.service.js';
 
 @Injectable()
 export class Compilazione_questionarioService {
+    constructor(private readonly scoreService: ScoreService) { }
     // Metodo per ottenere un questionario specifico con le sue domande dalla tipologia_questionario
     async getQuestionarioDto(idQuestionario: string): Promise<{
         idQuestionario: string;
@@ -236,6 +238,10 @@ export class Compilazione_questionarioService {
         if (!id) {
             throw new Error('Impossibile salvare il questionario');
         }
+
+        // Aggiorna lo score del paziente (media di tutti i questionari)
+        // Solo se ha completato lo screening iniziale
+        await this.scoreService.updatePatientScore(idPaziente);
 
         return { idQuestionario: id, score };
     }

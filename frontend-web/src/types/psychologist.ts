@@ -50,13 +50,6 @@ export type {
 } from './questionnaire';
 export { getQuestionnaireStatus } from './questionnaire';
 
-export interface Questionnaire {
-    id: string;
-    name: string;
-    author: string;
-    status: QuestionnaireStatus;
-    revisionDate: string; // Format: YYYY-MM-DD
-}
 
 export interface PaginationInfo {
     currentPage: number;

@@ -11,6 +11,7 @@ import { DiaryModule } from './diary/diary.module.js';
 import { BadgeModule } from './badge/badge.module.js';
 import { AreaPersonaleModule } from './area-personale/area-personale.module.js';
 import { SettingsModule } from './settings/settings.module.js';
+import { ScoreModule } from './score/score.module.js';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { SettingsModule } from './settings/settings.module.js';
         StatoAnimoModule,
         DiaryModule,
         BadgeModule,
+        ScoreModule,
         AreaPersonaleModule,
         SettingsModule,
     ],
