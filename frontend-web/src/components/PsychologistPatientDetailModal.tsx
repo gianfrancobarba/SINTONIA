@@ -4,7 +4,7 @@ import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTrian
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
 import { getPatientDetailsByPsychologist, terminatePatientCare } from '../services/patient.service';
-import { fetchQuestionnairesByPatient } from '../services/questionnaire.service';
+import { fetchQuestionnairesByPatient, reviewQuestionnaire, requestInvalidation, viewQuestionnaire } from '../services/questionnaire.service';
 import QuestionnaireDetailModal from './QuestionnaireDetailModal';
 import Toast from './Toast';
 import '../css/QuestionnaireDetailModal.css'; // Reuse existing styles
@@ -13,6 +13,69 @@ interface PsychologistPatientDetailModalProps {
     patient: PatientData | null;
     onClose: () => void;
 }
+
+// Info Card Component
+const InfoCard: React.FC<{
+    icon: React.ReactNode;
+    label: string;
+    value: string;
+    iconColor: string;
+    tooltip?: string;
+}> = ({ icon, label, value, iconColor, tooltip }) => {
+    return (
+        <div
+            style={{
+                background: 'white',
+                borderRadius: '12px',
+                padding: '14px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                border: '1px solid #e8e8e8',
+                transition: 'all 0.3s ease'
+            }}
+            title={tooltip}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
+                e.currentTarget.style.transform = 'translateY(0)';
+            }}
+        >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '10px',
+                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white'
+                }}>
+                    {icon}
+                </div>
+                <span style={{
+                    fontSize: '10px',
+                    fontWeight: '600',
+                    color: '#666',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                }}>
+                    {label}
+                </span>
+            </div>
+            <p style={{
+                margin: 0,
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#1a1a1a'
+            }}>
+                {value}
+            </p>
+        </div>
+    );
+};
 
 const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalProps> = ({
     patient,
@@ -63,12 +126,41 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
         }
     };
 
-    const handleViewQuestionnaire = (questionnaire: QuestionnaireData) => {
-        setViewingQuestionnaire(questionnaire);
+    const handleViewQuestionnaire = async (questionnaire: QuestionnaireData) => {
+        try {
+            // Fetch full details including questions and answers
+            const fullDetails = await viewQuestionnaire(questionnaire.idQuestionario, 'psychologist');
+            setViewingQuestionnaire(fullDetails);
+        } catch (error) {
+            console.error('Error fetching questionnaire details:', error);
+            setToast({ message: 'Errore nel caricamento dei dettagli del questionario', type: 'error' });
+        }
     };
 
     const handleCloseQuestionnaireModal = () => {
         setViewingQuestionnaire(null);
+    };
+
+    const handleRequestInvalidation = async (id: string, notes: string) => {
+        try {
+            await requestInvalidation(id, notes);
+            setToast({ message: 'Richiesta di invalidazione inviata con successo', type: 'success' });
+            loadQuestionnaires(); // Reload to update status
+        } catch (error) {
+            console.error('Error requesting invalidation:', error);
+            setToast({ message: 'Errore durante la richiesta di invalidazione', type: 'error' });
+        }
+    };
+
+    const handleReview = async (id: string) => {
+        try {
+            await reviewQuestionnaire(id);
+            loadQuestionnaires(); // Reload to update status
+        } catch (error) {
+            console.error('Error reviewing questionnaire:', error);
+            // Toast is handled inside QuestionnaireDetailModal for review
+            throw error; // Propagate error so modal can show it
+        }
     };
 
     if (!patient) return null;
@@ -436,8 +528,8 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                             </div>
                         )}
                     </div>
-                  
-                        {/* Footer vuoto - solo chiusura tramite X */}
+
+                    {/* Footer vuoto - solo chiusura tramite X */}
                     <div className="modal-footer">
                         <button
                             className="terminate-cure-btn"
@@ -475,73 +567,11 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                     questionnaire={viewingQuestionnaire}
                     onClose={handleCloseQuestionnaireModal}
                     role="psychologist"
+                    onRequestInvalidation={handleRequestInvalidation}
+                    onReview={handleReview}
                 />
             )}
-        </>,
-        document.body
-    );
-};
 
-// Info Card Component
-const InfoCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-    tooltip?: string;
-}> = ({ icon, label, value, iconColor, tooltip }) => {
-    return (
-        <div
-            style={{
-                background: 'white',
-                borderRadius: '12px',
-                padding: '14px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                border: '1px solid #e8e8e8',
-                transition: 'all 0.3s ease'
-            }}
-            title={tooltip}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}
-        >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            <p style={{
-                margin: 0,
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#1a1a1a'
-            }}>
-                {value}
-            </p>
-        </div>
 
             {toast && (
                 <Toast
@@ -635,8 +665,11 @@ const InfoCard: React.FC<{
                     </div>
                 </div>
             )}
-        </>
+        </>,
+        document.body
     );
 };
 
 export default PsychologistPatientDetailModal;
+
+
