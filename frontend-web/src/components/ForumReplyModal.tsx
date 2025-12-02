@@ -60,32 +60,138 @@ const ForumReplyModal: React.FC<ForumReplyModalProps> = ({
     };
 
     return ReactDOM.createPortal(
-        <div className="forum-reply-modal-overlay" onClick={onClose}>
-            <div className="forum-reply-modal" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <div className="modal-header-content">
-                        <svg className="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        <div className="modal-header-text">
-                            <h2>{isEditing ? 'Modifica Risposta' : 'Risposta alla domanda'}</h2>
-                            <p className="modal-subtitle">{isEditing ? 'Aggiorna la tua risposta professionale' : 'Fornisci supporto al paziente'}</p>
+        <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+            <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                    maxWidth: '700px',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+                }}
+            >
+                {/* Modern Header with Gradient */}
+                <div style={{
+                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
+                    padding: '32px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}>
+                    <div style={{
+                        position: 'absolute',
+                        top: '-50%',
+                        right: '-10%',
+                        width: '300px',
+                        height: '300px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        borderRadius: '50%',
+                        filter: 'blur(40px)'
+                    }}></div>
+
+                    <div style={{ position: 'relative', zIndex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div>
+                                <h2 style={{
+                                    margin: '0 0 8px 0',
+                                    fontSize: '28px',
+                                    fontWeight: '700',
+                                    color: 'white',
+                                    letterSpacing: '-0.5px'
+                                }}>
+                                    {isEditing ? 'Modifica Risposta' : 'Risposta alla domanda'}
+                                </h2>
+                                <p style={{
+                                    margin: 0,
+                                    fontSize: '14px',
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    fontWeight: '500'
+                                }}>
+                                    {isEditing ? 'Aggiorna la tua risposta professionale' : 'Fornisci supporto al paziente'}
+                                </p>
+                            </div>
+                            <button
+                                onClick={onClose}
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.15)',
+                                    backdropFilter: 'blur(10px)',
+                                    border: 'none',
+                                    color: 'white',
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '50%',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'all 0.3s ease',
+                                    fontSize: '20px'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
+                                }}
+                            >
+                                <X size={24} />
+                            </button>
                         </div>
                     </div>
-                    <button className="close-button" onClick={onClose}>
-                        <X size={24} />
-                    </button>
                 </div>
 
-                <div className="modal-body">
-                    <div className="question-preview">
-                        <div className="preview-label">Domanda:</div>
-                        <div className="preview-title">{question.titolo}</div>
-                        <div className="preview-text">{question.testo}</div>
+                {/* Body with Modern Styling */}
+                <div style={{
+                    padding: '32px',
+                    background: '#f8f9fa',
+                    maxHeight: 'calc(90vh - 200px)',
+                    overflowY: 'auto'
+                }}>
+                    <div style={{
+                        background: 'white',
+                        borderRadius: '16px',
+                        padding: '24px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                        border: '1px solid #e8e8e8',
+                        marginBottom: '24px'
+                    }}>
+                        <div style={{
+                            fontSize: '12px',
+                            fontWeight: '600',
+                            color: '#666',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px',
+                            marginBottom: '8px'
+                        }}>
+                            Domanda
+                        </div>
+                        <div style={{
+                            fontSize: '18px',
+                            fontWeight: '700',
+                            color: '#1a1a1a',
+                            marginBottom: '12px'
+                        }}>
+                            {question.titolo}
+                        </div>
+                        <div style={{
+                            fontSize: '15px',
+                            color: '#4a4a4a',
+                            lineHeight: '1.6'
+                        }}>
+                            {question.testo}
+                        </div>
                     </div>
 
                     <div className="reply-section">
-                        <label htmlFor="reply-textarea" className="reply-label">
+                        <label htmlFor="reply-textarea" style={{
+                            display: 'block',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: '#1a1a1a',
+                            marginBottom: '8px'
+                        }}>
                             {isEditing ? 'Modifica la tua risposta' : 'Scrivi la tua risposta professionale'}
                         </label>
                         <textarea
@@ -96,32 +202,125 @@ const ForumReplyModal: React.FC<ForumReplyModalProps> = ({
                             placeholder="Fornisci una risposta professionale e di supporto al paziente..."
                             rows={8}
                             disabled={isSubmitting}
+                            style={{
+                                width: '100%',
+                                padding: '16px',
+                                border: '2px solid #e0e0e0',
+                                borderRadius: '12px',
+                                fontSize: '15px',
+                                lineHeight: '1.6',
+                                resize: 'vertical',
+                                minHeight: '150px',
+                                outline: 'none',
+                                transition: 'all 0.2s ease',
+                                fontFamily: 'inherit'
+                            }}
+                            onFocus={(e) => e.target.style.borderColor = '#0D475D'}
+                            onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
                         />
-                        <div className="character-count">
-                            <span className={content.length < 20 ? 'text-danger' : content.length > 2000 ? 'text-danger' : ''}>
-                                {content.length}
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            marginTop: '8px',
+                            fontSize: '13px',
+                            color: '#666'
+                        }}>
+                            <span>
+                                {content.length < 20 && (
+                                    <span style={{ color: '#E57373' }}>Minimo 20 caratteri</span>
+                                )}
                             </span>
-                            {' / 2000 caratteri'}
-                            {content.length < 20 && (
-                                <span className="min-chars-hint"> (minimo 20 caratteri)</span>
-                            )}
+                            <span>
+                                <span style={{
+                                    color: content.length < 20 || content.length > 2000 ? '#E57373' : '#666',
+                                    fontWeight: '600'
+                                }}>
+                                    {content.length}
+                                </span>
+                                / 2000
+                            </span>
                         </div>
-                        {error && <div className="error-message">{error}</div>}
+                        {error && (
+                            <div style={{
+                                marginTop: '12px',
+                                padding: '12px',
+                                background: '#FEF2F2',
+                                border: '1px solid #FECACA',
+                                borderRadius: '8px',
+                                color: '#DC2626',
+                                fontSize: '14px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span>⚠️</span> {error}
+                            </div>
+                        )}
                     </div>
                 </div>
 
-                <div className="modal-footer">
+                {/* Modern Footer */}
+                <div style={{
+                    padding: '24px 32px',
+                    background: 'white',
+                    borderTop: '1px solid #e8e8e8',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    gap: '12px'
+                }}>
                     <button
-                        className="cancel-modal-button"
                         onClick={onClose}
                         disabled={isSubmitting}
+                        style={{
+                            padding: '12px 24px',
+                            borderRadius: '12px',
+                            border: '2px solid #e0e0e0',
+                            background: 'white',
+                            color: '#666',
+                            cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                            fontSize: '15px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            if (!isSubmitting) {
+                                e.currentTarget.style.background = '#f8f9fa';
+                                e.currentTarget.style.borderColor = '#d0d0d0';
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'white';
+                            e.currentTarget.style.borderColor = '#e0e0e0';
+                        }}
                     >
                         Annulla
                     </button>
                     <button
-                        className="submit-modal-button"
                         onClick={handleSubmit}
                         disabled={isSubmitting || content.trim().length < 20}
+                        style={{
+                            padding: '12px 24px',
+                            borderRadius: '12px',
+                            border: 'none',
+                            background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 100%)',
+                            color: 'white',
+                            cursor: (isSubmitting || content.trim().length < 20) ? 'not-allowed' : 'pointer',
+                            fontSize: '15px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease',
+                            boxShadow: '0 4px 12px rgba(13, 71, 93, 0.3)',
+                            opacity: (isSubmitting || content.trim().length < 20) ? 0.7 : 1
+                        }}
+                        onMouseEnter={(e) => {
+                            if (!isSubmitting && content.trim().length >= 20) {
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(13, 71, 93, 0.4)';
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 71, 93, 0.3)';
+                        }}
                     >
                         {isSubmitting ? 'Invio...' : isEditing ? 'Salva Modifiche' : 'Invia Risposta'}
                     </button>

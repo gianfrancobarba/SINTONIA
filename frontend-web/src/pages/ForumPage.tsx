@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import ForumQuestionCard from '../components/ForumQuestionCard';
 import ForumCategoryFilter from '../components/ForumCategoryFilter';
 import ForumReplyModal from '../components/ForumReplyModal';
@@ -318,7 +319,7 @@ const ForumPage: React.FC = () => {
                 />
             )}
 
-            {deleteModalState.isOpen && (
+            {deleteModalState.isOpen && createPortal(
                 <div className="delete-confirm-overlay" onClick={() => setDeleteModalState({ isOpen: false, answerId: null })}>
                     <div className="delete-confirm-dialog" onClick={(e) => e.stopPropagation()}>
                         <h3>Conferma eliminazione</h3>
@@ -338,7 +339,8 @@ const ForumPage: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
