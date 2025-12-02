@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Search, User, Mail, Building2, IdCard, Edit2, Save, X, Trash2 } from 'lucide-react';
+import ReactDOM from 'react-dom';
+import { Search, User, Mail, Building2, IdCard, Edit2, Save, X, Check } from 'lucide-react';
 import '../css/QuestionnaireDetailModal.css';
-import { updatePsychologist, deletePsychologist } from '../services/psychologist.service';
+import { updatePsychologist } from '../services/psychologist.service';
 import Toast from './Toast';
-import DeletePsychologistConfirmModal from './DeletePsychologistConfirmModal';
 
 interface PsychologistData {
     codiceFiscale: string;
@@ -17,7 +17,6 @@ interface AdminPsychologistDetailModalProps {
     psychologist: PsychologistData | null;
     onClose: () => void;
     onUpdate?: (updatedData?: Partial<PsychologistData>) => void;
-    onDelete?: (codiceFiscale: string) => void;
 }
 
 const ASL_OPTIONS = [
@@ -35,11 +34,10 @@ const ASL_OPTIONS = [
 ];
 
 const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> = ({
-    psychologist,
-    onClose,
-    onUpdate,
-    onDelete,
-}) => {
+                                                                                       psychologist,
+                                                                                       onClose,
+                                                                                       onUpdate,
+                                                                                   }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [editedEmail, setEditedEmail] = useState(psychologist?.email || '');
@@ -47,8 +45,6 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
     const [aslSearch, setAslSearch] = useState('');
     const [showAslDropdown, setShowAslDropdown] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
 
     React.useEffect(() => {
         if (psychologist) {
@@ -107,54 +103,13 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
         setShowAslDropdown(false);
     };
 
-    const handleDeleteConfirm = async () => {
-        if (!psychologist) return;
-        setIsDeleting(true);
-
-        try {
-            await deletePsychologist(psychologist.codiceFiscale);
-
-            setToast({
-                message: 'Psicologo eliminato con successo!',
-                type: 'success'
-            });
-
-            // Chiudi il modal di conferma
-            setShowDeleteConfirm(false);
-
-            // Notifica il parent per ricaricare la lista
-            if (onDelete) {
-                onDelete(psychologist.codiceFiscale);
-            }
-
-            // Chiudi il modal principale dopo un breve delay per mostrare il toast
-            setTimeout(() => {
-                onClose();
-            }, 1500);
-        } catch (error) {
-            console.error('Failed to delete psychologist:', error);
-            // Extract error message if available, otherwise use default
-            const errorMessage = error instanceof Error
-                ? error.message
-                : 'Si è verificato un errore durante l\'eliminazione. Riprova più tardi.';
-
-            setToast({
-                message: errorMessage,
-                type: 'error'
-            });
-            setShowDeleteConfirm(false);
-        } finally {
-            setIsDeleting(false);
-        }
-    };
-
     const filteredAslOptions = ASL_OPTIONS.filter(asl =>
         asl.toLowerCase().includes(aslSearch.toLowerCase())
     );
 
     if (!psychologist) return null;
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
             <div
                 className="modal-content"
@@ -284,14 +239,14 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                             position: 'relative',
                             zIndex: 10
                         }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                                e.currentTarget.style.transform = 'translateY(0)';
-                            }}>
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+                                 e.currentTarget.style.transform = 'translateY(-2px)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                             }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                                 <div style={{
                                     width: '40px',
@@ -414,11 +369,14 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                                         <span style={{
                                             fontSize: '11px',
                                             color: '#7FB77E',
-                                            display: 'block',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '4px',
                                             marginTop: '6px',
                                             fontWeight: '500'
                                         }}>
-                                            ✓ Selezionato: {editedAsl}
+                                            <Check size={12} />
+                                            Selezionato: {editedAsl}
                                         </span>
                                     )}
                                 </div>
@@ -446,14 +404,14 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                             position: 'relative',
                             zIndex: 1
                         }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                                e.currentTarget.style.transform = 'translateY(0)';
-                            }}>
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+                                 e.currentTarget.style.transform = 'translateY(-2px)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                             }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                                 <div style={{
                                     width: '40px',
@@ -586,66 +544,35 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                             </button>
                         </>
                     ) : (
-                        <>
-                            <button
-                                onClick={() => setShowDeleteConfirm(true)}
-                                style={{
-                                    padding: '12px 24px',
-                                    borderRadius: '12px',
-                                    border: 'none',
-                                    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                    fontSize: '15px',
-                                    fontWeight: '600',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    transition: 'all 0.2s ease',
-                                    boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(-2px)';
-                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.4)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.3)';
-                                }}
-                            >
-                                <Trash2 size={18} />
-                                Elimina
-                            </button>
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                style={{
-                                    padding: '12px 24px',
-                                    borderRadius: '12px',
-                                    border: 'none',
-                                    background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                    fontSize: '15px',
-                                    fontWeight: '600',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    transition: 'all 0.2s ease',
-                                    boxShadow: '0 4px 12px rgba(131, 185, 193, 0.3)'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(-2px)';
-                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
-                                }}
-                            >
-                                <Edit2 size={18} />
-                                Modifica
-                            </button>
-                        </>
+                        <button
+                            onClick={() => setIsEditing(true)}
+                            style={{
+                                padding: '12px 24px',
+                                borderRadius: '12px',
+                                border: 'none',
+                                background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
+                                color: 'white',
+                                cursor: 'pointer',
+                                fontSize: '15px',
+                                fontWeight: '600',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                transition: 'all 0.2s ease',
+                                boxShadow: '0 4px 12px rgba(131, 185, 193, 0.3)'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
+                            }}
+                        >
+                            <Edit2 size={18} />
+                            Modifica
+                        </button>
                     )}
                 </div>
             </div>
@@ -656,14 +583,8 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                     onClose={() => setToast(null)}
                 />
             )}
-            <DeletePsychologistConfirmModal
-                isOpen={showDeleteConfirm}
-                psychologistName={`${psychologist?.nome} ${psychologist?.cognome}`}
-                onConfirm={handleDeleteConfirm}
-                onCancel={() => setShowDeleteConfirm(false)}
-                isDeleting={isDeleting}
-            />
-        </div >
+        </div >,
+        document.body
     );
 };
 
@@ -683,14 +604,14 @@ const InfoCard: React.FC<{
             border: '1px solid #e8e8e8',
             transition: 'all 0.3s ease'
         }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}>
+             onMouseEnter={(e) => {
+                 e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+                 e.currentTarget.style.transform = 'translateY(-2px)';
+             }}
+             onMouseLeave={(e) => {
+                 e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
+                 e.currentTarget.style.transform = 'translateY(0)';
+             }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                 <div style={{
                     width: '40px',

@@ -3,7 +3,7 @@ import AdminPatientTable from '../components/AdminPatientTable';
 import AdminPatientDetailModal from '../components/AdminPatientDetailModal';
 import type { PatientData, LoadingState } from '../types/patient';
 import { fetchPatients } from '../services/patient.service';
-import { User, Eye, LayoutGrid, List } from 'lucide-react';
+import { User, Eye, LayoutGrid, List, Search, RotateCcw } from 'lucide-react';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 import '../css/AdminPatientList.css';
 
@@ -65,14 +65,10 @@ const AdminPatientList: React.FC = () => {
             // Nessuna ricerca, mostra tutti
             setFilteredPatients(patientsState.data);
         } else {
-            // Filtra per ID, Nome, Cognome o Nome Completo
-            const filtered = patientsState.data.filter(patient => {
-                const fullName = `${patient.nome} ${patient.cognome}`.toLowerCase();
-                return patient.idPaziente.toLowerCase().includes(query) ||
-                    patient.nome.toLowerCase().includes(query) ||
-                    patient.cognome.toLowerCase().includes(query) ||
-                    fullName.includes(query);
-            });
+            // Filtra per ID parziale (case insensitive)
+            const filtered = patientsState.data.filter(patient =>
+                patient.idPaziente.toLowerCase().includes(query)
+            );
             setFilteredPatients(filtered);
         }
 
@@ -240,7 +236,7 @@ const AdminPatientList: React.FC = () => {
                                 type="text"
                                 value={searchQuery}
                                 onChange={handleSearchInputChange}
-                                placeholder="🔍 Cerca per ID, nome o cognome..."
+                                placeholder="Cerca per ID..."
                                 style={{
                                     padding: '10px 16px',
                                     borderRadius: '8px',
@@ -254,8 +250,9 @@ const AdminPatientList: React.FC = () => {
                                 onBlur={(e) => e.target.style.borderColor = '#ddd'}
                             />
                             {searchQuery && (
-                                <button onClick={handleReset} className="clear-filter-btn">
-                                    ↺ Reset
+                                <button onClick={handleReset} className="clear-filter-btn" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <RotateCcw size={14} />
+                                    Reset
                                 </button>
                             )}
                         </div>
@@ -371,16 +368,21 @@ const AdminPatientList: React.FC = () => {
                             <p style={{
                                 fontSize: '16px',
                                 color: '#666',
-                                margin: 0
+                                margin: 0,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px'
                             }}>
-                                🔍 Nessun paziente trovato con "<strong>{searchQuery}</strong>"
+                                <Search size={18} style={{ flexShrink: 0 }} />
+                                <span>Nessun paziente trovato con ID "<strong>{searchQuery}</strong>"</span>
                             </p>
                             <p style={{
                                 fontSize: '14px',
                                 color: '#999',
                                 marginTop: '8px'
                             }}>
-                                Prova con un altro termine o clicca Reset
+                                Prova con un altro ID o clicca Reset
                             </p>
                         </div>
                     )}
