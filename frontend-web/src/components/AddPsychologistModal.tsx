@@ -8,7 +8,7 @@ interface PsychologistFormData {
     cognome: string;
     email: string;
     aslAppartenenza: string;
-    stato: 'Attivo' | 'Disattivato';
+    stato: 'Attivo' | 'Inattivo';
 }
 
 const ASL_OPTIONS = [

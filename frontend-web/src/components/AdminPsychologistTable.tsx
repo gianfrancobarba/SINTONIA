@@ -14,7 +14,7 @@ interface PsychologistData {
     cognome: string;
     email: string;
     aslAppartenenza: string;
-    stato: 'Attivo' | 'Disattivato';
+    stato: 'Attivo' | 'Inattivo';
 }
 
 interface AdminPsychologistTableProps {

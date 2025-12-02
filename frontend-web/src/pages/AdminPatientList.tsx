@@ -65,10 +65,14 @@ const AdminPatientList: React.FC = () => {
             // Nessuna ricerca, mostra tutti
             setFilteredPatients(patientsState.data);
         } else {
-            // Filtra per ID parziale (case insensitive)
-            const filtered = patientsState.data.filter(patient =>
-                patient.idPaziente.toLowerCase().includes(query)
-            );
+            // Filtra per ID, Nome, Cognome o Nome Completo
+            const filtered = patientsState.data.filter(patient => {
+                const fullName = `${patient.nome} ${patient.cognome}`.toLowerCase();
+                return patient.idPaziente.toLowerCase().includes(query) ||
+                    patient.nome.toLowerCase().includes(query) ||
+                    patient.cognome.toLowerCase().includes(query) ||
+                    fullName.includes(query);
+            });
             setFilteredPatients(filtered);
         }
 
@@ -236,7 +240,7 @@ const AdminPatientList: React.FC = () => {
                                 type="text"
                                 value={searchQuery}
                                 onChange={handleSearchInputChange}
-                                placeholder="🔍 Cerca per ID..."
+                                placeholder="🔍 Cerca per ID, nome o cognome..."
                                 style={{
                                     padding: '10px 16px',
                                     borderRadius: '8px',
@@ -369,14 +373,14 @@ const AdminPatientList: React.FC = () => {
                                 color: '#666',
                                 margin: 0
                             }}>
-                                🔍 Nessun paziente trovato con ID "<strong>{searchQuery}</strong>"
+                                🔍 Nessun paziente trovato con "<strong>{searchQuery}</strong>"
                             </p>
                             <p style={{
                                 fontSize: '14px',
                                 color: '#999',
                                 marginTop: '8px'
                             }}>
-                                Prova con un altro ID o clicca Reset
+                                Prova con un altro termine o clicca Reset
                             </p>
                         </div>
                     )}
