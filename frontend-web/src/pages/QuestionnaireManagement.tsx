@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
-import PsychologistProfile from '../components/PsychologistProfile';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
@@ -12,7 +10,6 @@ import '../css/QuestionnaireManagement.css';
 import Toast from '../components/Toast';
 
 const QuestionnaireManagement: React.FC = () => {
-    const navigate = useNavigate();
     const [questionnairesState, setQuestionnairesState] = useState<LoadingState<QuestionnaireData[]>>({
         data: null,
         loading: true,
@@ -133,88 +130,66 @@ const QuestionnaireManagement: React.FC = () => {
         setToast({ message: 'Carica nuova tipologia di questionario', type: 'success' });
     };
 
-    const handleSectionSelect = (section: string) => {
-        if (section === 'forum') {
-            navigate('/forum');
-        } else if (section === 'alert') {
-            navigate('/clinical-alerts');
-        } else if (section !== 'questionari') {
-            navigate('/dashboard', { state: { selectedSection: section } });
-        }
-    };
-
     if (!role) {
         return <div className="error-message">Errore: ruolo utente non trovato</div>;
     }
 
     return (
-        <div className="questionnaire-management-container">
-            <div className="management-grid">
-                <div className="management-sidebar">
-                    <PsychologistProfile
-                        onSelectSection={handleSectionSelect}
-                        activeSection="questionari"
-                    />
+        <div className="content-panel fade-in">
+            <h2 className="panel-title">Gestione Questionari</h2>
+            <div className="management-header">
+                <div className="header-actions">
+                    {role === 'admin' && (
+                        <button
+                            className="upload-btn"
+                            onClick={handleUploadNewType}
+                        >
+                            ⬆ Carica Nuova Tipologia
+                        </button>
+                    )}
                 </div>
-                <div className="management-content">
-                    <div className="content-panel fade-in">
-                        <h2 className="panel-title">Gestione Questionari</h2>
-                        <div className="management-header">
-                            <div className="header-actions">
-                                {role === 'admin' && (
-                                    <button
-                                        className="upload-btn"
-                                        onClick={handleUploadNewType}
-                                    >
-                                        ⬆ Carica Nuova Tipologia
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+            </div>
 
-                        {questionnairesState.error && (
-                            <div className="error-state">
-                                <p>Errore: {questionnairesState.error}</p>
-                                <button onClick={() => loadQuestionnaires()} className="retry-btn">
-                                    Riprova
+            {questionnairesState.error && (
+                <div className="error-state">
+                    <p>Errore: {questionnairesState.error}</p>
+                    <button onClick={() => loadQuestionnaires()} className="retry-btn">
+                        Riprova
+                    </button>
+                </div>
+            )}
+
+            {questionnairesState.data && !questionnairesState.loading && (
+                <>
+                    <div className="filter-controls">
+                        <button
+                            className="filter-btn"
+                            onClick={handleFilterByPatient}
+                            disabled={!selectedQuestionnaireId}
+                            title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
+                        >
+                            Filtra per Paziente
+                        </button>
+                        {patientFilter && (
+                            <div className="active-filter">
+                                <span>Filtro attivo</span>
+                                <button className="reset-filter-btn" onClick={handleResetFilter} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <X size={14} />
+                                    Rimuovi Filtro
                                 </button>
                             </div>
                         )}
-
-                        {questionnairesState.data && !questionnairesState.loading && (
-                            <>
-                                <div className="filter-controls">
-                                    <button
-                                        className="filter-btn"
-                                        onClick={handleFilterByPatient}
-                                        disabled={!selectedQuestionnaireId}
-                                        title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
-                                    >
-                                        Filtra per Paziente
-                                    </button>
-                                    {patientFilter && (
-                                        <div className="active-filter">
-                                            <span>Filtro attivo</span>
-                                            <button className="reset-filter-btn" onClick={handleResetFilter} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                                <X size={14} />
-                                                Rimuovi Filtro
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                                <QuestionnaireTable
-                                    questionnaires={questionnairesState.data}
-                                    role={role === 'admin' ? 'admin' : 'psychologist'}
-                                    selectedId={selectedQuestionnaireId}
-                                    onSelect={handleSelectQuestionnaire}
-                                    onView={handleView}
-                                    onReview={handleReview}
-                                />
-                            </>
-                        )}
                     </div>
-                </div>
-            </div>
+                    <QuestionnaireTable
+                        questionnaires={questionnairesState.data}
+                        role={role === 'admin' ? 'admin' : 'psychologist'}
+                        selectedId={selectedQuestionnaireId}
+                        onSelect={handleSelectQuestionnaire}
+                        onView={handleView}
+                        onReview={handleReview}
+                    />
+                </>
+            )}
 
             {/* Modal for viewing questionnaire details */}
             {viewingQuestionnaire && (

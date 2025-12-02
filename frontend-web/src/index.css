@@ -88,43 +88,8 @@ body {
 /* Reset */
 * {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-}
-
-#root {
-  width: 100%;
-}
-
-button {
-  font-family: inherit;
-}
-
-/* Accessibility */
-button:focus-visible {
-  outline: 2px solid var(--color-teal-medium);
-  outline-offset: 2px;
-}
-
-/* Global Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .fade-in {
