@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
-import { User, Cake, MapPin, Mail } from 'lucide-react';
-import { getPersonalInfo } from '../services/settings.service.ts';
+import { User, Cake, MapPin, Mail, Save } from 'lucide-react';
+import { getPersonalInfo, updatePersonalInfo } from '../services/settings.service.ts';
 import type { PersonalInfoDto } from '../types/settings.ts';
 import '../css/PersonalInfo.css';
 
@@ -12,11 +12,23 @@ const PersonalInfo: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Form state
+    const [editedEmail, setEditedEmail] = useState('');
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Toast state
+    const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({
+        show: false,
+        message: '',
+        type: 'success'
+    });
+
     useEffect(() => {
         const fetchPersonalInfo = async () => {
             try {
                 const data = await getPersonalInfo();
                 setPersonalData(data);
+                setEditedEmail(data.email);
             } catch (err) {
                 setError('Errore nel caricamento delle informazioni');
                 console.error(err);
@@ -40,6 +52,38 @@ const PersonalInfo: React.FC = () => {
             year: 'numeric'
         });
     };
+
+    const showToast = (message: string, type: 'success' | 'error') => {
+        setToast({ show: true, message, type });
+        setTimeout(() => setToast({ ...toast, show: false }), 3000);
+    };
+
+    const handleSave = async () => {
+        if (!editedEmail || !editedEmail.includes('@')) {
+            showToast('Inserisci un indirizzo email valido', 'error');
+            return;
+        }
+
+        try {
+            setIsSaving(true);
+            await updatePersonalInfo({ email: editedEmail });
+
+            // Update local state
+            if (personalData) {
+                setPersonalData({ ...personalData, email: editedEmail });
+            }
+
+            showToast('Modifiche salvate con successo', 'success');
+        } catch (err) {
+            console.error(err);
+            showToast('Errore durante il salvataggio', 'error');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    // Check if changes have been made
+    const hasChanges = personalData ? editedEmail !== personalData.email : false;
 
     if (loading) {
         return (
@@ -71,7 +115,7 @@ const PersonalInfo: React.FC = () => {
             <div className="personal-info-content">
                 <div className="form-section">
                     <label className="form-label">Nome e Cognome</label>
-                    <div className="title-input-container">
+                    <div className="title-input-container disabled">
                         <User size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
                         <input
                             type="text"
@@ -84,20 +128,21 @@ const PersonalInfo: React.FC = () => {
 
                 <div className="form-section">
                     <label className="form-label">Email</label>
-                    <div className="title-input-container">
-                        <Mail size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
+                    <div className={`title-input-container editable ${hasChanges ? 'modified' : ''}`}>
+                        <Mail size={20} color={hasChanges ? "#4a9d6f" : "#9CA3AF"} style={{ marginRight: '10px' }} />
                         <input
-                            type="text"
+                            type="email"
                             className="title-input"
-                            value={personalData.email}
-                            readOnly
+                            value={editedEmail}
+                            onChange={(e) => setEditedEmail(e.target.value)}
+                            placeholder="Inserisci la tua email"
                         />
                     </div>
                 </div>
 
                 <div className="form-section">
                     <label className="form-label">Data di Nascita</label>
-                    <div className="title-input-container">
+                    <div className="title-input-container disabled">
                         <Cake size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
                         <input
                             type="text"
@@ -110,21 +155,32 @@ const PersonalInfo: React.FC = () => {
 
                 <div className="form-section">
                     <label className="form-label">Indirizzo</label>
-                    <div className="title-input-container">
+                    <div className="title-input-container disabled">
                         <MapPin size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
                         <input
                             type="text"
                             className="title-input"
-                            value={personalData.indirizzo || 'Non specificato'}
+                            value={personalData.residenza || 'Non specificato'}
                             readOnly
                         />
                     </div>
                 </div>
 
-                <button className="submit-button" onClick={handleBack}>
-                    Torna alle Impostazioni
+                <button
+                    className={`submit-button ${hasChanges ? 'active' : 'disabled'}`}
+                    onClick={handleSave}
+                    disabled={!hasChanges || isSaving}
+                >
+                    {isSaving ? 'Salvataggio...' : 'Salva Modifiche'}
                 </button>
             </div>
+
+            {/* Toast Notification */}
+            {toast.show && (
+                <div className={`toast-notification ${toast.type}`}>
+                    {toast.message}
+                </div>
+            )}
         </div>
     );
 };

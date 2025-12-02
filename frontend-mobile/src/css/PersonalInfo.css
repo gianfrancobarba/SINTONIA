@@ -1,26 +1,30 @@
 .personal-info-page {
     background-color: var(--secondary-bg);
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
+    padding-bottom: 40px;
 }
 
-/* Header - matching NewDiaryPage style */
 .personal-info-header {
     background-color: var(--primary-dark);
+    color: var(--white);
     padding: 48px 20px 30px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.personal-info-header .header-content {
+.header-content {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.personal-info-header .back-button {
+.personal-info-page .back-button {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -32,126 +36,196 @@
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    padding: 0;
 }
 
-.personal-info-header .back-button img {
+.personal-info-page .back-button img {
     width: 20px;
     height: 20px;
     filter: brightness(0) invert(1);
 }
 
-.personal-info-header .back-button:hover {
+.personal-info-page .back-button:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
 
-.personal-info-header .back-button:active {
+.personal-info-page .back-button:active {
     transform: scale(0.95);
 }
 
 .header-title {
-    color: white;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
-    flex: 1;
 }
 
-/* Content */
 .personal-info-content {
-    flex: 1;
-    padding: 20px 20px 40px;
-    display: flex;
-    flex-direction: column;
+    padding: 30px 20px;
     max-width: 600px;
     margin: 0 auto;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-/* Form Section */
 .form-section {
-    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .form-label {
-    display: block;
-    font-size: 18px;
-    font-weight: 700;
-    color: #1F1F1F;
-    margin-bottom: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-left: 10px;
 }
 
-/* Input Container matching NewDiaryPage */
 .title-input-container {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
-    background: white;
-    border: 2px solid #E5E5E5;
-    border-radius: 16px;
-    padding: 14px 20px;
-    transition: all 0.2s ease;
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.12),
-        0 3px 6px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
 }
 
-.title-input-container:focus-within {
-    border-color: #2C5F6F;
-    box-shadow:
-        0 0 0 3px rgba(44, 95, 111, 0.1),
-        0 8px 20px rgba(0, 0, 0, 0.12),
-        0 3px 6px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+.title-input-container.disabled {
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: none;
+}
+
+.title-input-container.editable {
+    background-color: var(--white);
+    border-color: #e5e7eb;
+}
+
+.title-input-container.editable:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 4px 20px rgba(74, 157, 111, 0.15);
+    transform: translateY(-2px);
+}
+
+.title-input-container.modified {
+    border-color: var(--primary-light);
+    background-color: rgba(74, 157, 111, 0.05);
 }
 
 .title-input {
-    flex: 1;
     border: none;
     outline: none;
-    font-size: 16px;
-    color: #1F1F1F;
-    background: transparent;
-    font-weight: 600;
-}
-
-/* Submit Button matching NewDiaryPage */
-.submit-button {
+    font-size: 1rem;
+    color: var(--text-dark);
     width: 100%;
-    padding: 18px;
-    background: var(--primary-dark);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-size: 18px;
-    font-weight: 600;
+    background: transparent;
     font-family: var(--font-family);
+}
+
+.title-input-container.disabled .title-input {
+    color: var(--text-gray);
+}
+
+.submit-button {
+    border: none;
+    padding: 16px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
+    margin-top: 20px;
     transition: all 0.3s ease;
-    margin-top: auto;
-    box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
+    font-family: var(--font-family);
+    width: 100%;
+    text-align: center;
 }
 
-.submit-button:hover {
+.submit-button.active {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button.active:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    background-color: #3a8d5f;
 }
 
-.submit-button:active {
-    transform: translateY(0);
+.submit-button.active:active {
+    transform: scale(0.98);
 }
 
-/* Loading & Error */
+.submit-button.disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 .loading,
 .error {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 16px;
-    color: #666;
+    text-align: center;
+    margin-top: 50px;
+    font-weight: 600;
+    color: var(--text-gray);
 }
 
 .error {
-    color: #DC2626;
+    color: #ef4444;
+}
+
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    text-align: center;
+}
+
+.toast-notification.success {
+    background-color: #4a9d6f;
+    /* Primary Light */
+}
+
+.toast-notification.error {
+    background-color: #ef4444;
+    /* Red */
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
 }

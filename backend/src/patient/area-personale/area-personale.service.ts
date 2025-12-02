@@ -85,4 +85,16 @@ export class AreaPersonaleService {
             questionari,
         };
     }
+
+    /**
+     * Aggiorna i dati dell'area personale del paziente (es. email)
+     */
+    async updateAreaPersonale(userId: string, updates: { email?: string }): Promise<void> {
+        if (updates.email) {
+            await db
+                .update(paziente)
+                .set({ email: updates.email })
+                .where(eq(paziente.idPaziente, userId));
+        }
+    }
 }
