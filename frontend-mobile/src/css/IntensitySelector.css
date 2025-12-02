@@ -1,0 +1,58 @@
+.intensity-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+}
+
+.intensity-display {
+    font-size: 120px;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intensity-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 400px;
+}
+
+.intensity-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #d0d0d0;
+    background-color: white;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intensity-button:hover {
+    border-color: #0D475D;
+    transform: scale(1.05);
+}
+
+.intensity-button.selected {
+    background-color: #0D475D;
+    border-color: #0D475D;
+    color: white;
+    transform: scale(1.1);
+}
+
+.intensity-button:active {
+    transform: scale(0.95);
+}

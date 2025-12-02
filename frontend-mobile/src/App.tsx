@@ -26,6 +26,7 @@ import Diary from './pages/Diary';
 import NewDiaryPage from './pages/NewDiaryPage';
 import EditDiaryPage from './pages/EditDiaryPage';
 import MainLayout from './components/MainLayout';
+import MoodEntry from './pages/MoodEntry';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -178,6 +179,14 @@ function App() {
           element={
             <PrivateRoute>
               <EditDiaryPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/mood-entry"
+          element={
+            <PrivateRoute>
+              <MoodEntry />
             </PrivateRoute>
           }
         />

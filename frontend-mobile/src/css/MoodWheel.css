@@ -1,0 +1,137 @@
+/* Immersive Mood Wheel Styles - Fixed Positioning with Wrapper */
+
+.immersive-wheel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.emoji-display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 5vh;
+    cursor: pointer;
+    z-index: 20;
+    transition: transform 0.2s ease;
+}
+
+.emoji-display-container:active {
+    transform: scale(0.95);
+}
+
+.selected-mood-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+}
+
+.emoji-large-clickable {
+    font-size: 7rem;
+    line-height: 1;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+.tap-hint {
+    font-size: 1rem;
+    color: #666;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+.wheel-pointer {
+    font-size: 2rem;
+    color: #1a1a1a;
+    margin-top: 2rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+/* The "Buried" Wheel Effect - Fixed to Viewport */
+.wheel-overflow-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 45vh;
+    /* Visible height area */
+
+    /* Just a container to clip if needed */
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* The Positioner - Handles centering and bottom anchoring */
+.wheel-positioner {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    /* Huge size */
+    width: 140vh;
+    height: 140vh;
+
+    /* Center horizontally (-50%) and push down vertically (+60%) */
+    /* This ensures the wheel is centered and lowered as requested */
+    transform: translate(-50%, 60%);
+
+    pointer-events: auto;
+    /* Re-enable clicks */
+}
+
+.rotating-wheel {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    cursor: grab;
+    touch-action: none;
+    transform-origin: center center;
+
+    /* No margins or transforms needed here for positioning! */
+    /* React controls the rotation transform */
+}
+
+.rotating-wheel:active {
+    cursor: grabbing;
+}
+
+.wheel-svg-content {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    transform: rotate(-90deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .wheel-overflow-wrapper {
+        height: 40vh;
+    }
+
+    .wheel-positioner {
+        width: 160vw;
+        height: 160vw;
+        /* Maintain the same centering logic on mobile */
+        transform: translate(-50%, 60%);
+    }
+
+    .emoji-large-clickable {
+        font-size: 6rem;
+    }
+}

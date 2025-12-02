@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { CalendarDay } from '../types/home';
 import '../css/Calendar.css';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
@@ -9,6 +10,8 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
+    const navigate = useNavigate();
+
     // Helper to get Monday of the week for a given date
     const getMonday = (d: Date) => {
         const date = new Date(d);
@@ -20,6 +23,13 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
     const [startDate, setStartDate] = useState(getMonday(new Date()));
     const [isAnimating, setIsAnimating] = useState(false);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
+
+    // Handler per il click sul giorno "oggi"
+    const handleDayClick = (day: CalendarDay) => {
+        if (day.isToday) {
+            navigate('/mood-entry');
+        }
+    };
 
     // Mappa data (YYYY-MM-DD) -> mood
     const moodMap = React.useMemo(() => {
@@ -151,7 +161,12 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
             {days.map((day, index) => {
                 const moodColor = getMoodColor(day.mood);
                 return (
-                    <div key={index} className={`day-item ${day.isToday ? 'active' : ''}`}>
+                    <div
+                        key={index}
+                        className={`day-item ${day.isToday ? 'active' : ''}`}
+                        onClick={() => handleDayClick(day)}
+                        style={{ cursor: day.isToday ? 'pointer' : 'default' }}
+                    >
                         <div
                             className="dot"
                             style={{ backgroundColor: day.hasEvent ? moodColor : 'transparent' }}
