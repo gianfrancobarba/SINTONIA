@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Eye, EyeOff, X } from 'lucide-react';
 import '../css/QuestionnaireDetailModal.css';
 
@@ -40,7 +41,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
         onClose();
     };
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 {/* Modern Header with Gradient - Same as AdminPsychologistDetailModal */}
@@ -281,7 +282,8 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

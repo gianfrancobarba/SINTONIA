@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTriangle, FileText, Check, X, ClipboardList } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
@@ -74,7 +75,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
         return dateString;
     };
 
-    return (
+    return ReactDOM.createPortal(
         <>
             <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
                 <div
@@ -459,7 +460,8 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                     role="psychologist"
                 />
             )}
-        </>
+        </>,
+        document.body
     );
 };
 

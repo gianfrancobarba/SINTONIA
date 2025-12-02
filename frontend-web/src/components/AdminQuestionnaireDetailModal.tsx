@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { FileText, Calendar, User, Hash, Award, CheckCircle, AlertCircle, X, XCircle } from 'lucide-react';
 import type { QuestionnaireData } from '../types/questionnaire';
 import Toast from './Toast';
@@ -55,7 +56,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
         }
     };
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
             <div
                 className="modal-content"
@@ -406,7 +407,8 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                     onClose={() => setToast(null)}
                 />
             )}
-        </div>
+        </div>,
+        document.body
     );
 };
 

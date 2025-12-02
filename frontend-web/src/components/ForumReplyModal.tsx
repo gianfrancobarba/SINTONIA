@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import type { ForumQuestion } from '../types/forum';
 import { X } from 'lucide-react';
 import '../css/ForumReplyModal.css';
@@ -58,7 +59,7 @@ const ForumReplyModal: React.FC<ForumReplyModalProps> = ({
         setError('');
     };
 
-    return (
+    return ReactDOM.createPortal(
         <div className="forum-reply-modal-overlay" onClick={onClose}>
             <div className="forum-reply-modal" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
@@ -126,7 +127,8 @@ const ForumReplyModal: React.FC<ForumReplyModalProps> = ({
                     </button>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

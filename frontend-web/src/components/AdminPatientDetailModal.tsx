@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { User, Mail, MapPin, IdCard, Calendar, Award, Flag, UserCog, X, Save, Edit2, Loader2, Hash, Users } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import { getPatientDetails, updatePatient } from '../services/patient.service';
@@ -127,7 +128,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
         return dateString;
     };
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
             <div
                 className="modal-content"
@@ -647,7 +648,8 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                     onClose={() => setToast(null)}
                 />
             )}
-        </div>
+        </div>,
+        document.body
     );
 };
 

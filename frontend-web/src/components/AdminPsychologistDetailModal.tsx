@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Search, User, Mail, Building2, IdCard, Edit2, Save, X, Check } from 'lucide-react';
 import '../css/QuestionnaireDetailModal.css';
 import { updatePsychologist } from '../services/psychologist.service';
@@ -108,7 +109,7 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
 
     if (!psychologist) return null;
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
             <div
                 className="modal-content"
@@ -582,7 +583,8 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                     onClose={() => setToast(null)}
                 />
             )}
-        </div >
+        </div >,
+        document.body
     );
 };
 

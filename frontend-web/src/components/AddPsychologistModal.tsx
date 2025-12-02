@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { X, UserPlus, Search } from 'lucide-react';
 import '../css/AddPsychologistModal.css';
 
@@ -121,7 +122,7 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
         }
     };
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose}>
             <div className="add-psychologist-modal" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
@@ -320,7 +321,8 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

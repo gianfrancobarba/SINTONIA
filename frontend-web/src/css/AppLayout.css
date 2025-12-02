@@ -33,7 +33,7 @@ html {
     /* Isolate sidebar from content animations */
     transform: translateZ(0);
     will-change: auto;
-    contain: layout style;
+    /* Removed contain: layout style to avoid stacking context issues */
 }
 
 /* Hide scrollbar but keep functionality */
@@ -58,8 +58,7 @@ html {
 .app-layout-content {
     width: 100%;
     min-height: 600px;
-    /* Contain layout changes within content area */
-    contain: layout;
+    /* Removed contain: layout to fix modal positioning */
 }
 
 /* Content Panel - Global Styles for all pages */

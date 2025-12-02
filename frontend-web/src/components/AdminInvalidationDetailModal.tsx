@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Hash, FileText, User, Clock, AlertCircle, CheckCircle, XCircle, MessageSquare, Check, X } from 'lucide-react';
 import type { InvalidationRequestData } from '../types/invalidation';
 import Toast from './Toast';
@@ -68,7 +69,7 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
 
     const statusInfo = getStatusInfo(request.stato);
 
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
             <div
                 className="modal-content"
@@ -380,7 +381,8 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                     onClose={() => setToast(null)}
                 />
             )}
-        </div>
+        </div>,
+        document.body
     );
 };
 
