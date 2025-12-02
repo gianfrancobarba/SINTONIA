@@ -155,14 +155,12 @@ const AdminPsychologistList: React.FC = () => {
             const normalized = data.map(normalizePsychologist);
             setPsychologists(normalized);
 
-            setShowAddModal(false);
+            // Modal closing is now handled by the modal itself after toast
+            // setShowAddModal(false); 
         } catch (err: any) {
             console.error('Error adding psychologist:', err);
-            const errorMessage = err.message?.includes('localhost') || err.message?.includes('fetch')
-                ? 'Errore di connessione al server.'
-                : (err.message || 'Errore durante la creazione dello psicologo. Riprova.');
-            setError(errorMessage);
-            // Keep modal open on error so user can retry
+            // Re-throw error so the modal can handle it with a toast
+            throw err;
         } finally {
             setLoading(false);
         }

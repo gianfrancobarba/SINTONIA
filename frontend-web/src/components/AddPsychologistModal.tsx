@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { X, UserPlus, Search } from 'lucide-react';
 import '../css/AddPsychologistModal.css';
+import Toast from './Toast';
 
 interface PsychologistFormData {
     codiceFiscale: string;
@@ -43,6 +44,8 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
 
     const [errors, setErrors] = useState<Partial<Record<keyof PsychologistFormData, string>>>({});
     const [aslSearch, setAslSearch] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     const [showAslDropdown, setShowAslDropdown] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -113,12 +116,25 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (validateForm()) {
-            onAdd(formData);
-            onClose();
+            setIsSubmitting(true);
+            try {
+                await onAdd(formData);
+                setToast({ message: 'Psicologo aggiunto con successo!', type: 'success' });
+                setTimeout(() => {
+                    onClose();
+                }, 1000);
+            } catch (error: any) {
+                console.error('Error adding psychologist:', error);
+                const errorMessage = error.message?.includes('localhost') || error.message?.includes('fetch')
+                    ? 'Errore di connessione al server.'
+                    : (error.message || 'Errore durante l\'aggiunta dello psicologo.');
+                setToast({ message: errorMessage, type: 'error' });
+                setIsSubmitting(false); // Re-enable button on error
+            }
         }
     };
 
@@ -511,6 +527,13 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                     </button>
                 </div>
             </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>,
         document.body
     );
