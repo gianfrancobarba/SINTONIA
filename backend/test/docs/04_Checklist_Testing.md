@@ -1,602 +1,274 @@
-# Checklist Testing - Progetto Sintonia
+# Checklist Testing - Granulare
 
-## 📋 Indice
+Questa checklist traccia il progresso del testing per **ogni singolo metodo** del progetto Sintonia.
 
-1. [Panoramica](#panoramica)
-2. [Moduli da Testare](#moduli-da-testare)
-3. [Checklist per Modulo](#checklist-per-modulo)
-4. [Coverage Target](#coverage-target)
-5. [Tracking Progress](#tracking-progress)
-6. [Report Template](#report-template)
+## 📌 Legenda
 
----
-
-## 🎯 Panoramica
-
-Questa checklist serve per tracciare il progresso del testing nel progetto Sintonia.
-
-### Obiettivi di Coverage
-
-| Livello | Coverage Target | Status |
-|---------|----------------|--------|
-| **Minimo Accettabile** | 60% | 🟡 |
-| **Buono** | 80% | 🟢 |
-| **Eccellente** | 90%+ | ⭐ |
-
-### Legenda
-
-- ✅ Completato e testato
-- 🔄 In corso
-- ⏳ Pianificato
-- ❌ Non iniziato
-- 🚫 Non applicabile
+| Simbolo | Significato | Descrizione |
+|:---:|---|---|
+| ✅ | **Completato** | Testati tutti i casi (successo, errore, edge cases). Coverage 100%. |
+| 🔄 | **In Corso** | Test scritti ma non completi o coverage parziale. |
+| ❌ | **Non Iniziato** | Nessun test scritto per questo metodo. |
+| 🚫 | **Skipped** | Metodo banale o non testabile unitariamente (es. solo log). |
 
 ---
 
-## 📦 Moduli da Testare
+## 📦 Patient Module
 
-### 1. Patient Module
+### 🎭 Stato Animo (`src/patient/stato-animo`)
 
-#### 1.1 Stato Animo (`patient/stato-animo/`)
+#### `StatoAnimoService`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getUltimoStatoAnimo` | ✅ | 100% | [Report](../reports/stato-animo/get-ultimo-coverage.html) |
+| `getStoricoStatoAnimo` | ✅ | 100% | [Report](../reports/stato-animo/get-storico-coverage.html) |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `StatoAnimoService` | Service | ❌ | 0% | |
-| `StatoAnimoController` | Controller | ❌ | 0% | |
-| `UltimoStatoAnimoDto` | DTO | 🚫 | N/A | Solo interfaccia |
-| `StoricoStatoAnimoDto` | DTO | 🚫 | N/A | Solo interfaccia |
+#### `StatoAnimoController`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getUltimoStatoAnimo` | ❌ | 0% | |
+| `getStoricoStatoAnimo` | ❌ | 0% | |
 
-**Test Cases da Implementare**:
-- [ ] `getUltimoStatoAnimo` - con dati
-- [ ] `getUltimoStatoAnimo` - senza dati (null)
-- [ ] `getUltimoStatoAnimo` - campi opzionali null
-- [ ] `getStoricoStatoAnimo` - con filtro 30 giorni
-- [ ] `getStoricoStatoAnimo` - con filtro personalizzato
-- [ ] `getStoricoStatoAnimo` - array vuoto
-- [ ] `formatLocalDate` - formattazione corretta
-- [ ] Controller GET `/ultimo` - success
-- [ ] Controller GET `/storico` - success
-- [ ] Controller - autenticazione JWT
+### 📔 Diary (`src/patient/diary`)
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 85%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+#### `DiaryService`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getDiaryPages` | ❌ | 0% | |
+| `getLastDiaryPage` | ❌ | 0% | |
 
----
+#### `DiaryController`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getDiaryPages` | ❌ | 0% | |
+| `getLastDiaryPage` | ❌ | 0% | |
 
-#### 1.2 Diary (`patient/diary/`)
+#### `CreateDiaryPage`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `createDiaryPage` (Service) | ❌ | 0% | |
+| `createDiaryPage` (Controller) | ❌ | 0% | |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `DiaryService` | Service | ❌ | 0% | |
-| `DiaryController` | Controller | ❌ | 0% | |
-| `CreateDiaryPageService` | Service | ❌ | 0% | |
-| `CreateDiaryPageController` | Controller | ❌ | 0% | |
-| `UpdateDiaryPageService` | Service | ❌ | 0% | |
-| `UpdateDiaryPageController` | Controller | ❌ | 0% | |
-| `DeleteDiaryPageService` | Service | ❌ | 0% | |
-| `DeleteDiaryPageController` | Controller | ❌ | 0% | |
+#### `UpdateDiaryPage`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `updateDiaryPage` (Service) | ❌ | 0% | |
+| `updateDiaryPage` (Controller) | ❌ | 0% | |
 
-**Test Cases da Implementare**:
-- [ ] `getDiaryPages` - lista pagine
-- [ ] `getDiaryPages` - lista vuota
-- [ ] `getLastDiaryPage` - ultima pagina
-- [ ] `getLastDiaryPage` - nessuna pagina (null)
-- [ ] `createDiaryPage` - creazione success
-- [ ] `createDiaryPage` - validazione titolo
-- [ ] `createDiaryPage` - validazione contenuto
-- [ ] `updateDiaryPage` - aggiornamento success
-- [ ] `updateDiaryPage` - pagina non trovata (404)
-- [ ] `updateDiaryPage` - ownership validation
-- [ ] `deleteDiaryPage` - eliminazione success
-- [ ] `deleteDiaryPage` - pagina non trovata (404)
-- [ ] `deleteDiaryPage` - ownership validation (403)
+#### `DeleteDiaryPage`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `deleteDiaryPage` (Service) | ❌ | 0% | |
+| `deleteDiaryPage` (Controller) | ❌ | 0% | |
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 85%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### 🏆 Badge (`src/patient/badge`)
 
----
+#### `BadgeService` & `Controller`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getBadgeUtente` (Service) | ❌ | 0% | |
+| `getBadgeUtente` (Controller) | ❌ | 0% | |
 
-#### 1.3 Badge (`patient/badge/`)
+### 📝 Questionario (`src/patient/questionario`)
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `BadgeService` | Service | ❌ | 0% | |
-| `BadgeController` | Controller | ❌ | 0% | |
+#### `CompilazioneQuestionario`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getQuestionarioDto` (Service) | ❌ | 0% | |
+| `calculateScore` (Service) | ❌ | 0% | |
+| `submitQuestionario` (Service) | ❌ | 0% | |
+| `startCompilazione` (Service) | ❌ | 0% | |
+| `getQuestionario` (Controller) | ❌ | 0% | |
+| `submitQuestionario` (Controller) | ❌ | 0% | |
+| `startCompilazione` (Controller) | ❌ | 0% | |
 
-**Test Cases da Implementare**:
-- [ ] `getPatientBadges` - lista badge acquisiti
-- [ ] `getPatientBadges` - nessun badge
-- [ ] `checkAndAwardBadges` - assegnazione badge
-- [ ] `checkAndAwardBadges` - badge già acquisito
-- [ ] Badge logic - primo stato d'animo
-- [ ] Badge logic - 7 giorni consecutivi
-- [ ] Badge logic - 30 giorni consecutivi
+#### `VisualizzazioneListaQuestionari`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getStoricoQuestionari` (Service) | ❌ | 0% | |
+| `hasCompletedInitialQuestionnaires` (Service) | ❌ | 0% | |
+| `getStoricoQuestionari` (Controller) | ❌ | 0% | |
+| `checkInitialQuestionnaires` (Controller) | ❌ | 0% | |
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 80%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### 💬 Forum (`src/patient/forum`)
 
----
+#### `ForumService` & `Controller`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getMyQuestions` | ❌ | 0% | |
+| `getPublicQuestions` | ❌ | 0% | |
 
-#### 1.4 Questionario (`patient/questionario/`)
+#### `Gestione Domande`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `inserisciDomanda` | ❌ | 0% | |
+| `modificaDomanda` | ❌ | 0% | |
+| `eliminaDomanda` | ❌ | 0% | |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `QuestionarioService` | Service | ❌ | 0% | |
-| `QuestionarioController` | Controller | ❌ | 0% | |
-| `CompilazioneQuestionarioService` | Service | ❌ | 0% | |
+### 📊 Score (`src/patient/score`)
 
-**Test Cases da Implementare**:
-- [ ] `getQuestionari` - lista questionari
-- [ ] `getQuestionario` - dettaglio questionario
-- [ ] `compilaQuestionario` - compilazione success
-- [ ] `compilaQuestionario` - calcolo score
-- [ ] `compilaQuestionario` - validazione risposte
-- [ ] `invalidaQuestionario` - invalidazione
-- [ ] `invalidaQuestionario` - ricalcolo score
+#### `ScoreService`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `hasCompletedScreening` | ❌ | 0% | |
+| `calculatePatientScore` | ❌ | 0% | |
+| `updatePatientScore` | ❌ | 0% | |
+| `updatePatientScoreOnly` | ❌ | 0% | |
+| `getPatientScore` | ❌ | 0% | |
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 85%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+#### `ScoreController`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getScore` | ❌ | 0% | |
 
----
+### 👤 Area Personale (`src/patient/area-personale`)
 
-#### 1.5 Alert (`patient/alert/`)
+#### `AreaPersonale`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getProfile` | ❌ | 0% | |
+| `updateProfile` | ❌ | 0% | |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `AlertService` | Service | ❌ | 0% | |
-| `AlertController` | Controller | ❌ | 0% | |
+### 🏠 Home (`src/patient/home`)
 
-**Test Cases da Implementare**:
-- [ ] `getPatientAlerts` - lista alert
-- [ ] `createAlertIfNeeded` - score >= 80
-- [ ] `createAlertIfNeeded` - score < 80 (no alert)
-- [ ] `createAlertIfNeeded` - screening non completo
-- [ ] `createAlertIfNeeded` - alert già esistente
-- [ ] `hasCompletedScreening` - tutti questionari
-- [ ] `hasAlertInLastMonth` - verifica duplicati
+#### `Home`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getDashboardData` (Service) | ❌ | 0% | |
+| `getDashboard` (Controller) | ❌ | 0% | |
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 85%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### 🚨 Alert (`src/patient/alert`)
 
----
+#### `Alert`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getPatientAlerts` | ❌ | 0% | |
+| `createAlertIfNeeded` | ❌ | 0% | |
 
-#### 1.6 Score (`patient/score/`)
+### ⭐ Priorità (`src/patient/priorita`)
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `ScoreService` | Service | ❌ | 0% | |
-| `ScoreController` | Controller | ❌ | 0% | |
+#### `Priorita`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getPriorita` | ❌ | 0% | |
+| `calculatePriority` | ❌ | 0% | |
 
-**Test Cases da Implementare**:
-- [ ] `getPatientScore` - recupero score
-- [ ] `calculateScore` - calcolo corretto
-- [ ] `updateScore` - aggiornamento
-- [ ] Score logic - media ponderata
-- [ ] Score logic - arrotondamento
+### ⚙️ Settings (`src/patient/settings`)
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 85%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+#### `Settings`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getSettings` | ❌ | 0% | |
+| `updateSettings` | ❌ | 0% | |
 
----
+### 📜 Terms (`src/patient/terms`)
 
-#### 1.7 Priorità (`patient/priorita/`)
-
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `PrioritaService` | Service | ❌ | 0% | |
-| `PrioritaController` | Controller | ❌ | 0% | |
-
-**Test Cases da Implementare**:
-- [ ] `getPriorita` - lista priorità
-- [ ] `calculatePriority` - calcolo priorità
-- [ ] `updatePatientPriority` - aggiornamento
-- [ ] Priority logic - range score
-- [ ] Priority logic - finestra temporale
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 80%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+#### `Terms`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getTerms` | ❌ | 0% | |
+| `acceptTerms` | ❌ | 0% | |
 
 ---
 
-#### 1.8 Forum (`patient/forum/`)
+## 📦 Psicologo Module
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `ForumService` | Service | ❌ | 0% | |
-| `ForumController` | Controller | ❌ | 0% | |
+### 📊 Dashboard (`src/psi/dashboard`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getDashboardData` | ❌ | 0% | |
 
-**Test Cases da Implementare**:
-- [ ] `getDomande` - lista domande
-- [ ] `createDomanda` - creazione domanda
-- [ ] `getRisposte` - risposte a domanda
-- [ ] `createRisposta` - creazione risposta
-- [ ] Validazione - titolo domanda
-- [ ] Validazione - testo domanda
-- [ ] Ownership - modifica domanda
+### 👥 Pazienti (`src/psi/pazienti`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getPazientiByPsicologo` | ❌ | 0% | |
+| `getDettaglioPaziente` | ❌ | 0% | |
+| `cercaPazientePerNome` | ❌ | 0% | |
+| `terminaCura` | ❌ | 0% | |
 
-**Coverage Attuale**: 0%  
-**Coverage Target**: 80%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### 📝 Questionari (`src/psi/questionari`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getNonRevisionatiByPsicologo` | ❌ | 0% | |
+| `getTuttiNonInvalidati` | ❌ | 0% | |
+| `getQuestionariByPaziente` | ❌ | 0% | |
+| `getQuestionarioById` | ❌ | 0% | |
+| `revisionaQuestionario` | ❌ | 0% | |
+| `richiestaInvalidazione` | ❌ | 0% | |
 
----
+### 🚨 Alert Clinici (`src/psi/alert-clinici`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getAlertNonAccettati` | ❌ | 0% | |
+| `accettaAlert` | ❌ | 0% | |
 
-#### 1.9 Settings (`patient/settings/`)
+### 💬 Forum (`src/psi/forum`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getAllQuestions` | ❌ | 0% | |
+| `getMyAnswers` | ❌ | 0% | |
+| `getUnansweredQuestions` | ❌ | 0% | |
+| `createAnswer` | ❌ | 0% | |
+| `updateAnswer` | ❌ | 0% | |
+| `deleteAnswer` | ❌ | 0% | |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `SettingsService` | Service | ❌ | 0% | |
-| `SettingsController` | Controller | ❌ | 0% | |
-
-**Test Cases da Implementare**:
-- [ ] `getSettings` - recupero impostazioni
-- [ ] `updateSettings` - aggiornamento
-- [ ] Validazione - email format
-- [ ] Validazione - notifiche
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 75%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
-
----
-
-#### 1.10 Home (`patient/home/`)
-
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `HomeService` | Service | ❌ | 0% | |
-| `HomeController` | Controller | ❌ | 0% | |
-
-**Test Cases da Implementare**:
-- [ ] `getDashboard` - dati dashboard
-- [ ] `getDashboard` - aggregazione dati
-- [ ] Dashboard - ultimo stato d'animo
-- [ ] Dashboard - notifiche
-- [ ] Dashboard - post suggeriti
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 80%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### 👤 Area Personale (`src/psi/area-personale`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getProfile` | ❌ | 0% | |
+| `updateProfile` | ❌ | 0% | |
 
 ---
 
-### 2. Psicologo Module
+## 📦 Amministratore Module
 
-#### 2.1 Psicologo Service
+### 👥 Pazienti (`src/amministratore/pazienti`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `cercaPazienti` | ❌ | 0% | |
+| `getPazienti` | ❌ | 0% | |
+| `getDettaglioPaziente` | ❌ | 0% | |
+| `modificaPaziente` | ❌ | 0% | |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `PsicologoService` | Service | ❌ | 0% | |
-| `PsicologoController` | Controller | ❌ | 0% | |
+### 🧠 Psicologi (`src/amministratore/psicologi`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `cercaPsicologi` | ❌ | 0% | |
+| `getPsicologi` | ❌ | 0% | |
+| `getDettaglioPsicologo` | ❌ | 0% | |
+| `creaPsicologo` | ❌ | 0% | |
+| `modificaPsicologo` | ❌ | 0% | |
 
-**Test Cases da Implementare**:
-- [ ] `getPazienti` - lista pazienti assegnati
-- [ ] `getPatientDetails` - dettagli paziente
-- [ ] `acceptAlert` - accettazione alert
-- [ ] `createReport` - creazione report
-- [ ] Ownership - accesso solo pazienti assegnati
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 85%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
-
----
-
-### 3. Amministratore Module
-
-#### 3.1 Amministratore Service
-
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `AmministratoreService` | Service | ❌ | 0% | |
-| `AmministratoreController` | Controller | ❌ | 0% | |
-
-**Test Cases da Implementare**:
-- [ ] `login` - autenticazione
-- [ ] `getPsicologi` - lista psicologi
-- [ ] `assignPsicologo` - assegnazione
-- [ ] `managePriority` - gestione priorità
-- [ ] Password hashing - bcrypt
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 80%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### 📝 Questionari (`src/amministratore/questionari`)
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getQuestionari` | ❌ | 0% | |
+| `getDettaglioQuestionario` | ❌ | 0% | |
+| `annullaRevisione` | ❌ | 0% | |
 
 ---
 
-### 4. Auth Module
+## 🔐 Auth Module (`src/auth`)
 
-#### 4.1 Authentication
+### `AuthService` & `Controller`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `validateUser` | ❌ | 0% | |
+| `login` | ❌ | 0% | |
+| `getProfile` | ❌ | 0% | |
 
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `JwtStrategy` | Strategy | ❌ | 0% | |
-| `JwtAuthGuard` | Guard | ❌ | 0% | |
-| `SpidAuthService` | Service | ❌ | 0% | |
-
-**Test Cases da Implementare**:
-- [ ] JWT - token generation
-- [ ] JWT - token validation
-- [ ] JWT - token expiration
-- [ ] SPID - authentication flow
-- [ ] SPID - callback handling
-- [ ] Guard - protected routes
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 90%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
+### `SpidAuth`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `getLoginUrl` | ❌ | 0% | |
+| `handleCallback` | ❌ | 0% | |
 
 ---
 
-### 5. Database Module
-
-#### 5.1 Drizzle ORM
-
-| Componente | Tipo | Status | Coverage | Note |
-|------------|------|--------|----------|------|
-| `schema.ts` | Schema | 🚫 | N/A | Solo definizioni |
-| `db.ts` | Connection | ❌ | 0% | |
-
-**Test Cases da Implementare**:
-- [ ] Connection - database connection
-- [ ] Connection - error handling
-- [ ] Migrations - schema sync
-
-**Coverage Attuale**: 0%  
-**Coverage Target**: 70%  
-**Data Inizio**: ___________  
-**Data Completamento**: ___________
-
----
-
-## 📊 Coverage Target per Categoria
-
-### Services
-
-| Categoria | Target | Priorità |
-|-----------|--------|----------|
-| Core Business Logic | 90% | 🔴 Alta |
-| Data Access | 85% | 🟡 Media |
-| Utilities | 80% | 🟢 Bassa |
-
-### Controllers
-
-| Categoria | Target | Priorità |
-|-----------|--------|----------|
-| CRUD Operations | 85% | 🔴 Alta |
-| Authentication | 90% | 🔴 Alta |
-| Public Endpoints | 80% | 🟡 Media |
-
-### DTOs
-
-| Categoria | Target | Priorità |
-|-----------|--------|----------|
-| Validation Logic | 85% | 🔴 Alta |
-| Simple Interfaces | N/A | 🚫 Skip |
-
----
-
-## 📈 Tracking Progress
-
-### Progress Dashboard
-
-```
-Totale Moduli: 15
-Completati: 0 (0%)
-In Corso: 0 (0%)
-Pianificati: 0 (0%)
-Non Iniziati: 15 (100%)
-
-Coverage Globale: 0%
-Coverage Target: 85%
-Gap: -85%
-```
-
-### Aggiornamento Settimanale
-
-| Settimana | Moduli Completati | Coverage | Note |
-|-----------|-------------------|----------|------|
-| 1 | 0 | 0% | |
-| 2 | 0 | 0% | |
-| 3 | 0 | 0% | |
-| 4 | 0 | 0% | |
-
----
-
-## 📝 Report Template
-
-### Report Settimanale
-
-```markdown
-# Testing Report - Settimana [N]
-
-## Sommario
-- **Data**: [DATA]
-- **Responsabile**: [NOME]
-- **Coverage Globale**: [X]%
-- **Moduli Completati**: [N]/[TOTALE]
-
-## Progressi
-### Moduli Completati
-- [ ] Modulo 1 - Coverage: X%
-- [ ] Modulo 2 - Coverage: X%
-
-### Moduli in Corso
-- [ ] Modulo 3 - Coverage: X% (Target: Y%)
-
-## Issues
-### Blockers
-- Issue 1: Descrizione
-- Issue 2: Descrizione
-
-### Warnings
-- Warning 1: Descrizione
-
-## Metriche
-- Test Scritti: [N]
-- Test Passati: [N]
-- Test Falliti: [N]
-- Coverage Incremento: +[X]%
-
-## Prossimi Passi
-1. Completare Modulo X
-2. Iniziare Modulo Y
-3. Risolvere Issue Z
-
-## Note
-[Note aggiuntive]
-```
-
----
-
-## 🎯 Priorità Testing
-
-### Alta Priorità (P0)
-
-1. **Authentication** - Sicurezza critica
-2. **Patient Data** - Dati sensibili
-3. **Score Calculation** - Logica core
-4. **Alert System** - Funzionalità critica
-
-### Media Priorità (P1)
-
-5. **Diary** - Feature importante
-6. **Forum** - Interazione utenti
-7. **Badge** - Gamification
-8. **Settings** - Configurazione
-
-### Bassa Priorità (P2)
-
-9. **Dashboard** - Aggregazione dati
-10. **Utilities** - Helper functions
-
----
-
-## 📅 Timeline Suggerita
-
-### Fase 1: Foundation (Settimane 1-2)
-- [ ] Setup testing infrastructure
-- [ ] Create test helpers
-- [ ] Generate oracles
-- [ ] Test authentication
-
-### Fase 2: Core Features (Settimane 3-5)
-- [ ] Test patient services
-- [ ] Test score calculation
-- [ ] Test alert system
-- [ ] Test questionari
-
-### Fase 3: Secondary Features (Settimane 6-7)
-- [ ] Test diary
-- [ ] Test forum
-- [ ] Test badge system
-- [ ] Test settings
-
-### Fase 4: Integration & Refinement (Settimana 8)
-- [ ] Integration tests
-- [ ] Coverage improvement
-- [ ] Bug fixes
-- [ ] Documentation
-
----
-
-## 🔧 Tools & Scripts
-
-### Comandi Utili
-
-```bash
-# Esegui tutti i test
-npm test
-
-# Esegui test con coverage
-npm run test:cov
-
-# Esegui test in watch mode
-npm run test:watch
-
-# Esegui test di un modulo specifico
-npm test -- stato-animo
-
-# Genera report HTML coverage
-npm run test:cov && open coverage/lcov-report/index.html
-
-# Valida oracoli
-npm run validate:oracles
-```
-
-### Script Personalizzati
-
-Aggiungi in `package.json`:
-
-```json
-{
-  "scripts": {
-    "test:patient": "jest --testPathPattern=patient",
-    "test:psi": "jest --testPathPattern=psi",
-    "test:admin": "jest --testPathPattern=amministratore",
-    "test:coverage:check": "jest --coverage --coverageThreshold='{\"global\":{\"lines\":85}}'",
-    "test:report": "jest --coverage --coverageReporters=html text"
-  }
-}
-```
-
----
-
-## 📊 Metriche di Qualità
-
-### Criteri di Accettazione
-
-Un modulo è considerato "completato" quando:
-
-- ✅ Coverage >= 85%
-- ✅ Tutti i test passano
-- ✅ Nessun test skippato
-- ✅ Documentazione aggiornata
-- ✅ Oracolo JSON creato
-- ✅ Code review completata
-
-### Red Flags
-
-⚠️ **Attenzione se**:
-- Coverage < 60%
-- Test falliti > 5%
-- Test skippati > 10%
-- Nessun test per funzioni critiche
-- Mock non puliti tra test
-
----
-
-## 🎓 Conclusioni
-
-Questa checklist serve come guida per il testing sistematico del progetto Sintonia. 
-
-**Ricorda**:
-- ✅ Testa prima le funzionalità critiche
-- ✅ Mantieni i test semplici e leggibili
-- ✅ Aggiorna la checklist regolarmente
-- ✅ Documenta i problemi trovati
-- ✅ Celebra i progressi! 🎉
-
-**Risorse**:
-- [Guida Unit Testing](./01_Guida_Unit_Testing_Sintonia.md)
-- [Guida Jest](./02_Guida_Jest.md)
-- [Guida Oracle JSON](./03_Guida_Oracle_JSON.md)
+## 📤 Uploads Module (`src/uploads`)
+
+### `UploadsController`
+| Metodo | Status | Coverage | Note |
+|---|:---:|:---:|---|
+| `uploadFile` | ❌ | 0% | |
+| `getFile` | ❌ | 0% | |

@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Genera un oracolo JSON per i test
  */
-class OracleGenerator {
+export class OracleGenerator {
     constructor(serviceName) {
         this.serviceName = serviceName;
         this.oracle = {
@@ -64,11 +68,8 @@ class OracleGenerator {
     }
 }
 
-// Export per uso come modulo
-module.exports = { OracleGenerator };
-
 // CLI usage
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const serviceName = process.argv[2] || 'ExampleService';
     const outputPath = process.argv[3] || `./test/oracles/${serviceName.toLowerCase()}-oracle.json`;
 

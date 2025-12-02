@@ -1,0 +1,6665 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Test oracle for StatoAnimoService - getStoricoStatoAnimo",
+    "createdAt": "2025-12-02T13:36:57.501Z",
+    "author": "Testing Team"
+  },
+  "testCases": [
+    {
+      "id": "test-001",
+      "description": "getStoricoStatoAnimo - returns empty array when no moods in range",
+      "category": "edge-case-critical",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "123e4567-e89b-12d3-a456-426614174000",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": []
+      },
+      "expectedOutput": {
+        "entries": []
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-002",
+      "description": "getStoricoStatoAnimo - handles single day range",
+      "category": "edge-case-critical",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "123e4567-e89b-12d3-a456-426614174000",
+        "giorni": 1
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": 7,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Sereno",
+            "intensita": 7
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "singleDayRange": true
+      }
+    },
+    {
+      "id": "test-003",
+      "description": "getStoricoStatoAnimo - filters data outside date range",
+      "category": "edge-case-critical",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "123e4567-e89b-12d3-a456-426614174000",
+        "giorni": 7
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Felice",
+            "intensita": 8,
+            "dataInserimento": "2025-12-02T10:00:00.000Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 3,
+            "dataInserimento": "2025-11-20T10:00:00.000Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Felice",
+            "intensita": 8
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "filteredByDate": true
+      }
+    },
+    {
+      "id": "test-004",
+      "description": "getStoricoStatoAnimo - uses default 30 days when giorni is missing",
+      "category": "edge-case-critical",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "123e4567-e89b-12d3-a456-426614174000"
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": 7,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Sereno",
+            "intensita": 7
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "defaultGiorni": true
+      }
+    },
+    {
+      "id": "test-005",
+      "description": "getStoricoStatoAnimo - 8 entries in 43 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "5f702646-b979-45bf-8cfa-6bb2226772e3",
+        "giorni": 43
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Ansioso",
+            "intensita": 5,
+            "dataInserimento": "2025-11-27T11:43:16.350Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-18T10:05:48.396Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 10,
+            "dataInserimento": "2025-11-17T14:15:33.126Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-16T10:21:44.028Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-16T09:31:21.830Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-10T18:59:35.665Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 3,
+            "dataInserimento": "2025-11-08T08:54:33.010Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 9,
+            "dataInserimento": "2025-11-02T16:06:26.868Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-02",
+            "umore": "Triste",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Energico",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Arrabbiato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Confuso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Neutro",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Ansioso",
+            "intensita": 5
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-006",
+      "description": "getStoricoStatoAnimo - 6 entries in 1 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "771a59f9-9a51-44a3-b7eb-51c78d9f7dd6",
+        "giorni": 1
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Stanco",
+            "intensita": 9,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 7,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 8,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 9,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 1,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 4,
+            "dataInserimento": "2025-12-02T13:36:57.508Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Triste",
+            "intensita": 4
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Energico",
+            "intensita": 1
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Felice",
+            "intensita": 9
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Neutro",
+            "intensita": 8
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Arrabbiato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Stanco",
+            "intensita": 9
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-007",
+      "description": "getStoricoStatoAnimo - 5 entries in 81 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "3033debd-ad23-4196-bf24-67fff1f8ce55",
+        "giorni": 81
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Arrabbiato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-25T02:32:32.956Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 5,
+            "dataInserimento": "2025-11-11T21:19:07.264Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-10-19T15:24:57.435Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 5,
+            "dataInserimento": "2025-10-10T09:59:33.796Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-09-28T06:53:15.151Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-09-28",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-10-10",
+            "umore": "Ansioso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-10-19",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Neutro",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Arrabbiato",
+            "intensita": 3
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-008",
+      "description": "getStoricoStatoAnimo - 15 entries in 80 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "7084d205-e97c-4ef1-b7ed-a88a2cd1bc5f",
+        "giorni": 80
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T21:38:03.144Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 1,
+            "dataInserimento": "2025-11-18T18:31:19.010Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 4,
+            "dataInserimento": "2025-11-04T04:46:23.721Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 2,
+            "dataInserimento": "2025-10-21T14:21:09.637Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-10-19T10:40:02.703Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 9,
+            "dataInserimento": "2025-10-19T02:35:05.175Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 8,
+            "dataInserimento": "2025-10-13T01:54:56.058Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 5,
+            "dataInserimento": "2025-10-12T06:20:32.690Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-10-08T02:44:08.965Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 3,
+            "dataInserimento": "2025-10-06T09:09:57.652Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-09-30T15:21:50.158Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 9,
+            "dataInserimento": "2025-09-23T21:13:18.592Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 9,
+            "dataInserimento": "2025-09-21T21:16:28.191Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-09-19T23:24:54.707Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-09-16T14:50:38.378Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-09-16",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-09-20",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-09-21",
+            "umore": "Felice",
+            "intensita": 9
+          },
+          {
+            "date": "2025-09-23",
+            "umore": "Arrabbiato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-09-30",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-10-06",
+            "umore": "Triste",
+            "intensita": 3
+          },
+          {
+            "date": "2025-10-08",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-10-12",
+            "umore": "Triste",
+            "intensita": 5
+          },
+          {
+            "date": "2025-10-13",
+            "umore": "Felice",
+            "intensita": 8
+          },
+          {
+            "date": "2025-10-19",
+            "umore": "Triste",
+            "intensita": 9
+          },
+          {
+            "date": "2025-10-19",
+            "umore": "Stanco",
+            "intensita": 5
+          },
+          {
+            "date": "2025-10-21",
+            "umore": "Felice",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Stanco",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Sereno",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Sereno"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-009",
+      "description": "getStoricoStatoAnimo - 12 entries in 23 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "4b295f5d-2eac-439f-8d5c-ae97be36aff8",
+        "giorni": 23
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T07:41:00.958Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 5,
+            "dataInserimento": "2025-11-29T20:20:41.897Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 9,
+            "dataInserimento": "2025-11-29T14:05:42.291Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-28T00:54:58.310Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-25T21:18:31.360Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T12:22:09.785Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T08:12:48.133Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-20T10:06:18.866Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T18:50:38.976Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 4,
+            "dataInserimento": "2025-11-17T21:09:38.530Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-12T20:21:23.804Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 8,
+            "dataInserimento": "2025-11-11T17:55:40.542Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-11",
+            "umore": "Triste",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Energico",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Neutro",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Spaventato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Ansioso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Felice",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Felice",
+            "intensita": 5
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Stanco"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-010",
+      "description": "getStoricoStatoAnimo - 4 entries in 50 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "466ba878-1b51-4d10-ade3-9da935353725",
+        "giorni": 50
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-20T17:32:29.349Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-16T02:21:10.555Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 8,
+            "dataInserimento": "2025-11-02T07:14:14.483Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 10,
+            "dataInserimento": "2025-11-01T09:21:09.814Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-01",
+            "umore": "Felice",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-02",
+            "umore": "Neutro",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Arrabbiato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Sereno",
+            "intensita": 9
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-011",
+      "description": "getStoricoStatoAnimo - 13 entries in 4 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "6809267a-5c7a-4595-a48e-4cbf9cd4d6ff",
+        "giorni": 4
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Arrabbiato",
+            "intensita": 9,
+            "dataInserimento": "2025-12-02T11:52:01.473Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 8,
+            "dataInserimento": "2025-12-02T01:45:21.413Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T00:46:18.517Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 5,
+            "dataInserimento": "2025-12-01T20:01:45.209Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T15:26:10.024Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-12-01T14:50:42.883Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 3,
+            "dataInserimento": "2025-11-30T21:09:17.591Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T15:33:24.246Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 5,
+            "dataInserimento": "2025-11-30T10:34:52.828Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T05:36:43.299Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T21:24:07.342Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-29T16:43:50.302Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-29T13:42:08.883Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-29",
+            "umore": "Arrabbiato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Arrabbiato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Energico",
+            "intensita": 3
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Energico",
+            "intensita": 5
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Triste",
+            "intensita": 8
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Arrabbiato",
+            "intensita": 9
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-012",
+      "description": "getStoricoStatoAnimo - 10 entries in 41 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "da433fdb-4919-4642-80e3-a67be0d1af70",
+        "giorni": 41
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T04:19:44.708Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-27T18:38:41.663Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 9,
+            "dataInserimento": "2025-11-22T16:29:53.757Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-22T02:33:10.953Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-13T20:40:51.922Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 4,
+            "dataInserimento": "2025-11-07T00:43:15.169Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-04T19:06:50.187Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 5,
+            "dataInserimento": "2025-11-03T07:47:25.165Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-10-27T12:40:59.023Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 7,
+            "dataInserimento": "2025-10-25T14:41:07.462Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-10-25",
+            "umore": "Spaventato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-10-27",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-03",
+            "umore": "Ansioso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Triste",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Energico",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Ansioso"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-013",
+      "description": "getStoricoStatoAnimo - 14 entries in 69 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "8dca5b75-0a97-4bf4-b39e-421fadaca185",
+        "giorni": 69
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T23:44:21.683Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-20T09:59:56.862Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-19T22:12:06.671Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-03T14:48:07.802Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 10,
+            "dataInserimento": "2025-10-30T23:21:35.931Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 9,
+            "dataInserimento": "2025-10-26T15:02:45.580Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-10-26T05:22:34.283Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 6,
+            "dataInserimento": "2025-10-17T21:52:25.299Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-10-17T16:00:22.493Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 10,
+            "dataInserimento": "2025-10-10T00:15:23.617Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 2,
+            "dataInserimento": "2025-10-08T08:08:03.558Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-10-05T03:02:30.222Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-10-04T21:30:31.905Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-09-30T17:44:01.095Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-09-30",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-10-04",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-10-05",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-10-08",
+            "umore": "Spaventato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-10-10",
+            "umore": "Ansioso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-10-17",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-10-17",
+            "umore": "Confuso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-10-26",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-10-26",
+            "umore": "Energico",
+            "intensita": 9
+          },
+          {
+            "date": "2025-10-31",
+            "umore": "Sereno",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-03",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Confuso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Confuso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Triste"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-014",
+      "description": "getStoricoStatoAnimo - 2 entries in 70 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "a2bef7bb-8e58-431a-9a62-361ba02ba27f",
+        "giorni": 70
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-23T14:44:58.365Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 1,
+            "dataInserimento": "2025-10-16T08:31:31.471Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-10-16",
+            "umore": "Neutro",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Spaventato"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-015",
+      "description": "getStoricoStatoAnimo - 3 entries in 47 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "80e5f848-9b1c-430c-9e93-b51c72780786",
+        "giorni": 47
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-15T09:19:33.749Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 10,
+            "dataInserimento": "2025-11-09T20:39:42.803Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 7,
+            "dataInserimento": "2025-10-23T01:34:47.289Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-10-23",
+            "umore": "Arrabbiato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Arrabbiato",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Triste"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-016",
+      "description": "getStoricoStatoAnimo - 7 entries in 20 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "4adc8a07-a445-48b7-b265-c015c858dffb",
+        "giorni": 20
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T20:21:43.850Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 1,
+            "dataInserimento": "2025-11-28T13:08:26.721Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-27T09:23:32.843Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-25T23:51:18.795Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T22:51:31.358Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 1,
+            "dataInserimento": "2025-11-22T01:45:16.376Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 7,
+            "dataInserimento": "2025-11-15T22:22:02.675Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-15",
+            "umore": "Energico",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Neutro",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Ansioso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Energico",
+            "intensita": 1
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Felice"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-017",
+      "description": "getStoricoStatoAnimo - 15 entries in 73 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "2a327696-d1cc-4193-b1ed-3b7e38428b59",
+        "giorni": 73
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": 3,
+            "dataInserimento": "2025-11-24T06:37:34.984Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-20T12:01:57.071Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-14T20:38:40.369Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 3,
+            "dataInserimento": "2025-11-11T06:36:33.268Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 5,
+            "dataInserimento": "2025-11-08T00:58:39.322Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-04T05:59:13.904Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-01T11:50:26.608Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-10-30T04:21:23.039Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-10-29T10:05:33.399Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 3,
+            "dataInserimento": "2025-10-25T12:09:17.671Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 4,
+            "dataInserimento": "2025-10-20T20:20:48.105Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 7,
+            "dataInserimento": "2025-10-19T14:49:12.449Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 5,
+            "dataInserimento": "2025-10-06T02:27:46.551Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-09-24T03:15:46.308Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 10,
+            "dataInserimento": "2025-09-22T21:53:48.624Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-09-22",
+            "umore": "Arrabbiato",
+            "intensita": 10
+          },
+          {
+            "date": "2025-09-24",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-10-06",
+            "umore": "Confuso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-10-19",
+            "umore": "Spaventato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-10-20",
+            "umore": "Sereno",
+            "intensita": 4
+          },
+          {
+            "date": "2025-10-25",
+            "umore": "Energico",
+            "intensita": 3
+          },
+          {
+            "date": "2025-10-29",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-10-30",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-01",
+            "umore": "Confuso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Neutro",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Felice",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Sereno",
+            "intensita": 3
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-018",
+      "description": "getStoricoStatoAnimo - 10 entries in 64 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "8bab2854-0191-464c-a001-b63aa2674c8b",
+        "giorni": 64
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T14:52:58.928Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-17T19:08:32.819Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-14T10:00:34.982Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-10T02:23:09.149Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 5,
+            "dataInserimento": "2025-11-08T11:22:51.918Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 4,
+            "dataInserimento": "2025-11-06T00:18:32.349Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 6,
+            "dataInserimento": "2025-11-02T09:46:51.752Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 5,
+            "dataInserimento": "2025-10-25T12:08:38.646Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 9,
+            "dataInserimento": "2025-10-07T18:17:41.102Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 1,
+            "dataInserimento": "2025-10-03T23:35:21.980Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-10-04",
+            "umore": "Triste",
+            "intensita": 1
+          },
+          {
+            "date": "2025-10-07",
+            "umore": "Confuso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-10-25",
+            "umore": "Spaventato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-02",
+            "umore": "Felice",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Sereno",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Felice",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Arrabbiato"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-019",
+      "description": "getStoricoStatoAnimo - 2 entries in 43 days",
+      "category": "success",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "900735a4-7b6a-49d9-8468-007e4341e2ce",
+        "giorni": 43
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Felice",
+            "intensita": 1,
+            "dataInserimento": "2025-11-30T14:57:32.373Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-14T20:00:57.290Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-14",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Felice",
+            "intensita": 1
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-020",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "7c7c26b3-152f-4a4c-ae50-02bf9c9f0017",
+        "giorni": 18
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T06:43:39.368Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-01",
+            "umore": "Confuso"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-021",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "cce21eea-f832-4900-abfd-432327688f10",
+        "giorni": 20
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T06:20:21.729Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-29",
+            "umore": "Arrabbiato"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-022",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "7ed9f211-9ef8-4783-b8db-2d0f10b39294",
+        "giorni": 25
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T08:29:46.817Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-01",
+            "umore": "Ansioso"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-023",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "3127a22e-54df-4bb0-a5e0-977c278c0885",
+        "giorni": 17
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-28T06:48:13.445Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-28",
+            "umore": "Stanco"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-024",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "32c79a3e-80df-4e1d-9b55-d0663eee98bd",
+        "giorni": 11
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T03:30:21.658Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-30",
+            "umore": "Triste"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-025",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "27860395-9f48-4a4c-8f1e-43a8ee2bba2f",
+        "giorni": 7
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T13:53:36.327Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-29",
+            "umore": "Felice"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-026",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "7898b78f-51cb-45e5-acd3-bc9176f9655a",
+        "giorni": 7
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-28T20:17:11.074Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-28",
+            "umore": "Triste"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-027",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "4f63bcf7-a58d-4361-b829-1b9bfb3088c2",
+        "giorni": 28
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T02:49:28.989Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Neutro"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-028",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "e33bd56e-74ec-432c-aa87-452444f2934c",
+        "giorni": 9
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T19:45:34.325Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-30",
+            "umore": "Triste"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-029",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "7c244681-ac73-4f52-a5fc-13a689ba089e",
+        "giorni": 8
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T09:48:12.119Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Ansioso"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-030",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "8cfd23d9-721a-4fd8-beec-b18f1eab8945",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T07:06:56.204Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Neutro"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-031",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "f2c715c5-e83c-4f15-b620-f75c431a2093",
+        "giorni": 16
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T13:27:23.294Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Spaventato"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-032",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "d8a0b854-9814-4b5d-abc6-4913a012afc5",
+        "giorni": 26
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-27T16:05:35.174Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-27",
+            "umore": "Spaventato"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-033",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "9ca45f06-ff57-4e96-981f-0f7344bcf84e",
+        "giorni": 13
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T20:45:41.896Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-034",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "5e65e530-1abd-4c4f-bc5f-e37e2e2fad80",
+        "giorni": 12
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-27T22:57:44.574Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-27",
+            "umore": "Stanco"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-035",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "d762f209-6d83-462c-a998-c8612c12b3de",
+        "giorni": 10
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T16:50:52.848Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-01",
+            "umore": "Ansioso"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-036",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "fe640079-8504-4d5d-a810-4cda830286a0",
+        "giorni": 28
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T12:31:06.718Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-29",
+            "umore": "Sereno"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-037",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "ea773284-76cd-44e8-b9ac-5ca8d99dd028",
+        "giorni": 9
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-12-02T07:50:36.523Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-12-02",
+            "umore": "Neutro"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-038",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "1cf9b24d-e568-4379-a21f-c9af95a3be34",
+        "giorni": 22
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-28T04:47:15.858Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-28",
+            "umore": "Sereno"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-039",
+      "description": "Random edge - storico with null intensita",
+      "category": "edge-case",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "676dd17e-915c-40d0-a347-6be793b71af9",
+        "giorni": 16
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T10:36:18.897Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-30",
+            "umore": "Spaventato"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false
+      }
+    },
+    {
+      "id": "test-040",
+      "description": "Stress test - 81 entries (near safety limit)",
+      "category": "stress",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "83c89637-2f24-4962-b1aa-99da5e3a9e83",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Confuso",
+            "intensita": 1,
+            "dataInserimento": "2025-12-02T03:35:09.581Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 1,
+            "dataInserimento": "2025-12-02T03:04:35.564Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T21:37:57.007Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T18:23:40.781Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 3,
+            "dataInserimento": "2025-12-01T11:02:26.754Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 10,
+            "dataInserimento": "2025-12-01T06:22:39.696Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 9,
+            "dataInserimento": "2025-12-01T05:18:26.231Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 2,
+            "dataInserimento": "2025-11-30T22:49:30.969Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-30T20:20:58.485Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-30T20:07:48.600Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 9,
+            "dataInserimento": "2025-11-30T18:50:20.809Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-30T14:51:07.378Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-29T19:41:32.317Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T17:06:55.601Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-28T23:59:44.663Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-28T03:07:26.570Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-27T11:01:37.157Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 8,
+            "dataInserimento": "2025-11-27T08:57:45.882Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-26T22:39:33.183Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-26T22:32:38.523Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 1,
+            "dataInserimento": "2025-11-26T20:49:17.328Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-26T10:22:28.711Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 4,
+            "dataInserimento": "2025-11-26T04:48:05.984Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-26T01:57:27.710Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-25T19:31:27.850Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 10,
+            "dataInserimento": "2025-11-25T14:11:35.336Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 2,
+            "dataInserimento": "2025-11-25T09:04:37.567Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-25T05:32:51.001Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 3,
+            "dataInserimento": "2025-11-25T03:05:56.031Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 4,
+            "dataInserimento": "2025-11-24T10:03:20.517Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-22T20:35:44.421Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 8,
+            "dataInserimento": "2025-11-22T19:52:35.401Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 7,
+            "dataInserimento": "2025-11-22T04:47:27.982Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-22T01:54:42.641Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 6,
+            "dataInserimento": "2025-11-20T18:42:44.424Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T20:09:31.410Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T10:58:43.266Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 6,
+            "dataInserimento": "2025-11-18T21:57:57.168Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-18T12:17:21.495Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-18T10:52:06.413Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-17T14:52:02.362Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 8,
+            "dataInserimento": "2025-11-17T11:52:55.976Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 6,
+            "dataInserimento": "2025-11-17T07:35:56.035Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 7,
+            "dataInserimento": "2025-11-16T20:14:43.198Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 3,
+            "dataInserimento": "2025-11-16T15:21:26.521Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 5,
+            "dataInserimento": "2025-11-16T10:58:49.317Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-16T01:41:25.884Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T00:02:51.934Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-15T09:51:24.956Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 4,
+            "dataInserimento": "2025-11-15T07:31:05.415Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 10,
+            "dataInserimento": "2025-11-15T01:14:01.985Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-14T17:39:12.610Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-14T16:55:53.501Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-13T20:16:44.833Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-11-13T13:19:49.203Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-13T06:30:32.159Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-12T22:52:34.997Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 7,
+            "dataInserimento": "2025-11-10T16:29:01.269Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 7,
+            "dataInserimento": "2025-11-10T14:42:33.326Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 7,
+            "dataInserimento": "2025-11-10T12:17:26.216Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 10,
+            "dataInserimento": "2025-11-10T05:10:19.107Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-11-10T04:56:43.387Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 6,
+            "dataInserimento": "2025-11-09T13:36:25.855Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T10:08:48.219Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 6,
+            "dataInserimento": "2025-11-09T09:33:47.526Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-08T16:41:08.354Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 5,
+            "dataInserimento": "2025-11-07T19:38:05.514Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-07T17:43:42.295Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-07T16:55:35.373Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-07T12:22:17.132Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-06T17:24:53.783Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-06T08:16:44.434Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-06T03:50:22.263Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 7,
+            "dataInserimento": "2025-11-05T17:18:48.839Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-05T16:01:55.992Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-05T13:55:33.579Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 6,
+            "dataInserimento": "2025-11-04T14:06:26.890Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-04T03:32:07.461Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 8,
+            "dataInserimento": "2025-11-04T03:19:14.313Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 3,
+            "dataInserimento": "2025-11-03T21:40:52.618Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 10,
+            "dataInserimento": "2025-11-03T19:25:42.034Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-03",
+            "umore": "Spaventato",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-03",
+            "umore": "Energico",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Neutro",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Neutro",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Stanco",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Ansioso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Spaventato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Arrabbiato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Spaventato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Triste",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Felice",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Neutro",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Neutro",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Ansioso",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Felice",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Arrabbiato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Stanco",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Confuso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Energico",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Triste",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Arrabbiato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Spaventato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Triste",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Energico",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Felice",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Confuso",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Spaventato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Spaventato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Energico",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Felice",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Arrabbiato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Energico",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Energico",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Felice",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Sereno",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Felice",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Stanco",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Confuso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Stanco",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Triste",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Energico",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Arrabbiato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Confuso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Triste",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Spaventato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Sereno",
+            "intensita": 2
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Arrabbiato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco",
+            "intensita": 10
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Felice",
+            "intensita": 3
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Sereno",
+            "intensita": 1
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Confuso",
+            "intensita": 1
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "largeDataset": true
+      }
+    },
+    {
+      "id": "test-041",
+      "description": "Stress test - 82 entries (near safety limit)",
+      "category": "stress",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "28190dc4-877f-46ca-8a47-6c3c88c6f735",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Confuso",
+            "intensita": 8,
+            "dataInserimento": "2025-12-02T10:31:50.748Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T21:26:04.006Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 4,
+            "dataInserimento": "2025-12-01T20:44:34.741Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-12-01T14:19:06.476Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T11:49:23.124Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-12-01T08:57:29.042Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T21:20:52.202Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-30T17:24:24.600Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 8,
+            "dataInserimento": "2025-11-30T10:49:17.993Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-29T19:37:58.710Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-29T15:20:11.016Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-29T07:49:37.868Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 1,
+            "dataInserimento": "2025-11-29T04:14:32.402Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-28T11:21:53.571Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-27T12:02:39.718Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 10,
+            "dataInserimento": "2025-11-27T09:35:11.997Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-26T17:15:57.369Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-26T15:25:16.282Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-11-26T04:51:53.232Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 1,
+            "dataInserimento": "2025-11-26T04:15:29.432Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 4,
+            "dataInserimento": "2025-11-26T03:08:42.096Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-25T13:08:22.524Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-25T06:57:17.235Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-24T18:57:23.264Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 3,
+            "dataInserimento": "2025-11-24T14:29:32.949Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 10,
+            "dataInserimento": "2025-11-24T14:10:48.811Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-11-24T13:08:18.421Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 6,
+            "dataInserimento": "2025-11-23T23:01:11.619Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-23T13:55:06.979Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-23T07:19:21.279Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-22T14:42:08.599Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 8,
+            "dataInserimento": "2025-11-22T11:56:50.423Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-22T11:44:11.618Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-21T19:13:46.330Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 8,
+            "dataInserimento": "2025-11-20T11:21:47.158Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-20T06:35:24.356Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-20T06:22:29.334Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-20T04:52:35.891Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-19T21:21:17.425Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 10,
+            "dataInserimento": "2025-11-19T06:00:34.153Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 2,
+            "dataInserimento": "2025-11-19T04:13:09.471Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-18T01:15:40.754Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-17T06:43:51.183Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-11-16T19:11:12.083Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 2,
+            "dataInserimento": "2025-11-16T09:41:55.600Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-16T05:02:41.152Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-11-16T00:13:38.169Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-15T16:37:50.530Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-15T14:03:07.273Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-11-15T11:08:50.024Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 7,
+            "dataInserimento": "2025-11-15T07:23:32.259Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 5,
+            "dataInserimento": "2025-11-15T07:03:26.612Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 1,
+            "dataInserimento": "2025-11-15T03:52:54.078Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-14T17:20:21.204Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-14T09:21:44.812Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-14T06:35:10.552Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-14T01:24:57.638Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 5,
+            "dataInserimento": "2025-11-13T00:25:17.090Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-12T19:59:00.956Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-12T19:42:47.249Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-12T16:09:44.410Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 8,
+            "dataInserimento": "2025-11-12T01:35:50.108Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-11T20:26:13.600Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-10T05:52:37.766Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-10T01:06:20.955Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T22:11:41.248Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T13:09:57.016Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-09T08:36:02.246Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-09T03:10:31.182Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 6,
+            "dataInserimento": "2025-11-08T22:39:32.638Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-11-08T20:32:02.126Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 10,
+            "dataInserimento": "2025-11-08T05:56:49.067Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 6,
+            "dataInserimento": "2025-11-07T14:34:28.457Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-07T05:24:54.573Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-07T03:30:02.506Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-06T04:01:03.522Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 5,
+            "dataInserimento": "2025-11-06T00:16:08.783Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-05T13:36:59.698Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-05T08:33:22.976Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-05T06:50:55.145Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 9,
+            "dataInserimento": "2025-11-04T08:45:54.780Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-04T03:54:19.095Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-04",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Felice",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Arrabbiato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Neutro",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Ansioso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Arrabbiato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Neutro",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Felice",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Sereno",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Sereno",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Confuso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Confuso",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Ansioso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Ansioso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Energico",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Ansioso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Spaventato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Stanco",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Neutro",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Spaventato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Stanco",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Spaventato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Confuso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Neutro",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Stanco",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Neutro",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Arrabbiato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Sereno",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Arrabbiato",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Ansioso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Confuso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Energico",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Felice",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Confuso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Stanco",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Stanco",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Felice",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Neutro",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Neutro",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Stanco",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Arrabbiato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Spaventato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Triste",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Felice",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Confuso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Confuso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Sereno",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Sereno",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco",
+            "intensita": 4
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Confuso",
+            "intensita": 8
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "largeDataset": true
+      }
+    },
+    {
+      "id": "test-042",
+      "description": "Stress test - 100 entries (near safety limit)",
+      "category": "stress",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "764408b7-66b4-4d2d-85e0-45cf55eb0cab",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-12-01T13:17:18.633Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 1,
+            "dataInserimento": "2025-12-01T11:38:34.308Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 10,
+            "dataInserimento": "2025-12-01T03:37:40.429Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-30T18:24:18.718Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 7,
+            "dataInserimento": "2025-11-29T12:20:58.238Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 8,
+            "dataInserimento": "2025-11-29T04:10:51.261Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 6,
+            "dataInserimento": "2025-11-28T09:14:07.810Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 10,
+            "dataInserimento": "2025-11-28T07:33:02.986Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-11-27T14:44:35.822Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 8,
+            "dataInserimento": "2025-11-27T09:41:25.323Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-27T01:52:25.957Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-27T01:49:15.584Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-11-26T18:07:16.283Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 1,
+            "dataInserimento": "2025-11-26T15:26:02.004Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-26T11:45:42.566Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-26T10:30:14.017Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 10,
+            "dataInserimento": "2025-11-26T08:54:16.849Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-26T06:16:28.082Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 5,
+            "dataInserimento": "2025-11-26T03:39:21.678Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-26T01:27:45.396Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-25T23:01:59.975Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-25T18:09:47.477Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-25T09:01:56.599Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-25T06:49:58.391Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-24T20:17:48.016Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-24T16:16:48.840Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-24T10:10:54.149Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-24T00:04:09.783Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 7,
+            "dataInserimento": "2025-11-23T23:24:52.550Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 5,
+            "dataInserimento": "2025-11-23T20:29:28.137Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-23T14:39:52.579Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 9,
+            "dataInserimento": "2025-11-23T12:48:27.846Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 1,
+            "dataInserimento": "2025-11-23T07:52:06.033Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 4,
+            "dataInserimento": "2025-11-23T02:13:35.568Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 9,
+            "dataInserimento": "2025-11-22T02:01:36.852Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T01:20:54.123Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-21T20:49:05.044Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-21T04:21:59.767Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 3,
+            "dataInserimento": "2025-11-21T02:36:27.157Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-20T23:40:19.892Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 8,
+            "dataInserimento": "2025-11-20T16:03:54.119Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-11-20T07:20:30.687Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-20T04:47:34.186Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-19T08:49:38.362Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 8,
+            "dataInserimento": "2025-11-19T06:02:54.119Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T05:48:28.221Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T01:50:59.313Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-19T01:10:51.286Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-11-18T18:56:31.450Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 3,
+            "dataInserimento": "2025-11-18T16:49:56.344Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 1,
+            "dataInserimento": "2025-11-18T10:12:20.905Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-18T03:18:27.068Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-17T23:45:16.054Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-17T17:43:46.771Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-17T16:56:25.940Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 3,
+            "dataInserimento": "2025-11-17T15:41:10.923Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 2,
+            "dataInserimento": "2025-11-17T12:13:11.493Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-17T00:48:14.564Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T23:50:54.474Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T21:08:56.981Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-16T19:20:41.862Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-16T10:33:20.207Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 8,
+            "dataInserimento": "2025-11-15T22:25:38.539Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 9,
+            "dataInserimento": "2025-11-15T16:30:33.301Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-15T14:04:39.096Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-15T02:13:39.011Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-14T20:27:35.516Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 5,
+            "dataInserimento": "2025-11-14T19:32:44.078Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-14T16:57:01.464Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-14T04:28:37.659Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 10,
+            "dataInserimento": "2025-11-14T00:48:40.557Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 6,
+            "dataInserimento": "2025-11-13T10:35:16.566Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 1,
+            "dataInserimento": "2025-11-12T03:06:49.793Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-12T02:53:10.873Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-11T14:51:15.230Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 7,
+            "dataInserimento": "2025-11-10T18:09:43.941Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 7,
+            "dataInserimento": "2025-11-10T06:40:33.230Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 10,
+            "dataInserimento": "2025-11-09T05:04:47.463Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T00:40:40.256Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-08T17:04:47.863Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 6,
+            "dataInserimento": "2025-11-08T15:39:49.684Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-07T20:34:13.114Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-07T14:30:32.023Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-07T11:47:00.509Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 8,
+            "dataInserimento": "2025-11-07T11:30:11.044Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 1,
+            "dataInserimento": "2025-11-07T07:26:14.621Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-06T19:07:11.181Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-06T08:38:21.897Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 5,
+            "dataInserimento": "2025-11-06T06:13:47.896Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-06T05:52:11.237Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 7,
+            "dataInserimento": "2025-11-05T14:48:32.129Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 6,
+            "dataInserimento": "2025-11-05T10:11:16.634Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 3,
+            "dataInserimento": "2025-11-04T22:23:53.842Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-04T08:38:16.265Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-04T07:18:25.813Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 2,
+            "dataInserimento": "2025-11-04T06:36:17.825Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-04T00:07:37.465Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-03T17:56:21.054Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 8,
+            "dataInserimento": "2025-11-03T15:52:08.327Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-03T14:20:58.132Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-03",
+            "umore": "Confuso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-03",
+            "umore": "Stanco",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-03",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Spaventato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Triste",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Confuso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Triste",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Sereno",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Arrabbiato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Triste",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Confuso",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Confuso",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Ansioso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Triste",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Spaventato",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Stanco",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Arrabbiato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Spaventato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Felice",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Felice",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Felice",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Spaventato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Arrabbiato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Felice",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Felice",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Ansioso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Sereno",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Stanco",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Felice",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Energico",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Arrabbiato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Felice",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Confuso",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Sereno",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Arrabbiato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Arrabbiato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Felice",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Neutro",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Triste",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Triste",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Ansioso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Sereno",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Confuso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Sereno",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Energico",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Neutro",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Energico",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Stanco",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Stanco",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Neutro",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Felice",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Neutro",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Neutro",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Energico",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Triste",
+            "intensita": 10
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Ansioso",
+            "intensita": 1
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Neutro",
+            "intensita": 9
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "largeDataset": true
+      }
+    },
+    {
+      "id": "test-043",
+      "description": "Stress test - 83 entries (near safety limit)",
+      "category": "stress",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "6d9e71dd-8ad8-4889-8ab6-f6991f89b80e",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-12-02T09:46:00.945Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 3,
+            "dataInserimento": "2025-12-02T03:13:43.294Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T19:01:21.253Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-30T22:52:38.029Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-30T09:29:22.748Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-30T07:51:55.405Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-29T22:00:32.412Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-29T04:09:17.558Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T03:39:01.582Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 4,
+            "dataInserimento": "2025-11-28T20:27:33.411Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 2,
+            "dataInserimento": "2025-11-28T18:09:03.922Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 3,
+            "dataInserimento": "2025-11-28T11:04:39.093Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-28T01:36:16.171Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 10,
+            "dataInserimento": "2025-11-27T20:52:48.020Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 8,
+            "dataInserimento": "2025-11-27T12:17:17.326Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 8,
+            "dataInserimento": "2025-11-27T02:58:28.164Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-26T19:49:56.693Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 3,
+            "dataInserimento": "2025-11-26T15:07:40.214Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-11-26T13:33:03.607Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 2,
+            "dataInserimento": "2025-11-26T09:31:23.592Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 7,
+            "dataInserimento": "2025-11-26T02:51:44.815Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 1,
+            "dataInserimento": "2025-11-25T10:19:19.735Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 1,
+            "dataInserimento": "2025-11-25T08:05:34.550Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 10,
+            "dataInserimento": "2025-11-25T06:53:14.862Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": null,
+            "dataInserimento": "2025-11-25T04:52:20.211Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 10,
+            "dataInserimento": "2025-11-24T13:20:00.629Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 8,
+            "dataInserimento": "2025-11-24T00:45:49.481Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-23T06:26:52.478Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 2,
+            "dataInserimento": "2025-11-23T04:57:34.464Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-22T23:01:20.316Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-22T17:47:25.408Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T07:16:25.341Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-22T06:45:24.945Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 3,
+            "dataInserimento": "2025-11-22T05:37:42.819Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 5,
+            "dataInserimento": "2025-11-21T20:22:21.197Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 10,
+            "dataInserimento": "2025-11-20T20:53:02.029Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 7,
+            "dataInserimento": "2025-11-20T18:27:26.130Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 9,
+            "dataInserimento": "2025-11-20T09:45:20.403Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 5,
+            "dataInserimento": "2025-11-19T12:52:56.235Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-19T07:18:27.990Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 5,
+            "dataInserimento": "2025-11-19T04:54:34.318Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T04:49:11.450Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-18T16:25:26.121Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 9,
+            "dataInserimento": "2025-11-18T12:24:41.384Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 9,
+            "dataInserimento": "2025-11-18T01:31:12.895Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 10,
+            "dataInserimento": "2025-11-17T19:36:13.883Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-17T17:04:32.067Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 4,
+            "dataInserimento": "2025-11-17T16:17:04.257Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 10,
+            "dataInserimento": "2025-11-17T05:50:27.791Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T21:52:48.104Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T20:41:16.994Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 9,
+            "dataInserimento": "2025-11-16T13:05:48.991Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-15T19:37:41.563Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-15T18:27:35.853Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 6,
+            "dataInserimento": "2025-11-15T10:59:58.987Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-15T09:12:09.637Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 1,
+            "dataInserimento": "2025-11-14T07:53:01.754Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-13T23:20:06.303Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 1,
+            "dataInserimento": "2025-11-13T01:34:47.649Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-12T12:30:01.069Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-12T10:53:21.438Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 3,
+            "dataInserimento": "2025-11-11T10:47:23.190Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-11T06:31:43.646Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-11T06:11:50.397Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-10T19:30:10.902Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 6,
+            "dataInserimento": "2025-11-10T15:12:31.293Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-10T13:37:02.042Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-10T07:52:24.474Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T17:19:11.643Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-09T15:38:59.064Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T09:19:10.140Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 7,
+            "dataInserimento": "2025-11-09T02:29:38.609Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-09T01:49:32.617Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 7,
+            "dataInserimento": "2025-11-07T23:14:43.712Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-07T02:19:35.237Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-06T08:52:34.538Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 2,
+            "dataInserimento": "2025-11-05T20:49:50.070Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-05T12:31:27.785Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 10,
+            "dataInserimento": "2025-11-05T10:59:42.016Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 4,
+            "dataInserimento": "2025-11-05T04:31:41.864Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-04T19:03:16.408Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 5,
+            "dataInserimento": "2025-11-03T19:13:09.210Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-03T15:21:39.334Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-03",
+            "umore": "Sereno",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-03",
+            "umore": "Neutro",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Triste",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Triste",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Spaventato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Stanco",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Energico",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Arrabbiato",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Spaventato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Spaventato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Triste",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Spaventato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-12",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Energico",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Arrabbiato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Sereno",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Sereno",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Arrabbiato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Arrabbiato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Energico",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Arrabbiato",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Sereno",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Ansioso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Sereno",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Energico",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Energico",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Felice",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Arrabbiato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Ansioso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Stanco",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Stanco",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Energico",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Spaventato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Stanco",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Felice",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Felice",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Triste",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Triste",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Stanco",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Sereno",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Neutro",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Stanco",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Neutro",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Neutro",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Felice",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Ansioso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Energico",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Ansioso",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Stanco",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Felice",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Neutro",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-28",
+            "umore": "Neutro",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Ansioso",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Sereno",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Confuso"
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Sereno",
+            "intensita": 3
+          },
+          {
+            "date": "2025-12-02",
+            "umore": "Stanco",
+            "intensita": 5
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "largeDataset": true
+      }
+    },
+    {
+      "id": "test-044",
+      "description": "Stress test - 89 entries (near safety limit)",
+      "category": "stress",
+      "method": "getStoricoStatoAnimo",
+      "input": {
+        "userId": "4557414d-5aa7-4725-a212-5b1289eda27e",
+        "giorni": 30
+      },
+      "mockData": {
+        "dbResponse": [
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T22:28:50.214Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-12-01T05:46:06.406Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 3,
+            "dataInserimento": "2025-12-01T05:03:59.124Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-30T17:57:57.028Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 7,
+            "dataInserimento": "2025-11-30T17:48:23.749Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": null,
+            "dataInserimento": "2025-11-30T13:48:55.535Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 5,
+            "dataInserimento": "2025-11-30T03:02:38.659Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 7,
+            "dataInserimento": "2025-11-29T22:38:09.048Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 1,
+            "dataInserimento": "2025-11-29T18:46:59.523Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T18:11:19.464Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 1,
+            "dataInserimento": "2025-11-29T11:52:55.332Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": null,
+            "dataInserimento": "2025-11-29T00:48:19.254Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-27T22:50:29.173Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 6,
+            "dataInserimento": "2025-11-27T14:41:56.161Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 2,
+            "dataInserimento": "2025-11-27T11:56:14.213Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-27T05:09:24.705Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 2,
+            "dataInserimento": "2025-11-27T00:40:40.378Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 5,
+            "dataInserimento": "2025-11-26T22:26:49.650Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 4,
+            "dataInserimento": "2025-11-26T13:13:39.252Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 8,
+            "dataInserimento": "2025-11-25T14:38:01.077Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 3,
+            "dataInserimento": "2025-11-25T00:28:44.196Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 10,
+            "dataInserimento": "2025-11-24T17:17:01.827Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 3,
+            "dataInserimento": "2025-11-24T06:42:03.418Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-11-24T06:16:05.011Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-23T12:32:00.563Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-23T11:55:40.305Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 8,
+            "dataInserimento": "2025-11-23T07:47:02.279Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 2,
+            "dataInserimento": "2025-11-23T06:38:23.816Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 10,
+            "dataInserimento": "2025-11-22T20:10:32.446Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-22T11:52:14.777Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T09:45:51.792Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 4,
+            "dataInserimento": "2025-11-22T08:37:53.094Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 2,
+            "dataInserimento": "2025-11-22T08:23:21.868Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 9,
+            "dataInserimento": "2025-11-21T21:43:19.428Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-21T20:08:27.951Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 7,
+            "dataInserimento": "2025-11-21T11:42:39.088Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 4,
+            "dataInserimento": "2025-11-21T08:51:03.342Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-21T08:49:17.329Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 5,
+            "dataInserimento": "2025-11-21T03:35:32.063Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 8,
+            "dataInserimento": "2025-11-21T02:03:06.958Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-20T21:17:00.222Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 5,
+            "dataInserimento": "2025-11-20T18:12:13.367Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": null,
+            "dataInserimento": "2025-11-20T07:19:48.904Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": null,
+            "dataInserimento": "2025-11-20T05:43:44.377Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 5,
+            "dataInserimento": "2025-11-20T02:23:19.122Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 7,
+            "dataInserimento": "2025-11-19T16:51:05.073Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-19T12:18:36.291Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 7,
+            "dataInserimento": "2025-11-19T02:31:49.174Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-18T14:51:54.852Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-18T12:14:41.019Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-18T11:10:29.352Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 8,
+            "dataInserimento": "2025-11-18T09:00:52.311Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 9,
+            "dataInserimento": "2025-11-18T03:55:05.035Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 1,
+            "dataInserimento": "2025-11-17T20:20:47.808Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 3,
+            "dataInserimento": "2025-11-17T10:39:38.740Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 9,
+            "dataInserimento": "2025-11-17T10:22:15.457Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-17T10:02:25.171Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T17:15:35.524Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 7,
+            "dataInserimento": "2025-11-16T08:01:45.366Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": null,
+            "dataInserimento": "2025-11-16T05:48:23.426Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 10,
+            "dataInserimento": "2025-11-15T17:19:34.615Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-15T16:36:17.852Z"
+          },
+          {
+            "umore": "Confuso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-15T12:18:53.532Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-14T18:11:59.638Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-14T09:04:19.991Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 2,
+            "dataInserimento": "2025-11-13T23:44:40.995Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-13T22:11:59.396Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 6,
+            "dataInserimento": "2025-11-13T13:39:24.110Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 4,
+            "dataInserimento": "2025-11-11T22:24:09.078Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 8,
+            "dataInserimento": "2025-11-11T15:17:42.183Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 1,
+            "dataInserimento": "2025-11-11T09:42:57.623Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": null,
+            "dataInserimento": "2025-11-11T09:01:36.490Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-11T06:15:04.679Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 8,
+            "dataInserimento": "2025-11-10T02:20:16.515Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 10,
+            "dataInserimento": "2025-11-09T20:54:30.023Z"
+          },
+          {
+            "umore": "Neutro",
+            "intensita": 6,
+            "dataInserimento": "2025-11-09T16:01:56.020Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 1,
+            "dataInserimento": "2025-11-09T08:56:08.062Z"
+          },
+          {
+            "umore": "Ansioso",
+            "intensita": 9,
+            "dataInserimento": "2025-11-09T03:11:48.656Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-08T03:47:08.410Z"
+          },
+          {
+            "umore": "Triste",
+            "intensita": 1,
+            "dataInserimento": "2025-11-07T07:28:42.496Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 3,
+            "dataInserimento": "2025-11-07T06:33:40.175Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 7,
+            "dataInserimento": "2025-11-07T04:56:12.194Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": 3,
+            "dataInserimento": "2025-11-06T12:32:10.848Z"
+          },
+          {
+            "umore": "Sereno",
+            "intensita": 9,
+            "dataInserimento": "2025-11-05T07:25:45.159Z"
+          },
+          {
+            "umore": "Stanco",
+            "intensita": 7,
+            "dataInserimento": "2025-11-05T04:49:05.595Z"
+          },
+          {
+            "umore": "Felice",
+            "intensita": 5,
+            "dataInserimento": "2025-11-05T01:26:39.559Z"
+          },
+          {
+            "umore": "Energico",
+            "intensita": null,
+            "dataInserimento": "2025-11-04T18:46:44.787Z"
+          },
+          {
+            "umore": "Spaventato",
+            "intensita": 4,
+            "dataInserimento": "2025-11-04T07:51:50.851Z"
+          },
+          {
+            "umore": "Arrabbiato",
+            "intensita": null,
+            "dataInserimento": "2025-11-04T07:17:06.548Z"
+          }
+        ]
+      },
+      "expectedOutput": {
+        "entries": [
+          {
+            "date": "2025-11-04",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Spaventato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-04",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Felice",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Stanco",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-05",
+            "umore": "Sereno",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-06",
+            "umore": "Energico",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Sereno",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Spaventato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-07",
+            "umore": "Triste",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-08",
+            "umore": "Arrabbiato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Energico",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Neutro",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-09",
+            "umore": "Felice",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-10",
+            "umore": "Stanco",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Ansioso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Ansioso",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Ansioso",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-11",
+            "umore": "Neutro",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Spaventato",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-13",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Neutro",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Spaventato",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-14",
+            "umore": "Spaventato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Confuso",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-15",
+            "umore": "Sereno",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Confuso",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-16",
+            "umore": "Ansioso"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Neutro",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Neutro",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-17",
+            "umore": "Ansioso",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Spaventato",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Arrabbiato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Spaventato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-18",
+            "umore": "Spaventato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Ansioso",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Stanco"
+          },
+          {
+            "date": "2025-11-19",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Confuso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Spaventato",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-20",
+            "umore": "Neutro"
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Neutro",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Triste",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Triste"
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Sereno",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Energico",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Arrabbiato",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-21",
+            "umore": "Energico",
+            "intensita": 9
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Arrabbiato",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Neutro",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Stanco",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Arrabbiato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-22",
+            "umore": "Energico",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Confuso",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Energico",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-23",
+            "umore": "Felice"
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Triste",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Confuso",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-24",
+            "umore": "Confuso",
+            "intensita": 10
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Stanco",
+            "intensita": 3
+          },
+          {
+            "date": "2025-11-25",
+            "umore": "Felice",
+            "intensita": 8
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Ansioso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-26",
+            "umore": "Ansioso",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Energico",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Arrabbiato"
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Stanco",
+            "intensita": 2
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Triste",
+            "intensita": 6
+          },
+          {
+            "date": "2025-11-27",
+            "umore": "Ansioso",
+            "intensita": 4
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Spaventato",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Energico"
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Felice",
+            "intensita": 1
+          },
+          {
+            "date": "2025-11-29",
+            "umore": "Neutro",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Stanco",
+            "intensita": 5
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Spaventato"
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Ansioso",
+            "intensita": 7
+          },
+          {
+            "date": "2025-11-30",
+            "umore": "Spaventato",
+            "intensita": 4
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Stanco",
+            "intensita": 3
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Sereno"
+          },
+          {
+            "date": "2025-12-01",
+            "umore": "Triste"
+          }
+        ]
+      },
+      "expectedBehavior": {
+        "shouldSucceed": true,
+        "shouldThrow": false,
+        "largeDataset": true
+      }
+    }
+  ]
+}

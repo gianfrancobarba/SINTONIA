@@ -2,23 +2,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export interface OracleTestCase {
-    id: string;
-    description: string;
-    category: string;
-    input: any;
-    mockData: any;
-    expectedOutput: any;
-    expectedBehavior: any;
+  id: string;
+  description: string;
+  category: string;
+  input: any;
+  mockData: any;
+  expectedOutput: any;
+  expectedBehavior: any;
 }
 
 export interface Oracle {
-    metadata: {
-        version: string;
-        description: string;
-        createdAt: string;
-        author: string;
-    };
-    testCases: OracleTestCase[];
+  metadata: {
+    version: string;
+    description: string;
+    createdAt: string;
+    author: string;
+  };
+  testCases: OracleTestCase[];
 }
 
 /**
@@ -27,9 +27,13 @@ export interface Oracle {
  * @returns Oracle object
  */
 export function loadOracle(oracleName: string): Oracle {
-    const oraclePath = path.join(__dirname, '../oracles', `${oracleName}-oracle.json`);
-    const content = fs.readFileSync(oraclePath, 'utf-8');
-    return JSON.parse(content);
+  const oraclePath = path.join(
+    __dirname,
+    '../oracles',
+    `${oracleName}-oracle.json`,
+  );
+  const content = fs.readFileSync(oraclePath, 'utf-8');
+  return JSON.parse(content);
 }
 
 /**
@@ -38,8 +42,11 @@ export function loadOracle(oracleName: string): Oracle {
  * @param category Categoria da filtrare
  * @returns Array di test cases filtrati
  */
-export function filterByCategory(oracle: Oracle, category: string): OracleTestCase[] {
-    return oracle.testCases.filter(tc => tc.category === category);
+export function filterByCategory(
+  oracle: Oracle,
+  category: string,
+): OracleTestCase[] {
+  return oracle.testCases.filter((tc) => tc.category === category);
 }
 
 /**
@@ -48,8 +55,11 @@ export function filterByCategory(oracle: Oracle, category: string): OracleTestCa
  * @param id ID del test case
  * @returns Test case o undefined
  */
-export function getTestCase(oracle: Oracle, id: string): OracleTestCase | undefined {
-    return oracle.testCases.find(tc => tc.id === id);
+export function getTestCase(
+  oracle: Oracle,
+  id: string,
+): OracleTestCase | undefined {
+  return oracle.testCases.find((tc) => tc.id === id);
 }
 
 /**
@@ -58,7 +68,7 @@ export function getTestCase(oracle: Oracle, id: string): OracleTestCase | undefi
  * @returns Array di test cases di successo
  */
 export function getSuccessCases(oracle: Oracle): OracleTestCase[] {
-    return filterByCategory(oracle, 'success');
+  return filterByCategory(oracle, 'success');
 }
 
 /**
@@ -67,7 +77,7 @@ export function getSuccessCases(oracle: Oracle): OracleTestCase[] {
  * @returns Array di test cases di errore
  */
 export function getErrorCases(oracle: Oracle): OracleTestCase[] {
-    return filterByCategory(oracle, 'error');
+  return filterByCategory(oracle, 'error');
 }
 
 /**
@@ -76,5 +86,5 @@ export function getErrorCases(oracle: Oracle): OracleTestCase[] {
  * @returns Array di test cases edge-case
  */
 export function getEdgeCases(oracle: Oracle): OracleTestCase[] {
-    return filterByCategory(oracle, 'edge-case');
+  return filterByCategory(oracle, 'edge-case');
 }
