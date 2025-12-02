@@ -118,7 +118,8 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                     maxWidth: '700px',
                     borderRadius: '20px',
                     overflow: 'hidden',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+                    position: 'relative'
                 }}
             >
                 {/* Modern Header with Gradient */}

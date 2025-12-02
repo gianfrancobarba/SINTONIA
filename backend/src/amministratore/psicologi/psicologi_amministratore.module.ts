@@ -8,9 +8,23 @@ import { Creazione_psicologo_amministratoreService } from './creazione_psicologo
 
 import { Modifica_psicologo_amministratoreController } from './modifica_psicologo_amministratore.controller.js';
 import { Modifica_psicologo_amministratoreService } from './modifica_psicologo_amministratore.service.js';
+import { Eliminazione_psicologo_amministratoreController } from './eliminazione_psicologo_amministratore.controller.js';
+import { Eliminazione_psicologo_amministratoreService } from './eliminazione_psicologo_amministratore.service.js';
 
 @Module({
-    controllers: [Visualizzazione_psicologi_amministratoreController, Ricerca_psicologi_amministratoreController, Creazione_psicologo_amministratoreController, Modifica_psicologo_amministratoreController],
-    providers: [Visualizzazione_psicologi_amministratoreService, Ricerca_psicologi_amministratoreService, Creazione_psicologo_amministratoreService, Modifica_psicologo_amministratoreService],
+    controllers: [
+        Visualizzazione_psicologi_amministratoreController,
+        Ricerca_psicologi_amministratoreController,
+        Creazione_psicologo_amministratoreController,
+        Modifica_psicologo_amministratoreController,
+        Eliminazione_psicologo_amministratoreController
+    ],
+    providers: [
+        Visualizzazione_psicologi_amministratoreService,
+        Ricerca_psicologi_amministratoreService,
+        Creazione_psicologo_amministratoreService,
+        Modifica_psicologo_amministratoreService,
+        Eliminazione_psicologo_amministratoreService
+    ],
 })
 export class Psicologi_amministratoreModule { }
