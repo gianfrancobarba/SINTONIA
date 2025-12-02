@@ -100,12 +100,14 @@ const AdminPsychologistList: React.FC = () => {
             // Nessuna ricerca, mostra tutti
             setFilteredPsychologists(psychologists);
         } else {
-            // Filtra per Codice Fiscale, Nome o Cognome
-            const filtered = psychologists.filter(psy =>
-                psy.codiceFiscale.toLowerCase().includes(query) ||
-                psy.nome.toLowerCase().includes(query) ||
-                psy.cognome.toLowerCase().includes(query)
-            );
+            // Filtra per Codice Fiscale, Nome, Cognome o Nome Completo
+            const filtered = psychologists.filter(psy => {
+                const fullName = `${psy.nome} ${psy.cognome}`.toLowerCase();
+                return psy.codiceFiscale.toLowerCase().includes(query) ||
+                    psy.nome.toLowerCase().includes(query) ||
+                    psy.cognome.toLowerCase().includes(query) ||
+                    fullName.includes(query);
+            });
             setFilteredPsychologists(filtered);
         }
 
@@ -512,6 +514,16 @@ const AdminPsychologistList: React.FC = () => {
                             }
                         };
                         loadPsychologists();
+                    }}
+                    onDelete={async (codiceFiscale) => {
+                        // Refresh the list after deletion
+                        try {
+                            const data = await fetchAllPsychologists();
+                            const normalized = data.map(normalizePsychologist);
+                            setPsychologists(normalized);
+                        } catch (err) {
+                            console.error('Error reloading psychologists after deletion:', err);
+                        }
                     }}
                 />
             )}

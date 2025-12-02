@@ -3,10 +3,19 @@
  * Handles API calls to backend
  */
 
-import type { Psychologist, Questionnaire, PsychologistDashboardData } from '../types/psychologist';
+import type { Psychologist, PsychologistDashboardData } from '../types/psychologist';
 import { getCurrentUser } from './auth.service';
 
 const API_URL = 'http://localhost:3000';
+
+// Local type for deprecated mock functions
+interface Questionnaire {
+    id: string;
+    name: string;
+    author: string;
+    status: string;
+    revisionDate: string;
+}
 
 /**
  * Fetch dashboard data from backend API
@@ -265,3 +274,30 @@ export const updateProfile = async (codiceFiscale: string, data: { email: string
         throw error;
     }
 };
+
+/**
+ * Delete a psychologist (admin only)
+ * @param codiceFiscale - Codice fiscale of the psychologist to delete
+ */
+export const deletePsychologist = async (codiceFiscale: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists/${encodeURIComponent(codiceFiscale)}`, {
+            method: 'DELETE',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting psychologist:', error);
+        throw error;
+    }
+};
+
