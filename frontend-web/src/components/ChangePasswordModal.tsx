@@ -32,7 +32,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
         }
 
         if (newPassword !== confirmPassword) {
-            setError('Le nuove password non corrispondono');
+            setError('Le due password non coincidono');
             return;
         }
 
@@ -242,7 +242,12 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                             alignItems: 'center',
                             gap: '8px'
                         }}>
-                            ⚠️ {error}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            {error}
                         </div>
                     )}
 
