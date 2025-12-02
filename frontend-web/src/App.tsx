@@ -7,6 +7,7 @@ import AdminPatientList from './pages/AdminPatientList';
 import AdminPsychologistList from './pages/AdminPsychologistList';
 import AdminInvalidationList from './pages/AdminInvalidationList';
 import AdminQuestionnaireList from './pages/AdminQuestionnaireList';
+import AdminTechnicalSupport from './pages/AdminTechnicalSupport';
 import QuestionnaireManagement from './pages/QuestionnaireManagement';
 import ForumPage from './pages/ForumPage';
 import ClinicalAlerts from './pages/ClinicalAlerts';
@@ -59,6 +60,7 @@ function App() {
           <Route path="psychologists" element={<AdminPsychologistList />} />
           <Route path="questionnaires" element={<AdminQuestionnaireList />} />
           <Route path="invalidation" element={<AdminInvalidationList />} />
+          <Route path="technical-support" element={<AdminTechnicalSupport />} />
           <Route path="forum" element={<ForumPage />} />
           <Route path="personal-area" element={<AdminPersonalArea />} />
         </Route>

@@ -1,0 +1,193 @@
+/* Technical Support Page Styles */
+
+.support-page-header {
+    margin-bottom: 32px;
+}
+
+.support-page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-teal-dark);
+    margin: 0 0 8px 0;
+}
+
+.support-page-subtitle {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Support Table Container - Same as QuestionnaireTable */
+.support-table-container {
+    background: #F4FAFB;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.support-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #333;
+}
+
+.support-table thead {
+    background-color: #0D475D;
+}
+
+.support-table th {
+    padding: 16px 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.support-table tbody tr {
+    background-color: #F4FAFB;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.support-table tbody tr:hover {
+    background-color: #e8f4f5;
+}
+
+.support-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.support-table td {
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+/* Ticket ID Cell */
+.ticket-id-cell {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #0D475D;
+    font-size: 13px;
+}
+
+/* Status Badge - Same style as QuestionnaireTable */
+.ticket-status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ticket-status-aperto {
+    background-color: #FFB74D;
+    color: white;
+}
+
+.ticket-status-in-lavorazione {
+    background-color: #42A5F5;
+    color: white;
+}
+
+.ticket-status-risolto {
+    background-color: #7FB77E;
+    color: white;
+}
+
+.ticket-status-chiuso {
+    background-color: #9E9E9E;
+    color: white;
+}
+
+/* Object Cell */
+.ticket-object-cell {
+    font-weight: 500;
+    color: #333;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Date Cell */
+.ticket-date-cell {
+    color: #666;
+    font-size: 13px;
+}
+
+/* Patient/Psychologist ID Cells */
+.ticket-patient-cell,
+.ticket-psychologist-cell {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #666;
+}
+
+.ticket-psychologist-cell.no-psychologist {
+    color: #ccc;
+    font-style: italic;
+}
+
+/* Empty State - Same as QuestionnaireTable */
+.support-empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #F4FAFB;
+}
+
+.support-empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+}
+
+.support-empty-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+    margin: 0 0 8px 0;
+}
+
+.support-empty-message {
+    font-size: 14px;
+    color: #999;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+
+    .support-table th,
+    .support-table td {
+        padding: 12px 16px;
+    }
+
+    .ticket-object-cell {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .support-page-title {
+        font-size: 24px;
+    }
+
+    .support-table {
+        font-size: 13px;
+    }
+
+    .support-table th,
+    .support-table td {
+        padding: 10px 12px;
+    }
+
+    .ticket-object-cell {
+        max-width: 150px;
+    }
+}
