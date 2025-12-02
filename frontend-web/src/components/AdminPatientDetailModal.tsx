@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { User, Mail, MapPin, IdCard, Calendar, Award, Flag, UserCog, X, Save, Edit2, Loader2, Hash, Users } from 'lucide-react';
 import type { PatientData } from '../types/patient';
-import { getPatientDetails, updatePatient } from '../services/patient.service';
+import { getPatientDetails, updatePatient, updatePatientPriority } from '../services/patient.service';
 import { fetchAllPsychologists, type PsychologistOption } from '../services/psychologist.service';
 import Toast from './Toast';
 
@@ -86,12 +86,18 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
 
         setIsSaving(true);
         try {
+            // Update basic fields (email, residenza, psicologo)
             await updatePatient(patient.idPaziente, {
                 email: editedEmail,
                 residenza: editedResidenza,
                 idPsicologo: editedPsicologo,
-                idPriorita: editedPriorita,
             });
+
+            // Update priority separately if changed
+            if (editedPriorita !== patientDetails.idPriorita) {
+                await updatePatientPriority(patient.idPaziente, editedPriorita);
+            }
+
             setToast({ message: 'Paziente aggiornato con successo!', type: 'success' });
             setIsEditing(false);
             // Reload details

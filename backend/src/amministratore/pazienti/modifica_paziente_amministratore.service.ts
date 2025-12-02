@@ -14,7 +14,6 @@ export class Modifica_paziente_amministratoreService {
             email?: string;
             residenza?: string;
             idPsicologo?: string;
-            idPriorita?: string;
         }
     ) {
         // Verifica che il paziente esista
@@ -28,22 +27,11 @@ export class Modifica_paziente_amministratoreService {
             throw new NotFoundException(`Paziente con ID ${idPaziente} non trovato`);
         }
 
-        // Valida idPriorita se fornito
-        if (updates.idPriorita !== undefined) {
-            const prioritaValide = ['Urgente', 'Breve', 'Differibile', 'Programmabile'];
-            if (!prioritaValide.includes(updates.idPriorita)) {
-                throw new BadRequestException(
-                    `Priorità non valida. Valori ammessi: ${prioritaValide.join(', ')}`
-                );
-            }
-        }
-
         // Aggiorna solo i campi forniti
         const updateData: any = {};
         if (updates.email !== undefined) updateData.email = updates.email;
         if (updates.residenza !== undefined) updateData.residenza = updates.residenza;
         if (updates.idPsicologo !== undefined) updateData.idPsicologo = updates.idPsicologo;
-        if (updates.idPriorita !== undefined) updateData.idPriorita = updates.idPriorita;
 
         await db
             .update(paziente)

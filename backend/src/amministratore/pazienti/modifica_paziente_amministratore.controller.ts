@@ -32,7 +32,6 @@ export class Modifica_paziente_amministratoreController {
             email?: string;
             residenza?: string;
             idPsicologo?: string;
-            idPriorita?: string;
         }
     ) {
         return this.service.aggiornaPaziente(id, updates);
