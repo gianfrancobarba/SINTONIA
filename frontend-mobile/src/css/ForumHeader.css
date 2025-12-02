@@ -3,23 +3,24 @@
     padding: 48px 20px 30px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .forum-header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
     gap: 16px;
 }
 
 .forum-title-section {
-    flex: 1;
+    text-align: center;
 }
 
 .forum-title {
     color: white;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     margin: 0 0 4px 0;
 }
@@ -32,28 +33,30 @@
 }
 
 .add-post-button {
-    width: 50px;
-    height: 50px;
+    position: absolute;
+    right: 0;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: white;
+    background: rgba(255, 255, 255, 0.25);
     border: none;
-    color: var(--primary-dark);
+    color: white;
     font-size: 32px;
     font-weight: 300;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background 0.2s ease;
     flex-shrink: 0;
+    line-height: 1;
+    padding: 0;
 }
 
 .add-post-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.35);
 }
 
 .add-post-button:active {
-    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.45);
 }

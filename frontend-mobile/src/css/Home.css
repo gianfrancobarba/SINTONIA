@@ -1,25 +1,10 @@
 .home-page {
-    min-height: 100vh;
-    padding-bottom: 20px;
     background-color: var(--secondary-bg);
     animation: fadeIn 0.3s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .loading-screen,
 .error-screen {
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;

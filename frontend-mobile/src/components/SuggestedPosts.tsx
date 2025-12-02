@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { SuggestedPost } from '../types/home';
+import { categoryInfo } from '../services/forum.service';
 import '../css/SuggestedPosts.css';
 
 interface SuggestedPostsProps {
@@ -34,6 +35,13 @@ const SuggestedPosts: React.FC<SuggestedPostsProps> = ({ posts }) => {
         navigate(`/forum?postId=${postId}`);
     };
 
+    // Helper function to get category color
+    const getCategoryColor = (category: string): string => {
+        const categoryKey = category.toLowerCase().replace(/ /g, '_');
+        const categoryData = categoryInfo.find(c => c.id === categoryKey);
+        return categoryData?.color || '#e0f2f1'; // Default color if not found
+    };
+
     return (
         <div className="suggested-posts-section">
             <div className="section-header">
@@ -52,7 +60,10 @@ const SuggestedPosts: React.FC<SuggestedPostsProps> = ({ posts }) => {
                         className="post-card"
                         onClick={() => handlePostClick(post.id)}
                     >
-                        <div className="post-category-tag">
+                        <div
+                            className="post-category-tag"
+                            style={{ backgroundColor: getCategoryColor(post.category) }}
+                        >
                             {post.category}
                         </div>
                         <h4 className="post-title">{post.title}</h4>

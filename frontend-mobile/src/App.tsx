@@ -18,13 +18,14 @@ import Forum from './pages/Forum';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import Settings from './pages/Settings';
-import PersonalInfo from './pages/settings/PersonalInfo';
-import TechnicalSupport from './pages/settings/TechnicalSupport';
-import Badges from './pages/settings/Badges';
+import PersonalInfo from './pages/PersonalInfo.tsx';
+import TechnicalSupport from './pages/TechnicalSupport.tsx';
+import Badges from './pages/Badges.tsx';
 import Notifications from './pages/Notifications';
 import Diary from './pages/Diary';
 import NewDiaryPage from './pages/NewDiaryPage';
 import EditDiaryPage from './pages/EditDiaryPage';
+import MainLayout from './components/MainLayout';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -54,59 +55,55 @@ function App() {
           isAuthenticated() ? <Terms /> : <Navigate to="/spid-info" replace />
         } />
 
-        <Route
-          path="/home"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
+        <Route element={<MainLayout />}>
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/forum"
+            element={
+              <PrivateRoute>
+                <Forum />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <PrivateRoute>
+                <Notifications />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/diary"
+            element={
+              <PrivateRoute>
+                <Diary />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+
+        {/* Routes without BottomNavigation */}
         <Route
           path="/questionari"
           element={
             <PrivateRoute>
               <Questionari />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/compilation"
-          element={
-            <PrivateRoute>
-              <QuestionnaireCompilation />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/forum"
-          element={
-            <PrivateRoute>
-              <Forum />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/forum/create"
-          element={
-            <PrivateRoute>
-              <CreatePost />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/forum/edit/:id"
-          element={
-            <PrivateRoute>
-              <EditPost />
             </PrivateRoute>
           }
         />
@@ -118,6 +115,16 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/badges"
+          element={
+            <PrivateRoute>
+              <Badges />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Sub-pages without BottomNavigation */}
         <Route
           path="/settings/personal-info"
           element={
@@ -135,26 +142,26 @@ function App() {
           }
         />
         <Route
-          path="/settings/badges"
+          path="/compilation"
           element={
             <PrivateRoute>
-              <Badges />
+              <QuestionnaireCompilation />
             </PrivateRoute>
           }
         />
         <Route
-          path="/notifications"
+          path="/forum/create"
           element={
             <PrivateRoute>
-              <Notifications />
+              <CreatePost />
             </PrivateRoute>
           }
         />
         <Route
-          path="/diary"
+          path="/forum/edit/:id"
           element={
             <PrivateRoute>
-              <Diary />
+              <EditPost />
             </PrivateRoute>
           }
         />

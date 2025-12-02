@@ -1,58 +1,58 @@
 .notifications-page {
-    min-height: 100vh;
-    background-color: #F5F7FA;
-    padding-bottom: 100px;
+    background-color: var(--secondary-bg);
 }
 
-/* ===== Header ===== */
+/* ===== Header - Matching app style ===== */
 .notifications-header {
-    padding: 50px 20px 20px;
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
 }
 
-.notifications-back-btn {
-    background: transparent;
-    border: 2.5px solid #2C2C2C;
-    cursor: pointer;
-    padding: 0;
+.notifications-header-content {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transition: all 0.2s;
-    color: #2C2C2C;
+    position: relative;
+    gap: 16px;
 }
 
-.notifications-back-btn:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-/* ===== Title Section ===== */
 .notifications-title-section {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 20px 20px 30px;
-    justify-content: center;
+    text-align: center;
 }
 
 .notifications-title {
-    font-size: 32px;
+    color: white;
+    font-size: 28px;
     font-weight: 700;
-    color: #2C2C2C;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.notifications-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 400;
     margin: 0;
 }
 
 .notifications-badge {
-    background: #7FB99C;
+    position: absolute;
+    right: 0;
+    background: rgba(255, 255, 255, 0.25);
     color: white;
-    font-size: 14px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 12px;
-    min-width: 32px;
-    text-align: center;
+    font-size: 32px;
+    font-weight: 300;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 /* ===== Notifications List ===== */
@@ -153,6 +153,6 @@
     }
 
     .notifications-title {
-        font-size: 28px;
+        font-size: 24px;
     }
 }

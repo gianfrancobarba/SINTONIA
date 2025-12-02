@@ -1,17 +1,16 @@
 .questionari-page {
-    min-height: 100vh;
     background-color: var(--secondary-bg);
-    padding-bottom: 100px;
+    min-height: 100vh;
 }
 
 .questionari-header {
     background-color: var(--primary-dark);
     color: var(--white);
-    padding: 50px 20px 30px;
+    padding: 48px 20px 30px;
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -20,28 +19,28 @@
 }
 
 .questionari-page .back-button {
-    background: transparent;
-    border: 2px solid var(--white);
-    color: var(--white);
-    cursor: pointer;
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
     padding: 0;
 }
 
 .questionari-page .back-button img {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     filter: brightness(0) invert(1);
 }
 
 .questionari-page .back-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
 
@@ -114,6 +113,7 @@
     font-weight: 700;
     color: var(--text-dark);
     margin: 0;
+    flex: 1;
 }
 
 .descrizione {
@@ -164,6 +164,103 @@
     opacity: 1;
 }
 
+/* Category Cards */
+.category-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-card-header {
+    position: relative;
+}
+
+.category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 15px -5px rgba(0, 0, 0, 0.4);
+}
+
+.category-card:active {
+    transform: translateY(0);
+}
+
+.category-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.category-badge {
+    background-color: var(--primary-light);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    min-width: 26px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.category-last-date {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: 8px 0 0;
+}
+
+/* Category History - Accordion Content */
+.category-history {
+    margin-top: 16px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.history-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d0e4e3, transparent);
+    margin-bottom: 12px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.history-id {
+    font-weight: 600;
+    color: var(--primary-light);
+}
+
+.history-date {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
 /* Responsive design */
 @media (max-width: 480px) {
     .questionari-header h1 {
@@ -172,5 +269,10 @@
 
     .card-header h3 {
         font-size: 1.1rem;
+    }
+
+    .history-item {
+        font-size: 0.8rem;
+        padding: 6px 10px;
     }
 }

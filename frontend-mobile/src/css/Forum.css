@@ -1,7 +1,6 @@
 .forum-page {
     background-color: var(--secondary-bg);
-    min-height: 100vh;
-    padding-bottom: 140px;
+    padding-bottom: 100px;
 }
 
 .forum-content {
@@ -51,4 +50,37 @@
     font-size: 14px;
     font-weight: 400;
     opacity: 0.8;
+}
+
+.forum-fab {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(127, 185, 156, 0.15);
+    border: 2px solid #7FB99C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 150;
+    box-shadow: 0 4px 12px rgba(127, 185, 156, 0.2);
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.forum-fab img {
+    width: 30px;
+    height: 30px;
+}
+
+.forum-fab:hover {
+    transform: scale(1.05);
+    background: rgba(127, 185, 156, 0.25);
+}
+
+.forum-fab:active {
+    transform: scale(0.95);
 }

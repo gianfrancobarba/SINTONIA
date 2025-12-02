@@ -1,223 +1,120 @@
-/* Global reset to avoid unintended gaps */
-:root,
-body,
-#root {
-    margin: 0;
-    padding: 0;
-}
+/* Bottom Navigation - Modern Component-Based Design */
 
-.bottom-nav-container {
+.bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    /* ensure stretch to both edges */
-    /* Full-bleed to screen edges without 100vw issues */
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     width: 100%;
-    max-width: 500px;
-    /* Use aspect-ratio to ensure the SVG scales uniformly. 
-       This keeps the percentage-based button positions accurate on all screen sizes.
-       Ratio is 375 / 123 (from SVG viewBox) */
-    aspect-ratio: 375 / 123;
-    height: auto;
+    max-width: 430px;
     z-index: 100;
-    pointer-events: none;
-    /* Let clicks pass through container */
-    overflow: visible;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .bottom-nav-background {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    /* stretch with container */
-    height: 100%;
-    pointer-events: none;
-    /* Background is decorative; allow clicks on items above */
-    overflow: visible;
+    inset: 0;
+    background: white;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.nav-curve {
-    width: 100%;
-    height: 100%;
-}
-
-/* Inline SVG variant */
-.nav-curve-svg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-/* PNG background used for the bottombar shape */
-.nav-curve-img {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    /* fill container width */
-    height: 100%;
-    object-fit: cover;
-    /* fill horizontally exactly to edges */
-    object-position: bottom center;
-}
-
-.nav-items {
+.bottom-nav-items {
     position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 100%;
-    padding: 0 24px 22px;
-    z-index: 101;
-    pointer-events: auto;
-}
-
-/* Absolute hit areas aligned with the icon positions in BottomBar.svg (viewBox 375x123) */
-.nav-hit-areas {
-    position: absolute;
-    inset: 0;
-    z-index: 103;
-    pointer-events: none;
-    /* enable per-button only */
-}
-
-.hit-btn {
-    position: absolute;
-    width: 44px;
-    /* do not exceed icon footprint */
-    height: 44px;
-    border-radius: 50%;
-    background: transparent;
-    border: none;
-    pointer-events: auto;
-    cursor: pointer;
-    /* center by both axes */
-    transform: translate(-50%, -50%);
-    display: flex;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
+    padding: 12px 20px;
+    gap: 8px;
+    height: 80px;
+    box-sizing: border-box;
 }
 
-.hit-btn img {
-    width: 24px;
-    height: 24px;
-    /* Apply teal tint to match design */
-    filter: invert(49%) sepia(17%) saturate(743%) hue-rotate(131deg) brightness(95%) contrast(89%);
-}
-
-.hit-center img {
-    width: 32px;
-    height: 32px;
-    /* Darker teal for home */
-    filter: invert(16%) sepia(12%) saturate(2093%) hue-rotate(152deg) brightness(88%) contrast(96%);
-}
-
-/* Positions derived from SVG centers (viewBox 375x123):
-   leftmost (40,83), left (108,83), center (188,44), right (267,84), rightmost (335,88) */
-.hit-leftmost {
-    left: 10.667%;
-    top: 67.48%;
-}
-
-.hit-left {
-    left: 28.800%;
-    top: 67.48%;
-}
-
-.hit-center {
-    left: 50.133%;
-    top: 35.772%;
-    width: 64px;
-    height: 64px;
-}
-
-.hit-right {
-    left: 71.200%;
-    top: 68.293%;
-}
-
-.hit-rightmost {
-    left: 89.333%;
-    top: 71.545%;
-}
-
-/* Icon theming via inline SVG currentColor */
-.nav-icon {
-    color: #83B9C1;
-}
-
-.nav-icon--center {
-    color: #0D475D;
-}
-
+/* Navigation Item Base - Rounder corners */
 .nav-item {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 12px;
+    border-radius: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.nav-item img {
-    width: 28px;
-    height: 28px;
-    opacity: 0.7;
-    /* Teal tint approximation for external SVGs */
-    filter: invert(49%) sepia(17%) saturate(743%) hue-rotate(131deg) brightness(95%) contrast(89%);
-}
-
-.fab-container {
-    position: absolute;
-    left: 50%;
-    bottom: 78px;
-    /* Lift up so it clearly floats above the notch */
-    transform: translateX(-50%);
-    z-index: 102;
-    height: 84px;
-}
-
-.fab {
-    width: 84px;
-    height: 84px;
-    background-color: #dff2f7;
-    /* light aqua */
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
     position: relative;
 }
 
-.fab img {
-    width: 34px;
-    height: 34px;
-    /* Darker teal for active/home */
-    filter: invert(16%) sepia(12%) saturate(2093%) hue-rotate(152deg) brightness(88%) contrast(96%);
+.nav-item:focus-visible {
+    outline: 2px solid var(--primary-dark);
+    outline-offset: 2px;
 }
 
-/* Ambient halo under floating FAB */
-.fab::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    filter: blur(8px);
-    z-index: -1;
+/* Active State - Smaller zoom */
+.nav-item.active {
+    background: #e0f2f1;
+    transform: scale(1.05);
+}
+
+/* Hover Effects */
+.nav-item:hover:not(.active) {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Active Press Effect */
+.nav-item:active {
+    transform: scale(0.95);
+}
+
+/* Icon Styling - Base size 28px */
+.nav-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+    transition: all 0.3s ease;
+    /* Azzurro color filter for #88b7b5 */
+    filter: invert(72%) sepia(13%) saturate(808%) hue-rotate(130deg) brightness(92%) contrast(86%);
+}
+
+/* Active icon - Smaller size increase */
+.nav-item.active .nav-icon {
+    width: 30px;
+    height: 30px;
+    /* Dark blue color filter for #0f3e4d */
+    filter: invert(17%) sepia(28%) saturate(1247%) hue-rotate(155deg) brightness(95%) contrast(93%);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 375px) {
+    .bottom-nav-items {
+        padding: 10px 16px 18px;
+        gap: 4px;
+    }
+
+    .nav-item {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .bottom-nav-items {
+        padding: 8px 12px 16px;
+        gap: 2px;
+    }
+
+    .nav-item {
+        padding: 8px;
+    }
+}
+
+/* Accessibility - Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .nav-item,
+    .nav-icon {
+        transition: none;
+    }
 }

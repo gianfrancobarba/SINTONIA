@@ -1,156 +1,106 @@
 .settings-page {
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
-    background-color: #F5F5F5;
-    padding-bottom: 100px;
-    position: relative;
-    overflow-x: hidden;
 }
 
-/* ===== Header ===== */
+/* Header - matching NewDiaryPage style */
 .settings-header {
-    position: relative;
-    z-index: 10;
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.settings-header .header-content {
     display: flex;
     align-items: center;
-    padding: 50px 20px 20px;
-    background-color: #165A73;
+    gap: 16px;
 }
 
 .settings-back-btn {
-    background: transparent;
-    border: 2px solid white;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 12px;
-    transition: opacity 0.2s;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
 }
 
 .settings-back-btn img {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     filter: brightness(0) invert(1);
 }
 
 .settings-back-btn:hover {
-    opacity: 0.8;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.settings-back-btn:active {
+    transform: scale(0.95);
 }
 
 .settings-title {
-    font-size: 20px;
-    font-weight: 700;
     color: white;
+    font-size: 24px;
+    font-weight: 700;
     margin: 0;
+    flex: 1;
 }
 
-/* ===== Curved Background ===== */
-.settings-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: #165A73;
-    z-index: 0;
-    border-radius: 0 0 50% 50% / 0 0 25% 25%;
+/* Content */
+.settings-content {
+    flex: 1;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-/* ===== Profile Section ===== */
-.settings-profile-section {
-    position: relative;
-    z-index: 5;
-    text-align: center;
-    padding-top: 40px;
+/* Sections */
+.settings-section {
     margin-bottom: 30px;
 }
 
-.settings-avatar-circle {
-    width: 110px;
-    height: 110px;
-    margin: 0 auto 16px;
-    background: white;
-    border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-.settings-avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #E89B78 0%, #E8C578 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.settings-avatar-placeholder svg {
-    width: 70%;
-    height: 70%;
-}
-
-.settings-user-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: #2C2C2C;
-    margin: 0 0 4px 0;
-}
-
-.settings-user-email {
-    font-size: 13px;
-    color: #666;
-    margin: 0 0 2px 0;
-}
-
-.settings-user-location {
-    font-size: 13px;
-    color: #666;
-    margin: 0;
-}
-
-/* ===== Settings Sections ===== */
-.settings-section {
-    position: relative;
-    z-index: 5;
-    padding: 0 20px;
-    margin-bottom: 24px;
-    max-width: 430px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .settings-section-title {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
-    color: #2C2C2C;
-    margin: 0 0 12px 0;
+    color: #1F1F1F;
+    margin-bottom: 16px;
+    padding-left: 8px;
 }
 
-/* ===== Settings Items ===== */
+/* Items */
 .settings-item {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 18px 20px;
     background: white;
     border: none;
-    border-radius: 12px;
-    padding: 16px 18px;
-    margin-bottom: 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .settings-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .settings-item:active {
@@ -160,111 +110,65 @@
 .settings-item-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
 .settings-item-icon {
-    color: #165A73;
-    flex-shrink: 0;
+    color: var(--primary-dark);
 }
 
 .settings-item-text {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #2C2C2C;
-    text-align: left;
 }
 
 .settings-item-arrow {
-    color: #999;
-    flex-shrink: 0;
+    color: #9CA3AF;
 }
 
-/* ===== Logout Button (RED) ===== */
-.settings-item-logout {
-    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-    border: none;
-}
-
-.settings-item-logout .settings-item-icon {
-    color: white;
-}
-
+/* Logout Item */
+.settings-item-logout .settings-item-icon,
 .settings-item-logout .settings-item-text {
-    color: white;
-    font-weight: 700;
+    color: #DC2626;
 }
 
-.settings-item-logout .settings-item-arrow {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.settings-item-logout:hover {
-    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
-    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.4);
-    transform: translateY(-2px);
-}
-
-/* ===== Logout Confirmation Modal ===== */
+/* Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    animation: fadeIn 0.2s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    backdrop-filter: blur(4px);
 }
 
 .modal-content {
     background: white;
-    border-radius: 16px;
-    padding: 28px 24px;
-    max-width: 340px;
+    padding: 30px;
+    border-radius: 24px;
     width: 90%;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: slideUp 0.3s ease-out;
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .modal-title {
     font-size: 20px;
     font-weight: 700;
-    color: #2C2C2C;
+    color: #1F1F1F;
     margin: 0 0 12px 0;
-    text-align: center;
 }
 
 .modal-message {
-    font-size: 15px;
-    color: #666;
+    font-size: 16px;
+    color: #6B7280;
     margin: 0 0 24px 0;
-    text-align: center;
     line-height: 1.5;
 }
 
@@ -275,13 +179,13 @@
 
 .modal-button {
     flex: 1;
-    padding: 14px 20px;
-    font-size: 15px;
+    padding: 14px;
+    border-radius: 16px;
+    font-size: 16px;
     font-weight: 600;
-    border: none;
-    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    border: none;
+    transition: all 0.2s;
 }
 
 .modal-button-cancel {
@@ -289,41 +193,7 @@
     color: #4B5563;
 }
 
-.modal-button-cancel:hover {
-    background: #E5E7EB;
-}
-
 .modal-button-confirm {
-    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    background: #DC2626;
     color: white;
-}
-
-.modal-button-confirm:hover {
-    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-}
-
-/* ===== Loading State ===== */
-.settings-loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 16px;
-    color: #666;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 380px) {
-    .settings-item {
-        padding: 14px 16px;
-    }
-
-    .settings-item-text {
-        font-size: 13px;
-    }
-
-    .settings-user-name {
-        font-size: 18px;
-    }
 }

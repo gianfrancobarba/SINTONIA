@@ -3,6 +3,7 @@ import type { ForumPost } from '../types/forum';
 import { formatRelativeTime, categoryInfo } from '../services/forum.service';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import '../css/ForumPostCard.css';
+import EditIcon from '../assets/icons/edit-pen.svg';
 
 interface ForumPostCardProps {
     post: ForumPost;
@@ -12,7 +13,6 @@ interface ForumPostCardProps {
 }
 
 const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, onEdit, onDelete }) => {
-    const [showMenu, setShowMenu] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const category = categoryInfo.find(c => c.id === post.category);
@@ -22,11 +22,9 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
         if (onEdit) {
             onEdit(post.id);
         }
-        setShowMenu(false);
     };
 
     const handleDelete = () => {
-        setShowMenu(false);
         setShowDeleteModal(true);
     };
 
@@ -50,25 +48,26 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
                         <span className="post-timestamp">{formatRelativeTime(post.createdAt)}</span>
                     </div>
                 </div>
-                {/* Mostra il menu SOLO se è una domanda propria E NON ha risposte */}
+                {/* Mostra azioni SOLO se è una domanda propria E NON ha risposte */}
                 {isOwnPost && (!post.answers || post.answers.length === 0) && (
                     <div className="post-menu-container">
-                        <button
-                            className="menu-button"
-                            onClick={() => setShowMenu(!showMenu)}
-                            aria-label="Menu post"
-                        >
-                            ⋮
-                        </button>
-                        {showMenu && (
-                            <div className="menu-dropdown">
-                                <button onClick={handleEdit} className="menu-item edit">
-                                    Modifica
-                                </button>
-                                <button onClick={handleDelete} className="menu-item delete">
-                                    Elimina
-                                </button>
-                            </div>
+                        {onEdit && (
+                            <button
+                                className="post-action-btn edit-btn"
+                                onClick={(e) => { e.stopPropagation(); handleEdit(); }}
+                                aria-label="Modifica"
+                            >
+                                <img src={EditIcon} alt="" />
+                            </button>
+                        )}
+                        {onDelete && (
+                            <button
+                                className="post-action-btn delete-btn"
+                                onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+                                aria-label="Elimina"
+                            >
+                                ×
+                            </button>
                         )}
                     </div>
                 )}

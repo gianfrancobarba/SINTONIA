@@ -1,9 +1,9 @@
 .profile-page {
-    min-height: 100vh;
-    background-color: #F5F5F5;
-    padding-bottom: 120px;
+    background-color: var(--secondary-bg);
     position: relative;
     overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 85px;
 }
 
 /* ===== Organic Background ===== */
@@ -140,19 +140,28 @@
     border-radius: 24px;
     padding: 20px;
     box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     min-height: 180px;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 12px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.card-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    /* Make SVGs white */
 }
 
 /* ===== Badge Card ===== */
@@ -306,6 +315,12 @@
 .profile-diary-card {
     background: linear-gradient(135deg, #1A5F5F 0%, #0F3E4D 100%);
     color: white;
+    cursor: pointer;
+}
+
+.profile-diary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
 .diary-date {

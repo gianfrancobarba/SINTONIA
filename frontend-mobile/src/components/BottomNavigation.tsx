@@ -1,29 +1,60 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/BottomNavigation.css';
-import bottomBarSvg from '../assets/images/BottomBar.svg';
+
+// Import SVG icons
+import forumIcon from '../assets/icons/forum.svg';
+import diaryIcon from '../assets/icons/diary.svg';
+import homeIcon from '../assets/icons/home.svg';
+import notificationIcon from '../assets/icons/notification.svg';
+import userIcon from '../assets/icons/user.svg';
+
+interface NavItem {
+    path: string;
+    icon: string;
+    label: string;
+}
 
 const BottomNavigation: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const navItems: NavItem[] = [
+        { path: '/forum', icon: forumIcon, label: 'Forum' },
+        { path: '/diary', icon: diaryIcon, label: 'Diario' },
+        { path: '/home', icon: homeIcon, label: 'Home' },
+        { path: '/notifications', icon: notificationIcon, label: 'Notifiche' },
+        { path: '/profile', icon: userIcon, label: 'Profilo' }
+    ];
+
+    const isActive = (path: string) => location.pathname === path;
 
     return (
-        <div className="bottom-nav-container" role="navigation" aria-label="Bottom navigation">
-            <div className="bottom-nav-background">
-                <img src={bottomBarSvg} alt="" aria-hidden="true" className="nav-curve-img" />
+        <nav className="bottom-nav" role="navigation" aria-label="Navigazione principale">
+            <div className="bottom-nav-background" />
+            <div className="bottom-nav-items">
+                {navItems.map((item) => {
+                    const active = isActive(item.path);
+
+                    return (
+                        <button
+                            key={item.path}
+                            className={`nav-item ${active ? 'active' : ''}`}
+                            onClick={() => navigate(item.path)}
+                            aria-label={item.label}
+                            aria-current={active ? 'page' : undefined}
+                        >
+                            <img
+                                src={item.icon}
+                                alt={item.label}
+                                className="nav-icon"
+                            />
+                        </button>
+                    );
+                })}
             </div>
-
-            {/* Positioned buttons with explicit icons */}
-            <div className="nav-hit-areas">
-                <button className="hit-btn hit-leftmost" aria-label="Community" onClick={() => navigate('/forum')} />
-                <button className="hit-btn hit-left" aria-label="Notes" onClick={() => navigate('/diary')} />
-                <button className="hit-btn hit-center" aria-label="Home" onClick={() => navigate('/home')} />
-                <button className="hit-btn hit-right" aria-label="Notifications" onClick={() => navigate('/notifications')} />
-                <button className="hit-btn hit-rightmost" aria-label="Profile" onClick={() => navigate('/profile')} />
-            </div>
-
-
-        </div>
+        </nav>
     );
 };
 
-export default BottomNavigation;
+export default React.memo(BottomNavigation);

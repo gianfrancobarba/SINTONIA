@@ -4,7 +4,6 @@ import QuickNote from '../components/QuickNote';
 import StreakStatus from '../components/StreakStatus';
 import Calendar from '../components/Calendar';
 import SuggestedPosts from '../components/SuggestedPosts';
-import BottomNavigation from '../components/BottomNavigation';
 import InitialQuestionnairesModal from '../components/InitialQuestionnairesModal';
 import { getHomeDashboard } from '../services/home.service';
 import { checkInitialQuestionnaires } from '../services/questionari.service';
@@ -59,7 +58,6 @@ const Home: React.FC = () => {
             <StreakStatus data={data} />
             <Calendar days={data.calendarDays} />
             <SuggestedPosts posts={data.suggestedPosts} />
-            <BottomNavigation />
             <InitialQuestionnairesModal
                 isOpen={showInitialModal}
                 onClose={() => setShowInitialModal(false)}

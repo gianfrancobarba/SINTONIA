@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ArrowRight } from 'lucide-react';
-import { submitSupportRequest } from '../../services/settings.service';
-import '../../css/settings/TechnicalSupport.css';
+import LeftArrow from '../assets/icons/LeftArrow.svg';
+import { submitSupportRequest } from '../services/settings.service.ts';
+import '../css/TechnicalSupport.css';
 
 const TechnicalSupport: React.FC = () => {
     const navigate = useNavigate();
@@ -16,20 +16,9 @@ const TechnicalSupport: React.FC = () => {
         navigate('/settings');
     };
 
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitolo(e.target.value);
-        if (error) setError(null);
-    };
-
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setDescrizione(e.target.value);
-        if (error) setError(null);
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validazione client-side
         if (!titolo.trim()) {
             setError('Il titolo è obbligatorio');
             return;
@@ -49,7 +38,6 @@ const TechnicalSupport: React.FC = () => {
             });
             if (response.success) {
                 setSuccess(true);
-                // Redirect dopo 2 secondi
                 setTimeout(() => {
                     navigate('/settings');
                 }, 2000);
@@ -64,48 +52,29 @@ const TechnicalSupport: React.FC = () => {
 
     return (
         <div className="technical-support-page">
-            {/* Header */}
             <div className="technical-support-header">
-                <button className="technical-support-back-btn" onClick={handleBack} aria-label="Indietro">
-                    <ChevronLeft size={24} strokeWidth={2.5} />
-                </button>
-                <h1 className="technical-support-title">Supporto Tecnico</h1>
+                <div className="header-content">
+                    <button className="back-button" onClick={handleBack} aria-label="Indietro">
+                        <img src={LeftArrow} alt="" />
+                    </button>
+                    <h1 className="header-title">Supporto Tecnico</h1>
+                </div>
             </div>
 
-            {/* Content */}
             <div className="technical-support-content">
                 {success ? (
                     <div className="success-message">
                         <div className="success-icon">✓</div>
                         <h2>Richiesta Inviata!</h2>
-                        <p>La tua richiesta di supporto è stata inviata con successo. Verrai ricontattato al più presto.</p>
+                        <p>Il nostro team ti risponderà al più presto.</p>
                     </div>
                 ) : (
                     <form className="support-form" onSubmit={handleSubmit}>
                         <div className="form-header">
-                            <h2 className="form-title">Ticket</h2>
                             <p className="form-subtitle">
-                                Descrivi la tua problematica, un amministratore di sistema saprà aiutarti!
+                                Hai riscontrato un problema? Descrivilo qui sotto e ti aiuteremo a risolverlo.
                             </p>
                         </div>
-
-                        <input
-                            type="text"
-                            value={titolo}
-                            onChange={handleTitleChange}
-                            className="form-input-title"
-                            placeholder="Titolo della richiesta"
-                            disabled={loading}
-                        />
-
-                        <textarea
-                            value={descrizione}
-                            onChange={handleDescriptionChange}
-                            className="form-textarea-main"
-                            placeholder="Non riesco ad aprire più il mio diario. Mi dice &quot;errore generico&quot;."
-                            rows={8}
-                            disabled={loading}
-                        />
 
                         {error && (
                             <div className="error-message">
@@ -114,17 +83,39 @@ const TechnicalSupport: React.FC = () => {
                             </div>
                         )}
 
+                        <div className="form-section">
+                            <label className="form-label">Oggetto</label>
+                            <div className="title-input-container">
+                                <input
+                                    type="text"
+                                    className="title-input"
+                                    placeholder="Es. Problema con il diario"
+                                    value={titolo}
+                                    onChange={(e) => setTitolo(e.target.value)}
+                                    disabled={loading}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-section">
+                            <label className="form-label">Descrizione</label>
+                            <div className="textarea-container">
+                                <textarea
+                                    className="content-textarea"
+                                    placeholder="Descrivi il problema in dettaglio..."
+                                    value={descrizione}
+                                    onChange={(e) => setDescrizione(e.target.value)}
+                                    disabled={loading}
+                                />
+                            </div>
+                        </div>
+
                         <button
                             type="submit"
-                            className="submit-button-main"
+                            className="submit-button"
                             disabled={loading}
                         >
-                            {loading ? 'Invio in corso...' : (
-                                <>
-                                    Invia richiesta
-                                    <ArrowRight size={20} strokeWidth={2.5} />
-                                </>
-                            )}
+                            {loading ? 'Invio in corso...' : 'Invia Richiesta'}
                         </button>
                     </form>
                 )}

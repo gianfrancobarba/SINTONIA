@@ -6,6 +6,7 @@ import CategoryModal from '../components/CategoryModal';
 import type { ForumCategory, CreatePostDto } from '../types/forum';
 import '../css/CreatePost.css';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
+import Toast from '../components/Toast';
 
 const CreatePost: React.FC = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const CreatePost: React.FC = () => {
     const [category, setCategory] = useState<ForumCategory | null>(null);
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,11 +38,13 @@ const CreatePost: React.FC = () => {
                 category,
             };
             await createPost(postData);
-            navigate('/forum');
+            setShowToast(true);
+            setTimeout(() => {
+                navigate('/forum');
+            }, 2000);
         } catch (error) {
             console.error('Error creating post:', error);
             alert('Errore nella creazione del post');
-        } finally {
             setIsSubmitting(false);
         }
     };
@@ -137,6 +141,13 @@ const CreatePost: React.FC = () => {
                         setShowCategoryModal(false);
                     }}
                     onClose={() => setShowCategoryModal(false)}
+                />
+            )}
+
+            {showToast && (
+                <Toast
+                    message="Domanda pubblicata con successo!"
+                    onClose={() => setShowToast(false)}
                 />
             )}
         </div>

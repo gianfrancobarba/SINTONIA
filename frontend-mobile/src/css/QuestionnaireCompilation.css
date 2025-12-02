@@ -3,8 +3,8 @@
 .questionnaire-compilation {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     background-color: #eaf6f8;
+    min-height: 100vh;
 }
 
 .questionnaire-header {
@@ -52,9 +52,9 @@
     align-items: center;
     padding: 1rem 1.5rem 2rem;
     gap: 2rem;
-    overflow-y: auto;
-    max-height: calc(100vh - 5rem);
-    /* Account for header */
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .btn-continue {

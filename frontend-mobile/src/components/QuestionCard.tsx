@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Domanda } from '../../types/questionario';
-import '../../css/QuestionCard.css';
+import type { Domanda } from '../types/questionario.ts';
+import '../css/QuestionCard.css';
 
 interface QuestionCardProps {
     question: Domanda;

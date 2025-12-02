@@ -3,10 +3,11 @@ import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import ForumHeader from '../components/ForumHeader';
 import CategoryFilters from '../components/CategoryFilters';
 import ForumPostCard from '../components/ForumPostCard';
-import BottomNavigation from '../components/BottomNavigation';
 import { getForumPosts, deletePost } from '../services/forum.service';
 import type { ForumPost, ForumCategory } from '../types/forum';
 import '../css/Forum.css';
+import Toast from '../components/Toast';
+import NewDiaryPageIcon from '../assets/icons/NewDiaryPage.svg';
 
 const Forum: React.FC = () => {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Forum: React.FC = () => {
     const [publicQuestions, setPublicQuestions] = useState<ForumPost[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState<ForumCategory[]>([]);
+    const [showToast, setShowToast] = useState(false);
 
     useEffect(() => {
         fetchPosts();
@@ -64,6 +66,7 @@ const Forum: React.FC = () => {
     const handleDeletePost = async (id: string) => {
         try {
             await deletePost(id);
+            setShowToast(true);
             fetchPosts();
         } catch (error) {
             console.error('Error deleting post:', error);
@@ -89,7 +92,7 @@ const Forum: React.FC = () => {
 
     return (
         <div className="forum-page">
-            <ForumHeader postCount={filteredMyQuestions.length + filteredPublicQuestions.length} onAddPost={handleAddPost} />
+            <ForumHeader onAddPost={handleAddPost} />
             <CategoryFilters
                 selectedCategories={selectedCategories}
                 onCategoryChange={handleCategoryChange}
@@ -143,7 +146,21 @@ const Forum: React.FC = () => {
                     </div>
                 )}
             </div>
-            <BottomNavigation />
+
+            <button
+                className="forum-fab"
+                onClick={handleAddPost}
+                aria-label="Nuova domanda"
+            >
+                <img src={NewDiaryPageIcon} alt="" />
+            </button>
+
+            {showToast && (
+                <Toast
+                    message="Domanda eliminata con successo!"
+                    onClose={() => setShowToast(false)}
+                />
+            )}
         </div>
     );
 };

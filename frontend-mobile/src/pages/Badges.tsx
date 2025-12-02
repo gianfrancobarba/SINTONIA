@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
-import '../../css/settings/Badges.css';
+import LeftArrow from '../assets/icons/LeftArrow.svg';
+import '../css/Badges.css';
 
 interface Badge {
     nome: string;
@@ -60,13 +60,13 @@ const Badges: React.FC = () => {
     }, [navigate]);
 
     const handleBack = () => {
-        navigate('/settings');
+        navigate('/profile');
     };
 
     if (loading) {
         return (
             <div className="badges-page">
-                <div className="badges-loading">Caricamento...</div>
+                <div className="loading">Caricamento...</div>
             </div>
         );
     }
@@ -74,7 +74,7 @@ const Badges: React.FC = () => {
     if (error || !badgeData) {
         return (
             <div className="badges-page">
-                <div className="badges-error">{error || 'Dati non disponibili'}</div>
+                <div className="error">{error || 'Dati non disponibili'}</div>
             </div>
         );
     }
@@ -111,32 +111,22 @@ const Badges: React.FC = () => {
 
     return (
         <div className="badges-page">
-            {/* Header Section */}
             <div className="badges-header">
-                {/* Organic shapes in background */}
-                <div className="organic-shape organic-shape-1"></div>
-                <div className="organic-shape organic-shape-2"></div>
-                <div className="organic-shape organic-shape-3"></div>
-                <div className="organic-shape organic-shape-4"></div>
-                <div className="organic-shape organic-shape-5"></div>
-
-                <button className="badges-back-btn" onClick={handleBack} aria-label="Indietro">
-                    <ChevronLeft size={24} strokeWidth={2.5} />
-                </button>
-
-                <h1 className="badges-title">I Tuoi Badge</h1>
-
-                <div className="badges-count">
-                    <div className="badges-number">{badgeData.numeroBadge}</div>
-                    <p className="badges-subtitle">Badge ottenuti fino ad ora.</p>
+                <div className="header-content">
+                    <button className="back-button" onClick={handleBack} aria-label="Indietro">
+                        <img src={LeftArrow} alt="" />
+                    </button>
+                    <h1 className="header-title">I Tuoi Badge</h1>
                 </div>
             </div>
 
-            {/* Badge History Section */}
             <div className="badges-content">
-                <div className="badges-wave"></div>
+                <div className="badges-summary">
+                    <div className="badges-count">{badgeData.numeroBadge}</div>
+                    <p className="badges-subtitle">Badge ottenuti fino ad ora</p>
+                </div>
 
-                <div className="badges-history">
+                <div className="badges-history-card">
                     <h2 className="badges-history-title">Storico Badge</h2>
                     <div className="badges-grid">
                         {renderBadgeGrid()}

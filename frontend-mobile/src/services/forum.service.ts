@@ -3,10 +3,10 @@ import type { ForumPost, CreatePostDto, ForumCategory, CategoryInfo, UpdatePostD
 const API_BASE_URL = 'http://localhost:3000';
 
 export const categoryInfo: CategoryInfo[] = [
-    { id: 'ansia', label: 'Ansia', color: '#FB923C' },
-    { id: 'stress', label: 'Stress', color: '#FB923C' },
+    { id: 'ansia', label: 'Ansia', color: '#EAB308' },
+    { id: 'stress', label: 'Stress', color: '#D32F2F' },
     { id: 'tristezza', label: 'Tristezza', color: '#8B5CF6' },
-    { id: 'vita_di_coppia', label: 'Vita di coppia', color: '#10B981' },
+    { id: 'vita_di_coppia', label: 'Vita di coppia', color: '#EC4899' },
 ];
 
 // Helper per gestire autenticazione
@@ -37,7 +37,7 @@ const mapQuestionToPost = (question: any): ForumPost => {
         id: question.idDomanda,
         title: question.titolo,
         content: question.testo,
-        category: question.categoria as ForumCategory,
+        category: (question.categoria || '').toLowerCase().replace(/ /g, '_') as ForumCategory,
         author: 'User', // Il backend non ritorna l'autore per la privacy
         createdAt: new Date(question.dataInserimento),
         answers: question.risposte || [],

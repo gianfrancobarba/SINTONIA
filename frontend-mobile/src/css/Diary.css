@@ -1,9 +1,7 @@
 .diary-page {
     background-color: var(--secondary-bg);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-bottom: 100px;
 }
 
 /* Header - matching Home page style */
@@ -12,19 +10,19 @@
     padding: 48px 20px 30px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .diary-header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
     gap: 16px;
 }
 
 .diary-title-section {
-    flex: 1;
-    text-align: left;
+    text-align: center;
 }
 
 .diary-title {
@@ -45,6 +43,8 @@
 
 /* Add button - matching Forum header style */
 .add-diary-button {
+    position: absolute;
+    right: 0;
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -71,6 +71,20 @@
     background: rgba(255, 255, 255, 0.45);
 }
 
+/* Main Card Container */
+.diary-main-card {
+    background-color: white;
+    border-radius: 50px;
+    margin: 20px 0 80px;
+    padding: 20px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
 /* Content Area */
 .diary-content {
     flex: 1;
@@ -79,7 +93,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 40px 20px;
+    padding: 20px;
 }
 
 /* Cards Container */
@@ -157,6 +171,42 @@
 .retry-btn:hover {
     background: #1F4554;
     transform: translateY(-2px);
+}
+
+/* Floating Action Button */
+.diary-fab {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #2C5F6F;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 8px 20px rgba(44, 95, 111, 0.4);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.diary-fab img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+}
+
+.diary-fab:hover {
+    transform: scale(1.1);
+    background: #1F4554;
+    box-shadow: 0 10px 25px rgba(44, 95, 111, 0.5);
+}
+
+.diary-fab:active {
+    transform: scale(0.95);
 }
 
 /* Responsive */

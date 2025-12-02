@@ -19,10 +19,18 @@
     display: flex;
     align-items: center;
     color: var(--text-dark);
+    flex-shrink: 0;
+}
+
+.note-icon img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0);
 }
 
 .note-input {
     flex: 1;
+    min-width: 0;
     border: none;
     outline: none;
     font-family: var(--font-family);
@@ -39,7 +47,70 @@
     background: none;
     border: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    color: var(--text-dark);
-}
+
+    .quick-note-container {
+        padding: 20px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .quick-note-card {
+        background-color: var(--white);
+        border-radius: 50px;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        /* Sharp, dark, deep shadow */
+        box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.35);
+    }
+
+    .note-icon {
+        display: flex;
+        align-items: center;
+        color: var(--text-dark);
+        flex-shrink: 0;
+    }
+
+    .note-icon img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0);
+    }
+
+    .note-input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        outline: none;
+        font-family: var(--font-family);
+        font-size: 1rem;
+        color: var(--text-gray);
+    }
+
+    .note-input::placeholder {
+        color: var(--text-gray);
+        opacity: 0.8;
+    }
+
+    .edit-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: var(--text-dark);
+        flex-shrink: 0;
+    }
+
+    .edit-button img {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0);
+        opacity: 1 !important;
+    }
+
+    .edit-button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }

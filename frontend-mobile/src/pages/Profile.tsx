@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Settings, Heart, Smile, BookOpen, FileText, Clock } from 'lucide-react';
+import { Settings, Award, Smile, Clock } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
 import type { ProfileDto } from '../types/profile';
-import BottomNavigation from '../components/BottomNavigation';
 import '../css/Profile.css';
+import profileAvatar from '../assets/images/profile-avatar.png';
+import diaryIcon from '../assets/icons/diary.svg';
+import questionnaireIcon from '../assets/icons/questionnaire.svg';
 
 
 const Profile: React.FC = () => {
@@ -111,10 +113,7 @@ const Profile: React.FC = () => {
             <div className="avatar-section">
                 <div className="avatar-circle">
                     <div className="avatar-placeholder">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="35" r="18" fill="#4A5568" />
-                            <path d="M 20 80 Q 20 55 50 55 Q 80 55 80 80" fill="#4A5568" />
-                        </svg>
+                        <img src={profileAvatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                 </div>
                 <h1 className="user-name">{name}</h1>
@@ -123,9 +122,9 @@ const Profile: React.FC = () => {
             {/* Cards Grid */}
             <div className="profile-cards-grid">
                 {/* Badge Card */}
-                <div className="profile-card badge-card" onClick={() => navigate('/settings/badges')}>
+                <div className="profile-card badge-card" onClick={() => navigate('/badges')}>
                     <div className="card-header">
-                        <Heart size={20} />
+                        <Award size={24} color="white" />
                         <span>I Tuoi Badge</span>
                     </div>
                     <div className="badge-progress">
@@ -152,7 +151,7 @@ const Profile: React.FC = () => {
                 {/* Mood Card */}
                 <div className="profile-card mood-card">
                     <div className="card-header">
-                        <Smile size={20} />
+                        <Smile size={24} color="white" />
                         <span>Stato D'Animo</span>
                     </div>
                     <div className="mood-title">{mood.current}</div>
@@ -178,9 +177,9 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Diary Card */}
-                <div className="profile-card profile-diary-card">
+                <div className="profile-card profile-diary-card" onClick={() => navigate('/diary')} style={{ cursor: 'pointer' }}>
                     <div className="card-header">
-                        <BookOpen size={20} />
+                        <img src={diaryIcon} alt="Diario" className="card-icon" />
                         <span>Diario</span>
                     </div>
                     {diaryData ? (
@@ -198,7 +197,7 @@ const Profile: React.FC = () => {
                 {/* Questionnaires Card */}
                 <div className="profile-card questionnaire-card" onClick={() => navigate('/questionari')}>
                     <div className="card-header">
-                        <FileText size={20} />
+                        <img src={questionnaireIcon} alt="Questionari" className="card-icon" />
                         <span>Questionari</span>
                     </div>
                     <div className="questionnaire-time">
@@ -209,7 +208,7 @@ const Profile: React.FC = () => {
                 </div>
             </div>
 
-            <BottomNavigation />
+
         </div>
     );
 };

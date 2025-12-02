@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
-import BottomNavigation from '../components/BottomNavigation';
 import { getStoricoQuestionari } from '../services/questionari.service';
 import { startQuestionario } from '../services/questionario.service';
-import type { QuestionarioItemDto } from '../types/questionari';
+import type { QuestionarioItemDto, QuestionnaireCategory } from '../types/questionari';
 import '../css/Questionari.css';
 
 const Questionari: React.FC = () => {
@@ -14,6 +13,7 @@ const Questionari: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [startingId, setStartingId] = useState<string | null>(null);
+    const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchQuestionari = async () => {
@@ -33,20 +33,38 @@ const Questionari: React.FC = () => {
         fetchQuestionari();
     }, []);
 
+    // Group completed questionnaires by category (titolo)
+    const groupedCategories = useMemo<QuestionnaireCategory[]>(() => {
+        const categoryMap = new Map<string, QuestionarioItemDto[]>();
+
+        questionariCompletati.forEach(q => {
+            const existing = categoryMap.get(q.titolo) || [];
+            categoryMap.set(q.titolo, [...existing, q]);
+        });
+
+        return Array.from(categoryMap.entries()).map(([categoria, questionnaires]) => {
+            // Find most recent completion date
+            const dates = questionnaires
+                .map(q => q.dataCompletamento)
+                .filter((d): d is string => !!d)
+                .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+
+            return {
+                categoria,
+                count: questionnaires.length,
+                lastCompletionDate: dates[0] || '',
+                questionnaires: questionnaires.sort((a, b) => {
+                    if (!a.dataCompletamento || !b.dataCompletamento) return 0;
+                    return new Date(b.dataCompletamento).getTime() - new Date(a.dataCompletamento).getTime();
+                })
+            };
+        });
+    }, [questionariCompletati]);
+
     const handleCompilaOra = async (q: QuestionarioItemDto) => {
         try {
             setStartingId(q.id);
-            console.log('=== STARTING QUESTIONNAIRE ===');
-            console.log('Tipologia:', q.titolo);
             const questionarioData = await startQuestionario(q.titolo);
-            console.log('=== RECEIVED DATA FROM BACKEND ===');
-            console.log('Full data:', JSON.stringify(questionarioData, null, 2));
-            console.log('idQuestionario:', questionarioData.idQuestionario);
-            console.log('nomeTipologia:', questionarioData.nomeTipologia);
-            console.log('domande:', questionarioData.domande);
-            console.log('domande length:', questionarioData.domande?.length);
-            console.log('domande is array?', Array.isArray(questionarioData.domande));
-            // Navigate to static compilation route with data in state
             navigate('/compilation', { state: { questionario: questionarioData } });
         } catch (err) {
             console.error('Errore nell\'avvio del questionario:', err);
@@ -54,6 +72,19 @@ const Questionari: React.FC = () => {
         } finally {
             setStartingId(null);
         }
+    };
+
+    const toggleCategory = (categoria: string) => {
+        setExpandedCategory(expandedCategory === categoria ? null : categoria);
+    };
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('it-IT', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
     };
 
     if (loading) {
@@ -68,7 +99,6 @@ const Questionari: React.FC = () => {
                 <div className="questionari-content">
                     <p style={{ textAlign: 'center', marginTop: '50px' }}>Caricamento...</p>
                 </div>
-                <BottomNavigation />
             </div>
         );
     }
@@ -85,7 +115,6 @@ const Questionari: React.FC = () => {
                 <div className="questionari-content">
                     <p style={{ textAlign: 'center', marginTop: '50px', color: 'red' }}>{error}</p>
                 </div>
-                <BottomNavigation />
             </div>
         );
     }
@@ -128,19 +157,48 @@ const Questionari: React.FC = () => {
                     </section>
                 )}
 
-                {/* Sezione Questionari Completati */}
-                {questionariCompletati.length > 0 && (
+                {/* Sezione Questionari Completati - Raggruppati per Categoria */}
+                {groupedCategories.length > 0 && (
                     <section className="questionari-section">
                         <div className="questionari-divider">
                             <span className="divider-text">Completati</span>
                         </div>
                         <div className="questionari-list">
-                            {questionariCompletati.map((q) => (
-                                <div key={q.id} className="questionario-card completato">
-                                    <div className="card-header">
-                                        <h3>{q.titolo}</h3>
+                            {groupedCategories.map((category) => (
+                                <div
+                                    key={category.categoria}
+                                    className={`questionario-card category-card ${expandedCategory === category.categoria ? 'expanded' : ''}`}
+                                >
+                                    <div
+                                        className="category-card-header"
+                                        onClick={() => toggleCategory(category.categoria)}
+                                    >
+                                        <div className="card-header">
+                                            <h3>{category.categoria}</h3>
+                                            <span className="category-badge">{category.count}</span>
+                                        </div>
+                                        {category.lastCompletionDate && (
+                                            <p className="category-last-date">
+                                                Ultimo: {formatDate(category.lastCompletionDate)}
+                                            </p>
+                                        )}
                                     </div>
-                                    <p className="descrizione">{q.descrizione}</p>
+
+                                    {expandedCategory === category.categoria && (
+                                        <div className="category-history">
+                                            <div className="history-divider"></div>
+                                            <div className="history-list">
+                                                {category.questionnaires.map((q, index) => (
+                                                    <div key={q.id} className="history-item">
+                                                        <span className="history-id">#{category.questionnaires.length - index}</span>
+                                                        <span className="history-date">
+                                                            {q.dataCompletamento ? formatDate(q.dataCompletamento) : 'N/D'}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -154,11 +212,8 @@ const Questionari: React.FC = () => {
                     </p>
                 )}
             </div>
-
-            <BottomNavigation />
         </div>
     );
 };
 
 export default Questionari;
-

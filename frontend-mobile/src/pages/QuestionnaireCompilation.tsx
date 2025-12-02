@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
-import QuestionCard from '../components/questionnaire/QuestionCard';
-import QuestionScale from '../components/questionnaire/QuestionScale';
-import ProgressIndicator from '../components/questionnaire/ProgressIndicator';
+import QuestionCard from '../components/QuestionCard.tsx';
+import QuestionScale from '../components/QuestionScale.tsx';
+import ProgressIndicator from '../components/ProgressIndicator.tsx';
 import type { GetQuestionarioDto, Risposta } from '../types/questionario';
+import Toast from '../components/Toast';
 import '../css/QuestionnaireCompilation.css';
 
 const QuestionnaireCompilation: React.FC = () => {
@@ -16,7 +17,9 @@ const QuestionnaireCompilation: React.FC = () => {
     const [answers, setAnswers] = useState<Map<string, number>>(new Map());
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
     const [submitting, setSubmitting] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     useEffect(() => {
         console.log('=== QuestionnaireCompilation useEffect ===');
@@ -99,12 +102,15 @@ const QuestionnaireCompilation: React.FC = () => {
                 console.log('Questionario submitted successfully:', result);
                 console.log('Score ottenuto:', result.score);
 
-                // Navigate back to questionnaires list
-                navigate('/questionari');
+                console.log('Score ottenuto:', result.score);
+
+                setShowToast(true);
+                setTimeout(() => {
+                    navigate('/questionari');
+                }, 2000);
             } catch (err) {
                 console.error('Error submitting questionario:', err);
                 setError('Errore nell\'invio del questionario');
-            } finally {
                 setSubmitting(false);
             }
         } else {
@@ -172,6 +178,13 @@ const QuestionnaireCompilation: React.FC = () => {
                     {submitting ? 'Invio...' : 'Continua'}
                 </button>
             </div>
+
+            {showToast && (
+                <Toast
+                    message="Questionario inviato con successo!"
+                    onClose={() => setShowToast(false)}
+                />
+            )}
         </div>
     );
 };

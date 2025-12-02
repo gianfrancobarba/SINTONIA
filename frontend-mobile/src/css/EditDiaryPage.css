@@ -1,6 +1,5 @@
 .edit-diary-page {
     background-color: var(--secondary-bg);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -11,7 +10,7 @@
     padding: 48px 20px 30px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .edit-diary-header .header-content {
@@ -60,7 +59,8 @@
 /* Content */
 .edit-diary-content {
     flex: 1;
-    padding: 20px 20px 40px;
+    padding: 20px 20px 100px;
+    /* Added padding for fixed button */
     display: flex;
     flex-direction: column;
 }
@@ -203,39 +203,50 @@
     color: #6B7280;
 }
 
-/* Submit Button */
-.submit-button {
-    width: 100%;
-    padding: 18px;
+/* Bottone fisso in fondo */
+.publish-button-fixed {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 390px;
     background: var(--primary-dark);
     color: white;
     border: none;
     border-radius: 20px;
+    padding: 18px 24px;
     font-size: 18px;
     font-weight: 600;
     font-family: var(--font-family);
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: auto;
     box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
+    transition: all 0.2s ease;
+    z-index: 100;
 }
 
-.submit-button:hover:not(:disabled) {
-    transform: translateY(-2px);
+.publish-button-fixed:hover:not(:disabled) {
+    transform: translateX(-50%) translateY(-2px);
     box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }
 
-.submit-button:active:not(:disabled) {
-    transform: translateY(0);
+.publish-button-fixed:active:not(:disabled) {
+    transform: translateX(-50%) translateY(0);
 }
 
-.submit-button:disabled {
+.publish-button-fixed:disabled {
     background: #D1D5DB;
     cursor: not-allowed;
     box-shadow: none;
 }
 
 /* Responsive */
+@media (max-width: 430px) {
+    .publish-button-fixed {
+        width: calc(100% - 40px);
+    }
+}
+
 @media (max-width: 375px) {
     .edit-diary-header {
         padding: 40px 16px 24px;
@@ -264,7 +275,7 @@
         font-size: 16px;
     }
 
-    .submit-button {
+    .publish-button-fixed {
         padding: 16px;
         font-size: 16px;
     }

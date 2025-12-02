@@ -166,26 +166,28 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
 
     return (
         <div className="calendar-section">
-            <div className="calendar-header">
-                <button className="nav-arrow" onClick={handlePrev}>
-                    <img src={LeftArrowIcon} alt="Previous week" />
-                </button>
-                <h2>{formatWeekRange()}</h2>
-                <button className="nav-arrow" onClick={handleNext}>
-                    <img src={RightArrowIcon} alt="Next week" />
-                </button>
-            </div>
+            <div className="calendar-card">
+                <div className="calendar-header">
+                    <button className="nav-arrow" onClick={handlePrev}>
+                        <img src={LeftArrowIcon} alt="Previous week" />
+                    </button>
+                    <h2>{formatWeekRange()}</h2>
+                    <button className="nav-arrow" onClick={handleNext}>
+                        <img src={RightArrowIcon} alt="Next week" />
+                    </button>
+                </div>
 
-            <div
-                className="calendar-viewport"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-            >
-                <div className={`calendar-track ${slideDirection ? `animating-${slideDirection}` : ''}`}>
-                    {slideDirection === 'right' && renderWeek(prevWeekDays)}
-                    {renderWeek(currentWeekDays)}
-                    {slideDirection === 'left' && renderWeek(nextWeekDays)}
+                <div
+                    className="calendar-viewport"
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
+                    <div className={`calendar-track ${slideDirection ? `animating-${slideDirection}` : ''}`}>
+                        {slideDirection === 'right' && renderWeek(prevWeekDays)}
+                        {renderWeek(currentWeekDays)}
+                        {slideDirection === 'left' && renderWeek(nextWeekDays)}
+                    </div>
                 </div>
             </div>
         </div>

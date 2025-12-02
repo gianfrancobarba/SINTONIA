@@ -5,7 +5,7 @@
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
     position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .header-top {
@@ -26,7 +26,6 @@
     width: 20px;
     height: 20px;
     filter: brightness(0) invert(1);
-    /* Make SVG white */
 }
 
 .user-section {
@@ -144,6 +143,9 @@
     position: relative;
     z-index: 1;
     transition: transform 0.3s ease;
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
 }
 
 .notification-icon:hover .icon-box img {

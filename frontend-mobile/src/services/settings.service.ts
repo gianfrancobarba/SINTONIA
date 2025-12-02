@@ -85,3 +85,42 @@ export const submitSupportRequest = async (
         throw error;
     }
 };
+
+/**
+ * Aggiorna le informazioni personali del paziente (es. email)
+ * @param updates Oggetto con i campi da aggiornare
+ * @throws Error se il token è mancante o la richiesta fallisce
+ */
+export const updatePersonalInfo = async (
+    updates: { email?: string }
+): Promise<void> => {
+    try {
+        const token = localStorage.getItem('patient_token');
+        if (!token) {
+            window.location.href = '/spid-info';
+            throw new Error('Missing auth token. Redirecting to login...');
+        }
+
+        const response = await fetch(`${API_BASE_URL}/paziente/area-personale/me`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updates),
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem('patient_token');
+            window.location.href = '/spid-info';
+            throw new Error('Unauthorized. Redirecting to login...');
+        }
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error updating personal info:', error);
+        throw error;
+    }
+};

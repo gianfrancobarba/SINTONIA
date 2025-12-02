@@ -1,10 +1,13 @@
 .category-filters-container {
-    background-color: var(--secondary-bg);
-    padding: 20px 0 16px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 20px 20px 0;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.35);
 }
 
 .category-filters-header {
-    padding: 0 20px 12px;
+    margin-bottom: 12px;
 }
 
 .filters-title {
@@ -15,14 +18,13 @@
 }
 
 .category-chips-scroll {
-    overflow-x: auto;
-    padding: 0 20px;
+    overflow-x: visible;
 }
 
 .category-chips {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    min-width: min-content;
 }
 
 .category-chip {
@@ -36,7 +38,6 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;
-    flex-shrink: 0;
 }
 
 .category-chip:hover {

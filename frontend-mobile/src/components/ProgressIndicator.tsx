@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/ProgressIndicator.css';
+import '../css/ProgressIndicator.css';
 
 interface ProgressIndicatorProps {
     current: number;

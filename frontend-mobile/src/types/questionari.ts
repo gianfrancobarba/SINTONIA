@@ -6,6 +6,13 @@ export interface QuestionarioItemDto {
     dataCompletamento?: string;
 }
 
+export interface QuestionnaireCategory {
+    categoria: string;
+    count: number;
+    lastCompletionDate: string;
+    questionnaires: QuestionarioItemDto[];
+}
+
 export interface StoricoQuestionariDto {
     daCompilare: QuestionarioItemDto[];
     completati: QuestionarioItemDto[];
