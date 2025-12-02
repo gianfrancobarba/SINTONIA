@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { AlertTriangle } from 'lucide-react';
 import ClinicalAlertsTable from '../components/ClinicalAlertsTable';
 import { fetchClinicalAlerts, acceptClinicalAlert } from '../services/alert-clinici.service';
@@ -132,7 +133,7 @@ const ClinicalAlerts: React.FC = () => {
                             onAccept={handleAcceptClick}
                         />
 
-                        {confirmingAlertId && (
+                        {confirmingAlertId && createPortal(
                             <div className="alerts-overlay" role="dialog" aria-modal="true" aria-labelledby="alerts-overlay-title">
                                 <div className="alerts-overlay-backdrop" onClick={handleCancelAccept} />
                                 <div className="alerts-overlay-card" role="document">
@@ -144,7 +145,8 @@ const ClinicalAlerts: React.FC = () => {
                                         <button className="confirm-btn" onClick={handleConfirmAccept}>Conferma</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div>,
+                            document.body
                         )}
                     </div>
 
