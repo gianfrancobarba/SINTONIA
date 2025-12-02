@@ -133,8 +133,13 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
             }, 1500);
         } catch (error) {
             console.error('Failed to delete psychologist:', error);
+            // Extract error message if available, otherwise use default
+            const errorMessage = error instanceof Error
+                ? error.message
+                : 'Si è verificato un errore durante l\'eliminazione. Riprova più tardi.';
+
             setToast({
-                message: 'Si è verificato un errore durante l\'eliminazione. Riprova più tardi.',
+                message: errorMessage,
                 type: 'error'
             });
             setShowDeleteConfirm(false);

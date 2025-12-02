@@ -75,6 +75,7 @@ export const updatePatient = async (
         email?: string;
         residenza?: string;
         idPsicologo?: string;
+        idPriorita?: string;
     }
 ): Promise<any> => {
     try {

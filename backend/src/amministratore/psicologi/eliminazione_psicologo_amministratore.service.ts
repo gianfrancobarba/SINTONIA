@@ -1,12 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
-import { psicologo } from '../../drizzle/schema.js';
-import { eq } from 'drizzle-orm';
+import { psicologo, paziente } from '../../drizzle/schema.js';
+import { eq, and } from 'drizzle-orm';
 
 @Injectable()
 export class Eliminazione_psicologo_amministratoreService {
     /**
-     * Elimina definitivamente uno psicologo dal database
+     * Soft delete di uno psicologo (imposta stato = false)
+     * Impedisce l'eliminazione se ha pazienti attivi assegnati
      */
     async eliminaPsicologo(codFiscale: string) {
         // Verifica che lo psicologo esista
@@ -22,9 +23,28 @@ export class Eliminazione_psicologo_amministratoreService {
             );
         }
 
-        // Elimina lo psicologo
+        // Verifica se ha pazienti attivi assegnati
+        const pazientiAssegnati = await db
+            .select()
+            .from(paziente)
+            .where(
+                and(
+                    eq(paziente.idPsicologo, codFiscale),
+                    eq(paziente.stato, true) // solo pazienti attivi
+                )
+            )
+            .limit(1);
+
+        if (pazientiAssegnati.length > 0) {
+            throw new BadRequestException(
+                'Lo psicologo ha pazienti in carico e non può essere eliminato'
+            );
+        }
+
+        // Soft delete: imposta stato = false
         await db
-            .delete(psicologo)
+            .update(psicologo)
+            .set({ stato: false })
             .where(eq(psicologo.codFiscale, codFiscale));
 
         return {

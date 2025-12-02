@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
-import { paziente, psicologo } from '../../drizzle/schema.js';
+import { paziente, psicologo, priorita } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 
 @Injectable()
@@ -14,6 +14,7 @@ export class Modifica_paziente_amministratoreService {
             email?: string;
             residenza?: string;
             idPsicologo?: string;
+            idPriorita?: string;
         }
     ) {
         // Verifica che il paziente esista
@@ -27,11 +28,25 @@ export class Modifica_paziente_amministratoreService {
             throw new NotFoundException(`Paziente con ID ${idPaziente} non trovato`);
         }
 
+        // Se viene richiesta la modifica della priorità, verifica che esista
+        if (updates.idPriorita !== undefined) {
+            const existingPriorita = await db
+                .select()
+                .from(priorita)
+                .where(eq(priorita.nome, updates.idPriorita as any))
+                .limit(1);
+
+            if (existingPriorita.length === 0) {
+                throw new NotFoundException(`Priorità "${updates.idPriorita}" non trovata`);
+            }
+        }
+
         // Aggiorna solo i campi forniti
         const updateData: any = {};
         if (updates.email !== undefined) updateData.email = updates.email;
         if (updates.residenza !== undefined) updateData.residenza = updates.residenza;
         if (updates.idPsicologo !== undefined) updateData.idPsicologo = updates.idPsicologo;
+        if (updates.idPriorita !== undefined) updateData.idPriorita = updates.idPriorita;
 
         await db
             .update(paziente)

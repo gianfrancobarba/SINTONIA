@@ -32,7 +32,7 @@ const DeletePsychologistConfirmModal: React.FC<DeletePsychologistConfirmModalPro
                     Sei sicuro di voler eliminare lo psicologo <strong>{psychologistName}</strong>?
                 </p>
                 <p className="delete-psychologist-warning">
-                    ⚠️ Questa azione è irreversibile e rimuoverà permanentemente lo psicologo dal sistema.
+                    ⚠️ Lo psicologo verrà disattivato e spostato nella sezione "Account Inattivi".
                 </p>
                 <div className="delete-psychologist-actions">
                     <button

@@ -291,7 +291,17 @@ export const deletePsychologist = async (codiceFiscale: string): Promise<any> =>
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // Extract error message from response body
+            let errorMessage = `HTTP error! status: ${response.status}`;
+            try {
+                const errorData = await response.json();
+                if (errorData.message) {
+                    errorMessage = errorData.message;
+                }
+            } catch (jsonError) {
+                // If response is not JSON, use default error message
+            }
+            throw new Error(errorMessage);
         }
 
         return await response.json();
@@ -300,4 +310,5 @@ export const deletePsychologist = async (codiceFiscale: string): Promise<any> =>
         throw error;
     }
 };
+
 

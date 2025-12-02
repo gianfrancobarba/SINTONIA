@@ -28,7 +28,11 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
     const [editedEmail, setEditedEmail] = useState('');
     const [editedResidenza, setEditedResidenza] = useState('');
     const [editedPsicologo, setEditedPsicologo] = useState('');
+    const [editedPriorita, setEditedPriorita] = useState('');
     const [psychologistSearch, setPsychologistSearch] = useState('');
+
+    // Available priorities
+    const availablePriorities = ['Urgente', 'Breve', 'Differibile', 'Programmabile'];
 
     useEffect(() => {
         if (patient) {
@@ -60,6 +64,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
             setEditedEmail(details.email || '');
             setEditedResidenza(details.residenza || '');
             setEditedPsicologo(details.idPsicologo || '');
+            setEditedPriorita(details.idPriorita || '');
         } catch (error) {
             console.error('Error loading patient details:', error);
             alert('Errore nel caricamento dei dettagli del paziente');
@@ -77,6 +82,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                 email: editedEmail,
                 residenza: editedResidenza,
                 idPsicologo: editedPsicologo,
+                idPriorita: editedPriorita,
             });
             alert('Paziente aggiornato con successo!');
             setIsEditing(false);
@@ -100,6 +106,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
             setEditedEmail(patientDetails.email || '');
             setEditedResidenza(patientDetails.residenza || '');
             setEditedPsicologo(patientDetails.idPsicologo || '');
+            setEditedPriorita(patientDetails.idPriorita || '');
         }
         setIsEditing(false);
     };
@@ -356,7 +363,29 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                     </div>
                                     <div className="info-item">
                                         <label>Priorità:</label>
-                                        <span>{patientDetails.idPriorita || 'N/A'}</span>
+                                        {isEditing ? (
+                                            <select
+                                                value={editedPriorita}
+                                                onChange={(e) => setEditedPriorita(e.target.value)}
+                                                style={{
+                                                    padding: '6px 10px',
+                                                    border: '2px solid #7FB77E',
+                                                    borderRadius: '4px',
+                                                    fontSize: '14px',
+                                                    width: '100%',
+                                                    cursor: 'pointer',
+                                                    backgroundColor: 'white'
+                                                }}
+                                            >
+                                                {availablePriorities.map((priority) => (
+                                                    <option key={priority} value={priority}>
+                                                        {priority}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        ) : (
+                                            <span>{patientDetails.idPriorita || 'N/A'}</span>
+                                        )}
                                     </div>
                                 </div>
                             </div>
