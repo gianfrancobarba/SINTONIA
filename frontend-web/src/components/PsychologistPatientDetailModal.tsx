@@ -167,7 +167,12 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
 
     const formatDate = (dateString: string | null) => {
         if (!dateString) return 'N/A';
-        return dateString;
+        const date = new Date(dateString);
+        return date.toLocaleDateString('it-IT', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
     };
 
     return ReactDOM.createPortal(
