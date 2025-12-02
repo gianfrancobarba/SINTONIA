@@ -1,49 +1,12 @@
 /* Forum Page Styles */
 
-.forum-page-container {
-    height: 100vh;
-    background-color: #F5F5F5;
-    padding: 40px 20px;
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-.forum-grid {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 32px;
-    max-width: 1400px;
-    margin: 0 auto;
-    height: 100%;
-    overflow: hidden;
-}
-
-.forum-sidebar {
-    height: 100%;
-    /* Scroll handled by the profile component */
-}
-
-.forum-sidebar::-webkit-scrollbar {
-    display: none;
-}
-
-.forum-content {
-    height: 100%;
-    overflow: hidden;
-    /* Content panel handles scrolling now */
-    padding-right: 4px;
-    /* Prevent scrollbar from overlapping content */
-}
-
+/* Content Panel specific styles */
 .content-panel {
-    background: #f4fafb;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    height: 100%;
-    box-sizing: border-box;
+    /* Inherits base styles from AppLayout.css */
     display: flex;
     flex-direction: column;
+    height: 100%;
+    /* Ensure it fills the container */
 }
 
 /* Fixed Header Section */
@@ -319,37 +282,6 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .forum-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .forum-sidebar {
-        height: auto;
-        overflow: visible;
-        margin-bottom: 20px;
-    }
-
-    .forum-content {
-        overflow: visible;
-        height: auto;
-    }
-
-    .content-panel {
-        height: auto;
-    }
-
-    .forum-page-container {
-        height: auto;
-        min-height: 100vh;
-        overflow-y: auto;
-    }
-
-    .forum-grid {
-        height: auto;
-        overflow: visible;
-    }
-
     .forum-scroll-container {
         overflow: visible;
         flex: none;
@@ -357,10 +289,6 @@
 }
 
 @media (max-width: 768px) {
-    .forum-page-container {
-        padding: 20px 12px;
-    }
-
     .content-panel {
         padding: 20px;
         border-radius: 12px;
@@ -454,6 +382,7 @@
     background: #ef4444;
     border: none;
     color: white;
+    border-radius: 8px;
 }
 
 .confirm-delete-button:hover {

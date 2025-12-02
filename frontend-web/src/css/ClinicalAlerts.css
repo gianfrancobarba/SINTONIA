@@ -1,29 +1,5 @@
 /* Clinical Alerts Page - Styled like Questionnaire Management */
 
-.clinical-alerts-container {
-    min-height: 100vh;
-    background-color: var(--color-background);
-    padding: 20px;
-}
-
-.management-grid {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.management-sidebar {
-    position: sticky;
-    top: 20px;
-    height: fit-content;
-}
-
-.management-content {
-    min-height: 600px;
-}
-
 /* Header */
 .alerts-header {
     margin-bottom: 20px;
@@ -436,23 +412,7 @@
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-    .management-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .management-sidebar {
-        position: relative;
-        top: 0;
-    }
-}
-
 @media (max-width: 768px) {
-    .clinical-alerts-container {
-        padding: 12px;
-    }
-
     .alerts-table {
         font-size: 13px;
     }

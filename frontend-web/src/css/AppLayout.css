@@ -1,3 +1,8 @@
+/* Force scrollbar to prevent layout shift */
+html {
+    overflow-y: scroll;
+}
+
 /* App Layout Container */
 .app-layout-container {
     min-height: 100vh;
