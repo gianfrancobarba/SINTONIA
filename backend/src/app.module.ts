@@ -11,12 +11,12 @@ import { Questionari_amministratoreModule } from './amministratore/questionari/q
 import { Pazienti_amministratoreModule } from './amministratore/pazienti/pazienti_amministratore.module.js';
 import { InvalidazioneModule } from './amministratore/invalidazione/invalidazione.module.js';
 import { Psicologi_amministratoreModule } from './amministratore/psicologi/psicologi_amministratore.module.js';
+import { AdminSupportModule } from './amministratore/support-request/admin-support.module.js';
 import { UploadsModule } from './uploads/uploads.module.js';
 
 @Module({
-  imports: [AuthModule, DashboardModule, SpidAuthModule, PatientModule, PsiModule, QuestionnairesModule, Questionari_amministratoreModule, Pazienti_amministratoreModule, Psicologi_amministratoreModule, InvalidazioneModule, UploadsModule],
+  imports: [AuthModule, DashboardModule, SpidAuthModule, PatientModule, PsiModule, QuestionnairesModule, Questionari_amministratoreModule, Pazienti_amministratoreModule, Psicologi_amministratoreModule, AdminSupportModule, InvalidazioneModule, UploadsModule],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule { }
-

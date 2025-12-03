@@ -27,6 +27,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
             if (path.includes('/psychologists')) return 'psicologi';
             if (path.includes('/questionnaires')) return 'questionari';
             if (path.includes('/invalidation')) return 'invalidazione';
+            if (path.includes('/technical-support')) return 'supporto';
             if (path.includes('/forum')) return 'forum';
             if (path.includes('/personal-area')) return 'area-personale';
         }
@@ -59,6 +60,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
                 break;
             case 'invalidazione':
                 navigate(`${basePath}/invalidation`);
+                break;
+            case 'supporto':
+                navigate(`${basePath}/technical-support`);
                 break;
             default:
                 navigate(basePath);
