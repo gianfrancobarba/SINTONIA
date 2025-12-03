@@ -1,35 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import AppLayout from './components/AppLayout';
+import EmptyState from './components/EmptyState';
+import PsychologistPatientList from './pages/PsychologistPatientList';
+import AdminPatientList from './pages/AdminPatientList';
+import AdminPsychologistList from './pages/AdminPsychologistList';
+import AdminInvalidationList from './pages/AdminInvalidationList';
+import AdminQuestionnaireList from './pages/AdminQuestionnaireList';
+import AdminTechnicalSupport from './pages/AdminTechnicalSupport';
+import QuestionnaireManagement from './pages/QuestionnaireManagement';
+import ForumPage from './pages/ForumPage';
+import ClinicalAlerts from './pages/ClinicalAlerts';
+import PsychologistTechnicalSupport from './pages/PsychologistTechnicalSupport';
+import PsychologistPersonalArea from './components/PsychologistPersonalArea';
+import AdminPersonalArea from './components/AdminPersonalArea';
+import SpidCallback from './pages/SpidCallback';
+import { getCurrentUser } from './services/auth.service';
+
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const user = getCurrentUser();
+  return user ? children : <Navigate to="/login" />;
+};
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        {/* Login page */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/spid-callback" element={<SpidCallback />} />
+
+        {/* Psychologist Dashboard with nested routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <AppLayout role="psychologist" />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<EmptyState />} />
+          <Route path="patients" element={<PsychologistPatientList />} />
+          <Route path="questionnaires" element={<QuestionnaireManagement />} />
+          <Route path="forum" element={<ForumPage />} />
+          <Route path="clinical-alerts" element={<ClinicalAlerts />} />
+          <Route path="technical-support" element={<PsychologistTechnicalSupport />} />
+          <Route path="personal-area" element={<PsychologistPersonalArea onProfileUpdate={() => { }} />} />
+        </Route>
+
+        {/* Admin Dashboard with nested routes */}
+        <Route
+          path="/admin-dashboard"
+          element={
+            <PrivateRoute>
+              <AppLayout role="admin" />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<EmptyState />} />
+          <Route path="patients" element={<AdminPatientList />} />
+          <Route path="psychologists" element={<AdminPsychologistList />} />
+          <Route path="questionnaires" element={<AdminQuestionnaireList />} />
+          <Route path="invalidation" element={<AdminInvalidationList />} />
+          <Route path="technical-support" element={<AdminTechnicalSupport />} />
+          <Route path="forum" element={<ForumPage />} />
+          <Route path="personal-area" element={<AdminPersonalArea />} />
+        </Route>
+
+        {/* Legacy routes - redirect to new structure */}
+        <Route path="/questionnaires" element={<Navigate to="/dashboard/questionnaires" replace />} />
+        <Route path="/forum" element={<Navigate to="/dashboard/forum" replace />} />
+        <Route path="/clinical-alerts" element={<Navigate to="/dashboard/clinical-alerts" replace />} />
+
+        {/* Default route */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
+

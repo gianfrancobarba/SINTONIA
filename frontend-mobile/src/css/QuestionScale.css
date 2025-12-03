@@ -1,0 +1,105 @@
+/* Question Scale Component Styles */
+
+.question-scale {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+    margin-top: -2rem;
+}
+
+/* Label dinamica che appare al centro quando un valore è selezionato */
+.scale-selected-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: center;
+    padding: 0 1rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scale-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    position: relative;
+    width: 100%;
+    touch-action: pan-y;
+    /* Allow vertical scrolling but enable horizontal drag */
+    user-select: none;
+    /* Prevent text selection during drag */
+}
+
+.scale-point {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: #d4e6e6;
+    border: 3px solid #d4e6e6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.scale-point.selected {
+    background-color: #0D475D;
+    border-color: #0D475D;
+}
+
+.scale-point-inner {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #ffffff;
+}
+
+.scale-point:hover {
+    transform: scale(1.1);
+}
+
+.scale-line {
+    flex: 1;
+    height: 4px;
+    background-color: #d4e6e6;
+    margin: 0 -0.25rem;
+    transition: background-color 0.2s ease;
+}
+
+.scale-line.selected {
+    background-color: #0D475D;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .question-scale {
+        gap: 1rem;
+    }
+
+    .scale-selected-label {
+        font-size: 1.25rem;
+    }
+
+    .scale-point {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .scale-point {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

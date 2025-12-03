@@ -1,0 +1,149 @@
+.badges-page {
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header - matching NewDiaryPage style */
+.badges-header {
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.badges-header .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.badges-header .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.badges-header .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.badges-header .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.badges-header .back-button:active {
+    transform: scale(0.95);
+}
+
+.header-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    flex: 1;
+}
+
+/* Content */
+.badges-content {
+    flex: 1;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Summary Section */
+.badges-summary {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.badges-count {
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.badges-subtitle {
+    font-size: 16px;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+/* History Card */
+.badges-history-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #E5E5E5;
+}
+
+.badges-history-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 20px 0;
+}
+
+/* Grid */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    justify-items: center;
+}
+
+.badge-circle {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.badge-circle:hover {
+    transform: scale(1.1);
+}
+
+/* Loading & Error */
+.loading,
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 16px;
+    color: #666;
+}
+
+.error {
+    color: #DC2626;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+    .badges-grid {
+        gap: 8px;
+    }
+}

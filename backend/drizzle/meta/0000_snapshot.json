@@ -1,5 +1,5 @@
 {
-  "id": "fc51804a-1d8d-43e9-8b0d-af49dc8215f1",
+  "id": "29dbff5e-ae18-42f1-ba88-cc4a9aa45895",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -400,7 +400,7 @@
         },
         "data_nascita": {
           "name": "data_nascita",
-          "type": "timestamp",
+          "type": "date",
           "primaryKey": false,
           "notNull": true
         },
@@ -438,7 +438,7 @@
         },
         "data_ingresso": {
           "name": "data_ingresso",
-          "type": "timestamp",
+          "type": "date",
           "primaryKey": false,
           "notNull": true
         },
@@ -583,12 +583,34 @@
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'$2b$10$EpIxT98hP7v.q.Z6.Z6.Z6.Z6.Z6.Z6.Z6.Z6.Z6.Z6.Z6.Z6'"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'temp@temp.com'"
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "psicologo_email_unique": {
+          "name": "psicologo_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -627,7 +649,7 @@
           "name": "data_compilazione",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
         "revisionato": {

@@ -1,0 +1,118 @@
+/* Force scrollbar to prevent layout shift */
+html {
+    overflow-y: scroll;
+}
+
+/* App Layout Container */
+.app-layout-container {
+    min-height: 100vh;
+    background-color: #F5F5F5;
+    box-sizing: border-box;
+}
+
+/* Grid Layout: Fixed Sidebar + Content */
+.app-layout-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* Fixed Sidebar - Isolated rendering to prevent movement */
+.app-layout-sidebar {
+    position: sticky;
+    top: 40px;
+    align-self: start;
+    height: fit-content;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Isolate sidebar from content animations */
+    transform: translateZ(0);
+    will-change: auto;
+    /* Removed contain: layout style to avoid stacking context issues */
+}
+
+/* Hide scrollbar but keep functionality */
+.app-layout-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.app-layout-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.app-layout-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.app-layout-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Dynamic Content Area */
+.app-layout-content {
+    width: 100%;
+    min-height: 600px;
+    /* Removed contain: layout to fix modal positioning */
+}
+
+/* Content Panel - Global Styles for all pages */
+.content-panel {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    /* Apply animation only to opacity, not transform */
+    animation: contentFadeIn 0.2s ease-out forwards;
+}
+
+/* Fade-in animation - only opacity to avoid layout shift */
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .app-layout-grid {
+        padding: 20px 12px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .app-layout-sidebar {
+        position: static;
+        max-height: none;
+        overflow: visible;
+        transform: none;
+        contain: none;
+    }
+
+    .app-layout-content {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-layout-grid {
+        padding: 16px 8px;
+        gap: 16px;
+    }
+
+    .content-panel {
+        padding: 20px;
+        border-radius: 12px;
+    }
+}

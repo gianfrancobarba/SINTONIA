@@ -1,0 +1,1 @@
+ALTER TABLE "paziente" ALTER COLUMN "id_psicologo" DROP NOT NULL;

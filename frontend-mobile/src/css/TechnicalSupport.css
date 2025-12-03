@@ -1,0 +1,243 @@
+.technical-support-page {
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header - matching NewDiaryPage style */
+.technical-support-header {
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.technical-support-header .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.technical-support-header .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.technical-support-header .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.technical-support-header .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.technical-support-header .back-button:active {
+    transform: scale(0.95);
+}
+
+.header-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    flex: 1;
+}
+
+/* Content */
+.technical-support-content {
+    flex: 1;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.form-subtitle {
+    font-size: 16px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Form Section */
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin-bottom: 12px;
+}
+
+/* Input Container matching NewDiaryPage */
+.title-input-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #E5E5E5;
+    border-radius: 16px;
+    padding: 14px 20px;
+    transition: all 0.2s ease;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.title-input-container:focus-within {
+    border-color: #2C5F6F;
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.title-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #1F1F1F;
+    background: transparent;
+    font-weight: 600;
+}
+
+/* Textarea Container matching NewDiaryPage */
+.textarea-container {
+    background: white;
+    border: 2px solid #E5E5E5;
+    border-radius: 24px;
+    padding: 24px;
+    transition: all 0.2s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.textarea-container:focus-within {
+    border-color: #2C5F6F;
+    box-shadow:
+        0 0 0 3px rgba(44, 95, 111, 0.1),
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.content-textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1F1F1F;
+    line-height: 1.6;
+    resize: none;
+    background: transparent;
+    font-family: inherit;
+}
+
+/* Submit Button matching NewDiaryPage */
+.submit-button {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary-dark);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
+}
+
+.submit-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
+}
+
+.submit-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submit-button:disabled {
+    background: #D1D5DB;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Messages */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #FEE2E2;
+    border-left: 4px solid #DC2626;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #991B1B;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.success-message {
+    background: white;
+    border-radius: 24px;
+    padding: 48px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin-top: 40px;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: white;
+    font-weight: bold;
+}
+
+.success-message h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C2C2C;
+    margin: 0 0 12px 0;
+}

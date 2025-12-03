@@ -1,0 +1,278 @@
+.questionari-page {
+    background-color: var(--secondary-bg);
+    min-height: 100vh;
+}
+
+.questionari-header {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 48px 20px 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.questionari-page .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.questionari-page .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.questionari-page .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.questionari-page .back-button:active {
+    transform: scale(0.95);
+}
+
+.questionari-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.questionari-content {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.questionari-section {
+    margin-bottom: 30px;
+}
+
+.questionari-divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0 20px;
+    text-align: center;
+}
+
+.questionari-divider::before,
+.questionari-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #d0e4e3;
+}
+
+.questionari-divider .divider-text {
+    padding: 0 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.questionari-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.questionario-card {
+    background-color: var(--white);
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+    flex: 1;
+}
+
+.descrizione {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.card-footer {
+    margin-top: 15px;
+}
+
+.compila-button {
+    background-color: #4a9d6f;
+    color: var(--white);
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: none;
+    font-family: var(--font-family);
+    box-shadow: 0 4px 10px rgba(74, 157, 111, 0.3);
+}
+
+.compila-button:hover {
+    opacity: 0.95;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(74, 157, 111, 0.4);
+}
+
+.compila-button:active {
+    opacity: 0.8;
+}
+
+.data-completamento {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    font-weight: 500;
+}
+
+.questionario-card.completato {
+    opacity: 1;
+}
+
+/* Category Cards */
+.category-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-card-header {
+    position: relative;
+}
+
+.category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 15px -5px rgba(0, 0, 0, 0.4);
+}
+
+.category-card:active {
+    transform: translateY(0);
+}
+
+.category-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.category-badge {
+    background-color: var(--primary-light);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    min-width: 26px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.category-last-date {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: 8px 0 0;
+}
+
+/* Category History - Accordion Content */
+.category-history {
+    margin-top: 16px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.history-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d0e4e3, transparent);
+    margin-bottom: 12px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.history-id {
+    font-weight: 600;
+    color: var(--primary-light);
+}
+
+.history-date {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .questionari-header h1 {
+        font-size: 1.25rem;
+    }
+
+    .card-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .history-item {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}

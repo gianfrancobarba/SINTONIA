@@ -1,0 +1,1270 @@
+{
+  "id": "51b29d48-eb3b-428d-b45d-ad95c3b9a356",
+  "prevId": "52c766a4-3fb7-43d0-9470-5b20c415cd38",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.acquisizione_badge": {
+      "name": "acquisizione_badge",
+      "schema": "",
+      "columns": {
+        "data_acquisizione": {
+          "name": "data_acquisizione",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nome_badge": {
+          "name": "nome_badge",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "acquisizione_badge_id_paziente_paziente_id_paziente_fk": {
+          "name": "acquisizione_badge_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "acquisizione_badge",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "acquisizione_badge_nome_badge_badge_nome_fk": {
+          "name": "acquisizione_badge_nome_badge_badge_nome_fk",
+          "tableFrom": "acquisizione_badge",
+          "tableTo": "badge",
+          "columnsFrom": [
+            "nome_badge"
+          ],
+          "columnsTo": [
+            "nome"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "acquisizione_badge_id_paziente_nome_badge_data_acquisizione_pk": {
+          "name": "acquisizione_badge_id_paziente_nome_badge_data_acquisizione_pk",
+          "columns": [
+            "id_paziente",
+            "nome_badge",
+            "data_acquisizione"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.alert_clinico": {
+      "name": "alert_clinico",
+      "schema": "",
+      "columns": {
+        "id_alert": {
+          "name": "id_alert",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "data_alert": {
+          "name": "data_alert",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "accettato": {
+          "name": "accettato",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_psicologo": {
+          "name": "id_psicologo",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "alert_clinico_id_paziente_paziente_id_paziente_fk": {
+          "name": "alert_clinico_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "alert_clinico",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "alert_clinico_id_psicologo_psicologo_cod_fiscale_fk": {
+          "name": "alert_clinico_id_psicologo_psicologo_cod_fiscale_fk",
+          "tableFrom": "alert_clinico",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.amministratore": {
+      "name": "amministratore",
+      "schema": "",
+      "columns": {
+        "email": {
+          "name": "email",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nome": {
+          "name": "nome",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cognome": {
+          "name": "cognome",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pw": {
+          "name": "pw",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.badge": {
+      "name": "badge",
+      "schema": "",
+      "columns": {
+        "nome": {
+          "name": "nome",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "descrizione": {
+          "name": "descrizione",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "immagine_badge": {
+          "name": "immagine_badge",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.domanda_forum": {
+      "name": "domanda_forum",
+      "schema": "",
+      "columns": {
+        "id_domanda": {
+          "name": "id_domanda",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "titolo": {
+          "name": "titolo",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "testo": {
+          "name": "testo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "categoria": {
+          "name": "categoria",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_inserimento": {
+          "name": "data_inserimento",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "domanda_forum_id_paziente_paziente_id_paziente_fk": {
+          "name": "domanda_forum_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "domanda_forum",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.notifica": {
+      "name": "notifica",
+      "schema": "",
+      "columns": {
+        "id_notifica": {
+          "name": "id_notifica",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "titolo": {
+          "name": "titolo",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipologia": {
+          "name": "tipologia",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "descrizione": {
+          "name": "descrizione",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_invio": {
+          "name": "data_invio",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "letto": {
+          "name": "letto",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_psicologo": {
+          "name": "id_psicologo",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_amministratore": {
+          "name": "id_amministratore",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "notifica_id_paziente_paziente_id_paziente_fk": {
+          "name": "notifica_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "notifica",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "notifica_id_psicologo_psicologo_cod_fiscale_fk": {
+          "name": "notifica_id_psicologo_psicologo_cod_fiscale_fk",
+          "tableFrom": "notifica",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "notifica_id_amministratore_amministratore_email_fk": {
+          "name": "notifica_id_amministratore_amministratore_email_fk",
+          "tableFrom": "notifica",
+          "tableTo": "amministratore",
+          "columnsFrom": [
+            "id_amministratore"
+          ],
+          "columnsTo": [
+            "email"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "check_destinatario_notifica": {
+          "name": "check_destinatario_notifica",
+          "value": "\"notifica\".\"id_paziente\" IS NOT NULL OR \"notifica\".\"id_psicologo\" IS NOT NULL OR \"notifica\".\"id_amministratore\" IS NOT NULL"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.pagina_diario": {
+      "name": "pagina_diario",
+      "schema": "",
+      "columns": {
+        "id_pagina_diario": {
+          "name": "id_pagina_diario",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "titolo": {
+          "name": "titolo",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "testo": {
+          "name": "testo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_inserimento": {
+          "name": "data_inserimento",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pagina_diario_id_paziente_paziente_id_paziente_fk": {
+          "name": "pagina_diario_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "pagina_diario",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.paziente": {
+      "name": "paziente",
+      "schema": "",
+      "columns": {
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nome": {
+          "name": "nome",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cognome": {
+          "name": "cognome",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_nascita": {
+          "name": "data_nascita",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "terms": {
+          "name": "terms",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cod_fiscale": {
+          "name": "cod_fiscale",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "residenza": {
+          "name": "residenza",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sesso": {
+          "name": "sesso",
+          "type": "tipo_sesso",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_ingresso": {
+          "name": "data_ingresso",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "score": {
+          "name": "score",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "stato": {
+          "name": "stato",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "id_priorita": {
+          "name": "id_priorita",
+          "type": "nome_priorita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_psicologo": {
+          "name": "id_psicologo",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "paziente_id_priorita_priorita_nome_fk": {
+          "name": "paziente_id_priorita_priorita_nome_fk",
+          "tableFrom": "paziente",
+          "tableTo": "priorita",
+          "columnsFrom": [
+            "id_priorita"
+          ],
+          "columnsTo": [
+            "nome"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "paziente_id_psicologo_psicologo_cod_fiscale_fk": {
+          "name": "paziente_id_psicologo_psicologo_cod_fiscale_fk",
+          "tableFrom": "paziente",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "paziente_cod_fiscale_unique": {
+          "name": "paziente_cod_fiscale_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "cod_fiscale"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.priorita": {
+      "name": "priorita",
+      "schema": "",
+      "columns": {
+        "nome": {
+          "name": "nome",
+          "type": "nome_priorita",
+          "typeSchema": "public",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "punteggio_inizio": {
+          "name": "punteggio_inizio",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "punteggio_fine": {
+          "name": "punteggio_fine",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "finestra_temporale": {
+          "name": "finestra_temporale",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.psicologo": {
+      "name": "psicologo",
+      "schema": "",
+      "columns": {
+        "cod_fiscale": {
+          "name": "cod_fiscale",
+          "type": "char(16)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nome": {
+          "name": "nome",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cognome": {
+          "name": "cognome",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "asl_appartenenza": {
+          "name": "asl_appartenenza",
+          "type": "char(6)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stato": {
+          "name": "stato",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "immagine_profilo": {
+          "name": "immagine_profilo",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.questionario": {
+      "name": "questionario",
+      "schema": "",
+      "columns": {
+        "id_questionario": {
+          "name": "id_questionario",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "score": {
+          "name": "score",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risposte": {
+          "name": "risposte",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cambiamento": {
+          "name": "cambiamento",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "data_compilazione": {
+          "name": "data_compilazione",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "revisionato": {
+          "name": "revisionato",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "invalidato": {
+          "name": "invalidato",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "note_invalidazione": {
+          "name": "note_invalidazione",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_invalidazione": {
+          "name": "data_invalidazione",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nome_tipologia": {
+          "name": "nome_tipologia",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_psicologo_revisione": {
+          "name": "id_psicologo_revisione",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_psicologo_richiedente": {
+          "name": "id_psicologo_richiedente",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_amministratore_conferma": {
+          "name": "id_amministratore_conferma",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "questionario_id_paziente_paziente_id_paziente_fk": {
+          "name": "questionario_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "questionario",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "questionario_nome_tipologia_tipologia_questionario_nome_fk": {
+          "name": "questionario_nome_tipologia_tipologia_questionario_nome_fk",
+          "tableFrom": "questionario",
+          "tableTo": "tipologia_questionario",
+          "columnsFrom": [
+            "nome_tipologia"
+          ],
+          "columnsTo": [
+            "nome"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "questionario_id_psicologo_revisione_psicologo_cod_fiscale_fk": {
+          "name": "questionario_id_psicologo_revisione_psicologo_cod_fiscale_fk",
+          "tableFrom": "questionario",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo_revisione"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "questionario_id_psicologo_richiedente_psicologo_cod_fiscale_fk": {
+          "name": "questionario_id_psicologo_richiedente_psicologo_cod_fiscale_fk",
+          "tableFrom": "questionario",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo_richiedente"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "questionario_id_amministratore_conferma_amministratore_email_fk": {
+          "name": "questionario_id_amministratore_conferma_amministratore_email_fk",
+          "tableFrom": "questionario",
+          "tableTo": "amministratore",
+          "columnsFrom": [
+            "id_amministratore_conferma"
+          ],
+          "columnsTo": [
+            "email"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.report": {
+      "name": "report",
+      "schema": "",
+      "columns": {
+        "id_report": {
+          "name": "id_report",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "data_report": {
+          "name": "data_report",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "contenuto": {
+          "name": "contenuto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_psicologo": {
+          "name": "id_psicologo",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "report_id_paziente_paziente_id_paziente_fk": {
+          "name": "report_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "report",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "report_id_psicologo_psicologo_cod_fiscale_fk": {
+          "name": "report_id_psicologo_psicologo_cod_fiscale_fk",
+          "tableFrom": "report",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.risposta_forum": {
+      "name": "risposta_forum",
+      "schema": "",
+      "columns": {
+        "id_risposta": {
+          "name": "id_risposta",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "data_risposta": {
+          "name": "data_risposta",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "testo": {
+          "name": "testo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_psicologo": {
+          "name": "id_psicologo",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_domanda": {
+          "name": "id_domanda",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "risposta_forum_id_psicologo_psicologo_cod_fiscale_fk": {
+          "name": "risposta_forum_id_psicologo_psicologo_cod_fiscale_fk",
+          "tableFrom": "risposta_forum",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "risposta_forum_id_domanda_domanda_forum_id_domanda_fk": {
+          "name": "risposta_forum_id_domanda_domanda_forum_id_domanda_fk",
+          "tableFrom": "risposta_forum",
+          "tableTo": "domanda_forum",
+          "columnsFrom": [
+            "id_domanda"
+          ],
+          "columnsTo": [
+            "id_domanda"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.stato_animo": {
+      "name": "stato_animo",
+      "schema": "",
+      "columns": {
+        "id_stato_animo": {
+          "name": "id_stato_animo",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "umore": {
+          "name": "umore",
+          "type": "umore",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "intensita": {
+          "name": "intensita",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "note": {
+          "name": "note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_inserimento": {
+          "name": "data_inserimento",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "stato_animo_id_paziente_paziente_id_paziente_fk": {
+          "name": "stato_animo_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "stato_animo",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ticket": {
+      "name": "ticket",
+      "schema": "",
+      "columns": {
+        "id_ticket": {
+          "name": "id_ticket",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "risolto": {
+          "name": "risolto",
+          "type": "stato_ticket",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Aperto'"
+        },
+        "oggetto": {
+          "name": "oggetto",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descrizione": {
+          "name": "descrizione",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_invio": {
+          "name": "data_invio",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "id_amministratore": {
+          "name": "id_amministratore",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_paziente": {
+          "name": "id_paziente",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_psicologo": {
+          "name": "id_psicologo",
+          "type": "char(16)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ticket_id_amministratore_amministratore_email_fk": {
+          "name": "ticket_id_amministratore_amministratore_email_fk",
+          "tableFrom": "ticket",
+          "tableTo": "amministratore",
+          "columnsFrom": [
+            "id_amministratore"
+          ],
+          "columnsTo": [
+            "email"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "ticket_id_paziente_paziente_id_paziente_fk": {
+          "name": "ticket_id_paziente_paziente_id_paziente_fk",
+          "tableFrom": "ticket",
+          "tableTo": "paziente",
+          "columnsFrom": [
+            "id_paziente"
+          ],
+          "columnsTo": [
+            "id_paziente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "ticket_id_psicologo_psicologo_cod_fiscale_fk": {
+          "name": "ticket_id_psicologo_psicologo_cod_fiscale_fk",
+          "tableFrom": "ticket",
+          "tableTo": "psicologo",
+          "columnsFrom": [
+            "id_psicologo"
+          ],
+          "columnsTo": [
+            "cod_fiscale"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tipologia_questionario": {
+      "name": "tipologia_questionario",
+      "schema": "",
+      "columns": {
+        "nome": {
+          "name": "nome",
+          "type": "varchar(32)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "domande": {
+          "name": "domande",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "punteggio": {
+          "name": "punteggio",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "campi": {
+          "name": "campi",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tempo_somministrazione": {
+          "name": "tempo_somministrazione",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.nome_priorita": {
+      "name": "nome_priorita",
+      "schema": "public",
+      "values": [
+        "Urgente",
+        "Breve",
+        "Differibile",
+        "Programmabile"
+      ]
+    },
+    "public.stato_ticket": {
+      "name": "stato_ticket",
+      "schema": "public",
+      "values": [
+        "Aperto",
+        "Chiuso",
+        "In elaborazione"
+      ]
+    },
+    "public.tipo_sesso": {
+      "name": "tipo_sesso",
+      "schema": "public",
+      "values": [
+        "M",
+        "F",
+        "Altro"
+      ]
+    },
+    "public.umore": {
+      "name": "umore",
+      "schema": "public",
+      "values": [
+        "Felice",
+        "Sereno",
+        "Energico",
+        "Neutro",
+        "Stanco",
+        "Triste",
+        "Ansioso",
+        "Arrabbiato",
+        "Spaventato",
+        "Confuso"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

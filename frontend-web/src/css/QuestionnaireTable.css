@@ -1,0 +1,153 @@
+.questionnaire-table-container {
+    background: #F4FAFB;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.questionnaire-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #333;
+}
+
+.questionnaire-table thead {
+    background-color: #0D475D;
+}
+
+.questionnaire-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.questionnaire-table tbody tr {
+    background-color: #F4FAFB;
+    transition: background-color 0.2s ease, border 0.2s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-bottom: 1px solid #ddd;
+}
+
+.questionnaire-table tbody tr:hover {
+    background-color: #e8f4f5;
+}
+
+/* Selected row state */
+.questionnaire-table tbody tr.selected {
+    background-color: #d4e9eb;
+    border: 2px solid #83B9C1;
+    box-shadow: inset 0 0 8px rgba(131, 185, 193, 0.3);
+}
+
+.questionnaire-table tbody tr.selected:hover {
+    background-color: #c8e3e6;
+}
+
+.questionnaire-table td {
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.questionnaire-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-compilato {
+    background-color: #FFB74D;
+    color: #ffffff;
+}
+
+.status-revisionato {
+    background-color: #7FB77E;
+    color: #ffffff;
+}
+
+.status-invalidato {
+    background-color: #E57373;
+    color: #ffffff;
+}
+
+/* Actions Cell */
+.actions-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.action-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.view-btn {
+    background-color: #0D475D;
+    color: #ffffff;
+}
+
+.view-btn:hover {
+    background-color: #83B9C1;
+    transform: scale(1.1);
+}
+
+.review-btn {
+    background-color: #0D475D;
+    color: #ffffff;
+}
+
+.review-btn:hover {
+    background-color: #7FB77E;
+    transform: scale(1.1);
+}
+
+.invalidate-btn {
+    background-color: #FFB74D;
+    color: #ffffff;
+}
+
+.invalidate-btn:hover {
+    background-color: #FF9800;
+    transform: scale(1.1);
+}
+
+/* Empty State */
+.empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #F4FAFB;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+}

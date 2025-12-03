@@ -1,0 +1,23 @@
+.splash-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #E2FAFE;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.splash-container.fade-out {
+    opacity: 0;
+}
+
+.logo {
+    text-align: center;
+}
+
+.splash-logo-img {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}

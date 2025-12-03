@@ -1,0 +1,135 @@
+.calendar-section {
+    margin-bottom: 10px;
+    margin-top: 35px;
+}
+
+.calendar-card {
+    background-color: var(--white);
+    border-radius: 30px;
+    padding: 15px;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.35);
+    margin: 0 20px 20px 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.calendar-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.nav-arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-arrow img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Viewport acts as a window showing only one week */
+.calendar-viewport {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    touch-action: pan-y;
+}
+
+/* Track holds the weeks side-by-side */
+.calendar-track {
+    display: flex;
+    width: 100%;
+}
+
+/* We need to force the track to be wide enough for multiple weeks */
+.week-view {
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    gap: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+/* Animation classes */
+.animating-left {
+    animation: slideLeft 0.3s ease-out forwards;
+}
+
+.animating-right {
+    animation: slideRight 0.3s ease-out forwards;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Item styles - optimized to fit all 7 days */
+.day-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    height: 85px;
+    border-radius: 20px;
+    position: relative;
+    padding: 8px 4px;
+    gap: 6px;
+}
+
+.day-item.active {
+    background-color: #e0f2f1;
+    /* Sharp, dark shadow for active day */
+    box-shadow: 0 8px 8px -4px rgba(0, 0, 0, 0.3);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-gray);
+}
+
+.day-name {
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    margin-bottom: 0;
+}
+
+.day-number {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}

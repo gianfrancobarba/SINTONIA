@@ -1,68 +1,77 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --primary-dark: #0f3e4d;
+  /* Dark Teal from header */
+  --primary-light: #88b7b5;
+  /* Light Teal from streak/icons */
+  --secondary-bg: #f5f9fa;
+  /* Lighter blue/azure - even lighter */
+  /* Light background */
+  --white: #ffffff;
+  --text-dark: #1a1a1a;
+  --text-gray: #666666;
+  --accent-orange: #e89b78;
+  /* Dots in calendar */
+  --accent-brown: #a88b7d;
+  --accent-yellow: #e8c578;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-family: 'Urbanist', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
 }
 
 body {
-  margin: 0;
+  font-family: var(--font-family);
+  background-color: #ffffff;
+  /* White bands */
+  color: var(--text-dark);
+  font-weight: 600;
+  /* Increased global font weight */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  justify-content: center;
   min-height: 100vh;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll causing layout shifts */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root {
+  width: 100%;
+  max-width: 430px;
+  /* Mobile width */
+  background-color: var(--secondary-bg);
+  min-height: 100vh;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  /* Optional shadow for depth */
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Utility classes */
+.container {
+  padding: 0 20px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.card {
+  background-color: var(--white);
+  border-radius: 30px;
+  padding: 20px;
+  /* Sharp, dark, deep, thin shadow */
+  box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.35);
+}
+
+/* Hide scrollbar for horizontal scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

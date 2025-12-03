@@ -1,0 +1,50 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #4a8490;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.welcome-container.fade-in {
+    opacity: 1;
+}
+
+.welcome-container.fade-out {
+    opacity: 0;
+}
+
+.welcome-content {
+    max-width: 400px;
+}
+
+.quote-section {
+    margin-bottom: 50px;
+}
+
+.quote {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.welcome-btn {
+    background-color: #2d5a63;
+    color: white;
+    border: none;
+    padding: 15px 60px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.welcome-btn:hover {
+    background-color: #1f3f46;
+}

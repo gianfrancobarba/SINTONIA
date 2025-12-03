@@ -4,6 +4,7 @@ node_modules/
 .pnp.js
 
 # --- Environment & Security ---
+.env.development
 .env
 .env.local
 .env.development.local
