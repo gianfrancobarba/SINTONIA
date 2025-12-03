@@ -5,7 +5,7 @@ import ProgressIndicator from '../components/ProgressIndicator';
 import MoodWheel from '../components/MoodWheel';
 import IntensitySelector from '../components/IntensitySelector';
 import Toast from '../components/Toast';
-import { createMood } from '../services/mood.service';
+import { createMood, getTodayMood, deleteMood } from '../services/mood.service';
 import type { Umore } from '../types/mood';
 import '../css/MoodEntry.css';
 
@@ -21,6 +21,35 @@ const MoodEntry: React.FC = () => {
     // State per UI
     const [submitting, setSubmitting] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const [existingMoodId, setExistingMoodId] = useState<string | null>(null);
+
+    React.useEffect(() => {
+        const fetchMood = async () => {
+            try {
+                const mood = await getTodayMood();
+                if (mood) {
+                    setSelectedMood(mood.umore);
+                    setSelectedIntensity(mood.intensita || null);
+                    setNotes(mood.note || '');
+                    setExistingMoodId(mood.id);
+                }
+            } catch (error) {
+                console.error('Error fetching today mood:', error);
+            }
+        };
+        fetchMood();
+    }, []);
+
+    const handleDelete = async () => {
+        if (!confirm('Sei sicuro di voler eliminare lo stato d\'animo di oggi?')) return;
+        try {
+            await deleteMood();
+            setToast({ message: 'Stato d\'animo eliminato', type: 'success' });
+            setTimeout(() => navigate('/home'), 1500);
+        } catch (error) {
+            setToast({ message: 'Errore durante l\'eliminazione', type: 'error' });
+        }
+    };
 
     const handleBack = () => {
         if (currentStep > 1) {
@@ -94,6 +123,11 @@ const MoodEntry: React.FC = () => {
                             onChange={setSelectedMood}
                             onConfirm={handleConfirmMood}
                         />
+                        {existingMoodId && (
+                            <button className="delete-mood-btn" onClick={handleDelete} style={{ marginTop: '2rem', color: '#ff3b30', background: 'none', border: 'none', textDecoration: 'underline', cursor: 'pointer' }}>
+                                Elimina stato d'animo
+                            </button>
+                        )}
                     </div>
                 );
 
@@ -136,7 +170,7 @@ const MoodEntry: React.FC = () => {
                 <button className="back-button" onClick={handleBack} aria-label="Indietro">
                     <img src={LeftArrowIcon} alt="Back" />
                 </button>
-                <h1 className="page-title">Indietro</h1>
+                <h1 className="page-title"></h1>
                 <ProgressIndicator current={currentStep} total={3} />
             </header>
 
@@ -151,7 +185,7 @@ const MoodEntry: React.FC = () => {
                         onClick={handleContinue}
                         disabled={!canContinue() || submitting}
                     >
-                        {submitting ? 'Invio...' : 'Continua'} →
+                        {submitting ? 'Invio...' : 'Continua'}
                     </button>
                 )}
             </div>

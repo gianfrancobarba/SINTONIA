@@ -21,13 +21,24 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
 
     // Inizializza la rotazione per centrare l'umore selezionato o il primo
     useEffect(() => {
+        const totalSlices = MOOD_CONFIGS.length;
+        const sliceAngle = 360 / totalSlices;
+        const centerOffset = sliceAngle / 2;
+
         if (value) {
-            const config = MOOD_CONFIGS.find(m => m.umore === value);
-            if (config) {
-                setRotation(-90 - config.angle);
+            const index = MOOD_CONFIGS.findIndex(m => m.umore === value);
+            if (index !== -1) {
+                // Target: Arrow (Top) points to Center of Slice
+                // Page Angle (Top) = -90
+                // SVG Angle (Center) = index * 36 + 18
+                // CSS Rotation = -90
+                // -90 = (index * 36 + 18) - 90 + Rotation
+                // Rotation = -(index * 36 + 18)
+                setRotation(-(index * sliceAngle + centerOffset));
             }
         } else {
-            setRotation(-90 - MOOD_CONFIGS[0].angle);
+            // Default to first item
+            setRotation(-(0 * sliceAngle + centerOffset));
         }
     }, []);
 
@@ -53,11 +64,18 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
 
         setRotation(newRotation);
 
-        let targetAngle = (-90 - newRotation) % 360;
-        if (targetAngle < 0) targetAngle += 360;
+        // Calculate which slice is at the Top (Arrow position)
+        // Arrow is at Page -90deg.
+        // CSS rotates SVG by -90deg.
+        // So Arrow is at SVG 0deg relative to the rotated container.
+        // SliceAngle at Top = -Rotation
+        let probeAngle = (-newRotation) % 360;
+        if (probeAngle < 0) probeAngle += 360;
 
         const sliceAngle = 360 / MOOD_CONFIGS.length;
-        const index = Math.round(targetAngle / sliceAngle) % MOOD_CONFIGS.length;
+        // Use floor to correctly map [0, 36) to index 0
+        // Use floor to correctly map [0, 36) to index 0
+        const index = Math.floor(probeAngle / sliceAngle) % MOOD_CONFIGS.length;
         const safeIndex = (index + MOOD_CONFIGS.length) % MOOD_CONFIGS.length;
 
         const newMood = MOOD_CONFIGS[safeIndex].umore;
@@ -69,6 +87,29 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
 
     const handleEnd = () => {
         setIsDragging(false);
+        if (value) {
+            const index = MOOD_CONFIGS.findIndex(m => m.umore === value);
+            if (index !== -1) {
+                const totalSlices = MOOD_CONFIGS.length;
+                const sliceAngle = 360 / totalSlices;
+                const centerOffset = sliceAngle / 2;
+
+                // Calcola l'angolo target per centrare lo spicchio
+                // Vogliamo che la freccia (Top) punti al centro dello spicchio
+                // Rotation = -CenterAngle
+                const centerAngle = index * sliceAngle + centerOffset;
+                const targetRotation = -centerAngle;
+
+                // Trova la rotazione equivalente più vicina all'attuale per evitare giri completi inutili
+                // Calcola la differenza in modulo 360
+                let diff = (targetRotation - rotation) % 360;
+                // Normalizza tra -180 e 180
+                if (diff > 180) diff -= 360;
+                if (diff < -180) diff += 360;
+
+                setRotation(rotation + diff);
+            }
+        }
     };
 
     const handleMouseDown = (e: React.MouseEvent) => handleStart(e.clientX, e.clientY);
@@ -110,7 +151,10 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
                     <div
                         className="rotating-wheel"
                         ref={wheelRef}
-                        style={{ transform: `rotate(${rotation}deg)` }}
+                        style={{
+                            transform: `rotate(${rotation}deg)`,
+                            transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'
+                        }}
                         onMouseDown={handleMouseDown}
                         onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
@@ -119,7 +163,18 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
                         onTouchEnd={handleTouchEnd}
                     >
                         <svg viewBox="0 0 100 100" className="wheel-svg-content">
-                            {/* No defs needed as we removed shadows */}
+                            <defs>
+                                <filter id="center-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
+                                    <feOffset dx="0" dy="1" result="offsetblur" />
+                                    <feFlood floodColor="rgba(0,0,0,0.3)" />
+                                    <feComposite in2="offsetblur" operator="in" />
+                                    <feMerge>
+                                        <feMergeNode />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
 
                             {MOOD_CONFIGS.map((config, index) => {
                                 const totalSlices = MOOD_CONFIGS.length;
@@ -152,7 +207,7 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
                             })}
 
                             {/* Center Hole - r=30 makes slices shorter */}
-                            <circle cx="50" cy="50" r="30" fill="#eaf6f8" />
+                            <circle cx="50" cy="50" r="30" fill="#eaf6f8" filter="url(#center-shadow)" />
                         </svg>
                     </div>
                 </div>

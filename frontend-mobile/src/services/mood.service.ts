@@ -47,4 +47,37 @@ export async function createMood(
     }
 
     return response.json();
+    return response.json();
+}
+
+/**
+ * Recupera lo stato d'animo odierno del paziente
+ */
+export async function getTodayMood(): Promise<MoodResponse & CreateMoodDto | null> {
+    const token = localStorage.getItem('patient_token');
+    if (!token) throw new Error('Token non trovato');
+
+    const response = await fetch(`${API_BASE_URL}/paziente/stato-animo/oggi`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error('Errore nel recupero dello stato d\'animo');
+
+    return response.json();
+}
+
+/**
+ * Elimina lo stato d'animo odierno
+ */
+export async function deleteMood(): Promise<void> {
+    const token = localStorage.getItem('patient_token');
+    if (!token) throw new Error('Token non trovato');
+
+    const response = await fetch(`${API_BASE_URL}/paziente/stato-animo/oggi`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Errore durante l\'eliminazione');
 }

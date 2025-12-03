@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { CalendarDay } from '../types/home';
+import { MOOD_CONFIGS } from '../types/mood';
 import '../css/Calendar.css';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import RightArrowIcon from '../assets/icons/RightArrow.svg';
@@ -210,23 +211,9 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
 };
 
 const getMoodColor = (mood?: string): string => {
-    const m = mood?.toLowerCase();
-    switch (m) {
-        case 'felice': return '#4CAF50';
-        case 'calmo': return '#4CAF50';
-        case 'speranzoso': return '#43A047';
-        case 'triste': return '#2196F3';
-        case 'ansia': return '#FF9800';
-        case 'ansioso': return '#FB8C00';
-        case 'agitato': return '#F57C00';
-        case 'stanco': return '#9E9E9E';
-        case 'apatico': return '#9E9E9E';
-        case 'panico': return '#E53935';
-        case 'rabbia': return '#F44336';
-        case 'irritabile': return '#EF5350';
-        case 'neutro': return '#9E9E9E';
-        default: return '#88b7b5';
-    }
+    if (!mood) return '#88b7b5';
+    const config = MOOD_CONFIGS.find(c => c.umore.toLowerCase() === mood.toLowerCase());
+    return config ? config.color : '#88b7b5';
 };
 
 export default Calendar;

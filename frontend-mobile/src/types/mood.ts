@@ -40,14 +40,14 @@ export interface MoodConfig {
  * Ordinati da sinistra (negativo) a destra (positivo)
  */
 export const MOOD_CONFIGS: MoodConfig[] = [
-    { umore: 'Arrabbiato', emoji: '😠', color: '#E53935', angle: 0 },
-    { umore: 'Spaventato', emoji: '😨', color: '#F57C00', angle: 18 },
-    { umore: 'Ansioso', emoji: '😰', color: '#FB8C00', angle: 36 },
-    { umore: 'Triste', emoji: '😢', color: '#2196F3', angle: 54 },
-    { umore: 'Stanco', emoji: '😴', color: '#9E9E9E', angle: 72 },
-    { umore: 'Neutro', emoji: '😐', color: '#FDD835', angle: 90 },
-    { umore: 'Confuso', emoji: '😕', color: '#9C27B0', angle: 108 },
-    { umore: 'Sereno', emoji: '😌', color: '#66BB6A', angle: 126 },
-    { umore: 'Energico', emoji: '⚡', color: '#FFA726', angle: 144 },
-    { umore: 'Felice', emoji: '😊', color: '#4CAF50', angle: 162 },
+    { umore: 'Arrabbiato', emoji: '😠', color: '#FF3B30', angle: 0 },   // Red
+    { umore: 'Spaventato', emoji: '😨', color: '#FF9500', angle: 18 },  // Orange
+    { umore: 'Ansioso', emoji: '😰', color: '#FFCC00', angle: 36 },    // Yellow-Orange
+    { umore: 'Triste', emoji: '😢', color: '#007AFF', angle: 54 },     // Blue
+    { umore: 'Stanco', emoji: '😴', color: '#5856D6', angle: 72 },     // Purple
+    { umore: 'Neutro', emoji: '😐', color: '#8E8E93', angle: 90 },     // Gray
+    { umore: 'Confuso', emoji: '😕', color: '#AF52DE', angle: 108 },    // Violet
+    { umore: 'Sereno', emoji: '😌', color: '#34C759', angle: 126 },    // Green
+    { umore: 'Energico', emoji: '⚡', color: '#FFD60A', angle: 144 },    // Bright Yellow
+    { umore: 'Felice', emoji: '😊', color: '#30B0C7', angle: 162 },    // Teal
 ];
