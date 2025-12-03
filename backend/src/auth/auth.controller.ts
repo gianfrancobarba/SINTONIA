@@ -36,10 +36,10 @@ export class AuthController {
 
     @UseGuards(JwtAuthGuard)
     @Post('change-password')
-    async changePassword(@Request() req, @Body() body: { newPassword: string }) {
+    async changePassword(@Request() req, @Body() body: { currentPassword: string; newPassword: string }) {
         // req.user is populated by JwtStrategy (from the token payload)
         // The payload structure in AuthService.login is { email: ..., sub: ..., role: ... }
         const email = req.user.email;
-        return this.authService.changePassword(email, body.newPassword);
+        return this.authService.changePassword(email, body.currentPassword, body.newPassword);
     }
 }

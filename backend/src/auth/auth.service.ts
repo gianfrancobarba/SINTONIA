@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto.js';
 import { UpdateAuthDto } from './dto/update-auth.dto.js';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
@@ -79,11 +79,34 @@ export class AuthService {
         return { message: 'Password reset successfully', hashLength: hash.length };
     }
 
-    async changePassword(email: string, newPass: string) {
-        const hash = await bcrypt.hash(newPass, 10);
-        await this.db.update(schema.amministratore)
-            .set({ pw: hash })
+    async changePassword(email: string, currentPassword: string, newPassword: string) {
+        // 1. Recuperare l'utente dal database
+        const users = await this.db
+            .select()
+            .from(schema.amministratore)
             .where(eq(schema.amministratore.email, email));
-        return { message: 'Password updated successfully' };
+
+        if (!users.length) {
+            throw new NotFoundException('Utente non trovato');
+        }
+
+        const user = users[0];
+
+        // 2. Verificare che la password attuale sia corretta
+        const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.pw);
+
+        if (!isCurrentPasswordValid) {
+            throw new UnauthorizedException('Password attuale non corretta');
+        }
+
+        // 3. Hash della nuova password e aggiornamento
+        const newHash = await bcrypt.hash(newPassword, 10);
+
+        await this.db
+            .update(schema.amministratore)
+            .set({ pw: newHash })
+            .where(eq(schema.amministratore.email, email));
+
+        return { message: 'Password aggiornata con successo' };
     }
 }

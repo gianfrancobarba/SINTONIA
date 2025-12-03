@@ -86,7 +86,7 @@ export const getUserRole = (): 'admin' | 'psychologist' | null => {
     return user?.role || null;
 };
 
-export const changePassword = async (newPassword: string) => {
+export const changePassword = async (currentPassword: string, newPassword: string) => {
     const user = getCurrentUser();
     if (!user?.access_token) {
         throw new Error('User not authenticated');
@@ -94,7 +94,7 @@ export const changePassword = async (newPassword: string) => {
 
     const response = await axios.post(
         `${API_URL}/change-password`,
-        { newPassword },
+        { currentPassword, newPassword },
         {
             headers: {
                 Authorization: `Bearer ${user.access_token}`,

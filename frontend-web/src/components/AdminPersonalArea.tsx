@@ -18,20 +18,12 @@ const AdminPersonalArea: React.FC = () => {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
-    const handlePasswordChange = async (newPassword: string) => {
-        try {
-            await changePassword(newPassword);
-            setToast({
-                message: 'Password modificata con successo!',
-                type: 'success'
-            });
-        } catch (error) {
-            console.error('Error changing password:', error);
-            setToast({
-                message: 'Errore durante la modifica della password. Riprova.',
-                type: 'error'
-            });
-        }
+    const handlePasswordChange = async (oldPassword: string, newPassword: string) => {
+        await changePassword(oldPassword, newPassword);
+        setToast({
+            message: 'Password modificata con successo!',
+            type: 'success'
+        });
     };
 
     return (
@@ -80,8 +72,8 @@ const AdminPersonalArea: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Email - Read Only */}
-                    <div className="form-row">
+                    {/* Email and Password */}
+                    <div className="form-row form-row-double">
                         <div className="form-field">
                             <label className="field-label">Email</label>
                             <input
@@ -91,10 +83,6 @@ const AdminPersonalArea: React.FC = () => {
                                 className="field-input field-disabled"
                             />
                         </div>
-                    </div>
-
-                    {/* Password - Button to open modal */}
-                    <div className="form-row">
                         <div className="form-field">
                             <label className="field-label">Password</label>
                             <button

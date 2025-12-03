@@ -5,7 +5,7 @@ import '../css/QuestionnaireDetailModal.css';
 
 interface ChangePasswordModalProps {
     onClose: () => void;
-    onConfirm: (oldPassword: string, newPassword: string) => void;
+    onConfirm: (oldPassword: string, newPassword: string) => Promise<void>;
 }
 
 const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onConfirm }) => {
@@ -17,10 +17,10 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validazione
+        // Validazione client-side
         if (!oldPassword || !newPassword || !confirmPassword) {
             setError('Tutti i campi sono obbligatori');
             return;
@@ -32,13 +32,19 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
         }
 
         if (newPassword !== confirmPassword) {
-            setError('Le nuove password non corrispondono');
+            setError('Le due password non coincidono');
             return;
         }
 
-        // Se tutto ok, chiama onConfirm con password vecchia e nuova
-        onConfirm(oldPassword, newPassword);
-        onClose();
+        // Chiamata async al backend
+        try {
+            await onConfirm(oldPassword, newPassword);
+            onClose(); // Chiude solo se successo
+        } catch (error: any) {
+            // Mostra errore dal backend sotto il campo password attuale
+            const errorMessage = error.response?.data?.message || 'Errore durante la modifica della password';
+            setError(errorMessage);
+        }
     };
 
     return ReactDOM.createPortal(
@@ -242,7 +248,12 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                             alignItems: 'center',
                             gap: '8px'
                         }}>
-                            ⚠️ {error}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            {error}
                         </div>
                     )}
 

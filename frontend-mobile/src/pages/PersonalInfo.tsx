@@ -154,7 +154,7 @@ const PersonalInfo: React.FC = () => {
                 </div>
 
                 <div className="form-section">
-                    <label className="form-label">Indirizzo</label>
+                    <label className="form-label">Residenza</label>
                     <div className="title-input-container disabled">
                         <MapPin size={20} color="#9CA3AF" style={{ marginRight: '10px' }} />
                         <input
