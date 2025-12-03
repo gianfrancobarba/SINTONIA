@@ -18,6 +18,33 @@
     background-color: transparent;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+    background-color: rgba(255, 59, 48, 0.1);
+}
+
+.delete-button img {
+    width: 24px;
+    height: 24px;
+}
+
 .mood-entry-page .back-button {
     background: transparent;
     border: 2px solid #1a1a1a;

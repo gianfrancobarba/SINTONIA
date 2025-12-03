@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
+import TrashIcon from '../assets/icons/trash.svg';
 import ProgressIndicator from '../components/ProgressIndicator';
 import MoodWheel from '../components/MoodWheel';
 import IntensitySelector from '../components/IntensitySelector';
@@ -123,11 +124,6 @@ const MoodEntry: React.FC = () => {
                             onChange={setSelectedMood}
                             onConfirm={handleConfirmMood}
                         />
-                        {existingMoodId && (
-                            <button className="delete-mood-btn" onClick={handleDelete} style={{ marginTop: '2rem', color: '#ff3b30', background: 'none', border: 'none', textDecoration: 'underline', cursor: 'pointer' }}>
-                                Elimina stato d'animo
-                            </button>
-                        )}
                     </div>
                 );
 
@@ -171,7 +167,14 @@ const MoodEntry: React.FC = () => {
                     <img src={LeftArrowIcon} alt="Back" />
                 </button>
                 <h1 className="page-title"></h1>
-                <ProgressIndicator current={currentStep} total={3} />
+                <div className="header-actions">
+                    {existingMoodId && (
+                        <button className="delete-button" onClick={handleDelete} aria-label="Elimina">
+                            <img src={TrashIcon} alt="Delete" />
+                        </button>
+                    )}
+                    <ProgressIndicator current={currentStep} total={3} />
+                </div>
             </header>
 
             <div className="mood-entry-content">

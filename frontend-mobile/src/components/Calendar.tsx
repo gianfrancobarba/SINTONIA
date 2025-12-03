@@ -168,10 +168,16 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
                         onClick={() => handleDayClick(day)}
                         style={{ cursor: day.isToday ? 'pointer' : 'default' }}
                     >
-                        <div
-                            className="dot"
-                            style={{ backgroundColor: day.hasEvent ? moodColor : 'transparent' }}
-                        ></div>
+                        <div className="mood-indicator-container">
+                            {day.isToday && !day.hasEvent ? (
+                                <div className="add-mood-indicator">+</div>
+                            ) : (
+                                <div
+                                    className="dot"
+                                    style={{ backgroundColor: day.hasEvent ? moodColor : 'transparent' }}
+                                ></div>
+                            )}
+                        </div>
                         <span className="day-number">{day.date}</span>
                         <span className="day-name">{day.day}</span>
                     </div>

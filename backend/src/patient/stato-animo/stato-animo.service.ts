@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
 import { statoAnimo } from '../../drizzle/schema.js';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and, gte, lt } from 'drizzle-orm';
 import { UltimoStatoAnimoDto } from './dto/ultimo-stato-animo.dto.js';
 import { StoricoStatoAnimoDto } from './dto/storico-stato-animo.dto.js';
 
@@ -48,6 +48,44 @@ export class StatoAnimoService {
             umore: rows[0].umore,
             intensita: rows[0].intensita ?? undefined,
             note: rows[0].note ?? undefined,
+            dataInserimento: rows[0].dataInserimento,
+        };
+    }
+
+    /**
+     * Recupera lo stato d'animo inserito oggi dal paziente
+     * 
+     * @param userId ID del paziente
+     * @returns Dto con i dati dello stato d'animo o null se non presente
+     */
+    async getStatoAnimoOggi(userId: string): Promise<any | null> {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const rows = await db
+            .select()
+            .from(statoAnimo)
+            .where(
+                and(
+                    eq(statoAnimo.idPaziente, userId),
+                    gte(statoAnimo.dataInserimento, today),
+                    lt(statoAnimo.dataInserimento, tomorrow)
+                )
+            )
+            .limit(1);
+
+        if (rows.length === 0) {
+            return null;
+        }
+
+        return {
+            id: rows[0].idStatoAnimo,
+            umore: rows[0].umore,
+            intensita: rows[0].intensita,
+            note: rows[0].note,
             dataInserimento: rows[0].dataInserimento,
         };
     }
