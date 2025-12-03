@@ -17,7 +17,8 @@
 }
 
 .header-content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 40px 1fr 100px;
     align-items: center;
     gap: 15px;
     max-width: 600px;
@@ -58,6 +59,33 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
+    text-align: center;
+}
+
+.edit-button,
+.cancel-button {
+    justify-self: end;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.edit-button:hover,
+.cancel-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.edit-button:active,
+.cancel-button:active {
+    transform: scale(0.95);
 }
 
 .personal-info-content {
@@ -73,6 +101,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    position: relative;
 }
 
 .form-label {
@@ -114,6 +143,11 @@
     background-color: rgba(74, 157, 111, 0.05);
 }
 
+.title-input-container.error {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
 .title-input {
     border: none;
     outline: none;
@@ -126,6 +160,16 @@
 
 .title-input-container.disabled .title-input {
     color: var(--text-gray);
+}
+
+.error-message {
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    margin-top: 4px;
+    color: #ef4444;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
 .submit-button {
