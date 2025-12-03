@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
 import { paziente, psicologo } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';

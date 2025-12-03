@@ -93,6 +93,30 @@ export const updatePatient = async (
 };
 
 /**
+ * Aggiorna la priorità di un paziente
+ * @param id - ID del paziente
+ * @param idPriorita - Nuova priorità (Urgente, Breve, Differibile, Programmabile)
+ */
+export const updatePatientPriority = async (id: string, idPriorita: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await axios.patch(`${API_URL}/admin/patients/${id}/priority`,
+            { idPriorita },
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating patient priority:', error);
+        throw error;
+    }
+};
+
+/**
  * Fetch patients for a specific psychologist
  */
 export const fetchPatientsByPsychologist = async (): Promise<PatientData[]> => {

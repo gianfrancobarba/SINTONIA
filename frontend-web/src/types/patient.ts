@@ -9,6 +9,7 @@ export interface PatientData {
     idPsicologo: string | null;
     nomePsicologo?: string; // Nome completo dello psicologo assegnato
     score: number | null;
+    idPriorita?: string;
 }
 
 export interface LoadingState<T> {
