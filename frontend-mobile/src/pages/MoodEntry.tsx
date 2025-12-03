@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
-import TrashIcon from '../assets/icons/trash.svg';
 import ProgressIndicator from '../components/ProgressIndicator';
 import MoodWheel from '../components/MoodWheel';
 import IntensitySelector from '../components/IntensitySelector';
 import Toast from '../components/Toast';
-import { createMood, getTodayMood, deleteMood } from '../services/mood.service';
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
+import { createMood, getTodayMood, deleteMood, updateMood } from '../services/mood.service';
 import type { Umore } from '../types/mood';
 import '../css/MoodEntry.css';
 
@@ -15,7 +15,7 @@ const MoodEntry: React.FC = () => {
 
     // State per i tre step
     const [currentStep, setCurrentStep] = useState(1);
-    const [selectedMood, setSelectedMood] = useState<Umore | null>(null);
+    const [selectedMood, setSelectedMood] = useState<Umore | null>('Felice');
     const [selectedIntensity, setSelectedIntensity] = useState<number | null>(null);
     const [notes, setNotes] = useState('');
 
@@ -23,6 +23,7 @@ const MoodEntry: React.FC = () => {
     const [submitting, setSubmitting] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [existingMoodId, setExistingMoodId] = useState<string | null>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     React.useEffect(() => {
         const fetchMood = async () => {
@@ -33,18 +34,25 @@ const MoodEntry: React.FC = () => {
                     setSelectedIntensity(mood.intensita || null);
                     setNotes(mood.note || '');
                     setExistingMoodId(mood.id);
+                } else {
+                    // Default mood if none exists
+                    setSelectedMood('Felice');
                 }
             } catch (error) {
                 console.error('Error fetching today mood:', error);
+                // Default mood on error
+                setSelectedMood('Felice');
             }
         };
         fetchMood();
     }, []);
 
     const handleDelete = async () => {
-        if (!confirm('Sei sicuro di voler eliminare lo stato d\'animo di oggi?')) return;
+        setShowDeleteModal(false);
         try {
-            await deleteMood();
+            if (existingMoodId) {
+                await deleteMood(existingMoodId);
+            }
             setToast({ message: 'Stato d\'animo eliminato', type: 'success' });
             setTimeout(() => navigate('/home'), 1500);
         } catch (error) {
@@ -82,13 +90,22 @@ const MoodEntry: React.FC = () => {
             setToast(null);
 
             try {
-                await createMood(
-                    selectedMood,
-                    selectedIntensity ?? undefined,
-                    notes.trim() || undefined
-                );
-
-                setToast({ message: 'Stato d\'animo registrato con successo!', type: 'success' });
+                if (existingMoodId) {
+                    await updateMood(
+                        existingMoodId,
+                        selectedMood,
+                        selectedIntensity ?? undefined,
+                        notes.trim() || undefined
+                    );
+                    setToast({ message: 'Stato d\'animo aggiornato con successo!', type: 'success' });
+                } else {
+                    await createMood(
+                        selectedMood,
+                        selectedIntensity ?? undefined,
+                        notes.trim() || undefined
+                    );
+                    setToast({ message: 'Stato d\'animo registrato con successo!', type: 'success' });
+                }
                 setTimeout(() => {
                     navigate('/home');
                 }, 2000);
@@ -118,11 +135,12 @@ const MoodEntry: React.FC = () => {
             case 1:
                 return (
                     <div className="step-content mood-step">
-                        <h2 className="step-title">Come ti senti?</h2>
                         <MoodWheel
                             value={selectedMood}
                             onChange={setSelectedMood}
                             onConfirm={handleConfirmMood}
+                            onDelete={() => setShowDeleteModal(true)}
+                            showDelete={!!existingMoodId}
                         />
                     </div>
                 );
@@ -168,11 +186,6 @@ const MoodEntry: React.FC = () => {
                 </button>
                 <h1 className="page-title"></h1>
                 <div className="header-actions">
-                    {existingMoodId && (
-                        <button className="delete-button" onClick={handleDelete} aria-label="Elimina">
-                            <img src={TrashIcon} alt="Delete" />
-                        </button>
-                    )}
                     <ProgressIndicator current={currentStep} total={3} />
                 </div>
             </header>
@@ -200,6 +213,14 @@ const MoodEntry: React.FC = () => {
                     onClose={() => setToast(null)}
                 />
             )}
+
+            <ConfirmDeleteModal
+                isOpen={showDeleteModal}
+                onConfirm={handleDelete}
+                onCancel={() => setShowDeleteModal(false)}
+                title="Elimina stato d'animo"
+                message="Sei sicuro di voler eliminare lo stato d'animo di oggi? Questa azione non può essere annullata."
+            />
         </div>
     );
 };

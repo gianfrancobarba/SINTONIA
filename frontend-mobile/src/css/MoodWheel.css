@@ -22,6 +22,21 @@
     transform: scale(0.95);
 }
 
+.instruction-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.mood-text-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
 .selected-mood-text {
     font-size: 1.75rem;
     font-weight: 700;
@@ -29,10 +44,42 @@
     text-align: center;
 }
 
+.text-side-delete-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #fff0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 59, 48, 0.1);
+}
+
+.text-side-delete-button:active {
+    transform: scale(0.9);
+}
+
+.text-side-delete-button img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+    filter: invert(36%) sepia(96%) saturate(6034%) hue-rotate(344deg) brightness(100%) contrast(106%);
+    /* Red color */
+}
+
+.text-side-delete-button:hover {
+    background-color: #ffe5e5;
+    transform: scale(1.05);
+}
+
 .emoji-large-clickable {
     font-size: 7rem;
     line-height: 1;
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+    margin-top: 1.5rem;
+    /* Added margin to lower the emoji */
 }
 
 .tap-hint {
@@ -42,12 +89,7 @@
     margin-top: 0.5rem;
 }
 
-.wheel-pointer {
-    font-size: 2rem;
-    color: #1a1a1a;
-    margin-top: 2rem;
-    animation: bounce 2s infinite;
-}
+/* Removed old wheel-pointer style */
 
 @keyframes bounce {
 
@@ -74,6 +116,20 @@
     overflow: hidden;
     pointer-events: none;
     z-index: 10;
+}
+
+/* Realistic Pointer Styles */
+.realistic-pointer {
+    position: absolute;
+    top: 0;
+    /* Align to top of the overflow wrapper */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    /* Above the wheel */
+    pointer-events: none;
+    /* Let clicks pass through */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
 
 /* The Positioner - Handles centering and bottom anchoring */
@@ -105,6 +161,7 @@
 
     /* No margins or transforms needed here for positioning! */
     /* React controls the rotation transform */
+    will-change: transform;
 }
 
 .rotating-wheel:active {

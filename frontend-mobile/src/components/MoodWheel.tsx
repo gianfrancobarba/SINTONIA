@@ -2,14 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MOOD_CONFIGS } from '../types/mood';
 import type { Umore } from '../types/mood';
 import '../css/MoodWheel.css';
+import TrashIcon from '../assets/icons/trash.svg';
+import MoodIcon from './MoodIcons';
 
 interface MoodWheelProps {
     value: Umore | null;
     onChange: (mood: Umore | null) => void;
     onConfirm: () => void;
+    onDelete?: () => void;
+    showDelete?: boolean;
 }
 
-const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => {
+const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm, onDelete, showDelete }) => {
     const wheelRef = useRef<HTMLDivElement>(null);
     const [rotation, setRotation] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -24,6 +28,8 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
         const totalSlices = MOOD_CONFIGS.length;
         const sliceAngle = 360 / totalSlices;
         const centerOffset = sliceAngle / 2;
+
+        if (isDragging) return;
 
         if (value) {
             const index = MOOD_CONFIGS.findIndex(m => m.umore === value);
@@ -40,7 +46,7 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
             // Default to first item
             setRotation(-(0 * sliceAngle + centerOffset));
         }
-    }, []);
+    }, [value]);
 
     const getAngle = (clientX: number, clientY: number) => {
         if (!wheelRef.current) return 0;
@@ -135,18 +141,50 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
     return (
         <div className="immersive-wheel-container">
             <div className="emoji-display-container" onClick={onConfirm}>
-                <div className="selected-mood-text">
-                    {selectedConfig ? `Mi sento ${selectedConfig.umore}` : 'Come ti senti?'}
+                <div className="instruction-title">Inserisci il tuo stato d'animo</div>
+                <div className="mood-text-row">
+                    <div className="selected-mood-text">
+                        {selectedConfig ? `Mi sento ${selectedConfig.umore}` : 'Inserisci il tuo stato d\'animo'}
+                    </div>
+                    {showDelete && onDelete && (
+                        <div
+                            className="text-side-delete-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete();
+                            }}
+                        >
+                            <img src={TrashIcon} alt="Elimina" />
+                        </div>
+                    )}
                 </div>
                 <div className="emoji-large-clickable">
-                    {selectedConfig ? selectedConfig.emoji : '😐'}
+                    {selectedConfig ? (
+                        <MoodIcon mood={selectedConfig.umore} size={140} />
+                    ) : (
+                        <div style={{ fontSize: '7rem' }}>😐</div>
+                    )}
                 </div>
                 <div className="tap-hint">Tocca per continuare</div>
-
-                <div className="wheel-pointer">▼</div>
             </div>
 
             <div className="wheel-overflow-wrapper">
+                {/* Realistic Pointer */}
+                <div className="realistic-pointer">
+                    <svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 50L0 0H40L20 50Z" fill="#333" filter="url(#pointer-shadow)" />
+                        <defs>
+                            <filter id="pointer-shadow" x="-4" y="-4" width="48" height="58" filterUnits="userSpaceOnUse">
+                                <feFlood floodOpacity="0.3" />
+                                <feGaussianBlur stdDeviation="2" />
+                                <feComposite in2="SourceAlpha" operator="in" />
+                                <feOffset dy="2" />
+                                <feComposite in="SourceGraphic" />
+                            </filter>
+                        </defs>
+                    </svg>
+                </div>
+
                 <div className="wheel-positioner">
                     <div
                         className="rotating-wheel"
@@ -194,6 +232,14 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
                                 const x2 = cx + r * Math.cos(endRad);
                                 const y2 = cy + r * Math.sin(endRad);
 
+                                // Calculate icon position
+                                const midAngle = (startA + endA) / 2;
+                                const midRad = (midAngle * Math.PI) / 180;
+                                const iconR = 40; // Position at radius 40 (between 30 and 50)
+                                const iconX = cx + iconR * Math.cos(midRad);
+                                const iconY = cy + iconR * Math.sin(midRad);
+                                const iconSize = 12;
+
                                 return (
                                     <g key={config.umore}>
                                         {/* Base Color - No Stroke, No Shadow */}
@@ -202,6 +248,10 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm }) => 
                                             fill={config.color}
                                             stroke="none"
                                         />
+                                        {/* Icon on Slice */}
+                                        <g transform={`translate(${iconX - iconSize / 2}, ${iconY - iconSize / 2}) rotate(${midAngle + 90}, ${iconSize / 2}, ${iconSize / 2})`}>
+                                            <MoodIcon mood={config.umore} size={iconSize} />
+                                        </g>
                                     </g>
                                 );
                             })}
