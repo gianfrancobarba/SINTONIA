@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTriangle, FileText, Check, X, ClipboardList } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
-import { getPatientDetailsByPsychologist, terminatePatientCare, generateReport } from '../services/patient.service';
+import { getPatientDetailsByPsychologist, terminatePatientCare, generateReport, downloadReportPdf } from '../services/patient.service';
 import { fetchQuestionnairesByPatient, reviewQuestionnaire, requestInvalidation, viewQuestionnaire } from '../services/questionnaire.service';
 import QuestionnaireDetailModal from './QuestionnaireDetailModal';
 
@@ -183,6 +183,17 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
         }
     };
 
+    const handleDownloadPdf = async () => {
+        if (!patient) return;
+        try {
+            await downloadReportPdf(patient.idPaziente);
+            setToast({ message: 'Download avviato', type: 'success' });
+        } catch (error) {
+            console.error('Error downloading PDF:', error);
+            setToast({ message: 'Errore durante il download del PDF', type: 'error' });
+        }
+    };
+
     const handleViewReport = async () => {
         if (!patient) return;
         setIsLoadingReport(true);
@@ -336,25 +347,53 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                                             )}
                                         </>
                                     ) : (
-                                        <button
-                                            onClick={() => setViewingReport(null)}
-                                            style={{
-                                                background: 'rgba(255, 255, 255, 0.2)',
-                                                border: '1px solid rgba(255, 255, 255, 0.3)',
-                                                color: 'white',
-                                                padding: '8px 16px',
-                                                borderRadius: '8px',
-                                                cursor: 'pointer',
-                                                fontSize: '13px',
-                                                fontWeight: '600',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '8px',
-                                                transition: 'all 0.2s ease'
-                                            }}
-                                        >
-                                            Indietro
-                                        </button>
+                                        <>
+                                            <button
+                                                onClick={handleDownloadPdf}
+                                                style={{
+                                                    background: 'rgba(255, 255, 255, 0.2)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                    color: 'white',
+                                                    padding: '8px 16px',
+                                                    borderRadius: '8px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '13px',
+                                                    fontWeight: '600',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px',
+                                                    transition: 'all 0.2s ease'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                                                }}
+                                            >
+                                                <FileText size={16} />
+                                                Scarica PDF
+                                            </button>
+                                            <button
+                                                onClick={() => setViewingReport(null)}
+                                                style={{
+                                                    background: 'rgba(255, 255, 255, 0.2)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                    color: 'white',
+                                                    padding: '8px 16px',
+                                                    borderRadius: '8px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '13px',
+                                                    fontWeight: '600',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px',
+                                                    transition: 'all 0.2s ease'
+                                                }}
+                                            >
+                                                Indietro
+                                            </button>
+                                        </>
                                     )}
                                     <button
                                         onClick={onClose}
