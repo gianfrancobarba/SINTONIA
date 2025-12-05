@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTriangle, FileText, Check, X, ClipboardList } from 'lucide-react';
+import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTriangle, FileText, Check, X, ClipboardList, Download } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
-import { getPatientDetailsByPsychologist, terminatePatientCare, generateReport, downloadReportPdf } from '../services/patient.service';
+import { getPatientDetailsByPsychologist, terminatePatientCare, generateReport, getReport } from '../services/patient.service';
 import { fetchQuestionnairesByPatient, reviewQuestionnaire, requestInvalidation, viewQuestionnaire } from '../services/questionnaire.service';
 import QuestionnaireDetailModal from './QuestionnaireDetailModal';
-
-import { getReport } from '../services/patient.service';
 import Toast from './Toast';
+import { jsPDF } from 'jspdf';
 import '../css/QuestionnaireDetailModal.css'; // Reuse existing styles
 
 interface PsychologistPatientDetailModalProps {
@@ -94,6 +93,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
     const [viewingReport, setViewingReport] = useState<{ content: string; date: string } | null>(null);
     const [isLoadingReport, setIsLoadingReport] = useState(false);
+    const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
     useEffect(() => {
         if (patient) {
@@ -183,17 +183,6 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
         }
     };
 
-    const handleDownloadPdf = async () => {
-        if (!patient) return;
-        try {
-            await downloadReportPdf(patient.idPaziente);
-            setToast({ message: 'Download avviato', type: 'success' });
-        } catch (error) {
-            console.error('Error downloading PDF:', error);
-            setToast({ message: 'Errore durante il download del PDF', type: 'error' });
-        }
-    };
-
     const handleViewReport = async () => {
         if (!patient) return;
         setIsLoadingReport(true);
@@ -208,6 +197,184 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
             setToast({ message: 'Nessun report trovato o errore nel caricamento', type: 'error' });
         } finally {
             setIsLoadingReport(false);
+        }
+    };
+
+    const handleDownloadPdf = () => {
+        if (!viewingReport || !patient) return;
+        setIsDownloadingPdf(true);
+        try {
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 20;
+            const contentWidth = pageWidth - 2 * margin;
+            let yPosition = margin;
+
+            // Colors
+            const primaryColor: [number, number, number] = [13, 71, 92]; // #0D475C
+            const grayColor: [number, number, number] = [100, 100, 100];
+            const lightGray: [number, number, number] = [200, 200, 200];
+
+            // Patient info
+            const patientName = `${patient.nome} ${patient.cognome}`;
+            const reportDate = viewingReport.date
+                ? new Date(viewingReport.date).toLocaleDateString('it-IT', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+                : 'Data non disponibile';
+
+            // Header background
+            doc.setFillColor(...primaryColor);
+            doc.rect(0, 0, pageWidth, 40, 'F');
+
+            // Header title
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22);
+            doc.setFont('helvetica', 'bold');
+            doc.text('REPORT CLINICO', pageWidth / 2, 18, { align: 'center' });
+
+            // Subtitle
+            doc.setFontSize(11);
+            doc.setFont('helvetica', 'normal');
+            doc.text('Sintonia - Piattaforma di Supporto Psicologico', pageWidth / 2, 30, { align: 'center' });
+
+            yPosition = 55;
+
+            // Patient info box
+            doc.setFillColor(245, 247, 250);
+            doc.setDrawColor(...lightGray);
+            doc.setLineWidth(0.3);
+            doc.roundedRect(margin, yPosition - 5, contentWidth, 30, 3, 3, 'FD');
+
+            doc.setTextColor(...primaryColor);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Paziente:', margin + 5, yPosition + 5);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(0, 0, 0);
+            doc.text(patientName, margin + 30, yPosition + 5);
+
+            doc.setTextColor(...primaryColor);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Data:', margin + 5, yPosition + 16);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(0, 0, 0);
+            doc.text(reportDate, margin + 22, yPosition + 16);
+
+            yPosition += 38;
+
+            // Report content
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+
+            const contentLines = doc.splitTextToSize(viewingReport.content, contentWidth);
+            const lineHeight = 5;
+
+            for (const line of contentLines) {
+                // Check if we need a new page (leave space for footer and legal)
+                if (yPosition > pageHeight - 60) {
+                    doc.addPage();
+                    yPosition = margin;
+                }
+
+                // Check for section headers
+                if (line.match(/^[A-Z\s]+:?$/) || line.includes('===') || line.includes('---')) {
+                    if (line.includes('===') || line.includes('---')) {
+                        doc.setDrawColor(...lightGray);
+                        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+                        yPosition += lineHeight;
+                        continue;
+                    }
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(...primaryColor);
+                    yPosition += 3;
+                } else {
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                }
+
+                doc.text(line, margin, yPosition);
+                yPosition += lineHeight;
+            }
+
+            // === LEGAL DISCLAIMER ===
+            // Check if we need a new page for disclaimer
+            if (yPosition > pageHeight - 70) {
+                doc.addPage();
+                yPosition = margin;
+            }
+
+            yPosition += 10;
+
+            // Legal box
+            doc.setFillColor(255, 250, 245);
+            doc.setDrawColor(180, 140, 100);
+            doc.setLineWidth(0.3);
+            doc.roundedRect(margin, yPosition, contentWidth, 40, 2, 2, 'FD');
+
+            doc.setFontSize(8);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(140, 90, 40);
+            doc.text('DOCUMENTO RISERVATO', margin + 5, yPosition + 8);
+
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(100, 70, 40);
+            const legalText = 'Questo documento contiene informazioni riservate e confidenziali relative al percorso terapeutico del paziente. ' +
+                'È destinato esclusivamente al professionista sanitario autorizzato. ' +
+                'Si prega di non divulgare, copiare o distribuire questo documento.';
+
+            const legalLines = doc.splitTextToSize(legalText, contentWidth - 10);
+            let legalY = yPosition + 16;
+            for (const l of legalLines) {
+                doc.text(l, margin + 5, legalY);
+                legalY += 4;
+            }
+
+            // Footer on each page
+            const totalPages = doc.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setTextColor(...grayColor);
+
+                // Footer line
+                doc.setDrawColor(...lightGray);
+                doc.line(margin, pageHeight - 15, pageWidth - margin, pageHeight - 15);
+
+                doc.text(
+                    `Pagina ${i} di ${totalPages}`,
+                    pageWidth / 2,
+                    pageHeight - 8,
+                    { align: 'center' }
+                );
+                doc.text(
+                    'Documento generato da Sintonia',
+                    margin,
+                    pageHeight - 8
+                );
+                doc.text(
+                    new Date().toLocaleDateString('it-IT'),
+                    pageWidth - margin,
+                    pageHeight - 8,
+                    { align: 'right' }
+                );
+            }
+
+            // Save the PDF
+            doc.save(`report_clinico_${patient.cognome}_${new Date().toISOString().split('T')[0]}.pdf`);
+
+            setToast({ message: 'PDF scaricato con successo!', type: 'success' });
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            setToast({ message: 'Errore durante la generazione del PDF', type: 'error' });
+        } finally {
+            setIsDownloadingPdf(false);
         }
     };
 
@@ -349,32 +516,6 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                                     ) : (
                                         <>
                                             <button
-                                                onClick={handleDownloadPdf}
-                                                style={{
-                                                    background: 'rgba(255, 255, 255, 0.2)',
-                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                                                    color: 'white',
-                                                    padding: '8px 16px',
-                                                    borderRadius: '8px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '13px',
-                                                    fontWeight: '600',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: '8px',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                                                }}
-                                            >
-                                                <FileText size={16} />
-                                                Scarica PDF
-                                            </button>
-                                            <button
                                                 onClick={() => setViewingReport(null)}
                                                 style={{
                                                     background: 'rgba(255, 255, 255, 0.2)',
@@ -392,6 +533,37 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                                                 }}
                                             >
                                                 Indietro
+                                            </button>
+                                            <button
+                                                onClick={handleDownloadPdf}
+                                                disabled={isDownloadingPdf}
+                                                style={{
+                                                    background: 'rgba(255, 255, 255, 0.2)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                    color: 'white',
+                                                    padding: '8px 16px',
+                                                    borderRadius: '8px',
+                                                    cursor: isDownloadingPdf ? 'not-allowed' : 'pointer',
+                                                    fontSize: '13px',
+                                                    fontWeight: '600',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px',
+                                                    transition: 'all 0.2s ease'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    if (!isDownloadingPdf) {
+                                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
+                                                    }
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    if (!isDownloadingPdf) {
+                                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                                                    }
+                                                }}
+                                            >
+                                                <Download size={16} />
+                                                {isDownloadingPdf ? 'Download...' : 'Scarica PDF'}
                                             </button>
                                         </>
                                     )}
@@ -436,21 +608,147 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                         overflowY: 'auto'
                     }}>
                         {viewingReport ? (
-                            <div style={{
-                                backgroundColor: 'white',
-                                padding: '48px',
-                                borderRadius: '12px',
-                                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-                                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-                                fontSize: '16px',
-                                lineHeight: '1.8',
-                                color: '#2c3e50',
-                                whiteSpace: 'pre-wrap',
-                                border: '1px solid #eef2f5',
-                                maxWidth: '800px',
-                                margin: '0 auto'
-                            }}>
-                                {viewingReport.content}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                {/* Report Header Card */}
+                                <div style={{
+                                    backgroundColor: 'white',
+                                    borderRadius: '16px',
+                                    padding: '24px',
+                                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                                    border: '1px solid #eef2f5'
+                                }}>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
+                                        marginBottom: '16px'
+                                    }}>
+                                        <div style={{
+                                            width: '40px',
+                                            height: '40px',
+                                            borderRadius: '10px',
+                                            background: 'linear-gradient(135deg, #0D475C 0%, #1a6a85 100%)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                            <FileText size={20} color="white" />
+                                        </div>
+                                        <div>
+                                            <h3 style={{
+                                                margin: 0,
+                                                fontSize: '18px',
+                                                fontWeight: '600',
+                                                color: '#0D475C'
+                                            }}>Report Clinico</h3>
+                                            <p style={{
+                                                margin: 0,
+                                                fontSize: '13px',
+                                                color: '#6b7280'
+                                            }}>
+                                                {viewingReport.date ? new Date(viewingReport.date).toLocaleDateString('it-IT', {
+                                                    day: 'numeric',
+                                                    month: 'long',
+                                                    year: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                }) : 'Data non disponibile'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '12px'
+                                    }}>
+                                        <div style={{
+                                            flex: 1,
+                                            padding: '12px 16px',
+                                            background: '#f8fafc',
+                                            borderRadius: '8px',
+                                            border: '1px solid #e2e8f0'
+                                        }}>
+                                            <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '500' }}>Paziente</span>
+                                            <p style={{ margin: '4px 0 0', fontSize: '14px', fontWeight: '600', color: '#1e293b' }}>
+                                                {patient?.nome} {patient?.cognome}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Report Content Card */}
+                                <div style={{
+                                    backgroundColor: 'white',
+                                    borderRadius: '16px',
+                                    padding: '24px',
+                                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                                    border: '1px solid #eef2f5'
+                                }}>
+                                    <h4 style={{
+                                        margin: '0 0 16px 0',
+                                        fontSize: '14px',
+                                        fontWeight: '600',
+                                        color: '#0D475C',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.5px'
+                                    }}>Contenuto del Report</h4>
+                                    <div style={{
+                                        fontSize: '14px',
+                                        lineHeight: '1.75',
+                                        color: '#374151',
+                                        whiteSpace: 'pre-wrap'
+                                    }}>
+                                        {viewingReport.content.split('\n').map((line, index) => {
+                                            // Check if it's a section header (all caps or has delimiters)
+                                            if (line.includes('===') || line.includes('---')) {
+                                                return <hr key={index} style={{ border: 'none', borderTop: '1px solid #e5e7eb', margin: '16px 0' }} />;
+                                            }
+                                            if (line.match(/^[A-Z\s]+:?$/) && line.trim().length > 0) {
+                                                return (
+                                                    <p key={index} style={{
+                                                        fontWeight: '600',
+                                                        color: '#0D475C',
+                                                        marginTop: '20px',
+                                                        marginBottom: '8px',
+                                                        fontSize: '15px'
+                                                    }}>{line}</p>
+                                                );
+                                            }
+                                            if (line.trim() === '') {
+                                                return <br key={index} />;
+                                            }
+                                            return <p key={index} style={{ margin: '0 0 8px 0' }}>{line}</p>;
+                                        })}
+                                    </div>
+                                </div>
+
+                                {/* Confidentiality Notice */}
+                                <div style={{
+                                    backgroundColor: '#fffbeb',
+                                    borderRadius: '12px',
+                                    padding: '16px 20px',
+                                    border: '1px solid #fcd34d',
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '12px'
+                                }}>
+                                    <AlertTriangle size={18} color="#d97706" style={{ marginTop: '2px', flexShrink: 0 }} />
+                                    <div>
+                                        <p style={{
+                                            margin: 0,
+                                            fontSize: '13px',
+                                            fontWeight: '600',
+                                            color: '#92400e'
+                                        }}>Documento Riservato</p>
+                                        <p style={{
+                                            margin: '4px 0 0',
+                                            fontSize: '12px',
+                                            color: '#a16207',
+                                            lineHeight: '1.5'
+                                        }}>
+                                            Questo documento contiene informazioni riservate e confidenziali relative al percorso terapeutico del paziente.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         ) : loading ? (
                             <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
