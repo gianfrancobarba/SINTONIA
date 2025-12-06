@@ -56,6 +56,10 @@ const SPIDInfo = () => {
                         className={`spid-login-btn ${showSpidProviders ? 'active' : ''}`}
                         onClick={() => setShowSpidProviders(!showSpidProviders)}
                     >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+                            <circle cx="12" cy="8" r="5" />
+                            <path d="M20 21a8 8 0 0 0-16 0" />
+                        </svg>
                         Entra con SPID
                         <span className={`arrow-icon ${showSpidProviders ? 'rotated' : ''}`}>▼</span>
                     </button>

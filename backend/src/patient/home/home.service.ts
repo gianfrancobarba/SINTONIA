@@ -8,8 +8,9 @@ import { eq, desc, and } from 'drizzle-orm';
 @Injectable()
 export class HomeService {
     async getDashboard(userId: string): Promise<HomeDashboardDto> {
-        const [firstName, mood, notificationsCount, suggestedPosts, calendarDays, consecutiveDays] = await Promise.all([
+        const [firstName, gender, mood, notificationsCount, suggestedPosts, calendarDays, consecutiveDays] = await Promise.all([
             this.getFirstName(userId),
+            this.getGender(userId),
             this.getLastMood(userId),
             this.getPendingQuestionnairesCount(userId),
             this.getSuggestedPosts(),
@@ -22,6 +23,7 @@ export class HomeService {
 
         return {
             firstName,
+            gender,
             mood,
             notificationsCount,
             streakLevel,
@@ -46,6 +48,16 @@ export class HomeService {
             .where(eq(paziente.idPaziente, userId))
             .limit(1);
         return rows[0]?.firstName ?? 'Utente';
+    }
+
+    //Ottieni il sesso dell'utente
+    private async getGender(userId: string): Promise<string> {
+        const rows = await db
+            .select({ sesso: paziente.sesso })
+            .from(paziente)
+            .where(eq(paziente.idPaziente, userId))
+            .limit(1);
+        return rows[0]?.sesso ?? 'M';
     }
     //Ottieni l'ultimo stato d'umore dell'utente
     private async getLastMood(userId: string): Promise<string> {

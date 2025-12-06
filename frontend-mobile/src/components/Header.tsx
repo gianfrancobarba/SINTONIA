@@ -4,7 +4,8 @@ import type { HomeDashboardDto } from '../types/home';
 import '../css/Header.css';
 import questionnaireIcon from '../assets/icons/questionnaire.svg';
 import calendarIcon from '../assets/icons/calendar.svg';
-import profileAvatar from '../assets/images/profile-avatar.png';
+import profileAvatarWoman from '../assets/images/profile-avatar-woman.png';
+import profileAvatarMan from '../assets/images/profile-avatar-man.png';
 import MoodIcon from './MoodIcons';
 import type { Umore } from '../types/mood';
 
@@ -14,6 +15,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ data }) => {
     const navigate = useNavigate();
+
+    // Select avatar based on gender
+    const profileAvatar = data.gender === 'F' ? profileAvatarWoman : profileAvatarMan;
 
     // Generate current date in Italian format
     const getCurrentDate = () => {

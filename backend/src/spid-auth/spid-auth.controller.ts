@@ -173,11 +173,6 @@ export class SpidAuthController {
     const targetFrontendUrl = frontendUrl || 'http://localhost:5173';
     const targetUserType = userType || 'patient';
 
-    // Default demo credentials based on user type
-    const defaultFiscalCode = targetUserType === 'psychologist'
-      ? 'PSICOL01P01H501Z'
-      : 'PZT0010SINTONIAA';
-
     // Authentic SPID login page matching Poste Italiane design
     const html = `
       <!DOCTYPE html>
@@ -218,14 +213,11 @@ export class SpidAuthController {
           .spid-logo {
             display: flex;
             align-items: center;
-            gap: 8px;
           }
           
-          .spid-logo-text {
-            font-size: 36px;
-            font-weight: 700;
-            color: #0066CC;
-            letter-spacing: -1px;
+          .spid-logo-img {
+            height: 50px;
+            width: auto;
           }
           
           .spid-dot {
@@ -237,28 +229,13 @@ export class SpidAuthController {
           }
           
           .provider-badge {
-            background: white;
-            border: 2px solid #0066CC;
-            padding: 8px 16px;
-            border-radius: 4px;
             display: flex;
             align-items: center;
-            gap: 6px;
           }
           
-          .provider-text {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0066CC;
-          }
-          
-          .provider-id {
-            background: #FFCC00;
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: 700;
+          .provider-logo {
+            height: 40px;
+            width: auto;
           }
           
           .login-body {
@@ -437,11 +414,10 @@ export class SpidAuthController {
         <div class="login-container">
           <div class="login-header">
             <div class="spid-logo">
-              <span class="spid-logo-text">spid</span>
+              <img src="${targetFrontendUrl}/spid.png" alt="SPID Logo" class="spid-logo-img" />
             </div>
             <div class="provider-badge">
-              <span class="provider-text">Poste</span>
-              <span class="provider-id">ID</span>
+              <img src="${targetFrontendUrl}/logoposteid.png" alt="PosteID Logo" class="provider-logo" />
             </div>
           </div>
           
@@ -454,36 +430,71 @@ export class SpidAuthController {
               <input type="hidden" name="userType" value="${targetUserType}">
               
               <div class="form-group">
-                <label class="form-label" for="username">Nome Utente</label>
+                <label class="form-label" for="email">Email</label>
                 <input 
-                  type="text" 
-                  id="username" 
-                  name="fiscalcode" 
+                  type="email" 
+                  id="email" 
+                  name="email" 
                   class="form-input" 
                   placeholder="inserisci e-mail"
-                  value="${defaultFiscalCode}"
                   required
-                  readonly
-                  autocomplete="off"
+                  autocomplete="email"
                 >
               </div>
               
               <div class="form-group">
                 <label class="form-label" for="password">Password</label>
-                <input 
-                  type="password" 
-                  id="password" 
-                  name="password" 
-                  class="form-input" 
-                  placeholder="inserisci password"
-                  value="password123"
-                  required
-                  readonly
-                  autocomplete="current-password"
-                >
+                <div class="password-wrapper" style="position: relative;">
+                  <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input" 
+                    style="padding-right: 45px;"
+                    placeholder="inserisci password"
+                    required
+                    autocomplete="current-password"
+                  >
+                  <button type="button" class="password-toggle" onclick="togglePassword()" style="
+                    position: absolute;
+                    right: 12px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  ">
+                    <svg id="eye-icon" viewBox="0 0 24 24" width="20" height="20" fill="#999">
+                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                    <svg id="eye-off-icon" viewBox="0 0 24 24" width="20" height="20" fill="#999" style="display: none;">
+                      <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
               
-              <a href="#" class="forgot-link">Hai dimenticato il nome utente o la password?</a>
+              <script>
+                function togglePassword() {
+                  const passwordInput = document.getElementById('password');
+                  const eyeIcon = document.getElementById('eye-icon');
+                  const eyeOffIcon = document.getElementById('eye-off-icon');
+                  
+                  if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.style.display = 'none';
+                    eyeOffIcon.style.display = 'block';
+                  } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.style.display = 'block';
+                    eyeOffIcon.style.display = 'none';
+                  }
+                }
+              </script>
               
               <div class="button-group">
                 <button type="button" class="btn btn-cancel" onclick="window.history.back()">Annulla</button>
@@ -513,36 +524,44 @@ export class SpidAuthController {
   async callback(@Body() body: any, @Res() res: Response) {
     const frontendUrl = body.frontendUrl || 'http://localhost:5173';
     const userType = body.userType || 'patient';
+    const email = body.email;
+    const password = body.password;
 
     try {
       // Simuliamo un ritardo di autenticazione realistico
       await new Promise(resolve => setTimeout(resolve, 1200));
 
-      // Dati utente da SPID
-      const spidProfile: any = userType === 'psychologist'
-        ? {
-          fiscalNumber: 'BRBLCA81L15F205J',
-          name: 'Luca',
-          familyName: 'Bruno'
-        }
-        : {
-          fiscalNumber: 'PZT0010SINTONIAA',
-          name: 'Chiara',
-          familyName: 'Conti',
-          email: 'chiara.conti@gmail.com',
-          dateOfBirth: '2000-07-05'
-        };
-
-      console.log(`✓ Autenticazione SPID completata per: ${spidProfile.fiscalNumber} (${userType})`);
-
       let user;
       let tokenData;
 
       if (userType === 'psychologist') {
-        user = await this.spidAuthService.validatePsychologist(spidProfile);
+        // Per psicologi, usiamo email/password mock
+        if (!email) {
+          throw new Error('Email richiesta per il login');
+        }
+
+        user = await this.spidAuthService.authenticatePsychologistWithMockCredentials(email, password);
+
+        if (!user) {
+          throw new Error('Credenziali non valide. Verifica email e password.');
+        }
+
+        console.log(`✓ Autenticazione mock psicologo completata per: ${user.email}`);
         tokenData = await this.spidAuthService.generateToken(user, 'psychologist');
       } else {
-        user = await this.spidAuthService.validatePatient(spidProfile);
+        // Per pazienti, usiamo email/password mock
+        if (!email) {
+          throw new Error('Email richiesta per il login');
+        }
+
+        // Autentica con credenziali mock
+        user = await this.spidAuthService.authenticateWithMockCredentials(email, password);
+
+        if (!user) {
+          throw new Error('Credenziali non valide. Verifica email e password.');
+        }
+
+        console.log(`✓ Autenticazione mock completata per: ${user.email} (${userType})`);
 
         // Check if patient already has an assigned psychologist
         if (user.idPsicologo) {
