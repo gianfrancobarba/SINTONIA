@@ -67,7 +67,7 @@ const QuestionScale: React.FC<QuestionScaleProps> = ({
 
     const handleTouchMove = (e: React.TouchEvent) => {
         if (!isDraggingRef.current) return;
-        e.preventDefault(); // Prevent scrolling while dragging
+        // Note: preventDefault is handled via CSS touch-action: none on the container
         const touch = e.touches[0];
         const val = getValueFromTouch(touch.clientX);
         if (val !== null) {
