@@ -38,56 +38,94 @@ const Terms = () => {
                     <img src="/sintonia-logo-new.jpg" alt="Sintonia Logo" className="logo" />
                 </div>
 
-                <h1 className="terms-title">Termini & Condizioni</h1>
+                <h1 className="terms-title">Termini e Condizioni di Utilizzo</h1>
 
                 <div className="terms-content">
-                    <h3>Consenso informato (CNOP)</h3>
+                    <h3>Art. 1 - Oggetto del Servizio</h3>
                     <p>
-                        Prima di procedere con l'assessment, l'utente deve leggere e accettare il consenso informato. Alcuni punti essenziali:
+                        SINTONIA costituisce l'applicazione ufficiale per l'accesso al servizio di supporto
+                        psicologico gratuito erogato dalla Regione Campania. Il servizio comprende strumenti
+                        di screening psicologico e monitoraggio dello stato emotivo.
+                    </p>
+                    <p>
+                        Il presente strumento ha esclusiva finalità di screening e monitoraggio. Esso non
+                        sostituisce in alcun modo la diagnosi clinica né il percorso terapeutico con un
+                        professionista della salute mentale.
+                    </p>
+
+                    <h3>Art. 2 - Finalità dello Screening e Criteri di Priorità</h3>
+                    <p>
+                        I questionari validati (PHQ-9, GAD-7 e altri strumenti clinici) sono somministrati
+                        al fine di:
                     </p>
                     <ul>
-                        <li>Lo strumento serve solo a screening, non è una diagnosi.</li>
-                        <li>Le informazioni raccolte saranno utilizzate per generare una raccomandazione e gestire eventuali emergenze.</li>
+                        <li>Valutare il livello di bisogno psicologico dell'utente;</li>
+                        <li>Determinare la priorità di accesso al servizio di supporto psicologico;</li>
+                        <li>Identificare situazioni di urgenza clinica;</li>
+                    </ul>
+                    <p>
+                        La priorità nella lista d'attesa è assegnata sulla base dei risultati dello screening.
+                        Tali esiti non costituiscono diagnosi medica o psicologica e sono
+                        utilizzati esclusivamente ai fini della gestione delle priorità di accesso.
+                    </p>
+
+                    <h3>Art. 3 - Consenso Informato</h3>
+                    <p>
+                        Ai sensi della Legge 22 dicembre 2017, n. 219, e del Codice Deontologico degli
+                        Psicologi Italiani (artt. 9, 24, 31), l'utilizzo del presente servizio è subordinato
+                        al consenso libero e informato dell'utente.
+                    </p>
+                    <p>
+                        Con l'accettazione dei presenti Termini, l'utente dichiara:
+                    </p>
+                    <ul>
+                        <li>Di aver compreso natura e limiti del servizio;</li>
+                        <li>Di essere consapevole che il servizio non ha finalità diagnostiche;</li>
+                        <li>Di aderire volontariamente all'utilizzo dell'applicazione.</li>
                     </ul>
 
-                    <h3>Consenso informato</h3>
+                    <h3>Art. 4 - Gestione delle Situazioni di Emergenza</h3>
                     <p>
-                        L'istituto del consenso informato viene qualificato dalla dottrina come idoneo alla tutela dei principi costituzionali espressi nell'articolo 2, che promuove i diritti fondamentali della persona, e negli articoli 13 e 32, i quali stabiliscono che la libertà personale è inviolabile e che nessuno possa essere obbligato a un determinato trattamento sanitario se non per disposizione di legge.
+                        Qualora le risposte fornite dall'utente evidenzino una situazione di potenziale
+                        rischio, il sistema provvederà a generare una segnalazione verso un professionista
+                        sanitario per la valutazione del caso.
                     </p>
                     <p>
-                        L'art. 1 della L. 22 dicembre 2017 n. 219 disciplina in maniera organica la materia del consenso informato, dapprima lasciata ad interventi, anche autorevoli, ma slegati tra loro, della Giurisprudenza nazionale e comunitaria.
+                        In caso di emergenza, contattare il Numero Unico Emergenze 112 o recarsi presso
+                        il Pronto Soccorso più vicino.
                     </p>
+
+                    <h3>Art. 5 - Esclusione di Responsabilità</h3>
                     <p>
-                        La norma stabilisce che: "nessun trattamento sanitario può essere iniziato o proseguito se privo del consenso libero e informato della persona interessata, tranne che nei casi espressamente previsti dalla legge".
-                    </p>
-                    <p>
-                        Sebbene la norma esordisca parlando di trattamento sanitario e, pertanto, ricomprendendovi tutte le attività dei vari professionisti che operano in ambito sanitario, prosegue poi focalizzandosi prevalentemente sul rapporto medico-paziente.
-                    </p>
-                    <p>
-                        Tuttavia i principi in essa rinvenibili sono validi per tutte le professioni sanitarie ed essi devono essere letti congiuntamente alle norme in materia già previste nel Codice deontologico degli Psicologi Italiani, in particolare agli artt. 9, 24 e 31.
-                    </p>
-                    <p>
-                        L'informativa sulla quale ricevere il successivo consenso deve essere comprensibile secondo il livello culturale del paziente ed avere ad oggetto:
+                        Il gestore del servizio declina ogni responsabilità per:
                     </p>
                     <ul>
-                        <li>la diagnosi;</li>
-                        <li>la prognosi;</li>
-                        <li>i benefici e i rischi degli accertamenti (strumenti diagnostici) e dei trattamenti sanitari che si intendono perseguire;</li>
-                        <li>le possibili alternative;</li>
-                        <li>le conseguenze dell'eventuale rifiuto del trattamento o della rinuncia agli accertamenti.</li>
+                        <li>Decisioni assunte dall'utente sulla base dei risultati dello screening;</li>
+                        <li>Ritardi nella presa in carico da parte dei professionisti sanitari;</li>
+                        <li>Errate interpretazioni dei risultati da parte dell'utente.</li>
                     </ul>
+
+                    <h3>Art. 6 - Requisiti di Accesso</h3>
                     <p>
-                        Il consenso sulla predetta informativa viene acquisito nei modi e con gli strumenti più consoni alle condizioni del paziente e del setting, è documentato in forma scritta o attraverso videoregistrazioni o, per la persona con disabilità, attraverso dispositivi che le consentano di comunicare.
+                        L'accesso al servizio SINTONIA è subordinato ai seguenti requisiti:
                     </p>
+                    <ul>
+                        <li>Possesso di credenziali SPID valide;</li>
+                        <li>Accettazione dei presenti Termini e Condizioni.</li>
+                    </ul>
+
+                    <h3>Art. 7 - Modifiche delle Condizioni</h3>
                     <p>
-                        Il consenso informato, in qualunque forma espresso, è inserito nel fascicolo del paziente, nella cartella clinica e nel fascicolo sanitario elettronico, laddove necessario.
+                        Il gestore si riserva la facoltà di modificare i presenti Termini e Condizioni.
+                        In caso di modifiche sostanziali, l'utente sarà informato al successivo accesso
+                        e sarà tenuto ad accettare nuovamente le condizioni aggiornate.
                     </p>
                 </div>
 
                 <div className="terms-footer">
                     <div className="toggle-container">
                         <span className="toggle-label">
-                            Ho preso visione dei termini e condizioni
+                            Dichiaro di aver letto e di accettare i Termini e Condizioni
                         </span>
                         <label className="switch">
                             <input
@@ -105,7 +143,7 @@ const Terms = () => {
                         disabled={!accepted || loading}
                         onClick={handleAccept}
                     >
-                        {loading ? 'Attendere...' : 'Accetta'}
+                        {loading ? 'Attendere...' : 'Accetta e Prosegui'}
                     </button>
                 </div>
             </div>
