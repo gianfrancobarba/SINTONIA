@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, CheckCheck, Inbox, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Bell, CheckCheck, Inbox } from 'lucide-react';
 import { getCurrentUser } from '../services/auth.service';
 import {
     fetchPsychologistNotifications,
@@ -246,25 +246,23 @@ const NotificationCenter: React.FC = () => {
                     </div>
 
                     {totalPages > 1 && (
-                        <div className="notification-pagination">
+                        <div className="pagination">
                             <button
-                                className="pagination-btn"
+                                className="pagination-button"
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage === 1}
                             >
-                                <ChevronLeft size={20} />
                                 Precedente
                             </button>
                             <span className="pagination-info">
                                 Pagina {currentPage} di {totalPages}
                             </span>
                             <button
-                                className="pagination-btn"
+                                className="pagination-button"
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage === totalPages}
                             >
                                 Successiva
-                                <ChevronRight size={20} />
                             </button>
                         </div>
                     )}

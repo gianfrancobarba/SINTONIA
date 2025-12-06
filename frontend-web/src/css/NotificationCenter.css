@@ -26,7 +26,7 @@
 }
 
 .notification-header h1 svg {
-    color: #6c5ce7;
+    color: #0D475D;
 }
 
 .mark-all-read-btn {
@@ -34,7 +34,7 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    background: #0D475D;
     color: white;
     border: none;
     border-radius: 12px;
@@ -42,12 +42,12 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    box-shadow: 0 4px 15px rgba(13, 71, 93, 0.3);
 }
 
 .mark-all-read-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+    box-shadow: 0 6px 20px rgba(13, 71, 93, 0.4);
 }
 
 .mark-all-read-btn:disabled {
@@ -67,7 +67,7 @@
     border-radius: 16px;
     padding: 20px 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border-left: 4px solid #6c5ce7;
+    border-left: 4px solid #0D475D;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -79,7 +79,7 @@
 
 .notification-card.unread {
     background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-    border-left-color: #6c5ce7;
+    border-left-color: #0D475D;
 }
 
 .notification-card.read {
@@ -123,7 +123,7 @@
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
-    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    background: #0D475D;
     color: white;
     border-radius: 20px;
     font-size: 10px;
@@ -137,22 +137,22 @@
 .unread-indicator {
     width: 10px;
     height: 10px;
-    background: #6c5ce7;
+    background: #0D475D;
     border-radius: 50%;
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4);
+        box-shadow: 0 0 0 0 rgba(13, 71, 93, 0.4);
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba(108, 92, 231, 0);
+        box-shadow: 0 0 0 10px rgba(13, 71, 93, 0);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(108, 92, 231, 0);
+        box-shadow: 0 0 0 0 rgba(13, 71, 93, 0);
     }
 }
 
@@ -208,7 +208,7 @@
     width: 40px;
     height: 40px;
     border: 3px solid #e0e0e0;
-    border-top-color: #6c5ce7;
+    border-top-color: #0D475D;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 16px;
@@ -277,7 +277,7 @@
 }
 
 .stat-icon.total {
-    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    background: #0D475D;
     color: white;
 }
 
@@ -299,47 +299,41 @@
     margin: 4px 0 0 0;
 }
 
-/* Pagination */
-.notification-pagination {
+/* Pagination - Same as Forum */
+.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 16px;
-    padding: 24px;
-    margin-top: 16px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
 }
 
-.pagination-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #6c5ce7;
-    background: #f8f9fa;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.pagination-btn:hover:not(:disabled) {
-    background: #6c5ce7;
+.pagination-button {
+    padding: 10px 20px;
+    background: var(--color-teal-medium);
     color: white;
-    border-color: #6c5ce7;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
 }
 
-.pagination-btn:disabled {
-    opacity: 0.4;
+.pagination-button:hover:not(:disabled) {
+    background: var(--color-teal-dark);
+}
+
+.pagination-button:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
     cursor: not-allowed;
 }
 
 .pagination-info {
     font-size: 14px;
+    color: #6b7280;
     font-weight: 500;
-    color: #555;
 }
