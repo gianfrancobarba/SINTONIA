@@ -4,7 +4,8 @@ import { Settings, Award, Smile, Clock } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
 import type { ProfileDto } from '../types/profile';
 import '../css/Profile.css';
-import profileAvatar from '../assets/images/profile-avatar.png';
+import profileAvatarWoman from '../assets/images/profile-avatar-woman.png';
+import profileAvatarMan from '../assets/images/profile-avatar-man.png';
 import diaryIcon from '../assets/icons/diary.svg';
 import questionnaireIcon from '../assets/icons/questionnaire.svg';
 import MoodIcon from '../components/MoodIcons';
@@ -55,6 +56,9 @@ const Profile: React.FC = () => {
 
     // Map backend data to UI format
     const { profilo, badge, statoAnimo, diario, questionari } = profileData;
+
+    // Select avatar based on gender
+    const profileAvatar = profilo.sesso === 'F' ? profileAvatarWoman : profileAvatarMan;
 
     const name = profilo.nome;
     const badges = {

@@ -16,6 +16,7 @@ export interface SuggestedPost {
 
 export interface HomeDashboardDto {
     firstName: string;
+    gender: string; // 'M' | 'F'
     mood: string;
     notificationsCount: number;
     streakLevel: number;

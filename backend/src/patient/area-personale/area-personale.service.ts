@@ -26,6 +26,7 @@ export class AreaPersonaleService {
             .select({
                 nome: paziente.nome,
                 cognome: paziente.cognome,
+                sesso: paziente.sesso,
             })
             .from(paziente)
             .where(eq(paziente.idPaziente, userId))
@@ -34,6 +35,7 @@ export class AreaPersonaleService {
         const profilo = {
             nome: profiloRows[0]?.nome ?? 'Nome',
             cognome: profiloRows[0]?.cognome ?? 'Cognome',
+            sesso: profiloRows[0]?.sesso ?? 'M',
             immagineProfilo: undefined, // TODO: aggiungere campo immagine profilo se disponibile
         };
 

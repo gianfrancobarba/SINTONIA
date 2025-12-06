@@ -92,23 +92,18 @@
 }
 
 .avatar-circle {
-    width: 110px;
-    height: 110px;
+    width: 140px;
+    height: 140px;
     margin: 0 auto 16px;
-    background: white;
     border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
 }
 
 .avatar-placeholder {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: linear-gradient(135deg, #E89B78 0%, #E8C578 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 }
 
 .avatar-placeholder svg {
