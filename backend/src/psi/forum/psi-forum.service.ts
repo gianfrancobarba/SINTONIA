@@ -171,7 +171,7 @@ export class PsiForumService {
 
     async createAnswer(psiId: string, questionId: string, text: string) {
         // 1. Recupera la domanda per ottenere il paziente autore
-        const question = await this.db.query.domandaForum.findFirst({
+        const question = await db.query.domandaForum.findFirst({
             where: eq(domandaForum.idDomanda, questionId)
         });
 
