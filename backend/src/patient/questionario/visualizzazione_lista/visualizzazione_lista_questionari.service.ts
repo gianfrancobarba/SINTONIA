@@ -180,4 +180,34 @@ export class Visualizzazione_lista_questionariService {
         // Tutti e 4 i questionari sono stati compilati almeno una volta
         return true;
     }
+
+    /**
+     * Ritorna la lista dei questionari iniziali non ancora compilati
+     * I questionari iniziali sono: PHQ-9, GAD-7, WHO-5, PC-PTSD-5
+     * @param userId - ID del paziente
+     * @returns Array con i nomi dei questionari non compilati
+     */
+    async getPendingInitialQuestionnaires(userId: string): Promise<string[]> {
+        const INITIAL_QUESTIONNAIRES = ['PHQ-9', 'GAD-7', 'WHO-5', 'PC-PTSD-5'];
+        const pending: string[] = [];
+
+        for (const questionnaireName of INITIAL_QUESTIONNAIRES) {
+            const compilations = await db
+                .select({ id: questionario.idQuestionario })
+                .from(questionario)
+                .where(
+                    and(
+                        eq(questionario.idPaziente, userId),
+                        eq(questionario.nomeTipologia, questionnaireName)
+                    )
+                )
+                .limit(1);
+
+            if (compilations.length === 0) {
+                pending.push(questionnaireName);
+            }
+        }
+
+        return pending;
+    }
 }

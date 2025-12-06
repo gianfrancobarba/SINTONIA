@@ -5,17 +5,61 @@ import '../css/InitialQuestionnairesModal.css';
 interface InitialQuestionnairesModalProps {
     isOpen: boolean;
     onClose: () => void;
+    pendingQuestionnaires: string[];
 }
 
-const InitialQuestionnairesModal: React.FC<InitialQuestionnairesModalProps> = ({ isOpen, onClose }) => {
+// Mapping of questionnaire names to their display data
+const QUESTIONNAIRE_CONFIG: Record<string, { className: string; icon: React.ReactNode }> = {
+    'PHQ-9': {
+        className: 'phq9',
+        icon: (
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="2" />
+                <path d="M8 12H16M8 8H16M8 16H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+        )
+    },
+    'GAD-7': {
+        className: 'gad7',
+        icon: (
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+                <path d="M12 8V12L14.5 14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+        )
+    },
+    'WHO-5': {
+        className: 'who5',
+        icon: (
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+                <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        )
+    },
+    'PC-PTSD-5': {
+        className: 'pcptsd5',
+        icon: (
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        )
+    }
+};
+
+const InitialQuestionnairesModal: React.FC<InitialQuestionnairesModalProps> = ({ isOpen, onClose, pendingQuestionnaires }) => {
     const navigate = useNavigate();
 
-    if (!isOpen) return null;
+    // Don't render if not open or no pending questionnaires
+    if (!isOpen || pendingQuestionnaires.length === 0) return null;
 
     const handleGoToQuestionnaires = () => {
         onClose();
         navigate('/questionari');
     };
+
+    const questionnaireCount = pendingQuestionnaires.length;
+    const questionnaireWord = questionnaireCount === 1 ? 'questionario' : 'questionari';
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -34,48 +78,23 @@ const InitialQuestionnairesModal: React.FC<InitialQuestionnairesModalProps> = ({
 
                 <div className="modal-body">
                     <p className="intro-text">
-                        Completa <strong>4 questionari</strong> per valutare il tuo benessere
+                        Completa <strong>{questionnaireCount} {questionnaireWord}</strong> per valutare il tuo benessere
                     </p>
 
                     <div className="questionnaire-grid">
-                        <div className="grid-item phq9">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M8 12H16M8 8H16M8 16H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                </svg>
-                            </div>
-                            <strong>PHQ-9</strong>
-                        </div>
+                        {pendingQuestionnaires.map((name) => {
+                            const config = QUESTIONNAIRE_CONFIG[name];
+                            if (!config) return null;
 
-                        <div className="grid-item gad7">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M12 8V12L14.5 14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                </svg>
-                            </div>
-                            <strong>GAD-7</strong>
-                        </div>
-
-                        <div className="grid-item who5">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <strong>WHO-5</strong>
-                        </div>
-
-                        <div className="grid-item pcptsd5">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <strong>PC-PTSD-5</strong>
-                        </div>
+                            return (
+                                <div key={name} className={`grid-item ${config.className}`}>
+                                    <div className="grid-icon-wrapper">
+                                        {config.icon}
+                                    </div>
+                                    <strong>{name}</strong>
+                                </div>
+                            );
+                        })}
                     </div>
 
                     <div className="info-box">
