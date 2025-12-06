@@ -335,3 +335,32 @@ export const deletePsychologist = async (codiceFiscale: string): Promise<any> =>
     }
 };
 
+/**
+ * Submit a technical support request
+ * @param data - Support request data (subject and description)
+ */
+export const submitSupportRequest = async (data: { oggetto: string; descrizione: string }): Promise<any> => {
+    try {
+        const url = `${API_URL}/psi/support-request`;
+        const token = getCurrentUser()?.access_token as string | undefined;
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to submit support request:', error);
+        throw error;
+    }
+};
+
