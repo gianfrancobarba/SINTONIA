@@ -4,12 +4,14 @@ import { questionario, tipologiaQuestionario } from '../../../drizzle/schema.js'
 import { eq } from 'drizzle-orm';
 import { ScoreService } from '../../score/score.service.js';
 import { AlertService } from '../../alert/alert.service.js';
+import { BadgeService } from '../../badge/badge.service.js';
 
 @Injectable()
 export class Compilazione_questionarioService {
     constructor(
         private readonly scoreService: ScoreService,
-        private readonly alertService: AlertService
+        private readonly alertService: AlertService,
+        private readonly badgeService: BadgeService
     ) { }
     // Metodo per ottenere un questionario specifico con le sue domande dalla tipologia_questionario
     async getQuestionarioDto(idQuestionario: string): Promise<{
@@ -249,6 +251,9 @@ export class Compilazione_questionarioService {
 
         // Crea alert clinico se necessario (score >= 80, screening completo, max 1/mese)
         await this.alertService.createAlertIfNeeded(idPaziente, score);
+
+        // Controlla e assegna badge guadagnati
+        await this.badgeService.checkAndAwardBadges(idPaziente);
 
         return { idQuestionario: id, score };
     }

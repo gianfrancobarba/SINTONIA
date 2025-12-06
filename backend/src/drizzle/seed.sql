@@ -15,15 +15,19 @@ INSERT INTO badge (nome, descrizione, immagine_badge) VALUES
 ('Primo Questionario', 'Hai compilato il tuo primo questionario.', '/badges/primo_questionario.png'),
 ('Cinque Questionari', 'Hai compilato 5 questionari.', '/badges/cinque_questionari.png'),
 ('Dieci Questionari', 'Hai compilato 10 questionari.', '/badges/dieci_questionari.png'),
+('Venticinque Questionari', 'Hai compilato 25 questionari.', '/badges/venticinque_questionari.png'),
 ('Prima Nota Diario', 'Hai scritto la tua prima annotazione nel diario.', '/badges/prima_nota_diario.png'),
 ('Diario Costante', 'Hai scritto almeno 5 annotazioni nel diario.', '/badges/diario_costante.png'),
+('Narratore', 'Hai scritto 10 pagine di diario.', '/badges/narratore.png'),
+('Diario Esperto', 'Hai scritto 20 pagine di diario.', '/badges/diario_esperto.png'),
 ('Primo Stato dAnimo', 'Hai registrato il tuo primo stato d’animo.', '/badges/primo_stato_animo.png'),
 ('Monitoraggio Umore', 'Hai inserito almeno 10 stati d’animo.', '/badges/monitoraggio_umore.png'),
-('Assegnazione Psicologo', 'Sei stato assegnato a uno psicologo.', '/badges/assegnazione_psicologo.png'),
-('Primo Obiettivo Raggiunto', 'Hai completato il tuo primo obiettivo.', '/badges/primo_obiettivo.png'),
-('Tris di Obiettivi', 'Hai portato a termine almeno 3 obiettivi.', '/badges/tris_obiettivi.png'),
+('Streak Week', 'Hai registrato il tuo stato d''animo per 7 giorni consecutivi.', '/badges/streak_week.png'),
+('Streak Master', 'Hai registrato il tuo stato d''animo per 30 giorni consecutivi.', '/badges/streak_master.png'),
+('Screening Completo', 'Hai completato tutti e 4 i questionari iniziali.', '/badges/screening_completo.png'),
 ('Prima Domanda Forum', 'Hai pubblicato la tua prima domanda nel forum.', '/badges/prima_domanda_forum.png'),
-('Voce Attiva', 'Hai inserito almeno 5 domande.', '/badges/voce_attiva.png');
+('Voce Attiva', 'Hai inserito almeno 5 domande.', '/badges/voce_attiva.png'),
+('Prima Risposta Ricevuta', 'Hai ricevuto una risposta a una tua domanda nel forum.', '/badges/prima_risposta_ricevuta.png');
 
 -- =================================================================================
 -- 3. TIPOLOGIA QUESTIONARIO

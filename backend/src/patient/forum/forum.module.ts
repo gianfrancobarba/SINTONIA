@@ -8,9 +8,10 @@ import { EliminazioneDomandaController } from './eliminazione_domanda.controller
 import { InserimentoDomandaService } from './inserimento_domanda.service.js';
 import { ModificaDomandaService } from './modifica_domanda.service.js';
 import { EliminazioneDomandaService } from './eliminazione_domanda.service.js';
+import { BadgeModule } from '../badge/badge.module.js';
 
 @Module({
-    imports: [DrizzleModule],
+    imports: [DrizzleModule, BadgeModule],
     controllers: [
         ForumController,
         InserimentoDomandaController,

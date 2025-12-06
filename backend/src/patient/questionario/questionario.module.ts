@@ -5,9 +5,10 @@ import { Compilazione_questionarioController } from './compilazione/compilazione
 import { Compilazione_questionarioService } from './compilazione/compilazione_questionario.service.js';
 import { ScoreModule } from '../score/score.module.js';
 import { AlertModule } from '../alert/alert.module.js';
+import { BadgeModule } from '../badge/badge.module.js';
 
 @Module({
-  imports: [ScoreModule, AlertModule],
+  imports: [ScoreModule, AlertModule, BadgeModule],
   controllers: [
     Visualizzazione_lista_questionariController,
     Compilazione_questionarioController,

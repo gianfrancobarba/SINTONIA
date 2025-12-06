@@ -3,9 +3,12 @@ import { DiaryPageDto } from './dto/diary-page.dto.js';
 import { CreateDiaryPageDto } from './dto/create-diary-page.dto.js';
 import { db } from '../../drizzle/db.js';
 import { paginaDiario } from '../../drizzle/schema.js';
+import { BadgeService } from '../badge/badge.service.js';
 
 @Injectable()
 export class CreateDiaryPageService {
+    constructor(private readonly badgeService: BadgeService) { }
+
     /**
      * Create a new diary page for a patient
      * @param patientId - The UUID of the patient
@@ -42,6 +45,9 @@ export class CreateDiaryPageService {
         if (!insertedPage) {
             throw new BadRequestException('Impossibile creare la pagina del diario');
         }
+
+        // Controlla e assegna badge guadagnati
+        await this.badgeService.checkAndAwardBadges(patientId);
 
         return {
             id: insertedPage.id,

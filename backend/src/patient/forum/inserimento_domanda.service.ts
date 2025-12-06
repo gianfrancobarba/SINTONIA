@@ -2,9 +2,12 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
 import { domandaForum } from '../../drizzle/schema.js';
 import { InserisciDomandaDto, DomandaInseritaDto } from './dto/inserimento_domanda.dto.js';
+import { BadgeService } from '../badge/badge.service.js';
 
 @Injectable()
 export class InserimentoDomandaService {
+    constructor(private readonly badgeService: BadgeService) { }
+
     /**
      * Inserisce una nuova domanda nel forum
      * @param idPaziente - ID del paziente che crea la domanda
@@ -41,6 +44,9 @@ export class InserimentoDomandaService {
         if (!idDomanda) {
             throw new Error('Impossibile inserire la domanda nel forum');
         }
+
+        // Controlla e assegna badge guadagnati
+        await this.badgeService.checkAndAwardBadges(idPaziente);
 
         return {
             success: true,

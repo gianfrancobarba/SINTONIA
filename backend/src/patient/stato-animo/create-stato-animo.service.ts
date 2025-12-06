@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
 import { statoAnimo } from '../../drizzle/schema.js';
 import { CreateStatoAnimoDto } from './dto/create-stato-animo.dto.js';
+import { BadgeService } from '../badge/badge.service.js';
 
 /**
  * Service per la creazione di nuovi stati d'animo
@@ -13,6 +14,8 @@ import { CreateStatoAnimoDto } from './dto/create-stato-animo.dto.js';
  */
 @Injectable()
 export class CreateStatoAnimoService {
+    constructor(private readonly badgeService: BadgeService) { }
+
     /**
      * Crea un nuovo stato d'animo per il paziente
      * 
@@ -63,6 +66,9 @@ export class CreateStatoAnimoService {
         if (!insertedRecord) {
             throw new BadRequestException('Impossibile creare lo stato d\'animo');
         }
+
+        // Controlla e assegna badge guadagnati
+        await this.badgeService.checkAndAwardBadges(patientId);
 
         return {
             id: insertedRecord.id,

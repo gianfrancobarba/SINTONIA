@@ -8,6 +8,7 @@ import { UpdateStatoAnimoService } from './update-stato-animo.service.js';
 import { DeleteStatoAnimoController } from './delete-stato-animo.controller.js';
 import { DeleteStatoAnimoService } from './delete-stato-animo.service.js';
 import { DrizzleModule } from '../../drizzle/drizzle.module.js';
+import { BadgeModule } from '../badge/badge.module.js';
 
 /**
  * Modulo NestJS per la gestione degli stati d'animo del paziente
@@ -29,7 +30,7 @@ import { DrizzleModule } from '../../drizzle/drizzle.module.js';
  * - StatoAnimoService: Utilizzato da AreaPersonaleService per aggregazione dati
  */
 @Module({
-    imports: [DrizzleModule],
+    imports: [DrizzleModule, BadgeModule],
     controllers: [
         StatoAnimoController,
         CreateStatoAnimoController,
