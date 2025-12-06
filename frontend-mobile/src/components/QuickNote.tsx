@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../css/QuickNote.css';
 import noteIcon from '../assets/icons/diary.svg';
 import editIcon from '../assets/icons/edit-pen.svg';
-import { getDiaryPages, createDiaryPage, updateDiaryPage } from '../services/diary.service';
+import { createDiaryPage } from '../services/diary.service';
 import Toast from './Toast';
 
 const QuickNote: React.FC = () => {
@@ -15,33 +15,14 @@ const QuickNote: React.FC = () => {
 
         setLoading(true);
         try {
-            // 1. Fetch all diary pages
-            const pages = await getDiaryPages();
+            // Create a new diary page with timestamp for uniqueness
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
 
-            // 2. Check if a page with today's date exists
-            const today = new Date();
-            const todayPage = pages.find(page => {
-                const pageDate = new Date(page.createdAt);
-                return (
-                    pageDate.getDate() === today.getDate() &&
-                    pageDate.getMonth() === today.getMonth() &&
-                    pageDate.getFullYear() === today.getFullYear()
-                );
+            await createDiaryPage({
+                title: `Nota rapida - ${now.toLocaleDateString('it-IT')} ${timeString}`,
+                content: note
             });
-
-            if (todayPage) {
-                // 3. If yes: Update existing page
-                await updateDiaryPage(todayPage.id, {
-                    title: todayPage.title,
-                    content: `${todayPage.content}\n\n${note}`
-                });
-            } else {
-                // 4. If no: Create new page
-                await createDiaryPage({
-                    title: `Diario del ${today.toLocaleDateString('it-IT')}`,
-                    content: note
-                });
-            }
 
             // Clear input on success
             setNote('');
@@ -72,6 +53,7 @@ const QuickNote: React.FC = () => {
                     placeholder="Vuoi inserire una nota rapida?"
                     className="note-input"
                     value={note}
+                    maxLength={100}
                     onChange={(e) => setNote(e.target.value)}
                     disabled={loading}
                     onKeyDown={(e) => {
