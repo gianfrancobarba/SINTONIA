@@ -28,6 +28,7 @@ export class HomeService {
             notificationsCount,
             streakLevel,
             streakProgress,
+            currentStreakDays: consecutiveDays,
             calendarDays,
             suggestedPosts,
         };
