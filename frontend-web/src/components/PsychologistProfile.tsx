@@ -184,7 +184,11 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                         >
                             <HelpCircle className="side-btn-icon" size={24} />
                         </button>
-                        <button className="side-btn" aria-label="Notifications">
+                        <button
+                            className="side-btn"
+                            aria-label="Notifications"
+                            onClick={(e) => handleNavigation('notifiche', e)}
+                        >
                             <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
                         </button>
                     </div>

@@ -9,7 +9,7 @@ import { AlertService } from '../../alert/alert.service.js';
 export class Compilazione_questionarioService {
     constructor(
         private readonly scoreService: ScoreService,
-        private readonly alertService: AlertService
+        private readonly alertService: AlertService,
     ) { }
     // Metodo per ottenere un questionario specifico con le sue domande dalla tipologia_questionario
     async getQuestionarioDto(idQuestionario: string): Promise<{
@@ -249,6 +249,8 @@ export class Compilazione_questionarioService {
 
         // Crea alert clinico se necessario (score >= 80, screening completo, max 1/mese)
         await this.alertService.createAlertIfNeeded(idPaziente, score);
+
+
 
         return { idQuestionario: id, score };
     }
