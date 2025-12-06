@@ -14,6 +14,7 @@ import { SettingsModule } from './settings/settings.module.js';
 import { ScoreModule } from './score/score.module.js';
 import { PrioritaModule } from './priorita/priorita.module.js';
 import { AlertModule } from './alert/alert.module.js';
+import { PatientNotificheModule } from './notifiche/notifiche.module.js';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { AlertModule } from './alert/alert.module.js';
         AlertModule,
         AreaPersonaleModule,
         SettingsModule,
+        PatientNotificheModule,
     ],
     controllers: [
         HomeController,
