@@ -75,4 +75,26 @@ export class NotificationHelperService {
             console.error('Errore nella creazione notifica admin:', error);
         }
     }
+
+    /**
+     * Crea una notifica per un paziente specifico
+     */
+    async notifyPaziente(
+        idPaziente: string,
+        titolo: string,
+        descrizione: string,
+        tipologia: string,
+    ): Promise<void> {
+        try {
+            await db.insert(notifica).values({
+                titolo,
+                descrizione,
+                tipologia,
+                idPaziente,
+                letto: false,
+            });
+        } catch (error) {
+            console.error('Errore nella creazione notifica paziente:', error);
+        }
+    }
 }

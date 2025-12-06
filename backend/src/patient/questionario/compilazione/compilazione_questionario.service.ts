@@ -1,17 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { db } from '../../../drizzle/db.js';
-import { questionario, tipologiaQuestionario, paziente } from '../../../drizzle/schema.js';
+import { questionario, tipologiaQuestionario } from '../../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { ScoreService } from '../../score/score.service.js';
 import { AlertService } from '../../alert/alert.service.js';
-import { NotificationHelperService } from '../../../notifications/notification-helper.service.js';
 
 @Injectable()
 export class Compilazione_questionarioService {
     constructor(
         private readonly scoreService: ScoreService,
         private readonly alertService: AlertService,
-        private readonly notificationHelper: NotificationHelperService
     ) { }
     // Metodo per ottenere un questionario specifico con le sue domande dalla tipologia_questionario
     async getQuestionarioDto(idQuestionario: string): Promise<{
@@ -252,21 +250,7 @@ export class Compilazione_questionarioService {
         // Crea alert clinico se necessario (score >= 80, screening completo, max 1/mese)
         await this.alertService.createAlertIfNeeded(idPaziente, score);
 
-        // Notifica lo psicologo del paziente
-        const patientData = await db
-            .select({ idPsicologo: paziente.idPsicologo })
-            .from(paziente)
-            .where(eq(paziente.idPaziente, idPaziente))
-            .limit(1);
 
-        if (patientData.length > 0 && patientData[0].idPsicologo) {
-            await this.notificationHelper.notifyPsicologo(
-                patientData[0].idPsicologo,
-                'Nuovo questionario compilato',
-                `Un tuo paziente ha compilato il questionario ${nomeTipologia} con score ${score.toFixed(1)}%`,
-                'QUESTIONARIO',
-            );
-        }
 
         return { idQuestionario: id, score };
     }
