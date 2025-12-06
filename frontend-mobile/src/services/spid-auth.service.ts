@@ -8,6 +8,8 @@ export const startSPIDLogin = () => {
 export const handleSPIDCallback = (token: string) => {
     if (token) {
         localStorage.setItem('patient_token', token);
+        // Clear the flag so screening modal check runs after this new login
+        sessionStorage.removeItem('initialQuestionnairesChecked');
         return true;
     }
     return false;
@@ -20,6 +22,14 @@ export const getCurrentPatient = () => {
     // Decode JWT (simplified, in production use jwt-decode)
     try {
         const payload = JSON.parse(atob(token.split('.')[1]));
+
+        // Check if token is expired
+        if (payload.exp && payload.exp * 1000 < Date.now()) {
+            console.log('Token expired, logging out');
+            logout();
+            return null;
+        }
+
         return payload;
     } catch (e) {
         return null;
@@ -28,10 +38,13 @@ export const getCurrentPatient = () => {
 
 export const logout = () => {
     localStorage.removeItem('patient_token');
+    // Clear session-specific flags so screening modal shows on re-login
+    sessionStorage.removeItem('initialQuestionnairesChecked');
 };
 
 export const isAuthenticated = () => {
-    return !!localStorage.getItem('patient_token');
+    const patient = getCurrentPatient();
+    return patient !== null;
 };
 
 export const updateLocalTerms = (_status: boolean) => {

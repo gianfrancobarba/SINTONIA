@@ -12,7 +12,7 @@ import { DrizzleModule } from '../drizzle/drizzle.module.js';
         PassportModule,
         JwtModule.register({
             secret: 'jwt_secret', // Same secret as main auth module
-            signOptions: { expiresIn: '60m' },
+            signOptions: { expiresIn: '24h' },
         }),
     ],
     controllers: [SpidAuthController],

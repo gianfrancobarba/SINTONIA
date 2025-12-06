@@ -213,14 +213,11 @@ export class SpidAuthController {
           .spid-logo {
             display: flex;
             align-items: center;
-            gap: 8px;
           }
           
-          .spid-logo-text {
-            font-size: 36px;
-            font-weight: 700;
-            color: #0066CC;
-            letter-spacing: -1px;
+          .spid-logo-img {
+            height: 50px;
+            width: auto;
           }
           
           .spid-dot {
@@ -232,28 +229,13 @@ export class SpidAuthController {
           }
           
           .provider-badge {
-            background: white;
-            border: 2px solid #0066CC;
-            padding: 8px 16px;
-            border-radius: 4px;
             display: flex;
             align-items: center;
-            gap: 6px;
           }
           
-          .provider-text {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0066CC;
-          }
-          
-          .provider-id {
-            background: #FFCC00;
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: 700;
+          .provider-logo {
+            height: 40px;
+            width: auto;
           }
           
           .login-body {
@@ -432,11 +414,10 @@ export class SpidAuthController {
         <div class="login-container">
           <div class="login-header">
             <div class="spid-logo">
-              <span class="spid-logo-text">spid</span>
+              <img src="${targetFrontendUrl}/spid.png" alt="SPID Logo" class="spid-logo-img" />
             </div>
             <div class="provider-badge">
-              <span class="provider-text">Poste</span>
-              <span class="provider-id">ID</span>
+              <img src="${targetFrontendUrl}/logoposteid.png" alt="PosteID Logo" class="provider-logo" />
             </div>
           </div>
           
@@ -455,7 +436,7 @@ export class SpidAuthController {
                   id="email" 
                   name="email" 
                   class="form-input" 
-                  placeholder="email"
+                  placeholder="inserisci e-mail"
                   required
                   autocomplete="email"
                 >
@@ -470,7 +451,7 @@ export class SpidAuthController {
                     name="password" 
                     class="form-input" 
                     style="padding-right: 45px;"
-                    placeholder="password"
+                    placeholder="inserisci password"
                     required
                     autocomplete="current-password"
                   >
@@ -554,13 +535,18 @@ export class SpidAuthController {
       let tokenData;
 
       if (userType === 'psychologist') {
-        // Per psicologi, manteniamo il flow originale
-        const spidProfile = {
-          fiscalNumber: 'BRBLCA81L15F205J',
-          name: 'Luca',
-          familyName: 'Bruno'
-        };
-        user = await this.spidAuthService.validatePsychologist(spidProfile);
+        // Per psicologi, usiamo email/password mock
+        if (!email) {
+          throw new Error('Email richiesta per il login');
+        }
+
+        user = await this.spidAuthService.authenticatePsychologistWithMockCredentials(email, password);
+
+        if (!user) {
+          throw new Error('Credenziali non valide. Verifica email e password.');
+        }
+
+        console.log(`✓ Autenticazione mock psicologo completata per: ${user.email}`);
         tokenData = await this.spidAuthService.generateToken(user, 'psychologist');
       } else {
         // Per pazienti, usiamo email/password mock
