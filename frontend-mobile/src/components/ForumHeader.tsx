@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/ForumHeader.css';
 
 interface ForumHeaderProps {
-    onAddPost?: () => void; // Optional now, not used in header
+    onAddPost?: () => void;
 }
 
 const ForumHeader: React.FC<ForumHeaderProps> = () => {
@@ -11,7 +11,6 @@ const ForumHeader: React.FC<ForumHeaderProps> = () => {
             <div className="forum-header-content">
                 <div className="forum-title-section">
                     <h1 className="forum-title">Forum</h1>
-
                 </div>
             </div>
         </div>
