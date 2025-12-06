@@ -307,14 +307,13 @@ input:checked+.slider:before {
 }
 
 .spid-logo-footer {
-    margin-top: 40px;
     opacity: 0.8;
     display: flex;
     justify-content: center;
 }
 
 .spid-logo-footer img {
-    max-width: 140px;
+    max-width: 14rem;
     height: auto;
     object-fit: contain;
 }
