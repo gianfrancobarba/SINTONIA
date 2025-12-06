@@ -23,6 +23,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
             if (path.includes('/clinical-alerts')) return 'alert';
             if (path.includes('/technical-support')) return 'supporto-tecnico';
             if (path.includes('/personal-area')) return 'area-personale';
+            if (path.includes('/notifications')) return 'notifiche';
         } else {
             if (path.includes('/patients')) return 'pazienti';
             if (path.includes('/psychologists')) return 'psicologi';
@@ -31,6 +32,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
             if (path.includes('/technical-support')) return 'supporto';
             if (path.includes('/forum')) return 'forum';
             if (path.includes('/personal-area')) return 'area-personale';
+            if (path.includes('/notifications')) return 'notifiche';
         }
 
         return '';
@@ -67,6 +69,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
                 break;
             case 'supporto':
                 navigate(`${basePath}/technical-support`);
+                break;
+            case 'notifiche':
+                navigate(`${basePath}/notifications`);
                 break;
             default:
                 navigate(basePath);

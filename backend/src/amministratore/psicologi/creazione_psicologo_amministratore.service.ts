@@ -3,9 +3,12 @@ import { db } from '../../drizzle/db.js';
 import { psicologo } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { CreaPsicologoDto } from './dto/crea-psicologo.dto.js';
+import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
 
 @Injectable()
 export class Creazione_psicologo_amministratoreService {
+    constructor(private readonly notificationHelper: NotificationHelperService) { }
+
     /**
      * Crea un nuovo psicologo nel sistema
      */
@@ -36,6 +39,13 @@ export class Creazione_psicologo_amministratoreService {
                 immagineProfilo: '/images/psychologist-photo.png', // Immagine di default
             })
             .returning();
+
+        // Notifica tutti gli admin del nuovo psicologo
+        await this.notificationHelper.notifyAllAdmins(
+            'Nuovo psicologo registrato',
+            `È stato aggiunto il Dott. ${dto.nome} ${dto.cognome} (${dto.aslAppartenenza})`,
+            'SISTEMA',
+        );
 
         return {
             success: true,

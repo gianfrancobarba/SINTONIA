@@ -1,10 +1,14 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
-import { domandaForum } from '../../drizzle/schema.js';
+import { domandaForum, paziente } from '../../drizzle/schema.js';
+import { eq } from 'drizzle-orm';
 import { InserisciDomandaDto, DomandaInseritaDto } from './dto/inserimento_domanda.dto.js';
+import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
 
 @Injectable()
 export class InserimentoDomandaService {
+    constructor(private readonly notificationHelper: NotificationHelperService) { }
+
     /**
      * Inserisce una nuova domanda nel forum
      * @param idPaziente - ID del paziente che crea la domanda
@@ -42,6 +46,22 @@ export class InserimentoDomandaService {
             throw new Error('Impossibile inserire la domanda nel forum');
         }
 
+        // Recupera lo psicologo del paziente e notificalo
+        const patientData = await db
+            .select({ idPsicologo: paziente.idPsicologo })
+            .from(paziente)
+            .where(eq(paziente.idPaziente, idPaziente))
+            .limit(1);
+
+        if (patientData.length > 0 && patientData[0].idPsicologo) {
+            await this.notificationHelper.notifyPsicologo(
+                patientData[0].idPsicologo,
+                'Nuova domanda nel forum',
+                `Un tuo paziente ha pubblicato una domanda: "${dto.titolo.trim()}"`,
+                'FORUM',
+            );
+        }
+
         return {
             success: true,
             idDomanda,
@@ -49,3 +69,4 @@ export class InserimentoDomandaService {
         };
     }
 }
+

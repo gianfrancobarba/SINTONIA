@@ -161,7 +161,11 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSect
                         />
                     </div>
 
-                    <button className="side-btn right-side-btn" aria-label="Notifications">
+                    <button
+                        className="side-btn right-side-btn"
+                        aria-label="Notifications"
+                        onClick={(e) => handleNavigation('notifiche', e)}
+                    >
                         <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
                     </button>
                 </div>

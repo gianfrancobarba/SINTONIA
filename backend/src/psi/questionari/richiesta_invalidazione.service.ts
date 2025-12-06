@@ -2,9 +2,12 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { eq } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
 import { questionario } from '../../drizzle/schema.js';
+import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
 
 @Injectable()
 export class RichiestaInvalidazioneService {
+    constructor(private readonly notificationHelper: NotificationHelperService) { }
+
     async richiestaInvalidazione(
         idQuestionario: string,
         idPsicologo: string,
@@ -49,6 +52,13 @@ export class RichiestaInvalidazioneService {
                 dataInvalidazione: new Date(),
             })
             .where(eq(questionario.idQuestionario, idQuestionario));
+
+        // 5. Notifica tutti gli admin della richiesta
+        await this.notificationHelper.notifyAllAdmins(
+            'Nuova richiesta di invalidazione',
+            `È stata ricevuta una nuova richiesta di invalidazione questionario. Verifica nella sezione Richieste.`,
+            'INVALIDAZIONE',
+        );
 
         return {
             success: true,
