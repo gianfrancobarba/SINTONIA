@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { ForumPost } from '../types/forum';
 import { formatRelativeTime, categoryInfo } from '../services/forum.service';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import '../css/ForumPostCard.css';
 import EditIcon from '../assets/icons/edit-pen.svg';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ForumPostCardProps {
     post: ForumPost;
@@ -14,17 +15,30 @@ interface ForumPostCardProps {
 
 const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, onEdit, onDelete }) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isContentExpanded, setIsContentExpanded] = useState(false);
+    const [areAnswersExpanded, setAreAnswersExpanded] = useState(false);
+    const [isContentTruncated, setIsContentTruncated] = useState(false);
+    const contentRef = useRef<HTMLParagraphElement>(null);
 
     const category = categoryInfo.find(c => c.id === post.category);
     const categoryColor = category?.color || '#888';
 
-    const handleEdit = () => {
+    // Check if content is truncated
+    useEffect(() => {
+        if (contentRef.current) {
+            setIsContentTruncated(contentRef.current.scrollHeight > contentRef.current.clientHeight);
+        }
+    }, [post.content]);
+
+    const handleEdit = (e: React.MouseEvent) => {
+        e.stopPropagation();
         if (onEdit) {
             onEdit(post.id);
         }
     };
 
-    const handleDelete = () => {
+    const handleDelete = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setShowDeleteModal(true);
     };
 
@@ -34,6 +48,8 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
         }
         setShowDeleteModal(false);
     };
+
+    const hasAnswers = post.answers && post.answers.length > 0;
 
     return (
         <div className="forum-post-card">
@@ -49,12 +65,12 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
                     </div>
                 </div>
                 {/* Mostra azioni SOLO se è una domanda propria E NON ha risposte */}
-                {isOwnPost && (!post.answers || post.answers.length === 0) && (
+                {isOwnPost && !hasAnswers && (
                     <div className="post-menu-container">
                         {onEdit && (
                             <button
                                 className="post-action-btn edit-btn"
-                                onClick={(e) => { e.stopPropagation(); handleEdit(); }}
+                                onClick={handleEdit}
                                 aria-label="Modifica"
                             >
                                 <img src={EditIcon} alt="" />
@@ -63,7 +79,7 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
                         {onDelete && (
                             <button
                                 className="post-action-btn delete-btn"
-                                onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+                                onClick={handleDelete}
                                 aria-label="Elimina"
                             >
                                 ×
@@ -72,33 +88,60 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
                     </div>
                 )}
             </div>
-            <p className="post-content">{post.content}</p>
 
-            {/* Mostra risposte se presenti */}
-            {post.answers && post.answers.length > 0 && (
+            {/* Post Content with expand */}
+            <p
+                ref={contentRef}
+                className={`post-content ${isContentExpanded ? 'expanded' : ''}`}
+            >
+                {post.content}
+            </p>
+            {isContentTruncated && !isContentExpanded && (
+                <button className="expand-btn" onClick={() => setIsContentExpanded(true)}>
+                    Leggi di più
+                </button>
+            )}
+            {isContentExpanded && (
+                <button className="expand-btn" onClick={() => setIsContentExpanded(false)}>
+                    Mostra meno
+                </button>
+            )}
+
+            {/* Answers Section */}
+            {hasAnswers && (
                 <div className="post-answers">
-                    <h4 className="answers-title">
-                        Risposto da {post.answers.length} {post.answers.length > 1 ? 'psicologi' : 'psicologo'}
-                    </h4>
-                    {post.answers.map((answer) => (
-                        <div key={answer.idRisposta} className="answer-card">
-                            <div className="answer-header">
-                                <strong>Dr. {answer.nomePsicologo} {answer.cognomePsicologo}</strong>
-                                <span className="answer-date">{formatRelativeTime(new Date(answer.dataRisposta))}</span>
-                            </div>
-                            <p className="answer-content">{answer.testo}</p>
+                    <button
+                        className="answers-toggle"
+                        onClick={() => setAreAnswersExpanded(!areAnswersExpanded)}
+                    >
+                        <span className="answers-toggle-text">
+                            Risposto da {post.answers!.length} {post.answers!.length > 1 ? 'psicologi' : 'psicologo'}
+                        </span>
+                        {areAnswersExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    </button>
+
+                    {areAnswersExpanded && (
+                        <div className="answers-list">
+                            {post.answers!.map((answer) => (
+                                <div key={answer.idRisposta} className="answer-card">
+                                    <div className="answer-header">
+                                        <strong>Dr. {answer.nomePsicologo} {answer.cognomePsicologo}</strong>
+                                        <span className="answer-date">{formatRelativeTime(new Date(answer.dataRisposta))}</span>
+                                    </div>
+                                    <p className="answer-content">{answer.testo}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
             )}
 
             {/* Modal conferma eliminazione */}
-            {showDeleteModal && (
-                <ConfirmDeleteModal
-                    onConfirm={confirmDelete}
-                    onCancel={() => setShowDeleteModal(false)}
-                />
-            )}
+            <ConfirmDeleteModal
+                isOpen={showDeleteModal}
+                onConfirm={confirmDelete}
+                onCancel={() => setShowDeleteModal(false)}
+            />
         </div>
     );
 };

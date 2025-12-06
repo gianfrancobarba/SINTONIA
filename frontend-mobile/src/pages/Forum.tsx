@@ -18,6 +18,7 @@ const Forum: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState<ForumCategory[]>([]);
     const [showToast, setShowToast] = useState(false);
+    const [filter, setFilter] = useState<'all' | 'mine'>('all'); // New filter state
 
     useEffect(() => {
         fetchPosts();
@@ -86,6 +87,11 @@ const Forum: React.FC = () => {
         ? publicQuestions.filter(q => selectedCategories.includes(q.category))
         : publicQuestions;
 
+    // Display questions based on filter
+    // 'all' = only public questions (not mine)
+    // 'mine' = only my questions
+    const displayQuestions = filter === 'mine' ? filteredMyQuestions : filteredPublicQuestions;
+
     if (loading) {
         return <div className="loading-screen">Caricamento...</div>;
     }
@@ -97,48 +103,51 @@ const Forum: React.FC = () => {
                 selectedCategories={selectedCategories}
                 onCategoryChange={handleCategoryChange}
             />
+
+            {/* Filter Toggle - below category filters */}
+            <div className="forum-filter-section">
+                <div className="forum-filter-toggle">
+                    <button
+                        className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                        onClick={() => setFilter('all')}
+                    >
+                        Pubbliche
+                    </button>
+                    <button
+                        className={`filter-btn ${filter === 'mine' ? 'active' : ''}`}
+                        onClick={() => setFilter('mine')}
+                    >
+                        Le mie
+                    </button>
+                </div>
+            </div>
+
             <div className="forum-content">
-                {/* Sezione Le Mie Domande */}
-                {filteredMyQuestions.length > 0 && (
+                {/* Sezione con titolo condizionale */}
+                {displayQuestions.length > 0 ? (
                     <div className="forum-section">
-                        <h2 className="section-title">Le Mie Domande</h2>
+                        <h2 className="section-title">
+                            {filter === 'mine' ? 'Le Mie Domande' : 'Domande Pubbliche'}
+                        </h2>
                         <div className="posts-list">
-                            {filteredMyQuestions.map(post => (
+                            {displayQuestions.map(post => (
                                 <div key={post.id} id={`post-${post.id}`}>
                                     <ForumPostCard
                                         post={post}
-                                        isOwnPost={true}
-                                        onEdit={handleEditPost}
-                                        onDelete={handleDeletePost}
+                                        isOwnPost={filter === 'mine'}
+                                        onEdit={filter === 'mine' ? handleEditPost : undefined}
+                                        onDelete={filter === 'mine' ? handleDeletePost : undefined}
                                     />
                                 </div>
                             ))}
                         </div>
                     </div>
-                )}
-
-                {/* Sezione Domande Pubbliche */}
-                {filteredPublicQuestions.length > 0 && (
-                    <div className="forum-section">
-                        <h2 className="section-title">Domande Pubbliche</h2>
-                        <div className="posts-list">
-                            {filteredPublicQuestions.map(post => (
-                                <div key={post.id} id={`post-${post.id}`}>
-                                    <ForumPostCard
-                                        post={post}
-                                        isOwnPost={false}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* Messaggio se non ci sono domande */}
-                {filteredMyQuestions.length === 0 && filteredPublicQuestions.length === 0 && (
+                ) : (
                     <div className="no-posts">
                         <p>Nessuna domanda trovata.</p>
-                        {selectedCategories.length === 0 ? (
+                        {filter === 'mine' ? (
+                            <p className="no-posts-hint">Non hai ancora fatto domande. Aggiungi la tua prima domanda!</p>
+                        ) : selectedCategories.length === 0 ? (
                             <p className="no-posts-hint">Aggiungi la tua prima domanda!</p>
                         ) : (
                             <p className="no-posts-hint">Prova a selezionare altre categorie.</p>

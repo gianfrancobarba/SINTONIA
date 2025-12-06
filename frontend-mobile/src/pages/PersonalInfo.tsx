@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
-import { User, Cake, MapPin, Mail, Save } from 'lucide-react';
+import { User, Cake, MapPin, Mail, AlertCircle } from 'lucide-react';
 import { getPersonalInfo, updatePersonalInfo } from '../services/settings.service.ts';
 import type { PersonalInfoDto } from '../types/settings.ts';
+import Toast from '../components/Toast';
 import '../css/PersonalInfo.css';
 
 const PersonalInfo: React.FC = () => {
@@ -57,7 +58,10 @@ const PersonalInfo: React.FC = () => {
 
     const showToast = (message: string, type: 'success' | 'error') => {
         setToast({ show: true, message, type });
-        setTimeout(() => setToast({ ...toast, show: false }), 3000);
+    };
+
+    const hideToast = () => {
+        setToast({ ...toast, show: false });
     };
 
     const validateEmail = (email: string): boolean => {
@@ -182,9 +186,15 @@ const PersonalInfo: React.FC = () => {
                             onChange={handleEmailChange}
                             placeholder="Inserisci la tua email"
                             readOnly={!isEditing}
+                            maxLength={100}
                         />
                     </div>
-                    {emailError && <span className="error-message">{emailError}</span>}
+                    {emailError && (
+                        <div className="error-message">
+                            <AlertCircle size={16} />
+                            <span>{emailError}</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="form-section">
@@ -226,9 +236,12 @@ const PersonalInfo: React.FC = () => {
 
             {/* Toast Notification */}
             {toast.show && (
-                <div className={`toast-notification ${toast.type}`}>
-                    {toast.message}
-                </div>
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    duration={2000}
+                    onClose={hideToast}
+                />
             )}
         </div>
     );
