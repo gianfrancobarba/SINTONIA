@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import '../css/ConfirmDeleteModal.css';
 
 interface ConfirmDeleteModalProps {
-    isOpen: boolean;
+    isOpen?: boolean;
     onConfirm: () => void;
     onCancel: () => void;
     title?: string;
@@ -11,7 +11,7 @@ interface ConfirmDeleteModalProps {
 }
 
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
-    isOpen,
+    isOpen = true,
     onConfirm,
     onCancel,
     title = "Conferma eliminazione",
@@ -44,13 +44,13 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     return ReactDOM.createPortal(
         <div
             className="confirm-modal-overlay"
-            onClick={(e) => e.stopPropagation()}
+            onClick={onCancel}
         >
             <div
                 className="confirm-modal-box"
                 onClick={(e) => e.stopPropagation()}
             >
-                <h3 className="confirm-modal-title">{title}</h3>
+                <h2 className="confirm-modal-title">{title}</h2>
                 <p className="confirm-modal-message">{message}</p>
                 <div className="confirm-modal-buttons">
                     <button

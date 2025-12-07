@@ -27,6 +27,7 @@ export class Modifica_psicologo_amministratoreService {
         const updateData: any = {};
         if (dto.email !== undefined) updateData.email = dto.email;
         if (dto.aslAppartenenza !== undefined) updateData.aslAppartenenza = dto.aslAppartenenza;
+        if (dto.stato !== undefined) updateData.stato = dto.stato;
 
         if (Object.keys(updateData).length === 0) {
             return {

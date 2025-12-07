@@ -15,6 +15,8 @@ import PsychologistTechnicalSupport from './pages/PsychologistTechnicalSupport';
 import PsychologistPersonalArea from './components/PsychologistPersonalArea';
 import AdminPersonalArea from './components/AdminPersonalArea';
 import SpidCallback from './pages/SpidCallback';
+import SpidError from './pages/SpidError';
+import NotificationCenter from './pages/NotificationCenter';
 import { getCurrentUser } from './services/auth.service';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +31,7 @@ function App() {
         {/* Login page */}
         <Route path="/login" element={<Login />} />
         <Route path="/spid-callback" element={<SpidCallback />} />
+        <Route path="/spid-error" element={<SpidError />} />
 
         {/* Psychologist Dashboard with nested routes */}
         <Route
@@ -46,6 +49,7 @@ function App() {
           <Route path="clinical-alerts" element={<ClinicalAlerts />} />
           <Route path="technical-support" element={<PsychologistTechnicalSupport />} />
           <Route path="personal-area" element={<PsychologistPersonalArea onProfileUpdate={() => { }} />} />
+          <Route path="notifications" element={<NotificationCenter />} />
         </Route>
 
         {/* Admin Dashboard with nested routes */}
@@ -65,6 +69,7 @@ function App() {
           <Route path="technical-support" element={<AdminTechnicalSupport />} />
           <Route path="forum" element={<ForumPage />} />
           <Route path="personal-area" element={<AdminPersonalArea />} />
+          <Route path="notifications" element={<NotificationCenter />} />
         </Route>
 
         {/* Legacy routes - redirect to new structure */}

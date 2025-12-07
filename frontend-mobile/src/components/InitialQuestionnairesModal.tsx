@@ -5,17 +5,73 @@ import '../css/InitialQuestionnairesModal.css';
 interface InitialQuestionnairesModalProps {
     isOpen: boolean;
     onClose: () => void;
+    pendingQuestionnaires: string[];
 }
 
-const InitialQuestionnairesModal: React.FC<InitialQuestionnairesModalProps> = ({ isOpen, onClose }) => {
+// Mapping of questionnaire names to their display data
+// Icons are semantically appropriate for each clinical questionnaire type
+const QUESTIONNAIRE_CONFIG: Record<string, { className: string; icon: React.ReactNode }> = {
+    'PHQ-9': {
+        className: 'phq9',
+
+        icon: (
+            // Brain/mind icon - represents mental health/depression screening
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4.5C10.5 4.5 9.25 5 8.5 6C7.5 5.5 6 5.5 5 6.5C4 7.5 4 9 4.5 10C3.5 11 3.5 12.5 4.5 13.5C4 14.5 4 16 5 17C6 18 7.5 18 8.5 17.5C9.25 18.5 10.5 19 12 19C13.5 19 14.75 18.5 15.5 17.5C16.5 18 18 18 19 17C20 16 20 14.5 19.5 13.5C20.5 12.5 20.5 11 19.5 10C20 9 20 7.5 19 6.5C18 5.5 16.5 5.5 15.5 6C14.75 5 13.5 4.5 12 4.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M12 19V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+        )
+    },
+    'GAD-7': {
+        className: 'gad7',
+
+        icon: (
+            // Heart with pulse - represents anxiety/heart rate
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 6C12 6 8.5 2 5 5C1.5 8 4 12 12 20C20 12 22.5 8 19 5C15.5 2 12 6 12 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M5 12H8L10 9L12 15L14 11L16 12H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        )
+    },
+    'WHO-5': {
+        className: 'who5',
+        icon: (
+            // Smile face - represents wellbeing/happiness
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+                <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <circle cx="9" cy="10" r="1" fill="currentColor" />
+                <circle cx="15" cy="10" r="1" fill="currentColor" />
+            </svg>
+        )
+    },
+    'PC-PTSD-5': {
+        className: 'pcptsd5',
+
+        icon: (
+            // Shield icon - represents protection/trauma screening
+            <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3L4 7V12C4 16.5 7.5 20.5 12 21.5C16.5 20.5 20 16.5 20 12V7L12 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M12 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <circle cx="12" cy="15" r="1" fill="currentColor" />
+            </svg>
+        )
+    }
+};
+
+const InitialQuestionnairesModal: React.FC<InitialQuestionnairesModalProps> = ({ isOpen, onClose, pendingQuestionnaires }) => {
     const navigate = useNavigate();
 
-    if (!isOpen) return null;
+    // Don't render if not open or no pending questionnaires
+    if (!isOpen || pendingQuestionnaires.length === 0) return null;
 
     const handleGoToQuestionnaires = () => {
         onClose();
         navigate('/questionari');
     };
+
+    const questionnaireCount = pendingQuestionnaires.length;
+    const questionnaireWord = questionnaireCount === 1 ? 'questionario' : 'questionari';
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -34,48 +90,23 @@ const InitialQuestionnairesModal: React.FC<InitialQuestionnairesModalProps> = ({
 
                 <div className="modal-body">
                     <p className="intro-text">
-                        Completa <strong>4 questionari</strong> per valutare il tuo benessere
+                        Completa <strong>{questionnaireCount} {questionnaireWord}</strong> per valutare il tuo benessere
                     </p>
 
-                    <div className="questionnaire-grid">
-                        <div className="grid-item phq9">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M8 12H16M8 8H16M8 16H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                </svg>
-                            </div>
-                            <strong>PHQ-9</strong>
-                        </div>
+                    <div className={`questionnaire-grid count-${questionnaireCount}`}>
+                        {pendingQuestionnaires.map((name) => {
+                            const config = QUESTIONNAIRE_CONFIG[name];
+                            if (!config) return null;
 
-                        <div className="grid-item gad7">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M12 8V12L14.5 14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                </svg>
-                            </div>
-                            <strong>GAD-7</strong>
-                        </div>
-
-                        <div className="grid-item who5">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <strong>WHO-5</strong>
-                        </div>
-
-                        <div className="grid-item pcptsd5">
-                            <div className="grid-icon-wrapper">
-                                <svg className="grid-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <strong>PC-PTSD-5</strong>
-                        </div>
+                            return (
+                                <div key={name} className={`grid-item ${config.className}`}>
+                                    <div className="grid-icon-wrapper">
+                                        {config.icon}
+                                    </div>
+                                    <strong>{name}</strong>
+                                </div>
+                            );
+                        })}
                     </div>
 
                     <div className="info-box">

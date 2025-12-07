@@ -180,4 +180,39 @@ export class Visualizzazione_lista_questionariService {
         // Tutti e 4 i questionari sono stati compilati almeno una volta
         return true;
     }
+
+    /**
+     * Ritorna la lista dei questionari iniziali da compilare
+     * I questionari iniziali sono: PHQ-9, GAD-7, WHO-5, PC-PTSD-5
+     * Un questionario è "pending" solo se non è mai stato compilato.
+     * Questo modal appare solo finché tutti e 4 i questionari iniziali non sono stati completati almeno una volta.
+     * @param userId - ID del paziente
+     * @returns Array con i nomi dei questionari da compilare
+     */
+    async getPendingInitialQuestionnaires(userId: string): Promise<string[]> {
+        const INITIAL_QUESTIONNAIRES = ['PHQ-9', 'GAD-7', 'WHO-5', 'PC-PTSD-5'];
+        const pending: string[] = [];
+
+        for (const questionnaireName of INITIAL_QUESTIONNAIRES) {
+            // Verifica se esiste almeno una compilazione per questo questionario
+            const compilations = await db
+                .select({ id: questionario.idQuestionario })
+                .from(questionario)
+                .where(
+                    and(
+                        eq(questionario.idPaziente, userId),
+                        eq(questionario.nomeTipologia, questionnaireName)
+                    )
+                )
+                .limit(1);
+
+            if (compilations.length === 0) {
+                // Mai compilato -> pending
+                pending.push(questionnaireName);
+            }
+            // Se già compilato almeno una volta, NON viene aggiunto ai pending
+        }
+
+        return pending;
+    }
 }

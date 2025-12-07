@@ -190,13 +190,6 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/spid-error" element={
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h1>Errore autenticazione SPID</h1>
-            <p>Si è verificato un errore durante l'autenticazione.</p>
-            <a href="/">Torna alla home</a>
-          </div>
-        } />
         <Route path="/spid-error" element={<SPIDError />} />
       </Routes>
     </Router>

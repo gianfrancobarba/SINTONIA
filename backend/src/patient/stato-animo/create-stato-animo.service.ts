@@ -43,15 +43,15 @@ export class CreateStatoAnimoService {
         const values: any = {
             idPaziente: patientId,
             umore: dto.umore, // Drizzle gestirà il cast all'enum
+            intensita: dto.intensita,
         };
-
-        // Aggiungi campi opzionali solo se presenti
-        if (dto.intensita !== undefined && dto.intensita !== null) {
-            values.intensita = dto.intensita;
-        }
 
         if (dto.note !== undefined && dto.note !== null && dto.note.trim().length > 0) {
             values.note = dto.note.trim();
+        }
+
+        if (dto.dataInserimento) {
+            values.dataInserimento = new Date(dto.dataInserimento);
         }
 
         // Inserisci nel database

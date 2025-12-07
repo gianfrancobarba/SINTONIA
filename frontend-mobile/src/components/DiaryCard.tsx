@@ -25,6 +25,12 @@ const DiaryCard: React.FC<DiaryCardProps> = ({
     zIndex
 }) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
+    const [skipTransition, setSkipTransition] = React.useState(false);
+
+    // Touch gesture state for detecting swipe on expanded card
+    const [touchStart, setTouchStart] = React.useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = React.useState<number | null>(null);
+    const minSwipeDistance = 50;
 
     // Tronca il contenuto per l'anteprima
     const truncateContent = (text: string, maxLength: number = 280) => {
@@ -68,16 +74,58 @@ const DiaryCard: React.FC<DiaryCardProps> = ({
         setIsExpanded(false);
     };
 
+    // Touch handlers for expanded card swipe-to-close
+    const onTouchStart = (e: React.TouchEvent) => {
+        if (!isExpanded) return;
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        if (!isExpanded) return;
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!isExpanded || !touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        // If user swipes while expanded, collapse and navigate immediately
+        if (isLeftSwipe || isRightSwipe) {
+            // Skip transition for instant position change
+            setSkipTransition(true);
+            setIsExpanded(false);
+            if (isLeftSwipe && onSwipeLeft) {
+                onSwipeLeft();
+            } else if (isRightSwipe && onSwipeRight) {
+                onSwipeRight();
+            }
+            // Re-enable transitions after a frame
+            requestAnimationFrame(() => {
+                setSkipTransition(false);
+            });
+        }
+
+        setTouchStart(null);
+        setTouchEnd(null);
+    };
+
     return (
         <>
             {isExpanded && <div className="diary-card-overlay" onClick={handleCloseExpand} />}
             <div
-                className={`diary-card diary-card-${position} ${isExpanded ? 'diary-card-expanded' : ''}`}
+                className={`diary-card diary-card-${position} ${isExpanded ? 'diary-card-expanded' : ''} ${skipTransition ? 'diary-card-no-transition' : ''}`}
                 style={{
                     zIndex: isExpanded ? 1000 : zIndex,
                     backgroundColor: getCardColor(page.id)
                 }}
                 onClick={handleCardClick}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
             >
                 <div className="diary-card-content">
                     <div className="diary-card-header">

@@ -15,8 +15,9 @@ const API_BASE_URL = 'http://localhost:3000';
  */
 export async function createMood(
     umore: string,
-    intensita?: number,
-    note?: string
+    intensita: number, // Mandatory
+    note?: string,
+    dataInserimento?: string
 ): Promise<MoodResponse> {
     const token = localStorage.getItem('patient_token');
 
@@ -28,6 +29,7 @@ export async function createMood(
         umore: umore as any,
         intensita,
         note,
+        dataInserimento,
     };
 
     const response = await fetch(`${API_BASE_URL}/paziente/stato-animo`, {

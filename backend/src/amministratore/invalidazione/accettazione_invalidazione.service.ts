@@ -4,12 +4,14 @@ import { db } from '../../drizzle/db.js';
 import { questionario, paziente } from '../../drizzle/schema.js';
 import { ScoreService } from '../../patient/score/score.service.js';
 import { PrioritaService } from '../../patient/priorita/priorita.service.js';
+import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
 
 @Injectable()
 export class Accettazione_invalidazioneService {
     constructor(
         private readonly scoreService: ScoreService,
-        private readonly prioritaService: PrioritaService
+        private readonly prioritaService: PrioritaService,
+        private readonly notificationHelper: NotificationHelperService,
     ) { }
 
     /**
@@ -167,6 +169,16 @@ export class Accettazione_invalidazioneService {
             idAmministratoreConferma: emailAmministratore,
             cambiamento: false,
         }).where(eq(questionario.idQuestionario, idQuestionario));
+
+        // 2b. Notifica lo psicologo che ha richiesto l'invalidazione
+        if (quest.idPsicologoRichiedente) {
+            await this.notificationHelper.notifyPsicologo(
+                quest.idPsicologoRichiedente,
+                'Richiesta di invalidazione accettata',
+                'La tua richiesta di invalidazione questionario è stata accettata.',
+                'INVALIDAZIONE',
+            );
+        }
 
         // 3. Trova questionario PRECEDENTE con cambiamento=true
         const precedente = await this.trovaQuestionarioPrecedenteConCambiamento(

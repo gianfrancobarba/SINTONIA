@@ -102,14 +102,14 @@
     max-width: 400px;
     height: 500px;
     position: relative;
-    margin-bottom: 32px;
-    margin-top: 0;
+    margin-bottom: 48px;
+    margin-top: 16px;
 }
 
 /* Page Indicator */
 .diary-indicator {
     position: absolute;
-    bottom: 80px;
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
@@ -236,7 +236,7 @@
     }
 
     .diary-indicator {
-        bottom: 60px;
+        bottom: 40px;
     }
 
     .diary-page-counter {

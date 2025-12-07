@@ -252,9 +252,6 @@ export class Compilazione_questionarioService {
         // Crea alert clinico se necessario (score >= 80, screening completo, max 1/mese)
         await this.alertService.createAlertIfNeeded(idPaziente, score);
 
-        // Controlla e assegna badge guadagnati
-        await this.badgeService.checkAndAwardBadges(idPaziente);
-
         return { idQuestionario: id, score };
     }
 

@@ -109,6 +109,11 @@ export class SpidAuthService {
             .where(eq(schema.psicologo.codFiscale, spidProfile.fiscalNumber));
 
         if (psychologists.length > 0) {
+            // Verifica se lo psicologo è attivo
+            if (psychologists[0].stato === false) {
+                console.warn(`Access denied for psychologist ${psychologists[0].codFiscale}: account deactivated`);
+                throw new UnauthorizedException('Accesso negato: Il tuo account è stato disattivato. Contatta l\'amministratore.');
+            }
             console.log('Psychologist found:', psychologists[0].codFiscale);
             return psychologists[0];
         }
@@ -152,6 +157,11 @@ export class SpidAuthService {
             .where(eq(schema.psicologo.codFiscale, codFiscale));
 
         if (psychologists.length > 0) {
+            // Verifica se lo psicologo è attivo
+            if (psychologists[0].stato === false) {
+                console.warn(`Access denied for psychologist ${psychologists[0].codFiscale}: account deactivated`);
+                return null;
+            }
             console.log('Psychologist authenticated:', psychologists[0].codFiscale);
             return psychologists[0];
         }
@@ -184,5 +194,34 @@ export class SpidAuthService {
                 terms: user.terms,
             },
         };
+    }
+
+    async findPatientByCodFiscale(codFiscale: string) {
+        const patients = await this.db
+            .select()
+            .from(schema.paziente)
+            .where(eq(schema.paziente.codFiscale, codFiscale));
+
+        if (patients.length > 0) {
+            return patients[0];
+        }
+        return null;
+    }
+
+    async findPsychologistByCodFiscale(codFiscale: string) {
+        const psychologists = await this.db
+            .select()
+            .from(schema.psicologo)
+            .where(eq(schema.psicologo.codFiscale, codFiscale));
+
+        if (psychologists.length > 0) {
+            // Verifica se lo psicologo è attivo
+            if (psychologists[0].stato === false) {
+                console.warn(`Access denied for psychologist ${psychologists[0].codFiscale}: account deactivated`);
+                return null;
+            }
+            return psychologists[0];
+        }
+        return null;
     }
 }

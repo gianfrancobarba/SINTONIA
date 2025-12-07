@@ -3,12 +3,16 @@ import { db } from '../../drizzle/db.js';
 import { domandaForum, rispostaForum, psicologo } from '../../drizzle/schema.js';
 import { eq, not, exists, and } from 'drizzle-orm';
 import { ForumQuestionDto } from '../../forum-comune/dto/forum.dto.js';
+import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
 
 type DrizzleDB = typeof db;
 
 @Injectable()
 export class PsiForumService {
-    constructor(@Inject('drizzle') private db: DrizzleDB) { }
+    constructor(
+        @Inject('drizzle') private db: DrizzleDB,
+        private readonly notificationHelper: NotificationHelperService,
+    ) { }
 
     async getAllQuestions(categoria?: string) {
         let query = this.db
@@ -166,11 +170,27 @@ export class PsiForumService {
     }
 
     async createAnswer(psiId: string, questionId: string, text: string) {
+        // 1. Recupera la domanda per ottenere il paziente autore
+        const question = await db.query.domandaForum.findFirst({
+            where: eq(domandaForum.idDomanda, questionId)
+        });
+
+        // 2. Inserisce la risposta
         const [newAnswer] = await this.db.insert(rispostaForum).values({
             testo: text,
             idPsicologo: psiId,
             idDomanda: questionId,
         }).returning();
+
+        // 3. Notifica il paziente che ha posto la domanda
+        if (question?.idPaziente) {
+            await this.notificationHelper.notifyPaziente(
+                question.idPaziente,
+                'Nuova risposta alla tua domanda',
+                `Uno psicologo ha risposto alla tua domanda: "${question.titolo}"`,
+                'FORUM',
+            );
+        }
 
         return newAnswer;
     }

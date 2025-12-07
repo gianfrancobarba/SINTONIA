@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Search, User, Mail, Building2, IdCard, Edit2, Save, X, Check } from 'lucide-react';
+import { Search, User, Mail, Building2, IdCard, Edit2, Save, X, Check, Trash2 } from 'lucide-react';
 import '../css/QuestionnaireDetailModal.css';
-import { updatePsychologist } from '../services/psychologist.service';
+import { updatePsychologist, deletePsychologist } from '../services/psychologist.service';
 import Toast from './Toast';
 
 interface PsychologistData {
@@ -11,6 +11,7 @@ interface PsychologistData {
     cognome: string;
     aslAppartenenza: string;
     email: string;
+    stato?: boolean | 'Attivo' | 'Inattivo'; // Supporta sia boolean che string
 }
 
 interface AdminPsychologistDetailModalProps {
@@ -45,6 +46,9 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
     const [aslSearch, setAslSearch] = useState('');
     const [showAslDropdown, setShowAslDropdown] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isActivating, setIsActivating] = useState(false);
 
     React.useEffect(() => {
         if (psychologist) {
@@ -103,6 +107,67 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
         setShowAslDropdown(false);
     };
 
+    const handleDelete = async () => {
+        if (!psychologist) return;
+        setIsDeleting(true);
+
+        try {
+            await deletePsychologist(psychologist.codiceFiscale);
+            setToast({
+                message: 'Psicologo eliminato con successo!',
+                type: 'success'
+            });
+
+            setTimeout(() => {
+                onClose();
+                if (onUpdate) onUpdate();
+            }, 1500);
+        } catch (error: any) {
+            setToast({
+                message: error.message || 'Errore durante l\'eliminazione',
+                type: 'error'
+            });
+            setIsDeleting(false);
+            setShowDeleteConfirm(false);
+        }
+    };
+
+    const handleActivate = async () => {
+        if (!psychologist) return;
+        setIsActivating(true);
+
+        try {
+            // Usa l'endpoint di modifica per impostare stato = true
+            await updatePsychologist(psychologist.codiceFiscale, {
+                email: psychologist.email,
+                aslAppartenenza: psychologist.aslAppartenenza,
+                stato: true // <-- Riattiva lo psicologo
+            } as any);
+
+            setToast({
+                message: 'Psicologo riattivato con successo!',
+                type: 'success'
+            });
+
+            setTimeout(() => {
+                if (onUpdate) {
+                    // Aggiorna locale stato a 'Attivo'
+                    onUpdate({ stato: 'Attivo' as any });
+                }
+            }, 500);
+        } catch (error: any) {
+            setToast({
+                message: error.message || 'Errore durante la riattivazione',
+                type: 'error'
+            });
+        } finally {
+            setIsActivating(false);
+        }
+    };
+
+    // Helper: determina se lo psicologo è inattivo (supporta boolean e string)
+    const isInactive = psychologist?.stato === false || psychologist?.stato === 'Inattivo';
+
     const filteredAslOptions = ASL_OPTIONS.filter(asl =>
         asl.toLowerCase().includes(aslSearch.toLowerCase())
     );
@@ -118,7 +183,8 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                     maxWidth: '700px',
                     borderRadius: '20px',
                     overflow: 'hidden',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+                    position: 'relative'
                 }}
             >
                 {/* Modern Header with Gradient */}
@@ -544,38 +610,268 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                             </button>
                         </>
                     ) : (
-                        <button
-                            onClick={() => setIsEditing(true)}
-                            style={{
-                                padding: '12px 24px',
-                                borderRadius: '12px',
-                                border: 'none',
-                                background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
-                                color: 'white',
-                                cursor: 'pointer',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                transition: 'all 0.2s ease',
-                                boxShadow: '0 4px 12px rgba(131, 185, 193, 0.3)'
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'translateY(-2px)';
-                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'translateY(0)';
-                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
-                            }}
-                        >
-                            <Edit2 size={18} />
-                            Modifica
-                        </button>
+                        <>
+                            {/* Se inattivo: mostra Attiva (verde) */}
+                            {isInactive ? (
+                                <button
+                                    onClick={handleActivate}
+                                    disabled={isActivating}
+                                    style={{
+                                        padding: '12px 24px',
+                                        borderRadius: '12px',
+                                        border: 'none',
+                                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                        color: 'white',
+                                        cursor: isActivating ? 'not-allowed' : 'pointer',
+                                        fontSize: '15px',
+                                        fontWeight: '600',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+                                        opacity: isActivating ? 0.7 : 1
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!isActivating) {
+                                            e.currentTarget.style.transform = 'translateY(-2px)';
+                                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!isActivating) {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+                                        }
+                                    }}
+                                >
+                                    <Check size={18} />
+                                    {isActivating ? 'Attivazione...' : 'Attiva'}
+                                </button>
+                            ) : (
+                                /* Se attivo: mostra Elimina (rosso o grigio se già eliminato) */
+                                <button
+                                    onClick={() => !isInactive && setShowDeleteConfirm(true)}
+                                    disabled={isInactive}
+                                    style={{
+                                        padding: '12px 24px',
+                                        borderRadius: '12px',
+                                        border: 'none',
+                                        background: isInactive
+                                            ? 'linear-gradient(135deg, #9ca3af 0%, #6b7280 100%)'
+                                            : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                                        color: 'white',
+                                        cursor: isInactive ? 'not-allowed' : 'pointer',
+                                        fontSize: '15px',
+                                        fontWeight: '600',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: isInactive
+                                            ? '0 2px 4px rgba(0, 0, 0, 0.1)'
+                                            : '0 4px 12px rgba(239, 68, 68, 0.3)',
+                                        opacity: isInactive ? 0.6 : 1
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!isInactive) {
+                                            e.currentTarget.style.transform = 'translateY(-2px)';
+                                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.4)';
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!isInactive) {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.3)';
+                                        }
+                                    }}
+                                >
+                                    <Trash2 size={18} />
+                                    {isInactive ? 'Già Eliminato' : 'Elimina'}
+                                </button>
+                            )}
+
+                            {/* Pulsante Modifica - sempre presente */}<button
+                                onClick={() => setIsEditing(true)}
+                                style={{
+                                    padding: '12px 24px',
+                                    borderRadius: '12px',
+                                    border: 'none',
+                                    background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
+                                    color: 'white',
+                                    cursor: 'pointer',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    transition: 'all 0.2s ease',
+                                    boxShadow: '0 4px 12px rgba(131, 185, 193, 0.3)'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
+                                }}
+                            >
+                                <Edit2 size={18} />
+                                Modifica
+                            </button>
+                        </>
                     )}
                 </div>
             </div>
+
+            {/* Modale Conferma Eliminazione */}
+            {showDeleteConfirm && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        backdropFilter: 'blur(6px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10000
+                    }}
+                    onClick={() => !isDeleting && setShowDeleteConfirm(false)}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            background: 'white',
+                            borderRadius: '20px',
+                            padding: '32px',
+                            maxWidth: '480px',
+                            width: '90%',
+                            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)'
+                        }}
+                    >
+                        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                            <div style={{
+                                width: '64px',
+                                height: '64px',
+                                borderRadius: '50%',
+                                background: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                margin: '0 auto 16px',
+                                fontSize: '32px'
+                            }}>
+                                ⚠️
+                            </div>
+                            <h3 style={{
+                                margin: '0 0 12px 0',
+                                fontSize: '24px',
+                                fontWeight: '700',
+                                color: '#1a1a1a'
+                            }}>
+                                Conferma Eliminazione
+                            </h3>
+                            <p style={{
+                                margin: '0 0 8px 0',
+                                fontSize: '15px',
+                                color: '#666',
+                                lineHeight: '1.5'
+                            }}>
+                                Sei sicuro di voler eliminare lo psicologo:
+                            </p>
+                            <p style={{
+                                margin: '0 0 16px 0',
+                                fontSize: '18px',
+                                fontWeight: '600',
+                                color: '#0D475D'
+                            }}>
+                                {psychologist?.nome} {psychologist?.cognome}
+                            </p>
+                            <div style={{
+                                padding: '12px 16px',
+                                background: '#fef3c7',
+                                border: '1px solid #fbbf24',
+                                borderRadius: '10px',
+                                fontSize: '13px',
+                                color: '#92400e',
+                                fontWeight: '500'
+                            }}>
+                                ⚠️ Questa operazione non può essere annullata
+                            </div>
+                        </div>
+
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            justifyContent: 'center'
+                        }}>
+                            <button
+                                onClick={() => setShowDeleteConfirm(false)}
+                                disabled={isDeleting}
+                                style={{
+                                    padding: '12px 32px',
+                                    borderRadius: '12px',
+                                    border: '2px solid #e0e0e0',
+                                    background: 'white',
+                                    color: '#666',
+                                    cursor: isDeleting ? 'not-allowed' : 'pointer',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    transition: 'all 0.2s ease',
+                                    opacity: isDeleting ? 0.5 : 1
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!isDeleting) {
+                                        e.currentTarget.style.background = '#f8f9fa';
+                                        e.currentTarget.style.borderColor = '#d0d0d0';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'white';
+                                    e.currentTarget.style.borderColor = '#e0e0e0';
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                                style={{
+                                    padding: '12px 32px',
+                                    borderRadius: '12px',
+                                    border: 'none',
+                                    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                                    color: 'white',
+                                    cursor: isDeleting ? 'not-allowed' : 'pointer',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    transition: 'all 0.2s ease',
+                                    boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)',
+                                    opacity: isDeleting ? 0.7 : 1
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!isDeleting) {
+                                        e.currentTarget.style.transform = 'translateY(-2px)';
+                                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.4)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.3)';
+                                }}
+                            >
+                                {isDeleting ? 'Eliminazione...' : 'Elimina'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {toast && (
                 <Toast
                     message={toast.message}

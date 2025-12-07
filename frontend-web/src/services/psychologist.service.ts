@@ -300,6 +300,42 @@ export const updateProfile = async (codiceFiscale: string, data: { email: string
 };
 
 /**
+ * Delete a psychologist (soft delete)
+ * @param codiceFiscale - Codice fiscale of the psychologist to delete
+ */
+export const deletePsychologist = async (codiceFiscale: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists/${encodeURIComponent(codiceFiscale)}`, {
+            method: 'DELETE',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            // Extract error message from response body
+            let errorMessage = `HTTP error! status: ${response.status}`;
+            try {
+                const errorData = await response.json();
+                if (errorData.message) {
+                    errorMessage = errorData.message;
+                }
+            } catch (jsonError) {
+                // If response is not JSON, use default error message
+            }
+            throw new Error(errorMessage);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting psychologist:', error);
+        throw error;
+    }
+};
+
+/**
  * Submit a technical support request
  * @param data - Support request data (subject and description)
  */
@@ -327,3 +363,4 @@ export const submitSupportRequest = async (data: { oggetto: string; descrizione:
         throw error;
     }
 };
+

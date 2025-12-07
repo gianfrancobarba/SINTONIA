@@ -80,9 +80,9 @@
 
 .questionari-divider .divider-text {
     padding: 0 15px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-gray);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-dark);
     text-transform: uppercase;
     letter-spacing: 1px;
 }

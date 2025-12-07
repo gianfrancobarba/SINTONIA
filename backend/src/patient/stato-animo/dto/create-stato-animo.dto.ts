@@ -4,8 +4,9 @@
  */
 export class CreateStatoAnimoDto {
     umore: string;        // Tipo di umore (deve essere uno dei valori dell'enum)
-    intensita?: number;   // Intensità dell'umore da 1 a 10 (opzionale)
+    intensita: number;   // Intensità dell'umore da 1 a 10 (obbligatorio)
     note?: string;        // Note testuali del paziente (opzionale)
+    dataInserimento?: string; // Data di inserimento (opzionale, formato ISO string)
 
     /**
      * Valida il DTO
@@ -37,8 +38,10 @@ export class CreateStatoAnimoDto {
             );
         }
 
-        // Valida intensità (opzionale, ma se presente deve essere 1-10)
-        if (this.intensita !== undefined && this.intensita !== null) {
+        // Valida intensità (obbligatorio)
+        if (this.intensita === undefined || this.intensita === null) {
+            errors.push('L\'intensità è obbligatoria');
+        } else {
             if (typeof this.intensita !== 'number') {
                 errors.push('L\'intensità deve essere un numero');
             } else if (!Number.isInteger(this.intensita)) {
@@ -55,8 +58,18 @@ export class CreateStatoAnimoDto {
             } else if (this.note.length > 500) {
                 errors.push('Le note non possono superare i 500 caratteri');
             }
+
+            // Valida dataInserimento (opzionale)
+            if (this.dataInserimento !== undefined && this.dataInserimento !== null) {
+                if (typeof this.dataInserimento !== 'string') {
+                    errors.push('La data di inserimento deve essere una stringa');
+                } else if (isNaN(Date.parse(this.dataInserimento))) {
+                    errors.push('La data di inserimento non è valida');
+                }
+            }
         }
 
         return errors;
     }
 }
+

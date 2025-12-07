@@ -16,7 +16,7 @@
 .edit-diary-header .header-content {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .edit-diary-header .back-button {
@@ -48,12 +48,12 @@
     transform: scale(0.95);
 }
 
-.header-title {
+.edit-diary-page .header-title {
     color: white;
     font-size: 24px;
     font-weight: 700;
     margin: 0;
-    flex: 1;
+    flex: initial !important;
 }
 
 /* Content */
@@ -183,24 +183,13 @@
 
 .char-counter {
     position: absolute;
-    bottom: 16px;
+    bottom: 20px;
     right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    z-index: 2;
-}
-
-.counter-icon {
-    width: 16px;
-    height: 16px;
-    opacity: 0.6;
-}
-
-.counter-text {
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 13px;
     color: #6B7280;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* Bottone fisso in fondo */
@@ -254,7 +243,7 @@
         border-bottom-right-radius: 40px;
     }
 
-    .header-title {
+    .edit-diary-page .header-title {
         font-size: 20px;
     }
 

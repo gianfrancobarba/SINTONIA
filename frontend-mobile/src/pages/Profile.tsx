@@ -160,8 +160,7 @@ const Profile: React.FC = () => {
                         <Smile size={24} color="white" />
                         <span>Stato D'Animo</span>
                     </div>
-                    <div className="mood-title-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
-                        <MoodIcon mood={mood.current as Umore} size={40} />
+                    <div className="mood-title-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
                         <div className="mood-title" style={{ margin: 0 }}>{mood.current}</div>
                     </div>
                     <div className="mood-chart" style={{ opacity: hasMoodData ? 1 : 0.3 }}>

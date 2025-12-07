@@ -1,0 +1,339 @@
+/* Centro Notifiche Styles */
+
+.notification-center {
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.notification-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-header h1 svg {
+    color: #0D475D;
+}
+
+.mark-all-read-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #0D475D;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(13, 71, 93, 0.3);
+}
+
+.mark-all-read-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 71, 93, 0.4);
+}
+
+.mark-all-read-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notification-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid #0D475D;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.notification-card:hover {
+    transform: translateX(8px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.notification-card.unread {
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+    border-left-color: #0D475D;
+}
+
+.notification-card.read {
+    background: #fafafa;
+    border-left-color: #c0c0c0;
+    opacity: 0.8;
+}
+
+.notification-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.notification-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.notification-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.notification-title-text {
+    flex-shrink: 0;
+}
+
+.notification-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: #0D475D;
+    color: white;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.unread-indicator {
+    width: 10px;
+    height: 10px;
+    background: #0D475D;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 71, 93, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(13, 71, 93, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 71, 93, 0);
+    }
+}
+
+.notification-date {
+    font-size: 13px;
+    color: #888;
+    white-space: nowrap;
+}
+
+.notification-description {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.notification-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.notification-empty svg {
+    width: 80px;
+    height: 80px;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.notification-empty h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #666;
+    margin: 0 0 10px 0;
+}
+
+.notification-empty p {
+    font-size: 15px;
+    color: #999;
+    margin: 0;
+}
+
+.notification-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.notification-loading .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e0e0e0;
+    border-top-color: #0D475D;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.notification-error {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fff5f5;
+    border-radius: 16px;
+    color: #e74c3c;
+}
+
+.notification-error h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.retry-btn {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.retry-btn:hover {
+    background: #c0392b;
+}
+
+/* Stats section */
+.notification-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon.total {
+    background: #0D475D;
+    color: white;
+}
+
+.stat-icon.unread {
+    background: linear-gradient(135deg, #e74c3c 0%, #ff6b6b 100%);
+    color: white;
+}
+
+.stat-content h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.stat-content p {
+    font-size: 13px;
+    color: #888;
+    margin: 4px 0 0 0;
+}
+
+/* Pagination - Same as Forum */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.pagination-button {
+    padding: 10px 20px;
+    background: var(--color-teal-medium);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background: var(--color-teal-dark);
+}
+
+.pagination-button:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 500;
+}

@@ -22,37 +22,21 @@ const QuestionnaireCompilation: React.FC = () => {
     const [showToast, setShowToast] = useState(false);
 
     useEffect(() => {
-        console.log('=== QuestionnaireCompilation useEffect ===');
-        console.log('location.state:', location.state);
-
         // Load questionnaire data from navigation state
         const state = location.state as { questionario: GetQuestionarioDto } | undefined;
 
-        console.log('Extracted state:', state);
-        console.log('state?.questionario:', state?.questionario);
-
         if (!state?.questionario) {
-            console.error('NO QUESTIONNAIRE IN STATE!');
             setError('Nessun questionario da compilare. Torna alla lista.');
             setLoading(false);
             return;
         }
 
-        console.log('=== QUESTIONNAIRE DATA IN COMPILATION PAGE ===');
-        console.log('Full questionario:', JSON.stringify(state.questionario, null, 2));
-        console.log('domande:', state.questionario.domande);
-        console.log('domande length:', state.questionario.domande?.length);
-        console.log('domande is array?', Array.isArray(state.questionario.domande));
-
         if (!state.questionario.domande || state.questionario.domande.length === 0) {
-            console.error('QUESTIONNAIRE HAS NO QUESTIONS!');
-            console.error('domande value:', state.questionario.domande);
             setError('Il questionario non contiene domande.');
             setLoading(false);
             return;
         }
 
-        console.log('Setting questionario with', state.questionario.domande.length, 'questions');
         setQuestionario(state.questionario);
         setLoading(false);
     }, [location.state]);
@@ -98,11 +82,7 @@ const QuestionnaireCompilation: React.FC = () => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                const result = await response.json();
-                console.log('Questionario submitted successfully:', result);
-                console.log('Score ottenuto:', result.score);
-
-                console.log('Score ottenuto:', result.score);
+                await response.json();
 
                 setShowToast(true);
                 setTimeout(() => {

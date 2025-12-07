@@ -32,8 +32,8 @@
     padding: 0.5rem 0;
     position: relative;
     width: 100%;
-    touch-action: pan-y;
-    /* Allow vertical scrolling but enable horizontal drag */
+    touch-action: none;
+    /* Prevent scrolling while interacting with the scale */
     user-select: none;
     /* Prevent text selection during drag */
 }
