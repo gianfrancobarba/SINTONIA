@@ -73,7 +73,7 @@ const ForumReplyModal: React.FC<ForumReplyModalProps> = ({
                                 {isEditing ? 'Modifica Risposta' : 'Risposta alla domanda'}
                             </h2>
                             <p className="modal-header-subtitle">
-                                {isEditing ? 'Aggiorna la tua risposta professionale' : 'Fornisci supporto al paziente'}
+                                {isEditing ? 'Aggiorna la tua risposta' : 'Fornisci supporto al paziente'}
                             </p>
                         </div>
                         <button
@@ -112,14 +112,14 @@ const ForumReplyModal: React.FC<ForumReplyModalProps> = ({
                     {/* Reply Section */}
                     <div className="modal-form-group">
                         <label htmlFor="reply-textarea" className="modal-form-label">
-                            {isEditing ? 'Modifica la tua risposta' : 'Scrivi la tua risposta professionale'}
+                            {isEditing ? 'Modifica la tua risposta' : 'Scrivi la tua risposta'}
                         </label>
                         <textarea
                             id="reply-textarea"
                             className="modal-form-textarea"
                             value={content}
                             onChange={handleContentChange}
-                            placeholder="Fornisci una risposta professionale e di supporto al paziente..."
+                            placeholder="Fornisci una risposta di supporto al paziente..."
                             rows={8}
                             disabled={isSubmitting}
                             style={{ minHeight: '150px' }}

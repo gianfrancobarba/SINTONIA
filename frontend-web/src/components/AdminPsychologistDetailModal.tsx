@@ -202,30 +202,34 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
 
                 {/* Body */}
                 <div className="modal-body-gray modal-body-scrollable">
-                    <div className="modal-info-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                        {/* Codice Fiscale Card */}
-                        <InfoCard
-                            icon={<IdCard size={20} />}
-                            label="Codice Fiscale"
-                            value={psychologist.codiceFiscale}
-                            iconColor="#0D475D"
-                        />
+                    <div>
+                        {/* Compact Info Section */}
+                        <div className="modal-data-section">
+                            <div className="modal-data-section-title">
+                                <div className="modal-data-section-title-icon">
+                                    <User size={14} />
+                                </div>
+                                Informazioni Psicologo
+                            </div>
 
-                        {/* Nome Card */}
-                        <InfoCard
-                            icon={<User size={20} />}
-                            label="Nome"
-                            value={psychologist.nome}
-                            iconColor="#83B9C1"
-                        />
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                                <span className="modal-data-row-label">Codice Fiscale</span>
+                                <span className="modal-data-row-value">{psychologist.codiceFiscale}</span>
+                            </div>
 
-                        {/* Cognome Card */}
-                        <InfoCard
-                            icon={<User size={20} />}
-                            label="Cognome"
-                            value={psychologist.cognome}
-                            iconColor="#83B9C1"
-                        />
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                <span className="modal-data-row-label">Nome</span>
+                                <span className="modal-data-row-value">{psychologist.nome}</span>
+                            </div>
+
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                <span className="modal-data-row-label">Cognome</span>
+                                <span className="modal-data-row-value">{psychologist.cognome}</span>
+                            </div>
+                        </div>
 
                         {/* ASL Card */}
                         <div style={{

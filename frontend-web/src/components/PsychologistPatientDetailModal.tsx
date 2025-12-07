@@ -661,74 +661,80 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                             </div>
                         ) : patientDetails ? (
                             <>
-                                {/* Patient Info Cards Grid */}
-                                <div style={{
-                                    display: 'grid',
-                                    gridTemplateColumns: 'repeat(3, 1fr)',
-                                    gap: '16px',
-                                    marginBottom: '24px'
-                                }}>
-                                    <InfoCard
-                                        icon={<Hash size={16} />}
-                                        label="ID Paziente"
-                                        value={patientDetails.idPaziente.substring(0, 16) + '...'}
-                                        iconColor="#0D475D"
-                                        tooltip={patientDetails.idPaziente}
-                                    />
-                                    <InfoCard
-                                        icon={<User size={16} />}
-                                        label="Nome Completo"
-                                        value={`${patientDetails.nome} ${patientDetails.cognome}`}
-                                        iconColor="#83B9C1"
-                                    />
-                                    <InfoCard
-                                        icon={<CreditCard size={16} />}
-                                        label="Codice Fiscale"
-                                        value={patientDetails.codFiscale}
-                                        iconColor="#7FB77E"
-                                    />
-                                    <InfoCard
-                                        icon={<Mail size={16} />}
-                                        label="Email"
-                                        value={patientDetails.email}
-                                        iconColor="#5a9aa5"
-                                    />
-                                    <InfoCard
-                                        icon={<Calendar size={16} />}
-                                        label="Data di Nascita"
-                                        value={formatDate(patientDetails.dataNascita)}
-                                        iconColor="#FFB74D"
-                                    />
-                                    <InfoCard
-                                        icon={<Calendar size={16} />}
-                                        label="Data Ingresso"
-                                        value={formatDate(patientDetails.dataIngresso)}
-                                        iconColor="#9575CD"
-                                    />
-                                    <InfoCard
-                                        icon={<Home size={16} />}
-                                        label="Residenza"
-                                        value={patientDetails.residenza}
-                                        iconColor="#66BB6A"
-                                    />
-                                    <InfoCard
-                                        icon={<Users2 size={16} />}
-                                        label="Sesso"
-                                        value={patientDetails.sesso}
-                                        iconColor="#42A5F5"
-                                    />
-                                    <InfoCard
-                                        icon={<Award size={16} />}
-                                        label="Score"
-                                        value={patientDetails.score !== null ? String(patientDetails.score) : 'N/A'}
-                                        iconColor="#FFA726"
-                                    />
-                                    <InfoCard
-                                        icon={<AlertTriangle size={16} />}
-                                        label="Priorità"
-                                        value={patientDetails.idPriorita || 'N/A'}
-                                        iconColor="#EF5350"
-                                    />
+                                {/* Compact Patient Info Section */}
+                                <div className="modal-data-section">
+                                    <div className="modal-data-section-title">
+                                        <div className="modal-data-section-title-icon">
+                                            <User size={14} />
+                                        </div>
+                                        Informazioni Paziente
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                                        <span className="modal-data-row-label">ID Paziente</span>
+                                        <span className="modal-data-row-value" title={patientDetails.idPaziente}>
+                                            {patientDetails.idPaziente.length > 20
+                                                ? `${patientDetails.idPaziente.substring(0, 20)}...`
+                                                : patientDetails.idPaziente}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                        <span className="modal-data-row-label">Nome Completo</span>
+                                        <span className="modal-data-row-value">{patientDetails.nome} {patientDetails.cognome}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                        <span className="modal-data-row-label">Codice Fiscale</span>
+                                        <span className="modal-data-row-value">{patientDetails.codFiscale}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                        <span className="modal-data-row-label">Email</span>
+                                        <span className="modal-data-row-value">{patientDetails.email}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                        <span className="modal-data-row-label">Data di Nascita</span>
+                                        <span className="modal-data-row-value">{formatDate(patientDetails.dataNascita)}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-purple"></div>
+                                        <span className="modal-data-row-label">Data Ingresso</span>
+                                        <span className="modal-data-row-value">{formatDate(patientDetails.dataIngresso)}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                        <span className="modal-data-row-label">Residenza</span>
+                                        <span className="modal-data-row-value">{patientDetails.residenza}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                        <span className="modal-data-row-label">Sesso</span>
+                                        <span className="modal-data-row-value">{patientDetails.sesso}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                        <span className="modal-data-row-label">Score</span>
+                                        <span className="modal-data-row-value modal-data-row-value-highlight">
+                                            {patientDetails.score !== null ? patientDetails.score : 'N/A'}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-red"></div>
+                                        <span className="modal-data-row-label">Priorità</span>
+                                        <span className="modal-data-row-value">{patientDetails.idPriorita || 'N/A'}</span>
+                                    </div>
                                 </div>
 
                                 {/* Questionnaires Section */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Hash, FileText, User, Clock, AlertCircle, CheckCircle, XCircle, MessageSquare, Check, X } from 'lucide-react';
+import { FileText, Clock, AlertCircle, CheckCircle, XCircle, MessageSquare, Check, X } from 'lucide-react';
 import type { InvalidationRequestData } from '../types/invalidation';
 import Toast from './Toast';
 import '../css/Modal.css';
@@ -99,47 +99,44 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
 
                 {/* Body with Modern Cards */}
                 <div className="modal-body-gray modal-body-scrollable">
-                    <div className="modal-info-grid">
-                        {/* ID Questionario Card */}
-                        <InfoCard
-                            icon={<Hash size={16} />}
-                            label="ID Questionario"
-                            value={request.idQuestionario}
-                            iconColor="#0D475D"
-                        />
+                    {/* Compact Info Section */}
+                    <div className="modal-data-section">
+                        <div className="modal-data-section-title">
+                            <div className="modal-data-section-title-icon">
+                                <FileText size={14} />
+                            </div>
+                            Informazioni Richiesta
+                        </div>
 
-                        {/* Tipologia Card */}
-                        <InfoCard
-                            icon={<FileText size={16} />}
-                            label="Tipologia"
-                            value={request.nomeQuestionario}
-                            iconColor="#83B9C1"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                            <span className="modal-data-row-label">ID Questionario</span>
+                            <span className="modal-data-row-value">{request.idQuestionario}</span>
+                        </div>
 
-                        {/* Richiedente Card */}
-                        <InfoCard
-                            icon={<User size={16} />}
-                            label="Richiedente"
-                            value={request.nomePsicologoRichiedente}
-                            iconColor="#5a9aa5"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">Tipologia</span>
+                            <span className="modal-data-row-value modal-data-row-value-highlight">{request.nomeQuestionario}</span>
+                        </div>
 
-                        {/* ID Psicologo Card */}
-                        <InfoCard
-                            icon={<User size={16} />}
-                            label="ID Psicologo"
-                            value={request.idPsicologoRichiedente}
-                            iconColor="#7FB77E"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">Richiedente</span>
+                            <span className="modal-data-row-value">{request.nomePsicologoRichiedente}</span>
+                        </div>
 
-                        {/* Stato Richiesta Card */}
-                        <InfoCard
-                            icon={statusInfo.icon}
-                            label="Stato Richiesta"
-                            value={statusInfo.text}
-                            iconColor={statusInfo.color}
-                            valueColor={statusInfo.color}
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                            <span className="modal-data-row-label">ID Psicologo</span>
+                            <span className="modal-data-row-value">{request.idPsicologoRichiedente}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot" style={{ background: statusInfo.color }}></div>
+                            <span className="modal-data-row-label">Stato Richiesta</span>
+                            <span className="modal-data-row-value" style={{ color: statusInfo.color, fontWeight: '600' }}>{statusInfo.text}</span>
+                        </div>
                     </div>
 
                     {/* Note section */}
@@ -261,64 +258,6 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
     );
 };
 
-// Info Card Component
-const InfoCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-    valueColor?: string;
-}> = ({ icon, label, value, iconColor, valueColor }) => {
-    return (
-        <div style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '14px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e8e8e8',
-            transition: 'all 0.3s ease'
-        }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            <p style={{
-                margin: 0,
-                fontSize: '14px',
-                fontWeight: '600',
-                color: valueColor || '#1a1a1a'
-            }}>
-                {value}
-            </p>
-        </div>
-    );
-};
+
 
 export default AdminInvalidationDetailModal;

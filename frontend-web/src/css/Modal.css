@@ -568,6 +568,141 @@
 }
 
 /* ==========================================================================
+   COMPACT DATA DISPLAY
+   ========================================================================== */
+
+/* Data Section Container */
+.modal-data-section {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 20px;
+    border: 1px solid #eef2f5;
+}
+
+.modal-data-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0D475D;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eef2f5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-data-section-title-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0D475D 0%, #1a5f7a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Data Rows */
+.modal-data-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f7f9;
+    transition: background-color 0.2s ease;
+}
+
+.modal-data-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal-data-row:first-of-type {
+    padding-top: 0;
+}
+
+.modal-data-row:hover {
+    background-color: #fafbfc;
+    margin: 0 -8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 8px;
+}
+
+.modal-data-row-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 14px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.modal-data-row-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    min-width: 160px;
+    flex-shrink: 0;
+}
+
+.modal-data-row-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+    flex: 1;
+    word-break: break-word;
+}
+
+.modal-data-row-value-highlight {
+    color: #0D475D;
+    font-weight: 600;
+}
+
+.modal-data-row-value-success {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.modal-data-row-value-warning {
+    color: #ea580c;
+    font-weight: 600;
+}
+
+.modal-data-row-value-error {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* Dot Color Variants */
+.modal-data-row-dot-teal {
+    background: linear-gradient(135deg, #0D475D 0%, #1a5f7a 100%);
+}
+
+.modal-data-row-dot-cyan {
+    background: linear-gradient(135deg, #83B9C1 0%, #6FA8AF 100%);
+}
+
+.modal-data-row-dot-green {
+    background: linear-gradient(135deg, #7FB77E 0%, #5fa05d 100%);
+}
+
+.modal-data-row-dot-orange {
+    background: linear-gradient(135deg, #FFB74D 0%, #FF9800 100%);
+}
+
+.modal-data-row-dot-red {
+    background: linear-gradient(135deg, #E57373 0%, #d55353 100%);
+}
+
+.modal-data-row-dot-purple {
+    background: linear-gradient(135deg, #9575CD 0%, #7E57C2 100%);
+}
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 

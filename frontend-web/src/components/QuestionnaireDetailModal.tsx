@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Hash, FileText, Calendar, Award, MessageCircle, FileQuestion, Send } from 'lucide-react';
+import { FileText, MessageCircle, FileQuestion, Send } from 'lucide-react';
 import type { QuestionnaireData } from '../types/questionnaire';
 import Toast from './Toast';
 import '../css/Modal.css';
@@ -91,39 +91,47 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
 
                 {/* Body */}
                 <div className="modal-body-gray modal-body-scrollable">
-                    {/* Info Cards Grid */}
-                    <div className="modal-info-grid" style={{ marginBottom: '24px' }}>
-                        <InfoCard
-                            icon={<Hash size={16} />}
-                            label="ID Questionario"
-                            value={questionnaire.idQuestionario}
-                            iconColor="#0D475D"
-                        />
-                        <InfoCard
-                            icon={<FileText size={16} />}
-                            label="Tipologia"
-                            value={questionnaire.nomeTipologia}
-                            iconColor="#83B9C1"
-                        />
-                        <InfoCard
-                            icon={<Calendar size={16} />}
-                            label="Data Compilazione"
-                            value={new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            })}
-                            iconColor="#7FB77E"
-                        />
+                    {/* Compact Info Section */}
+                    <div className="modal-data-section">
+                        <div className="modal-data-section-title">
+                            <div className="modal-data-section-title-icon">
+                                <FileText size={14} />
+                            </div>
+                            Informazioni Questionario
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                            <span className="modal-data-row-label">ID Questionario</span>
+                            <span className="modal-data-row-value">{questionnaire.idQuestionario}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">Tipologia</span>
+                            <span className="modal-data-row-value modal-data-row-value-highlight">{questionnaire.nomeTipologia}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                            <span className="modal-data-row-label">Data Compilazione</span>
+                            <span className="modal-data-row-value">
+                                {new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </span>
+                        </div>
+
                         {questionnaire.score !== null && (
-                            <InfoCard
-                                icon={<Award size={16} />}
-                                label="Punteggio"
-                                value={String(questionnaire.score)}
-                                iconColor="#FFB74D"
-                            />
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                <span className="modal-data-row-label">Punteggio</span>
+                                <span className="modal-data-row-value modal-data-row-value-highlight">{questionnaire.score}</span>
+                            </div>
                         )}
                     </div>
 
@@ -398,63 +406,6 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     );
 };
 
-// Info Card Component
-const InfoCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-}> = ({ icon, label, value, iconColor }) => {
-    return (
-        <div style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '14px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e8e8e8',
-            transition: 'all 0.3s ease'
-        }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            <p style={{
-                margin: 0,
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#1a1a1a'
-            }}>
-                {value}
-            </p>
-        </div>
-    );
-};
+
 
 export default QuestionnaireDetailModal;
