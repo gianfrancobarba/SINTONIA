@@ -772,7 +772,7 @@ export class SpidAuthController {
         // Check if patient already has an assigned psychologist
         if (user.idPsicologo) {
           console.warn(`Access denied for patient ${user.codFiscale}: already assigned to psychologist ${user.idPsicologo}`);
-          const errorMessage = 'Accesso negato: Sei già in cura con uno psicologo assegnato.';
+          const errorMessage = 'Ottimo, hai già uno psicologo assegnato! Il tuo percorso prosegue direttamente con lui. Se pensi ci sia un errore, contatta il supporto tecnico.';
           return res.redirect(`${frontendUrl}/spid-error?message=` + encodeURIComponent(errorMessage));
         }
       }
