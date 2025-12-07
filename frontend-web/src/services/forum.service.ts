@@ -59,14 +59,23 @@ export const fetchForumQuestions = async (
  */
 export const fetchForumStats = async (): Promise<ForumStats> => {
     try {
+        const user = getCurrentUser();
+        const currentUserFiscalCode = user?.fiscalCode;
+
         // Fetch all questions (without category filter) to calculate stats
         const questions = await fetchForumQuestions();
 
         const totalQuestions = questions.length;
-        const answeredQuestions = questions.filter(q =>
-            q.hasResponse || (q.risposte && q.risposte.length > 0)
+
+        // Count questions with no answers at all
+        const unansweredQuestions = questions.filter(q =>
+            !q.risposte || q.risposte.length === 0
         ).length;
-        const unansweredQuestions = totalQuestions - answeredQuestions;
+
+        // Count questions where *I* have answered
+        const answeredQuestions = questions.filter(q =>
+            q.risposte && q.risposte.some(r => r.idPsicologo === currentUserFiscalCode)
+        ).length;
 
         return {
             totalQuestions,

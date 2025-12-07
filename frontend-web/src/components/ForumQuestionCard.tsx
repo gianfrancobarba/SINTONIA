@@ -64,12 +64,13 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
         <div className="forum-question-card">
             <div className="card-header">
                 <div className="header-left">
-                    <span
-                        className="category-badge"
-                        style={{ backgroundColor: getCategoryColor(question.categoria) }}
-                    >
-                        {question.categoria}
-                    </span>
+                    <div className="category-indicator">
+                        <span
+                            className="category-dot"
+                            style={{ backgroundColor: getCategoryColor(question.categoria) }}
+                        />
+                        <span className="category-label">{question.categoria}</span>
+                    </div>
                     <h3 className="question-title">{question.titolo}</h3>
                 </div>
                 <div className="header-right">
@@ -94,7 +95,8 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                 <div className="answers-list">
                     {displayedAnswers.map(answer => {
                         const currentUser = getCurrentUser();
-                        const isMyAnswer = !!(currentUser && answer.idPsicologo === currentUser.id);
+                        // Compare with fiscalCode since idPsicologo is the codice fiscale
+                        const isMyAnswer = !!(currentUser && answer.idPsicologo === currentUser.fiscalCode);
 
                         return (
                             <ForumAnswerSection

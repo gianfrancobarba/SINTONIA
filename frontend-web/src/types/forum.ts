@@ -30,6 +30,7 @@ export interface ForumAnswer {
     idPsicologo: string;            // cod_fiscale from DB
     nomePsicologo: string;          // Nome from psicologo table
     cognomePsicologo: string;       // Cognome from psicologo table
+    immagineProfilo?: string | null; // Immagine profilo from psicologo table
     testo: string;                  // testo from DB (answer text)
     dataRisposta: string;           // ISO 8601 timestamp
 }

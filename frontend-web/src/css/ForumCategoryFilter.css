@@ -1,46 +1,43 @@
-/* Forum Category Filter Styles */
+/* Forum Category Filter - Clean Pills */
 
 .forum-category-filter {
-    margin-bottom: 24px;
+    margin-top: 12px;
 }
 
 .filter-label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
 }
 
 .category-pills {
     display: flex;
+    gap: 6px;
     flex-wrap: wrap;
-    gap: 8px;
 }
 
 .category-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border: 2px solid #e5e7eb;
-    border-radius: 20px;
+    padding: 6px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
     background: white;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
-    color: #6b7280;
+    color: #6B7280;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.category-pill:hover {
-    border-color: #d1d5db;
-    background: #f9fafb;
+.category-pill:hover:not(.active) {
+    border-color: #9ca3af;
 }
 
 .category-pill.active {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: #0D475D;
+    border-color: #0D475D;
     color: white;
 }
 
@@ -51,8 +48,8 @@
 }
 
 .category-pill.category-stress.active {
-    background: #D32F2F;
-    border-color: #D32F2F;
+    background: #ef4444;
+    border-color: #ef4444;
 }
 
 .category-pill.category-tristezza.active {
@@ -65,24 +62,8 @@
     border-color: #ec4899;
 }
 
-.category-pill.category-altro.active {
-    background: #10b981;
-    border-color: #10b981;
-}
-
 .category-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.1);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.category-pill.active .category-count {
-    background: rgba(255, 255, 255, 0.3);
+    margin-left: 4px;
+    font-size: 11px;
+    opacity: 0.8;
 }

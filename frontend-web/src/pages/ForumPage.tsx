@@ -74,12 +74,20 @@ const ForumPage: React.FC = () => {
 
     const getStats = () => {
         if (!questionsState.data) return null;
+        const user = getCurrentUser();
+        const myFiscalCode = user?.fiscalCode;
 
         const totalQuestions = questionsState.data.length;
-        const answeredQuestions = questionsState.data.filter(q =>
-            q.risposte && q.risposte.length > 0
+
+        // Count questions with no answers
+        const unansweredQuestions = questionsState.data.filter(q =>
+            !q.risposte || q.risposte.length === 0
         ).length;
-        const unansweredQuestions = totalQuestions - answeredQuestions;
+
+        // Count questions where *I* have answered
+        const answeredQuestions = questionsState.data.filter(q =>
+            q.risposte && q.risposte.some(r => r.idPsicologo === myFiscalCode)
+        ).length;
 
         return {
             totalQuestions,
@@ -158,6 +166,8 @@ const ForumPage: React.FC = () => {
 
     const getFilteredQuestions = (): ForumQuestion[] => {
         if (!questionsState.data) return [];
+        const user = getCurrentUser();
+        const myFiscalCode = user?.fiscalCode;
 
         let filtered = questionsState.data;
 
@@ -171,7 +181,10 @@ const ForumPage: React.FC = () => {
             case 'unanswered':
                 return filtered.filter(q => !q.risposte || q.risposte.length === 0);
             case 'answered':
-                return filtered.filter(q => q.risposte && q.risposte.length > 0);
+                // Show only questions where *I* have answered
+                return filtered.filter(q =>
+                    q.risposte && q.risposte.some(r => r.idPsicologo === myFiscalCode)
+                );
             case 'all':
             default:
                 return filtered;
@@ -202,31 +215,27 @@ const ForumPage: React.FC = () => {
                     Forum
                 </h2>
 
-                {getStats() && (
-                    <div className="forum-stats">
-                        <button
-                            className={`stat-item ${filterType === 'all' ? 'stat-active' : ''}`}
-                            onClick={() => setFilterType('all')}
-                        >
-                            <span className="stat-value">{getStats()!.totalQuestions}</span>
-                            <span className="stat-label">Domande Totali</span>
-                        </button>
-                        <button
-                            className={`stat-item stat-unanswered ${filterType === 'unanswered' ? 'stat-active' : ''}`}
-                            onClick={() => setFilterType('unanswered')}
-                        >
-                            <span className="stat-value">{getStats()!.unansweredQuestions}</span>
-                            <span className="stat-label">Domande Da rispondere</span>
-                        </button>
-                        <button
-                            className={`stat-item stat-answered ${filterType === 'answered' ? 'stat-active' : ''}`}
-                            onClick={() => setFilterType('answered')}
-                        >
-                            <span className="stat-value">{getStats()!.answeredQuestions}</span>
-                            <span className="stat-label">Domande Risposte</span>
-                        </button>
-                    </div>
-                )}
+                {/* Compact Filter Pills */}
+                <div className="forum-filters">
+                    <button
+                        className={`filter-pill ${filterType === 'all' ? 'active' : ''}`}
+                        onClick={() => setFilterType('all')}
+                    >
+                        Tutte ({getStats()?.totalQuestions || 0})
+                    </button>
+                    <button
+                        className={`filter-pill ${filterType === 'unanswered' ? 'active' : ''}`}
+                        onClick={() => setFilterType('unanswered')}
+                    >
+                        Da rispondere ({getStats()?.unansweredQuestions || 0})
+                    </button>
+                    <button
+                        className={`filter-pill ${filterType === 'answered' ? 'active' : ''}`}
+                        onClick={() => setFilterType('answered')}
+                    >
+                        Le mie risposte ({getStats()?.answeredQuestions || 0})
+                    </button>
+                </div>
 
                 <ForumCategoryFilter
                     selectedCategory={selectedCategory}
@@ -256,9 +265,13 @@ const ForumPage: React.FC = () => {
                     <>
                         {getFilteredQuestions().length === 0 ? (
                             <div className="empty-state">
-                                <div className="empty-icon">💬</div>
-                                <h3>Nessuna domanda trovata</h3>
-                                <p>Non ci sono domande corrispondenti al filtro selezionato</p>
+                                <div className="empty-icon-container">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0D475D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    </svg>
+                                </div>
+                                <h3>Nessuna domanda</h3>
+                                <p>Non ci sono domande con i filtri selezionati</p>
                             </div>
                         ) : (
                             <>
@@ -273,33 +286,32 @@ const ForumPage: React.FC = () => {
                                         />
                                     ))}
                                 </div>
-
-                                {getTotalPages() > 1 && (
-                                    <div className="pagination">
-                                        <button
-                                            className="pagination-button"
-                                            onClick={() => handlePageChange(currentPage - 1)}
-                                            disabled={currentPage === 1}
-                                        >
-                                            ← Precedente
-                                        </button>
-                                        <div className="pagination-info">
-                                            Pagina {currentPage} di {getTotalPages()}
-                                        </div>
-                                        <button
-                                            className="pagination-button"
-                                            onClick={() => handlePageChange(currentPage + 1)}
-                                            disabled={currentPage === getTotalPages()}
-                                        >
-                                            Successiva →
-                                        </button>
-                                    </div>
-                                )}
                             </>
                         )}
                     </>
                 )}
             </div>
+
+            {/* Fixed Pagination Footer */}
+            {getTotalPages() > 1 && (
+                <div className="pagination">
+                    <button
+                        className="pagination-btn"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        ‹
+                    </button>
+                    <span className="pagination-current">{currentPage} / {getTotalPages()}</span>
+                    <button
+                        className="pagination-btn"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === getTotalPages()}
+                    >
+                        ›
+                    </button>
+                </div>
+            )}
 
             {modalState.isOpen && modalState.question && (
                 <ForumReplyModal

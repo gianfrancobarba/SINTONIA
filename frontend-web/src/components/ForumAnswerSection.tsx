@@ -19,6 +19,7 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
     isMyAnswer = false
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [imageError, setImageError] = useState(false);
 
     const getTimeAgo = (dateString: string): string => {
         const date = new Date(dateString);
@@ -37,21 +38,51 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
         }
     };
 
+    const getProfileImageUrl = (): string | null => {
+        if (answer.immagineProfilo) {
+            if (answer.immagineProfilo.startsWith('data:image')) {
+                return answer.immagineProfilo;
+            }
+            return `http://localhost:3000${answer.immagineProfilo}`;
+        }
+        return null;
+    };
+
+    const getInitials = (): string => {
+        const first = answer.nomePsicologo?.charAt(0) || '';
+        const last = answer.cognomePsicologo?.charAt(0) || '';
+        return `${first}${last}`.toUpperCase();
+    };
+
     const isTextLong = answer.testo.length > TEXT_TRUNCATE_LENGTH;
     const displayText = isTextLong && !isExpanded
         ? answer.testo.slice(0, TEXT_TRUNCATE_LENGTH) + '...'
         : answer.testo;
 
+    const profileImage = getProfileImageUrl();
+    const showInitials = !profileImage || imageError;
+
     return (
         <div className="forum-answer-section">
             <div className="answer-header">
-                <div className="answer-header-left">
-                    <svg className="answer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    <span className="answer-label">
-                        {isMyAnswer ? 'La tua risposta' : `Risposta di Dr. ${answer.nomePsicologo} ${answer.cognomePsicologo}`}
-                    </span>
+                <div className="answer-author-info">
+                    <div className="author-avatar">
+                        {showInitials ? (
+                            <span className="avatar-initials">{getInitials()}</span>
+                        ) : (
+                            <img
+                                src={profileImage!}
+                                alt=""
+                                onError={() => setImageError(true)}
+                            />
+                        )}
+                    </div>
+                    <div className="author-details">
+                        <span className="author-name">
+                            Dr. {answer.nomePsicologo} {answer.cognomePsicologo}
+                        </span>
+                        <span className="answer-time">{getTimeAgo(answer.dataRisposta)}</span>
+                    </div>
                 </div>
                 {isMyAnswer && onEdit && onDelete && (
                     <div className="answer-actions">
@@ -60,14 +91,14 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
                             onClick={onEdit}
                             title="Modifica risposta"
                         >
-                            <Pencil size={16} />
+                            <Pencil size={14} />
                         </button>
                         <button
                             className="action-button delete-button"
                             onClick={onDelete}
                             title="Elimina risposta"
                         >
-                            <Trash2 size={16} />
+                            <Trash2 size={14} />
                         </button>
                     </div>
                 )}
@@ -83,11 +114,6 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
                         {isExpanded ? 'Mostra meno' : 'Mostra di più'}
                     </button>
                 )}
-            </div>
-
-            <div className="answer-footer">
-                <span className="answer-separator">•</span>
-                <span className="answer-time">{getTimeAgo(answer.dataRisposta)}</span>
             </div>
         </div>
     );
