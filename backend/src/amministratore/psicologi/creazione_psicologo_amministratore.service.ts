@@ -4,13 +4,17 @@ import { psicologo } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { CreaPsicologoDto } from './dto/crea-psicologo.dto.js';
 import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
+import { AssegnazioneService } from '../../psi/assegnazione/assegnazione.service.js';
 
 @Injectable()
 export class Creazione_psicologo_amministratoreService {
-    constructor(private readonly notificationHelper: NotificationHelperService) { }
+    constructor(
+        private readonly notificationHelper: NotificationHelperService,
+        private readonly assegnazioneService: AssegnazioneService
+    ) { }
 
     /**
-     * Crea un nuovo psicologo nel sistema
+     * Crea un nuovo psicologo nel sistema e gli assegna fino a 8 pazienti dalla coda
      */
     async creaPsicologo(dto: CreaPsicologoDto) {
         // Verifica che il codice fiscale non esista già
@@ -40,17 +44,23 @@ export class Creazione_psicologo_amministratoreService {
             })
             .returning();
 
+        // Assegna fino a 8 pazienti dalla coda al nuovo psicologo
+        const pazientiAssegnati = await this.assegnazioneService.assignPatientsToNewPsychologist(
+            dto.codFiscale
+        );
+
         // Notifica tutti gli admin del nuovo psicologo
         await this.notificationHelper.notifyAllAdmins(
             'Nuovo psicologo registrato',
-            `È stato aggiunto il Dott. ${dto.nome} ${dto.cognome} (${dto.aslAppartenenza})`,
+            `È stato aggiunto il Dott. ${dto.nome} ${dto.cognome} (${dto.aslAppartenenza}). Pazienti assegnati: ${pazientiAssegnati.length}`,
             'SISTEMA',
         );
 
         return {
             success: true,
-            message: 'Psicologo creato con successo',
+            message: `Psicologo creato con successo. ${pazientiAssegnati.length} pazienti assegnati.`,
             data: nuovoPsicologo[0],
+            pazientiAssegnati: pazientiAssegnati.length,
         };
     }
 }

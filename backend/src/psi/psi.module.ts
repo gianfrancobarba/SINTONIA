@@ -8,8 +8,9 @@ import { AlertCliniciModule } from './alert-clinici/alert-clinici.module.js';
 import { ReportModule } from './report/report.module.js';
 import { PsiSupportModule } from './support-request/psi-support.module.js';
 import { NotificheModule } from './notifiche/notifiche.module.js';
+import { AssegnazioneModule } from './assegnazione/assegnazione.module.js';
 
 @Module({
-    imports: [DashboardModule, QuestionariModule, PazientiModule, PsiForumModule, PsiAreaPersonaleModule, AlertCliniciModule, ReportModule, PsiSupportModule, NotificheModule],
+    imports: [DashboardModule, QuestionariModule, PazientiModule, PsiForumModule, PsiAreaPersonaleModule, AlertCliniciModule, ReportModule, PsiSupportModule, NotificheModule, AssegnazioneModule],
 })
 export class PsiModule { }

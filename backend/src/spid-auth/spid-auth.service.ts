@@ -5,7 +5,6 @@ import * as schema from '../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { SpidProfileDto } from './dto/spid-profile.dto.js';
 import { MOCK_CREDENTIALS } from './mock-credentials.js';
-import { MOCK_PSYCHOLOGIST_CREDENTIALS } from './mock-credentials-psychologists.js';
 
 @Injectable()
 export class SpidAuthService {
@@ -136,25 +135,19 @@ export class SpidAuthService {
     }
 
     async authenticatePsychologistWithMockCredentials(email: string, password: string) {
-        console.log('Authenticating psychologist with mock credentials:', email);
+        console.log('Authenticating psychologist with email from DB:', email);
 
-        const codFiscale = MOCK_PSYCHOLOGIST_CREDENTIALS[email.toLowerCase()];
-
-        if (!codFiscale) {
-            console.log('Email not found in psychologist mock credentials');
-            return null;
-        }
-
+        // Verifica password (uguale per tutti)
         if (password !== this.MOCK_PASSWORD) {
             console.log('Password mismatch');
             return null;
         }
 
-        // Find psychologist by codFiscale
+        // Cerca psicologo direttamente nel DB per email
         const psychologists = await this.db
             .select()
             .from(schema.psicologo)
-            .where(eq(schema.psicologo.codFiscale, codFiscale));
+            .where(eq(schema.psicologo.email, email.toLowerCase()));
 
         if (psychologists.length > 0) {
             // Verifica se lo psicologo è attivo
@@ -166,7 +159,7 @@ export class SpidAuthService {
             return psychologists[0];
         }
 
-        console.log('Psychologist with codFiscale not found in DB:', codFiscale);
+        console.log('Psychologist with email not found in DB:', email);
         return null;
     }
 

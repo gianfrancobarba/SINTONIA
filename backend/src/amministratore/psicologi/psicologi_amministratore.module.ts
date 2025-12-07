@@ -10,8 +10,10 @@ import { Modifica_psicologo_amministratoreController } from './modifica_psicolog
 import { Modifica_psicologo_amministratoreService } from './modifica_psicologo_amministratore.service.js';
 import { Eliminazione_psicologo_amministratoreController } from './eliminazione_psicologo_amministratore.controller.js';
 import { Eliminazione_psicologo_amministratoreService } from './eliminazione_psicologo_amministratore.service.js';
+import { AssegnazioneModule } from '../../psi/assegnazione/assegnazione.module.js';
 
 @Module({
+    imports: [AssegnazioneModule],
     controllers: [
         Visualizzazione_psicologi_amministratoreController,
         Ricerca_psicologi_amministratoreController,
