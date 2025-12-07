@@ -5,6 +5,7 @@ export class HomeDashboardDto {
     notificationsCount: number;
     streakLevel: number;
     streakProgress: number; // Percentage 0-100
+    currentStreakDays: number; // Numero di giorni consecutivi di inserimento stato d'animo
     calendarDays: {
         day: string; // "Lun", "Mar"
         date: number; // 12, 13

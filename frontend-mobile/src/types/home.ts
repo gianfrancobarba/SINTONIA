@@ -21,6 +21,7 @@ export interface HomeDashboardDto {
     notificationsCount: number;
     streakLevel: number;
     streakProgress: number;
+    currentStreakDays: number;
     dailyNote: string;
     calendarDays: CalendarDay[];
     suggestedPosts: SuggestedPost[];
