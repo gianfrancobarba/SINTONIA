@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { ForumAnswer } from '../types/forum';
 import { Pencil, Trash2 } from 'lucide-react';
 import '../css/ForumAnswerSection.css';
@@ -10,12 +10,16 @@ interface ForumAnswerSectionProps {
     isMyAnswer?: boolean;
 }
 
+const TEXT_TRUNCATE_LENGTH = 150;
+
 const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
     answer,
     onEdit,
     onDelete,
     isMyAnswer = false
 }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
     const getTimeAgo = (dateString: string): string => {
         const date = new Date(dateString);
         const now = new Date();
@@ -32,6 +36,11 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
             return `${diffDays}g fa`;
         }
     };
+
+    const isTextLong = answer.testo.length > TEXT_TRUNCATE_LENGTH;
+    const displayText = isTextLong && !isExpanded
+        ? answer.testo.slice(0, TEXT_TRUNCATE_LENGTH) + '...'
+        : answer.testo;
 
     return (
         <div className="forum-answer-section">
@@ -65,7 +74,15 @@ const ForumAnswerSection: React.FC<ForumAnswerSectionProps> = ({
             </div>
 
             <div className="answer-body">
-                <p className="answer-text">{answer.testo}</p>
+                <p className="answer-text">{displayText}</p>
+                {isTextLong && (
+                    <button
+                        className="expand-text-button"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        {isExpanded ? 'Mostra meno' : 'Mostra di più'}
+                    </button>
+                )}
             </div>
 
             <div className="answer-footer">

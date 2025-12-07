@@ -79,6 +79,24 @@
     margin: 0;
 }
 
+.expand-text-button {
+    background: none;
+    border: none;
+    color: #0D475D;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: 8px;
+    display: inline-block;
+    transition: color 0.2s ease;
+}
+
+.expand-text-button:hover {
+    color: #1A5F5F;
+    text-decoration: underline;
+}
+
 /* Footer */
 .card-footer {
     border-top: 1px solid #f3f4f6;

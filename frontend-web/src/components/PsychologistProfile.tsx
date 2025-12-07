@@ -60,9 +60,10 @@ const LogoutIcon = () => (
 interface PsychologistProfileProps {
     onSelectSection?: (section: string) => void;
     activeSection?: string | null;
+    refreshKey?: number;
 }
 
-const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSection, activeSection }) => {
+const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSection, activeSection, refreshKey }) => {
     const navigate = useNavigate();
     // Internal state and location logic removed - completely controlled by parent
     const [dashboardState, setDashboardState] = useState<LoadingState<PsychologistDashboardData>>({
@@ -73,7 +74,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
 
     useEffect(() => {
         loadDashboardData();
-    }, []);
+    }, [refreshKey]);
 
     const loadDashboardData = async () => {
         setDashboardState(prev => ({ ...prev, loading: true, error: null }));
@@ -174,9 +175,11 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                     <div className="profile-photo">
                         <img
                             src={
-                                profileImageUrl && !profileImageUrl.startsWith('http')
-                                    ? `http://localhost:3000/uploads/${profileImageUrl}`
-                                    : profileImageUrl || profilePhoto
+                                profileImageUrl
+                                    ? profileImageUrl.startsWith('data:') || profileImageUrl.startsWith('http')
+                                        ? profileImageUrl
+                                        : `http://localhost:3000/uploads/${profileImageUrl}`
+                                    : profilePhoto
                             }
                             alt={fullName}
                             onError={(e) => {

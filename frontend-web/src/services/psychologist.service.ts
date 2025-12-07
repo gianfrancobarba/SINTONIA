@@ -267,25 +267,28 @@ export const getProfile = async (codiceFiscale: string): Promise<any> => {
 
 /**
  * Update psychologist profile
+ * @param codiceFiscale - Codice fiscale of the psychologist
+ * @param data - Profile data to update (email and optional base64 image)
  */
-export const updateProfile = async (codiceFiscale: string, data: { email: string; immagineProfilo?: File | null }): Promise<any> => {
+export const updateProfile = async (codiceFiscale: string, data: { email: string; immagineProfilo?: string }): Promise<any> => {
     try {
         const url = `${API_URL}/psi/area-personale/me?cf=${encodeURIComponent(codiceFiscale)}`;
         const token = getCurrentUser()?.access_token as string | undefined;
 
-        const formData = new FormData();
-        formData.append('email', data.email);
+        const body: { email: string; immagineProfilo?: string } = {
+            email: data.email
+        };
         if (data.immagineProfilo) {
-            formData.append('immagineProfilo', data.immagineProfilo);
+            body.immagineProfilo = data.immagineProfilo;
         }
 
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                // Content-Type is automatically set with boundary for FormData
+                'Content-Type': 'application/json',
             },
-            body: formData,
+            body: JSON.stringify(body),
         });
 
         if (!response.ok) {

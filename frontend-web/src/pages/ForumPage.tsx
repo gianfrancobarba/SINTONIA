@@ -51,9 +51,8 @@ const ForumPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setCurrentPage(1); // Reset to page 1 when filter changes
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterType]);
+        setCurrentPage(1); // Reset to page 1 when filter or category changes
+    }, [filterType, selectedCategory]);
 
     const loadData = async () => {
         await loadQuestions();

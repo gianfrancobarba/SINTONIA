@@ -45,13 +45,20 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
     };
 
     const [isExpanded, setIsExpanded] = React.useState(false);
+    const [isTextExpanded, setIsTextExpanded] = React.useState(false);
     const ANSWERS_THRESHOLD = 2;
+    const TEXT_TRUNCATE_LENGTH = 200;
 
     const displayedAnswers = question.risposte && question.risposte.length > 0
         ? (isExpanded ? question.risposte : question.risposte.slice(0, ANSWERS_THRESHOLD))
         : [];
 
     const hasMoreAnswers = question.risposte && question.risposte.length > ANSWERS_THRESHOLD;
+
+    const isTextLong = question.testo.length > TEXT_TRUNCATE_LENGTH;
+    const displayText = isTextLong && !isTextExpanded
+        ? question.testo.slice(0, TEXT_TRUNCATE_LENGTH) + '...'
+        : question.testo;
 
     return (
         <div className="forum-question-card">
@@ -72,7 +79,15 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
             </div>
 
             <div className="card-body">
-                <p className="question-text">{question.testo}</p>
+                <p className="question-text">{displayText}</p>
+                {isTextLong && (
+                    <button
+                        className="expand-text-button"
+                        onClick={() => setIsTextExpanded(!isTextExpanded)}
+                    >
+                        {isTextExpanded ? 'Mostra meno' : 'Mostra di più'}
+                    </button>
+                )}
             </div>
 
             {question.risposte && question.risposte.length > 0 && (
