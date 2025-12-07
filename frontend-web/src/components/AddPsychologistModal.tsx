@@ -313,9 +313,18 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                     <button onClick={onClose} className="btn-modal-secondary">
                         Annulla
                     </button>
-                    <button onClick={handleSubmit} className="btn-modal-primary">
-                        <UserPlus size={18} />
-                        Aggiungi Psicologo
+                    <button onClick={handleSubmit} className="btn-modal-primary" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></div>
+                                Aggiunta in corso...
+                            </>
+                        ) : (
+                            <>
+                                <UserPlus size={18} />
+                                Aggiungi Psicologo
+                            </>
+                        )}
                     </button>
                 </div>
             </div>
