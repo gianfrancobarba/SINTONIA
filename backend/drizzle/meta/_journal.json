@@ -43,6 +43,13 @@
       "when": 1764604255138,
       "tag": "0005_late_alex_wilder",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1765122904677,
+      "tag": "0006_easy_quicksilver",
+      "breakpoints": true
     }
   ]
 }

@@ -648,34 +648,24 @@ VALUES
 ((SELECT id_paziente FROM paziente WHERE email = 'chiara.conti@gmail.com'), 'Diario Costante', '2025-11-29 16:30:00'),
 
 -- Mario Russo
-((SELECT id_paziente FROM paziente WHERE email = 'mario.russo@gmail.com'), 'Assegnazione Psicologo', '2025-10-15 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'mario.russo@gmail.com'), 'Primo Questionario', '2025-10-15 09:30:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'mario.russo@gmail.com'), 'Cinque Questionari', '2025-11-15 09:30:00'),
 
 -- Giulia Esposito
-((SELECT id_paziente FROM paziente WHERE email = 'giulia.esposito@gmail.com'), 'Assegnazione Psicologo', '2025-09-10 09:00:00'),
-((SELECT id_paziente FROM paziente WHERE email = 'giulia.esposito@gmail.com'), 'Primo Obiettivo Raggiunto', '2025-10-01 10:00:00'),
 
 -- Luca Ferrara
-((SELECT id_paziente FROM paziente WHERE email = 'luca.ferrara@gmail.com'), 'Assegnazione Psicologo', '2025-11-01 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'luca.ferrara@gmail.com'), 'Prima Domanda Forum', '2025-10-17 09:15:00'),
 
 -- Sara Romano
-((SELECT id_paziente FROM paziente WHERE email = 'sara.romano@gmail.com'), 'Assegnazione Psicologo', '2025-10-22 09:00:00'),
-((SELECT id_paziente FROM paziente WHERE email = 'sara.romano@gmail.com'), 'Tris di Obiettivi', '2025-11-20 10:00:00'),
 
 -- Antonio De Luca
-((SELECT id_paziente FROM paziente WHERE email = 'antonio.deluca@gmail.com'), 'Assegnazione Psicologo', '2025-09-05 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'antonio.deluca@gmail.com'), 'Dieci Questionari', '2025-11-25 09:00:00'),
 
 -- Francesca Bianchi
-((SELECT id_paziente FROM paziente WHERE email = 'francesca.bianchi@gmail.com'), 'Assegnazione Psicologo', '2025-11-12 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'francesca.bianchi@gmail.com'), 'Prima Nota Diario', '2025-11-13 20:00:00'),
 
 -- Davide Greco
-((SELECT id_paziente FROM paziente WHERE email = 'davide.greco@gmail.com'), 'Assegnazione Psicologo', '2025-09-28 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'davide.greco@gmail.com'), 'Primo Stato dAnimo', '2025-09-30 07:30:00'),
 
 -- Elena Rizzo
-((SELECT id_paziente FROM paziente WHERE email = 'elena.rizzo@gmail.com'), 'Assegnazione Psicologo', '2025-11-03 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'elena.rizzo@gmail.com'), 'Voce Attiva', '2025-11-20 12:00:00');
