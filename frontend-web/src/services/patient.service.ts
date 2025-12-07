@@ -24,6 +24,28 @@ export const fetchPatients = async (): Promise<PatientData[]> => {
 };
 
 /**
+ * Search Campania municipalities (admin only)
+ */
+export const searchComuni = async (query: string): Promise<{ nome: string; provincia: string; codice: string }[]> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        // Se la query è vuota, potremmo voler restituire lista vuota o default
+        if (!query || query.length < 2) return [];
+
+        const response = await axios.get(`${API_URL}/admin/patients/comuni/search?q=${encodeURIComponent(query)}`, {
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error searching comuni:', error);
+        throw error;
+    }
+};
+
+/**
  * Cerca un paziente specifico per ID (admin only)
  * @param id - UUID del paziente da cercare
  * @returns Dati del paziente trovato

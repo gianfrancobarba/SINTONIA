@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { User, Flag, UserCog, X, Save, Edit2, Loader2, Trash2, ChevronDown, Check, PenLine } from 'lucide-react';
 import type { PatientData } from '../types/patient';
-import { getPatientDetails, updatePatient, removePatientFromWaitingList, updatePatientPriority } from '../services/patient.service';
+import { getPatientDetails, updatePatient, removePatientFromWaitingList, updatePatientPriority, searchComuni } from '../services/patient.service';
 import { fetchAllPsychologists, type PsychologistOption } from '../services/psychologist.service';
 import Toast from './Toast';
 import '../css/Modal.css';
@@ -42,8 +42,10 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
     const [tempEmail, setTempEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [editedResidenza, setEditedResidenza] = useState('');
+    const [isValidResidence, setIsValidResidence] = useState(true);
     const [editedPsicologo, setEditedPsicologo] = useState('');
     const [editedPriorita, setEditedPriorita] = useState('');
+    const [comuniOptions, setComuniOptions] = useState<{ nome: string; provincia: string; codice: string }[]>([]);
     const [psychologistSearch, setPsychologistSearch] = useState('');
     const [showPsychologistDropdown, setShowPsychologistDropdown] = useState(false);
 
@@ -421,13 +423,19 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                     </div>
                                 </div>
 
-                                {/* Residenza - Editable Chip */}
+                                {/* Residenza - Editable Chip with Autocomplete */}
                                 <div className="modal-data-row modal-data-row-editable">
                                     <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
                                     <span className="modal-data-row-label">Residenza</span>
                                     <div style={{ position: 'relative' }} ref={residenzaInputRef}>
                                         <button
-                                            onClick={() => isEditing && setShowResidenzaInput(!showResidenzaInput)}
+                                            onClick={() => {
+                                                if (isEditing) {
+                                                    setEditedResidenza(patientDetails.residenza || '');
+                                                    setIsValidResidence(true); // Assume current is valid initially
+                                                    setShowResidenzaInput(!showResidenzaInput);
+                                                }
+                                            }}
                                             className="modal-editable-chip"
                                             style={{ cursor: isEditing ? 'pointer' : 'default', opacity: isEditing ? 1 : 0.8 }}
                                         >
@@ -436,25 +444,81 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                         </button>
 
                                         {showResidenzaInput && (
-                                            <div className="modal-chip-input-popover">
+                                            <div className="modal-chip-input-popover" style={{ width: '280px', zIndex: 10002 }}>
                                                 <input
                                                     type="text"
-                                                    value={editedResidenza}
-                                                    onChange={(e) => setEditedResidenza(e.target.value)}
-                                                    placeholder="Inserisci indirizzo..."
+                                                    value={editedResidenza} // Used as search term
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        setEditedResidenza(val);
+                                                        setIsValidResidence(false); // Invalid while typing unless selected
+                                                        // Trigger search
+                                                        if (val.length >= 2) {
+                                                            searchComuni(val).then(setComuniOptions).catch(console.error);
+                                                        } else {
+                                                            setComuniOptions([]);
+                                                        }
+                                                    }}
+                                                    placeholder="Cerca comune..."
                                                     className="modal-chip-input"
                                                     autoFocus
                                                 />
-                                                <div className="modal-chip-input-actions">
+                                                {/* Suggestions List */}
+                                                {comuniOptions.length > 0 && (
+                                                    <div style={{
+                                                        maxHeight: '150px',
+                                                        overflowY: 'auto',
+                                                        border: '1px solid #eee',
+                                                        borderTop: 'none',
+                                                        borderRadius: '0 0 8px 8px',
+                                                        marginTop: '4px',
+                                                        background: 'white',
+                                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                                                    }}>
+                                                        {comuniOptions.map((comune) => (
+                                                            <div
+                                                                key={comune.codice}
+                                                                onClick={() => {
+                                                                    setEditedResidenza(`${comune.nome} (${comune.provincia})`);
+                                                                    setIsValidResidence(true); // Valid selection
+                                                                    setComuniOptions([]); // Close suggestions
+                                                                    // We keep the popover open until user clicks OK or Cancel
+                                                                }}
+                                                                style={{
+                                                                    padding: '8px 12px',
+                                                                    cursor: 'pointer',
+                                                                    fontSize: '13px',
+                                                                    borderBottom: '1px solid #f0f0f0'
+                                                                }}
+                                                                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; }}
+                                                                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'white'; }}
+                                                            >
+                                                                <span style={{ fontWeight: 500 }}>{comune.nome}</span>
+                                                                <span style={{ color: '#64748b', fontSize: '11px', marginLeft: '4px' }}>({comune.provincia})</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+
+                                                <div className="modal-chip-input-actions" style={{ marginTop: '8px' }}>
                                                     <button
-                                                        onClick={() => setShowResidenzaInput(false)}
+                                                        onClick={() => {
+                                                            // Revert to original if cancelled
+                                                            setEditedResidenza(patientDetails.residenza || '');
+                                                            setShowResidenzaInput(false);
+                                                        }}
                                                         className="modal-chip-btn modal-chip-btn-cancel"
                                                     >
                                                         Annulla
                                                     </button>
                                                     <button
-                                                        onClick={() => setShowResidenzaInput(false)}
+                                                        onClick={() => {
+                                                            setShowResidenzaInput(false);
+                                                            setComuniOptions([]);
+                                                        }}
+                                                        disabled={!isValidResidence}
                                                         className="modal-chip-btn modal-chip-btn-save"
+                                                        style={{ opacity: isValidResidence ? 1 : 0.5, cursor: isValidResidence ? 'pointer' : 'not-allowed' }}
                                                     >
                                                         <Check size={14} /> OK
                                                     </button>
