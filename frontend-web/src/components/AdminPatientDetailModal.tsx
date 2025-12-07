@@ -320,7 +320,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                                     style={{ marginBottom: '10px' }}
                                                 />
 
-                                                <div style={{ maxHeight: '180px', overflowY: 'auto' }}>
+                                                <div style={{ maxHeight: '140px', overflowY: 'auto' }}>
                                                     {/* Non assegnato option */}
                                                     <div
                                                         onClick={() => handlePsychologistSelect('')}
