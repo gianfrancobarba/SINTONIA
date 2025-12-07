@@ -358,7 +358,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                     display: 'flex',
                     justifyContent: 'flex-end'
                 }}>
-                    {role === 'psychologist' && (
+                    {role === 'psychologist' && !questionnaire.revisionato && !questionnaire.invalidato && (
                         <button
                             onClick={handleReview}
                             disabled={isReviewing}
