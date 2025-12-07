@@ -288,15 +288,24 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                     <span className="modal-data-row-value">{patientDetails.codFiscale}</span>
                                 </div>
 
-                                {/* Psicologo - Editable Chip */}
+                                {/* Psicologo - Editable Chip (only if already assigned) */}
                                 <div className="modal-data-row modal-data-row-editable">
                                     <div className="modal-data-row-dot modal-data-row-dot-purple"></div>
                                     <span className="modal-data-row-label">Psicologo</span>
                                     <div style={{ position: 'relative' }} ref={psychologistDropdownRef}>
                                         <button
-                                            onClick={() => isEditing && setShowPsychologistDropdown(!showPsychologistDropdown)}
+                                            onClick={() => {
+                                                // Only allow editing if patient already has a psychologist
+                                                if (isEditing && patientDetails.idPsicologo) {
+                                                    setShowPsychologistDropdown(!showPsychologistDropdown);
+                                                }
+                                            }}
                                             className="modal-editable-chip"
-                                            style={{ cursor: isEditing ? 'pointer' : 'default', opacity: isEditing ? 1 : 0.8, paddingRight: '12px' }}
+                                            style={{
+                                                cursor: isEditing && patientDetails.idPsicologo ? 'pointer' : 'default',
+                                                opacity: isEditing && patientDetails.idPsicologo ? 1 : 0.7,
+                                                paddingRight: '12px'
+                                            }}
                                         >
                                             {editedPsicologo ? (
                                                 <span style={{ fontWeight: 600 }}>
@@ -305,7 +314,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                                                         : editedPsicologo}
                                                 </span>
                                             ) : 'Non assegnato'}
-                                            {isEditing && <UserCog size={14} className="modal-editable-chip-icon" style={{ marginLeft: '6px' }} />}
+                                            {isEditing && patientDetails.idPsicologo && <UserCog size={14} className="modal-editable-chip-icon" style={{ marginLeft: '6px' }} />}
                                         </button>
 
                                         {showPsychologistDropdown && (
