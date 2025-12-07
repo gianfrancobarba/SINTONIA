@@ -18,6 +18,7 @@ export interface CreateMoodDto {
     umore: Umore;
     intensita?: number;
     note?: string;
+    dataInserimento?: string;
 }
 
 export interface MoodResponse {

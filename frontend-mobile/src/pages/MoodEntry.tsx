@@ -75,6 +75,11 @@ const MoodEntry: React.FC = () => {
             return;
         }
 
+        if (currentStep === 2 && selectedIntensity === null) {
+            setToast({ message: 'Seleziona un\'intensità per continuare', type: 'error' });
+            return;
+        }
+
         if (currentStep < 3) {
             // Vai al prossimo step
             setCurrentStep(currentStep + 1);
@@ -99,10 +104,16 @@ const MoodEntry: React.FC = () => {
                     );
                     setToast({ message: 'Stato d\'animo aggiornato con successo!', type: 'success' });
                 } else {
+                    // Calcola timestamp locale (per evitare problemi di timezone col server)
+                    const now = new Date();
+                    const offsetMs = now.getTimezoneOffset() * 60000;
+                    const localISOString = new Date(now.getTime() - offsetMs).toISOString();
+
                     await createMood(
                         selectedMood,
-                        selectedIntensity ?? undefined,
-                        notes.trim() || undefined
+                        selectedIntensity!, // Assert non-null because validated
+                        notes.trim() || undefined,
+                        localISOString
                     );
                     setToast({ message: 'Stato d\'animo registrato con successo!', type: 'success' });
                 }
@@ -120,7 +131,8 @@ const MoodEntry: React.FC = () => {
 
     const canContinue = () => {
         if (currentStep === 1) return selectedMood !== null;
-        // Step 2 e 3 sono opzionali, quindi si può sempre continuare
+        if (currentStep === 2) return selectedIntensity !== null;
+        // Step 3 è opzionale
         return true;
     };
 
