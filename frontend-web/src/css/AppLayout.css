@@ -28,8 +28,7 @@ html {
     align-self: start;
     height: fit-content;
     max-height: calc(100vh - 80px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible;
     /* Isolate sidebar from content animations */
     transform: translateZ(0);
     will-change: auto;

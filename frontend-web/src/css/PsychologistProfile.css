@@ -9,13 +9,13 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    overflow-y: auto;
 }
 
 /* Header Section */
 .profile-header {
     position: relative;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
+    overflow: visible;
 }
 
 .header-background {
@@ -35,6 +35,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 20px;
+    overflow: visible;
 }
 
 /* Side Buttons */
@@ -105,9 +106,10 @@
 
 /* Profile Info */
 .profile-info {
-    padding: 8px 20px 10px;
+    padding: 8px 20px 20px;
     text-align: center;
     background-color: #F4FAFB;
+    overflow: visible;
 }
 
 .profile-name {
@@ -166,6 +168,7 @@
     background-color: #F4FAFB;
     grid-auto-rows: 1fr;
     flex: 1;
+    border-radius: 0 0 24px 24px;
 }
 
 /* Navigation Grid - 2 columns variant for psychologist */
