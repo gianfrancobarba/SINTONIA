@@ -176,13 +176,15 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSect
                 <p className="profile-role">Amministratore</p>
 
                 {/* Modern Logout Button */}
-                <button
-                    onClick={(e) => { e.stopPropagation(); handleLogout(); }}
-                    className="modern-logout-btn"
-                >
-                    <LogoutIcon />
-                    <span>Esci</span>
-                </button>
+                <div className="profile-action-buttons">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); handleLogout(); }}
+                        className="modern-logout-btn"
+                    >
+                        <LogoutIcon />
+                        <span>Esci</span>
+                    </button>
+                </div>
             </div>
 
             <div className="navigation-grid">

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import PsychologistProfile from './PsychologistProfile';
 import AdminProfile from './AdminProfile';
@@ -11,6 +11,23 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // Close sidebar on route change
+    useEffect(() => {
+        setIsSidebarOpen(false);
+    }, [location.pathname]);
+
+    // Close sidebar when window resizes to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 1024) {
+                setIsSidebarOpen(false);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Memoize active section calculation to prevent unnecessary re-renders
     const activeSection = useMemo(() => {
@@ -78,11 +95,26 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
         }
     }, [navigate, role]);
 
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
         <div className="app-layout-container">
+            {/* Mobile Hamburger Button */}
+            <button
+                className={`hamburger-btn ${isSidebarOpen ? 'open' : ''}`}
+                onClick={toggleSidebar}
+                aria-label="Toggle menu"
+            >
+                <span className="hamburger-line"></span>
+                <span className="hamburger-line"></span>
+                <span className="hamburger-line"></span>
+            </button>
+
             <div className="app-layout-grid">
                 {/* Fixed Sidebar */}
-                <div className="app-layout-sidebar">
+                <div className={`app-layout-sidebar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                     {role === 'admin' ? (
                         <AdminProfile
                             onSelectSection={handleSectionSelect}
@@ -101,6 +133,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
                     <Outlet />
                 </div>
             </div>
+
+            {/* Global Footer */}
+            <footer className="app-footer">
+                © 2025 SINTONIA · Gruppo C09
+            </footer>
         </div>
     );
 };

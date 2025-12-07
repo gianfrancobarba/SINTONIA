@@ -1,41 +1,99 @@
-/* Force scrollbar to prevent layout shift */
+/* ==========================================================================
+   GLOBAL LAYOUT RULES - READ THIS BEFORE ADDING NEW PAGES
+   ==========================================================================
+   
+   STRUTTURA:
+   - .app-layout-container: Viewport container (100vh fisso)
+   - .app-layout-grid: CSS Grid (sidebar 320px + content 1fr)
+   - .app-layout-sidebar: Area sinistra (sticky, scrollabile internamente)
+   - .app-layout-content: Area destra (scrollabile, viewport-height)
+   - .content-panel: Card bianca per contenuti
+   
+   PER NUOVE PAGINE:
+   1. Usare SEMPRE .content-panel come wrapper principale
+   2. NON sovrascrivere height/max-height di .content-panel nelle pagine
+   3. Per contenuti scrollabili interni, usare .content-panel-scroll
+   4. L'altezza e' gestita automaticamente dal layout globale
+   
+   ESEMPIO STRUTTURA PAGINA:
+   
+   div.content-panel
+       h2.panel-title  ->  Titolo
+       div.content-panel-scroll  ->  Contenuto scrollabile
+   
+   ========================================================================== */
+
+/* Prevent body scroll - all scrolling happens inside layout areas */
 html {
-    overflow-y: scroll;
+    overflow: hidden;
+    height: 100%;
 }
 
-/* App Layout Container */
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+}
+
+/* App Layout Container - Fixed viewport height with footer */
 .app-layout-container {
-    min-height: 100vh;
+    height: 100vh;
     background-color: #F5F5F5;
     box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Grid Layout: Fixed Sidebar + Content */
 .app-layout-grid {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 30px 20px 10px 20px;
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 32px;
     align-items: start;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Fixed Sidebar - Isolated rendering to prevent movement */
+/* Global Footer - Subtle professional gradient */
+.app-footer {
+    text-align: center;
+    padding: 20px 20px 14px 20px;
+    background: linear-gradient(to bottom,
+            #F5F5F5 0%,
+            #e8eef0 50%,
+            #d0dde0 100%);
+    color: #4a5568;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(13, 71, 93, 0.1);
+}
+
+/* Fixed Sidebar - Scrollable independently */
 .app-layout-sidebar {
     position: sticky;
-    top: 40px;
+    top: 0;
     align-self: start;
-    height: fit-content;
-    max-height: calc(100vh - 80px);
-    overflow: visible;
+    height: 100%;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    overflow-x: hidden;
     /* Isolate sidebar from content animations */
     transform: translateZ(0);
     will-change: auto;
-    /* Removed contain: layout style to avoid stacking context issues */
 }
 
-/* Hide scrollbar but keep functionality */
+/* Custom scrollbar for sidebar */
 .app-layout-sidebar::-webkit-scrollbar {
     width: 6px;
 }
@@ -53,11 +111,32 @@ html {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* Dynamic Content Area */
+/* Dynamic Content Area - Scrollable independently */
 .app-layout-content {
     width: 100%;
-    min-height: 600px;
-    /* Removed contain: layout to fix modal positioning */
+    height: 100%;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Custom scrollbar for content area */
+.app-layout-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.app-layout-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.app-layout-content::-webkit-scrollbar-thumb {
+    background: rgba(13, 71, 93, 0.3);
+    border-radius: 4px;
+}
+
+.app-layout-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 71, 93, 0.5);
 }
 
 /* Content Panel - Global Styles for all pages */
@@ -65,11 +144,35 @@ html {
     background: #ffffff;
     border-radius: 16px;
     padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Removed box-shadow to prevent corner artifacts */
     width: 100%;
     box-sizing: border-box;
+    /* Fill the available viewport height */
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     /* Apply animation only to opacity, not transform */
     animation: contentFadeIn 0.2s ease-out forwards;
+}
+
+/* Scrollable content area inside panels - use this for long content */
+.content-panel-scroll {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* Panel title - consistent styling matching personal-area-header */
+.panel-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1A5F5F;
+    margin: 0;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #F5F5F5;
+    flex-shrink: 0;
 }
 
 /* Fade-in animation - only opacity to avoid layout shift */
@@ -83,35 +186,139 @@ html {
     }
 }
 
-/* Responsive Design */
+/* ==========================================================================
+   RESPONSIVE DESIGN - Mobile Sidebar
+   ========================================================================== */
+
+/* Hamburger Button - Hidden on desktop */
+.hamburger-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #0D475D 0%, #1A5F5F 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.3);
+    transition: all 0.3s ease;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.hamburger-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(13, 71, 93, 0.4);
+}
+
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Hamburger animation to X */
+.hamburger-btn.open .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 @media (max-width: 1024px) {
-    .app-layout-grid {
-        padding: 20px 12px;
-        grid-template-columns: 1fr;
-        gap: 24px;
+
+    /* Show hamburger on mobile */
+    .hamburger-btn {
+        display: flex;
     }
 
-    .app-layout-sidebar {
-        position: static;
-        max-height: none;
+    html,
+    body {
+        overflow: auto;
+        height: auto;
+    }
+
+    .app-layout-container {
+        height: auto;
+        min-height: 100vh;
         overflow: visible;
-        transform: none;
-        contain: none;
+    }
+
+    .app-layout-grid {
+        padding: 80px 12px 20px 12px;
+        /* Extra top padding for hamburger */
+        grid-template-columns: 1fr;
+        gap: 24px;
+        height: auto;
+    }
+
+    /* Sidebar - Hidden by default, slides in from left */
+    .app-layout-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 320px;
+        max-width: 85vw;
+        height: 100vh;
+        max-height: 100vh;
+        z-index: 1000;
+        background-color: #F5F5F5;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        padding: 20px;
+        padding-top: 80px;
+        padding-bottom: 40px;
+        box-sizing: border-box;
+        box-shadow: none;
+    }
+
+    /* Sidebar open state */
+    .app-layout-sidebar.sidebar-open {
+        transform: translateX(0);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
     }
 
     .app-layout-content {
-        min-height: auto;
+        height: auto;
+        overflow: visible;
     }
 }
 
 @media (max-width: 768px) {
     .app-layout-grid {
-        padding: 16px 8px;
+        padding: 80px 8px 16px 8px;
         gap: 16px;
     }
 
     .content-panel {
         padding: 20px;
         border-radius: 12px;
+    }
+
+    .hamburger-btn {
+        top: 16px;
+        left: 16px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .hamburger-line {
+        width: 20px;
     }
 }

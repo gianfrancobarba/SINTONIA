@@ -1,17 +1,5 @@
 /* Forum Page Styles */
-
-/* Content Panel specific styles */
-.content-panel {
-    /* Inherits base styles from AppLayout.css */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-height: calc(100vh - 80px);
-    /* Match sidebar height */
-    overflow: hidden;
-    /* Ensure border-radius clips content */
-    /* Ensure it fills the container */
-}
+/* Note: .content-panel inherits global styles from AppLayout.css */
 
 /* Fixed Header Section */
 .forum-fixed-header {
@@ -37,12 +25,7 @@
     margin: 0 0 12px 0;
 }
 
-.panel-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #111827;
-    margin: 0 0 16px 0;
-}
+/* Removed .panel-title override - now inherits from AppLayout.css */
 
 .panel-subtitle {
     font-size: 13px;
@@ -298,9 +281,7 @@
         border-radius: 12px;
     }
 
-    .panel-title {
-        font-size: 24px;
-    }
+    /* Removed .panel-title override */
 
     .forum-stats {
         gap: 8px;

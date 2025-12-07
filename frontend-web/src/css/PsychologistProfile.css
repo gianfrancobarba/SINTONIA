@@ -1,11 +1,12 @@
 .psychologist-profile {
     background-color: #F4FAFB;
     border-radius: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Removed box-shadow to prevent visual artifacts */
     overflow: hidden;
     max-width: 320px;
     margin: 0 auto;
     height: 100%;
+    min-height: fit-content;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -35,37 +36,40 @@
     align-items: center;
     justify-content: center;
     padding: 0 20px;
-    overflow: visible;
+    gap: 24px;
 }
 
-/* Side Buttons */
+/* Side Buttons - Single icon on each side */
 .side-btn {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background-color: #83B9C1;
-    border: none;
+    background: linear-gradient(135deg, #83B9C1 0%, #6FA8AF 100%);
+    border: 3px solid white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(131, 185, 193, 0.35);
+    color: white;
+    flex-shrink: 0;
 }
 
 .side-btn:hover {
-    background-color: #6FA8AF;
-
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(131, 185, 193, 0.5);
+    background: linear-gradient(135deg, #6FA8AF 0%, #5A9AA2 100%);
 }
 
-.left-side-btn {
-    margin-right: auto;
+.side-btn-icon {
+    object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
-.right-side-btn {
-    margin-left: auto;
+.notification-icon {
+    width: 24px;
+    height: 24px;
 }
 
 .side-btn-icon {
@@ -126,18 +130,50 @@
     color: #83B9C1;
 }
 
-/* Modern Logout Button */
-.modern-logout-btn {
+/* Action Buttons Row */
+.profile-action-buttons {
     margin-top: 16px;
-    display: inline-flex;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.support-link-btn {
+    display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    background: linear-gradient(135deg, #83B9C1 0%, #6FA8AF 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(131, 185, 193, 0.3);
+}
+
+.support-link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(131, 185, 193, 0.4);
+}
+
+.support-link-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.modern-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
     color: white;
     border: none;
     border-radius: 12px;
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 10px 16px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -185,6 +221,11 @@
 .navigation-grid-2col .nav-label {
     font-size: 13px;
     line-height: 1.2;
+}
+
+/* Full-width nav card - spans both columns */
+.nav-card-full-width {
+    grid-column: span 2;
 }
 
 .nav-card {

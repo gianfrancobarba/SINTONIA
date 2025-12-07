@@ -177,7 +177,7 @@ const AdminPatientList: React.FC = () => {
     };
 
     return (
-        <div className="content-panel-flex">
+        <div className="content-panel">
             <h2 className="panel-title">Gestione Pazienti</h2>
 
             {patientsState.loading && (
