@@ -15,15 +15,19 @@ INSERT INTO badge (nome, descrizione, immagine_badge) VALUES
 ('Primo Questionario', 'Hai compilato il tuo primo questionario.', '/badges/primo_questionario.png'),
 ('Cinque Questionari', 'Hai compilato 5 questionari.', '/badges/cinque_questionari.png'),
 ('Dieci Questionari', 'Hai compilato 10 questionari.', '/badges/dieci_questionari.png'),
+('Venticinque Questionari', 'Hai compilato 25 questionari.', '/badges/venticinque_questionari.png'),
 ('Prima Nota Diario', 'Hai scritto la tua prima annotazione nel diario.', '/badges/prima_nota_diario.png'),
 ('Diario Costante', 'Hai scritto almeno 5 annotazioni nel diario.', '/badges/diario_costante.png'),
+('Narratore', 'Hai scritto 10 pagine di diario.', '/badges/narratore.png'),
+('Diario Esperto', 'Hai scritto 20 pagine di diario.', '/badges/diario_esperto.png'),
 ('Primo Stato dAnimo', 'Hai registrato il tuo primo stato d’animo.', '/badges/primo_stato_animo.png'),
 ('Monitoraggio Umore', 'Hai inserito almeno 10 stati d’animo.', '/badges/monitoraggio_umore.png'),
-('Assegnazione Psicologo', 'Sei stato assegnato a uno psicologo.', '/badges/assegnazione_psicologo.png'),
-('Primo Obiettivo Raggiunto', 'Hai completato il tuo primo obiettivo.', '/badges/primo_obiettivo.png'),
-('Tris di Obiettivi', 'Hai portato a termine almeno 3 obiettivi.', '/badges/tris_obiettivi.png'),
+('Streak Week', 'Hai registrato il tuo stato d''animo per 7 giorni consecutivi.', '/badges/streak_week.png'),
+('Streak Master', 'Hai registrato il tuo stato d''animo per 30 giorni consecutivi.', '/badges/streak_master.png'),
+('Screening Completo', 'Hai completato tutti e 4 i questionari iniziali.', '/badges/screening_completo.png'),
 ('Prima Domanda Forum', 'Hai pubblicato la tua prima domanda nel forum.', '/badges/prima_domanda_forum.png'),
-('Voce Attiva', 'Hai inserito almeno 5 domande.', '/badges/voce_attiva.png');
+('Voce Attiva', 'Hai inserito almeno 5 domande.', '/badges/voce_attiva.png'),
+('Prima Risposta Ricevuta', 'Hai ricevuto una risposta a una tua domanda nel forum.', '/badges/prima_risposta_ricevuta.png');
 
 -- =================================================================================
 -- 3. TIPOLOGIA QUESTIONARIO
@@ -1644,34 +1648,24 @@ VALUES
 ((SELECT id_paziente FROM paziente WHERE email = 'chiara.conti@gmail.com'), 'Diario Costante', '2025-11-29 16:30:00'),
 
 -- Mario Russo
-((SELECT id_paziente FROM paziente WHERE email = 'mario.russo@gmail.com'), 'Assegnazione Psicologo', '2025-10-15 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'mario.russo@gmail.com'), 'Primo Questionario', '2025-10-15 09:30:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'mario.russo@gmail.com'), 'Cinque Questionari', '2025-11-15 09:30:00'),
 
 -- Giulia Esposito
-((SELECT id_paziente FROM paziente WHERE email = 'giulia.esposito@gmail.com'), 'Assegnazione Psicologo', '2025-09-10 09:00:00'),
-((SELECT id_paziente FROM paziente WHERE email = 'giulia.esposito@gmail.com'), 'Primo Obiettivo Raggiunto', '2025-10-01 10:00:00'),
 
 -- Luca Ferrara
-((SELECT id_paziente FROM paziente WHERE email = 'luca.ferrara@gmail.com'), 'Assegnazione Psicologo', '2025-11-01 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'luca.ferrara@gmail.com'), 'Prima Domanda Forum', '2025-10-17 09:15:00'),
 
 -- Sara Romano
-((SELECT id_paziente FROM paziente WHERE email = 'sara.romano@gmail.com'), 'Assegnazione Psicologo', '2025-10-22 09:00:00'),
-((SELECT id_paziente FROM paziente WHERE email = 'sara.romano@gmail.com'), 'Tris di Obiettivi', '2025-11-20 10:00:00'),
 
 -- Antonio De Luca
-((SELECT id_paziente FROM paziente WHERE email = 'antonio.deluca@gmail.com'), 'Assegnazione Psicologo', '2025-09-05 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'antonio.deluca@gmail.com'), 'Dieci Questionari', '2025-11-25 09:00:00'),
 
 -- Francesca Bianchi
-((SELECT id_paziente FROM paziente WHERE email = 'francesca.bianchi@gmail.com'), 'Assegnazione Psicologo', '2025-11-12 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'francesca.bianchi@gmail.com'), 'Prima Nota Diario', '2025-11-13 20:00:00'),
 
 -- Davide Greco
-((SELECT id_paziente FROM paziente WHERE email = 'davide.greco@gmail.com'), 'Assegnazione Psicologo', '2025-09-28 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'davide.greco@gmail.com'), 'Primo Stato dAnimo', '2025-09-30 07:30:00'),
 
 -- Elena Rizzo
-((SELECT id_paziente FROM paziente WHERE email = 'elena.rizzo@gmail.com'), 'Assegnazione Psicologo', '2025-11-03 09:00:00'),
 ((SELECT id_paziente FROM paziente WHERE email = 'elena.rizzo@gmail.com'), 'Voce Attiva', '2025-11-20 12:00:00');

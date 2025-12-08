@@ -188,7 +188,8 @@ export class HomeService {
         return calendarDays;
     }
 
-    // Calcola i giorni consecutivi di compilazione stato d'animo fino a oggi (incluso)
+    // Calcola i giorni consecutivi di compilazione stato d'animo
+    // Se oggi non è stato inserito, parte da ieri per mostrare la streak attuale
     private async getConsecutiveMoodDays(userId: string): Promise<number> {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -202,10 +203,17 @@ export class HomeService {
             .limit(90);
 
         const moodSet = new Set(moods.map(m => this.formatLocalDate(new Date(m.date))));
+        const todayStr = this.formatLocalDate(today);
+
+        // Determina il giorno di partenza:
+        // - Se oggi è stato inserito, conta anche oggi
+        // - Altrimenti parte da ieri per mostrare la streak fino a ieri
+        const hasTodayEntry = moodSet.has(todayStr);
+        const startOffset = hasTodayEntry ? 0 : 1;
 
         let consecutive = 0;
-        // Partiamo da oggi e torniamo indietro fino a quando troviamo un giorno senza evento
-        for (let i = 0; i < 365; i++) { // safety cap
+        // Partiamo dal giorno appropriato e torniamo indietro
+        for (let i = startOffset; i < 365; i++) { // safety cap
             const d = new Date(today);
             d.setDate(today.getDate() - i);
             const key = this.formatLocalDate(d);
