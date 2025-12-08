@@ -9,6 +9,7 @@ interface QuestionnaireDetailModalProps {
     questionnaire: QuestionnaireData | null;
     onClose: () => void;
     role?: 'psychologist' | 'admin';
+    readOnly?: boolean; // Hide review/invalidation actions (e.g., for assigned patients)
     onRequestInvalidation?: (id: string, notes: string) => void;
     onReview?: (id: string) => void;
 }
@@ -17,6 +18,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     questionnaire,
     onClose,
     role = 'psychologist',
+    readOnly = false,
     onRequestInvalidation,
     onReview,
 }) => {
@@ -268,8 +270,8 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                         </div>
                     )}
 
-                    {/* Invalidation Request Section (Psychologist only) */}
-                    {role === 'psychologist' && (
+                    {/* Invalidation Request Section (Psychologist only, not in readOnly mode) */}
+                    {role === 'psychologist' && !readOnly && (
                         <div style={{
                             background: 'white',
                             borderRadius: '16px',
@@ -358,7 +360,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                     display: 'flex',
                     justifyContent: 'flex-end'
                 }}>
-                    {role === 'psychologist' && !questionnaire.revisionato && !questionnaire.invalidato && (
+                    {role === 'psychologist' && !readOnly && !questionnaire.revisionato && !questionnaire.invalidato && (
                         <button
                             onClick={handleReview}
                             disabled={isReviewing}

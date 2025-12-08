@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTriangle, FileText, Check, X, ClipboardList, Download } from 'lucide-react';
+import { User, AlertTriangle, FileText, Check, X, ClipboardList, Download } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
 import { getPatientDetailsByPsychologist, terminatePatientCare, generateReport, getReport } from '../services/patient.service';
@@ -975,6 +975,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                     questionnaire={viewingQuestionnaire}
                     onClose={handleCloseQuestionnaireModal}
                     role="psychologist"
+                    readOnly={true}
                     onRequestInvalidation={handleRequestInvalidation}
                     onReview={handleReview}
                 />
