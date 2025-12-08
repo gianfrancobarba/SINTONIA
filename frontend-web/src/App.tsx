@@ -1,11 +1,21 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import PsychologistDashboard from './pages/PsychologistDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import AppLayout from './components/AppLayout';
+import PsychologistPatientList from './pages/PsychologistPatientList';
+import AdminPatientList from './pages/AdminPatientList';
+import AdminPsychologistList from './pages/AdminPsychologistList';
+import AdminInvalidationList from './pages/AdminInvalidationList';
+import AdminQuestionnaireList from './pages/AdminQuestionnaireList';
+import AdminTechnicalSupport from './pages/AdminTechnicalSupport';
 import QuestionnaireManagement from './pages/QuestionnaireManagement';
 import ForumPage from './pages/ForumPage';
 import ClinicalAlerts from './pages/ClinicalAlerts';
+import PsychologistTechnicalSupport from './pages/PsychologistTechnicalSupport';
+import PsychologistPersonalArea from './components/PsychologistPersonalArea';
+import AdminPersonalArea from './components/AdminPersonalArea';
 import SpidCallback from './pages/SpidCallback';
+import SpidError from './pages/SpidError';
+import NotificationCenter from './pages/NotificationCenter';
 import { getCurrentUser } from './services/auth.service';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -17,60 +27,55 @@ function App() {
   return (
     <Router>
       <Routes>
-
-        {/* Login per admin/psicologi */}
+        {/* Login page */}
         <Route path="/login" element={<Login />} />
+        <Route path="/spid-callback" element={<SpidCallback />} />
+        <Route path="/spid-error" element={<SpidError />} />
 
-
-        {/* Dashboard admin/psicologo */}
+        {/* Psychologist Dashboard with nested routes */}
         <Route
           path="/dashboard"
           element={
             <PrivateRoute>
-              <PsychologistDashboard />
+              <AppLayout role="psychologist" />
             </PrivateRoute>
           }
-        />
+        >
+          <Route index element={<Navigate to="personal-area" replace />} />
+          <Route path="patients" element={<PsychologistPatientList />} />
+          <Route path="questionnaires" element={<QuestionnaireManagement />} />
+          <Route path="forum" element={<ForumPage />} />
+          <Route path="clinical-alerts" element={<ClinicalAlerts />} />
+          <Route path="technical-support" element={<PsychologistTechnicalSupport />} />
+          <Route path="personal-area" element={<PsychologistPersonalArea onProfileUpdate={() => { }} />} />
+          <Route path="notifications" element={<NotificationCenter />} />
+        </Route>
+
+        {/* Admin Dashboard with nested routes */}
         <Route
           path="/admin-dashboard"
           element={
             <PrivateRoute>
-              <AdminDashboard />
+              <AppLayout role="admin" />
             </PrivateRoute>
           }
-        />
+        >
+          <Route index element={<Navigate to="personal-area" replace />} />
+          <Route path="patients" element={<AdminPatientList />} />
+          <Route path="psychologists" element={<AdminPsychologistList />} />
+          <Route path="questionnaires" element={<AdminQuestionnaireList />} />
+          <Route path="invalidation" element={<AdminInvalidationList />} />
+          <Route path="technical-support" element={<AdminTechnicalSupport />} />
+          <Route path="forum" element={<ForumPage />} />
+          <Route path="personal-area" element={<AdminPersonalArea />} />
+          <Route path="notifications" element={<NotificationCenter />} />
+        </Route>
 
-        {/* Gestione Questionari - accessible by both psychologists and admins */}
-        <Route
-          path="/questionnaires"
-          element={
-            <PrivateRoute>
-              <QuestionnaireManagement />
-            </PrivateRoute>
-          }
-        />
+        {/* Legacy routes - redirect to new structure */}
+        <Route path="/questionnaires" element={<Navigate to="/dashboard/questionnaires" replace />} />
+        <Route path="/forum" element={<Navigate to="/dashboard/forum" replace />} />
+        <Route path="/clinical-alerts" element={<Navigate to="/dashboard/clinical-alerts" replace />} />
 
-        {/* Forum - accessible by both psychologists and admins */}
-        <Route
-          path="/forum"
-          element={
-            <PrivateRoute>
-              <ForumPage />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Clinical Alerts - accessible by psychologists */}
-        <Route
-          path="/clinical-alerts"
-          element={
-            <PrivateRoute>
-              <ClinicalAlerts />
-            </PrivateRoute>
-          }
-        />
-
-        <Route path="/spid-callback" element={<SpidCallback />} />
         {/* Default route */}
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
@@ -79,3 +84,4 @@ function App() {
 }
 
 export default App
+

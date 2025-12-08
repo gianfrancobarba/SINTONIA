@@ -4,6 +4,7 @@ import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import * as schema from '../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { SpidProfileDto } from './dto/spid-profile.dto.js';
+import { MOCK_CREDENTIALS } from './mock-credentials.js';
 
 @Injectable()
 export class SpidAuthService {
@@ -65,6 +66,39 @@ export class SpidAuthService {
         return newPatients[0];
     }
 
+    // Password mock fissa per tutti gli utenti
+    private readonly MOCK_PASSWORD = 'password123';
+
+    async authenticateWithMockCredentials(email: string, password: string) {
+        console.log('Authenticating with mock credentials:', email);
+
+        const codFiscale = MOCK_CREDENTIALS[email.toLowerCase()];
+
+        if (!codFiscale) {
+            console.log('Email not found in mock credentials');
+            return null;
+        }
+
+        if (password !== this.MOCK_PASSWORD) {
+            console.log('Password mismatch');
+            return null;
+        }
+
+        // Find patient by codFiscale
+        const patients = await this.db
+            .select()
+            .from(schema.paziente)
+            .where(eq(schema.paziente.codFiscale, codFiscale));
+
+        if (patients.length > 0) {
+            console.log('Patient authenticated:', patients[0].idPaziente);
+            return patients[0];
+        }
+
+        console.log('Patient with codFiscale not found in DB:', codFiscale);
+        return null;
+    }
+
     async validatePsychologist(spidProfile: SpidProfileDto) {
         console.log('Validating SPID profile for Psychologist:', spidProfile);
 
@@ -74,6 +108,11 @@ export class SpidAuthService {
             .where(eq(schema.psicologo.codFiscale, spidProfile.fiscalNumber));
 
         if (psychologists.length > 0) {
+            // Verifica se lo psicologo è attivo
+            if (psychologists[0].stato === false) {
+                console.warn(`Access denied for psychologist ${psychologists[0].codFiscale}: account deactivated`);
+                throw new UnauthorizedException('Accesso negato: Il tuo account è stato disattivato. Contatta l\'amministratore.');
+            }
             console.log('Psychologist found:', psychologists[0].codFiscale);
             return psychologists[0];
         }
@@ -93,6 +132,35 @@ export class SpidAuthService {
 
         console.log('New psychologist created:', newPsychologists[0].codFiscale);
         return newPsychologists[0];
+    }
+
+    async authenticatePsychologistWithMockCredentials(email: string, password: string) {
+        console.log('Authenticating psychologist with email from DB:', email);
+
+        // Verifica password (uguale per tutti)
+        if (password !== this.MOCK_PASSWORD) {
+            console.log('Password mismatch');
+            return null;
+        }
+
+        // Cerca psicologo direttamente nel DB per email
+        const psychologists = await this.db
+            .select()
+            .from(schema.psicologo)
+            .where(eq(schema.psicologo.email, email.toLowerCase()));
+
+        if (psychologists.length > 0) {
+            // Verifica se lo psicologo è attivo
+            if (psychologists[0].stato === false) {
+                console.warn(`Access denied for psychologist ${psychologists[0].codFiscale}: account deactivated`);
+                return null;
+            }
+            console.log('Psychologist authenticated:', psychologists[0].codFiscale);
+            return psychologists[0];
+        }
+
+        console.log('Psychologist with email not found in DB:', email);
+        return null;
     }
 
     async generateToken(user: any, role: 'patient' | 'psychologist' = 'patient') {
@@ -119,5 +187,34 @@ export class SpidAuthService {
                 terms: user.terms,
             },
         };
+    }
+
+    async findPatientByCodFiscale(codFiscale: string) {
+        const patients = await this.db
+            .select()
+            .from(schema.paziente)
+            .where(eq(schema.paziente.codFiscale, codFiscale));
+
+        if (patients.length > 0) {
+            return patients[0];
+        }
+        return null;
+    }
+
+    async findPsychologistByCodFiscale(codFiscale: string) {
+        const psychologists = await this.db
+            .select()
+            .from(schema.psicologo)
+            .where(eq(schema.psicologo.codFiscale, codFiscale));
+
+        if (psychologists.length > 0) {
+            // Verifica se lo psicologo è attivo
+            if (psychologists[0].stato === false) {
+                console.warn(`Access denied for psychologist ${psychologists[0].codFiscale}: account deactivated`);
+                return null;
+            }
+            return psychologists[0];
+        }
+        return null;
     }
 }

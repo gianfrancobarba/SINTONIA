@@ -22,7 +22,7 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
             'Ansia': '#eab308',
             'Stress': '#D32F2F',
             'Tristezza': '#8B5CF6',
-            'Vita di coppia': '#ec4899',
+            'Vita di Coppia': '#ec4899',
         };
         return colors[categoria] || '#61A889';
     };

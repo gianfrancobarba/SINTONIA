@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
-import { paziente, psicologo } from '../../drizzle/schema.js';
+import { paziente, psicologo, report } from '../../drizzle/schema.js';
 import { eq, and } from 'drizzle-orm';
 
 @Injectable()
@@ -85,6 +85,13 @@ export class Visualizzazione_pazientiService {
             throw new NotFoundException(`Paziente non assegnato a questo psicologo`);
         }
 
+        // Check if patient has any reports
+        const [existingReport] = await db
+            .select({ idReport: report.idReport })
+            .from(report)
+            .where(eq(report.idPaziente, idPaziente))
+            .limit(1);
+
         return {
             idPaziente: row.idPaziente,
             nome: row.nome,
@@ -102,6 +109,7 @@ export class Visualizzazione_pazientiService {
             nomePsicologo: row.nomePsicologo && row.cognomePsicologo
                 ? `Dr. ${row.nomePsicologo} ${row.cognomePsicologo}`
                 : null,
+            hasReport: !!existingReport,
         };
     }
 }

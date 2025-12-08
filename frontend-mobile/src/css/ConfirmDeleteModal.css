@@ -4,87 +4,64 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
-    animation: fadeIn 0.2s ease;
-    pointer-events: auto;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    z-index: 1000;
+    backdrop-filter: blur(4px);
 }
 
 .confirm-modal-box {
     background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    animation: slideUp 0.3s ease;
-    pointer-events: auto;
+    padding: 30px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 12px 0;
+}
+
+.confirm-modal-message {
+    font-size: 16px;
+    color: #6B7280;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
 }
 
 .confirm-modal-buttons {
     display: flex;
-    gap: 20px;
-    width: 100%;
-    max-width: 500px;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    gap: 12px;
 }
 
 .confirm-modal-btn {
     flex: 1;
-    padding: 18px 28px;
-    border: none;
+    padding: 14px;
     border-radius: 16px;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    border: none;
+    transition: all 0.2s;
 }
 
 .cancel-btn {
-    background: #E5E7EB;
-    color: var(--text-dark);
+    background: #F3F4F6;
+    color: #4B5563;
+    font-size: 16px;
+    font-weight: 600;
 }
 
-.cancel-btn:hover {
-    background: #D1D5DB;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-.delete-btn {
-    background: #EF4444;
-    color: white;
-}
-
-.delete-btn:hover {
+.confirm-modal-btn.delete-btn {
     background: #DC2626;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
-}
-
-.confirm-modal-btn:active {
-    transform: translateY(0);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
 }

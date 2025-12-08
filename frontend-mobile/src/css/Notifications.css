@@ -156,3 +156,132 @@
         font-size: 24px;
     }
 }
+
+/* ===== Unread State ===== */
+.notification-card.unread {
+    border-left: 4px solid var(--primary-dark, #1E4A5F);
+    background: linear-gradient(135deg, #f8fbfc 0%, #ffffff 100%);
+}
+
+/* ===== Notification Date ===== */
+.notification-date {
+    font-size: 11px;
+    color: #9CA3AF;
+    margin-top: 4px;
+}
+
+/* ===== Loading State ===== */
+.notifications-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #9CA3AF;
+}
+
+.notifications-loading .spinner {
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== Empty State ===== */
+.notifications-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #9CA3AF;
+}
+
+.notifications-empty .empty-icon {
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+/* ===== Error State ===== */
+.notifications-error {
+    text-align: center;
+    padding: 40px 20px;
+    color: #EF4444;
+}
+
+.notifications-error button {
+    margin-top: 12px;
+    padding: 8px 20px;
+    background: var(--primary-dark, #1E4A5F);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ===== Count Badge ===== */
+.notifications-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+/* ===== Mark All Read Button ===== */
+.mark-all-read-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mark-all-read-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== Pagination ===== */
+.notifications-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.pagination-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-dark, #1E4A5F);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #6B7280;
+    font-weight: 500;
+}

@@ -1,45 +1,10 @@
 /* Forum Page Styles */
+/* Note: .content-panel inherits global styles from AppLayout.css */
 
-.forum-page-container {
-    height: 100vh;
-    background-color: #F5F5F5;
-    padding: 20px;
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-.forum-grid {
-    display: flex;
-    gap: 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-    height: calc(100vh - 40px);
-    /* Account for container padding */
-    overflow: hidden;
-}
-
-.forum-sidebar {
-    width: 320px;
+/* Fixed Header Section */
+.forum-fixed-header {
     flex-shrink: 0;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.forum-content {
-    flex: 1;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.content-panel {
-    background: #f4fafb;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    height: fit-content;
-    min-height: 100%;
+    margin-bottom: 12px;
 }
 
 /* Forum Header */
@@ -47,58 +12,66 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
     border-bottom: 2px solid #f3f4f6;
 }
 
 .forum-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: black;
     text-align: center;
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
 }
 
-.panel-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #111827;
-    margin: 0 0 8px 0;
-}
+/* Removed .panel-title override - now inherits from AppLayout.css */
 
 .panel-subtitle {
-    font-size: 15px;
+    font-size: 13px;
     color: #6b7280;
     margin: 0;
+}
+
+/* Scrollable Content Section */
+.forum-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    /* Prevent scrollbar from overlapping content */
+    min-height: 0;
+    /* Critical for flex scrolling */
 }
 
 /* Forum Stats */
 .forum-stats {
     display: flex;
-    gap: 12px;
+    gap: 6px;
     justify-content: center;
     width: 100%;
+    margin-bottom: 12px;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 16px;
+    padding: 6px 10px;
     background: rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
     opacity: 0.7;
+    flex: 1;
+    max-width: 140px;
 }
 
 .stat-item:hover {
     opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Active state - All questions (Blue) */
@@ -106,7 +79,7 @@
     background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
     border-color: #1E40AF;
     opacity: 1;
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .stat-item.stat-active .stat-value,
@@ -118,7 +91,7 @@
 .stat-unanswered.stat-active {
     background: linear-gradient(135deg, #FDE047 0%, #FACC15 100%);
     border-color: #CA8A04;
-    box-shadow: 0 6px 16px rgba(250, 204, 21, 0.3);
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.2);
 }
 
 .stat-unanswered.stat-active .stat-value,
@@ -130,7 +103,7 @@
 .stat-answered.stat-active {
     background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
     border-color: #059669;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .stat-answered.stat-active .stat-value,
@@ -139,11 +112,11 @@
 }
 
 .stat-value {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 700;
     color: #374151;
     line-height: 1;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .stat-label {
@@ -157,7 +130,9 @@
 
 /* Questions List */
 .forum-questions-list {
-    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 /* Loading State */
@@ -294,62 +269,19 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .forum-page-container {
-        height: auto;
-        min-height: 100vh;
-        overflow-y: auto;
-    }
-
-    .forum-grid {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        gap: 20px;
-    }
-
-    .forum-sidebar {
-        height: auto;
+    .forum-scroll-container {
         overflow: visible;
-    }
-
-    .forum-content {
-        height: auto;
-        overflow: visible;
-        padding-right: 0;
-    }
-
-    .content-panel {
-        padding: 24px;
-    }
-
-    .forum-header {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .forum-stats {
-        width: 100%;
-        justify-content: space-between;
+        flex: none;
     }
 }
 
 @media (max-width: 768px) {
-    .forum-page-container {
-        padding: 12px;
-    }
-
-    .forum-content {
-        padding: 0;
-    }
-
     .content-panel {
         padding: 20px;
         border-radius: 12px;
     }
 
-    .panel-title {
-        font-size: 24px;
-    }
+    /* Removed .panel-title override */
 
     .forum-stats {
         gap: 8px;
@@ -357,14 +289,92 @@
 
     .stat-item {
         padding: 6px 12px;
-        flex: 1;
-    }
-
-    .stat-value {
-        font-size: 16px;
     }
 
     .stat-label {
         font-size: 9px;
     }
+
+    .stat-value {
+        font-size: 16px;
+    }
+}
+
+/* Delete Confirmation Dialog */
+.delete-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirm-dialog {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.delete-confirm-dialog h3 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.delete-confirm-dialog p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.cancel-button,
+.confirm-delete-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-button {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+}
+
+.cancel-button:hover {
+    background: #e5e7eb;
+}
+
+.confirm-delete-button {
+    background: #ef4444;
+    border: none;
+    color: white;
+    border-radius: 8px;
+}
+
+.confirm-delete-button:hover {
+    background: #dc2626;
+}
+
+.confirm-delete-button:active,
+.cancel-button:active {
+    transform: scale(0.98);
 }

@@ -32,6 +32,22 @@ export class StatoAnimoController {
     }
 
     /**
+     * GET /paziente/stato-animo/oggi?date=YYYY-MM-DD
+     * Recupera lo stato d'animo inserito oggi
+     * 
+     * @param date Data in formato YYYY-MM-DD (usa il timezone del client)
+     */
+    @Get('oggi')
+    @UseGuards(JwtAuthGuard)
+    async getStatoAnimoOggi(
+        @Req() req: Request,
+        @Query('date') date?: string,
+    ): Promise<any | null> {
+        const userId = (req as any).user?.id;
+        return this.statoAnimoService.getStatoAnimoOggi(userId, date);
+    }
+
+    /**
      * GET /paziente/stato-animo/storico?giorni=30
      * Recupera lo storico degli stati d'animo per il grafico
      * 

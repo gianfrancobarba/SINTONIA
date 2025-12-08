@@ -2,11 +2,15 @@ import { Injectable, NotFoundException, BadRequestException, ForbiddenException 
 import { db } from '../../drizzle/db.js';
 import { paziente } from '../../drizzle/schema.js';
 import { eq, and } from 'drizzle-orm';
+import { AssegnazioneService } from '../assegnazione/assegnazione.service.js';
 
 @Injectable()
 export class TerminaCuraService {
+    constructor(private readonly assegnazioneService: AssegnazioneService) { }
+
     /**
      * Termina la cura di un paziente impostando stato = false
+     * e assegna il prossimo paziente in coda allo psicologo
      * @param idPaziente - UUID del paziente
      * @param codiceFiscalePsicologo - Codice fiscale dello psicologo che termina la cura
      */
@@ -50,10 +54,16 @@ export class TerminaCuraService {
             .set({ stato: false })
             .where(eq(paziente.idPaziente, idPaziente));
 
+        // Assegna il prossimo paziente in coda allo psicologo
+        const nuovoPazienteId = await this.assegnazioneService.assignNextPatientToPsychologist(
+            codiceFiscalePsicologo
+        );
+
         return {
             message: 'Cura terminata con successo',
             idPaziente: idPaziente,
             nomePaziente: `${pazienteData.nome} ${pazienteData.cognome}`,
+            nuovoPazienteAssegnato: nuovoPazienteId,
         };
     }
 }

@@ -53,6 +53,70 @@ export class StatoAnimoService {
     }
 
     /**
+     * Recupera lo stato d'animo inserito oggi dal paziente
+     * 
+     * @param userId ID del paziente
+     * @param clientDate Data locale del client in formato YYYY-MM-DD (opzionale, per gestire timezone)
+     * @returns Dto con i dati dello stato d'animo o null se non presente
+     */
+    async getStatoAnimoOggi(userId: string, clientDate?: string): Promise<any | null> {
+        // Usa la data del client se fornita, altrimenti calcola per timezone Europe/Rome
+        let todayStr: string;
+
+        if (clientDate && /^\d{4}-\d{2}-\d{2}$/.test(clientDate)) {
+            todayStr = clientDate;
+        } else {
+            // Fallback: calcola la data corrente nel timezone Europe/Rome
+            const now = new Date();
+            // Europe/Rome è UTC+1 (o UTC+2 in estate)
+            const romeOffset = this.getRomeOffset(now);
+            const romeTime = new Date(now.getTime() + romeOffset * 60000);
+            todayStr = this.formatLocalDate(romeTime);
+        }
+
+        // Recupera gli ultimi stati d'animo e filtra per data locale
+        const rows = await db
+            .select()
+            .from(statoAnimo)
+            .where(eq(statoAnimo.idPaziente, userId))
+            .orderBy(desc(statoAnimo.dataInserimento))
+            .limit(10);
+
+        // Filtra per data locale (confronto stringa YYYY-MM-DD)
+        const todayMood = rows.find(row => {
+            const rowDate = this.formatLocalDate(new Date(row.dataInserimento));
+            return rowDate === todayStr;
+        });
+
+        if (!todayMood) {
+            return null;
+        }
+
+        return {
+            id: todayMood.idStatoAnimo,
+            umore: todayMood.umore,
+            intensita: todayMood.intensita,
+            note: todayMood.note,
+            dataInserimento: todayMood.dataInserimento,
+        };
+    }
+
+    /**
+     * Calcola l'offset in minuti per Europe/Rome
+     * CET (inverno) = UTC+60, CEST (estate) = UTC+120
+     */
+    private getRomeOffset(date: Date): number {
+        // Semplificazione: marzo-ottobre = UTC+2, novembre-febbraio = UTC+1
+        const month = date.getUTCMonth(); // 0-11
+        // L'ora legale va dall'ultima domenica di marzo all'ultima domenica di ottobre
+        // Per semplicità: marzo (2) a ottobre (9) = +120, resto = +60
+        if (month >= 2 && month <= 9) {
+            return 120; // CEST (UTC+2)
+        }
+        return 60; // CET (UTC+1)
+    }
+
+    /**
      * Recupera lo storico degli stati d'animo per visualizzazione grafico
      * 
      * Filtra gli ultimi N giorni e ritorna gli stati in ordine cronologico crescente.

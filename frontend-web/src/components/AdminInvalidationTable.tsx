@@ -24,7 +24,24 @@ const AdminInvalidationTable: React.FC<AdminInvalidationTableProps> = ({
 }) => {
     const formatDate = (dateString: string | null) => {
         if (!dateString) return '-';
-        return dateString;
+
+        try {
+            const date = new Date(dateString);
+
+            // Format date as dd/mm/yy
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = String(date.getFullYear()).slice(-2);
+
+            // Format time as HH:mm
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return dateString;
+        }
     };
 
     const getStatusLabel = (stato: string) => {
@@ -84,7 +101,7 @@ const AdminInvalidationTable: React.FC<AdminInvalidationTableProps> = ({
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
                                     whiteSpace: 'nowrap'
-                                }} title={req.note}>
+                                }}>
                                     {req.note}
                                 </td>
                                 <td>{formatDate(req.dataRichiesta)}</td>

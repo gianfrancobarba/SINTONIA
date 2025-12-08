@@ -14,7 +14,7 @@ interface PsychologistData {
     cognome: string;
     email: string;
     aslAppartenenza: string;
-    stato: 'Attivo' | 'Disattivato';
+    stato: 'Attivo' | 'Inattivo';  // Changed from 'Disattivato' to 'Inattivo'
 }
 
 interface AdminPsychologistTableProps {
@@ -56,7 +56,6 @@ const AdminPsychologistTable: React.FC<AdminPsychologistTableProps> = ({
                             >
                                 <td
                                     className="questionnaire-id-cell"
-                                    title={`Codice Fiscale: ${psy.codiceFiscale}`}
                                 >
                                     {psy.codiceFiscale}
                                 </td>

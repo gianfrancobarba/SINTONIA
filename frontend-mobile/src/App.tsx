@@ -26,6 +26,7 @@ import Diary from './pages/Diary';
 import NewDiaryPage from './pages/NewDiaryPage';
 import EditDiaryPage from './pages/EditDiaryPage';
 import MainLayout from './components/MainLayout';
+import MoodEntry from './pages/MoodEntry';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -181,13 +182,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/spid-error" element={
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h1>Errore autenticazione SPID</h1>
-            <p>Si è verificato un errore durante l'autenticazione.</p>
-            <a href="/">Torna alla home</a>
-          </div>
-        } />
+        <Route
+          path="/mood-entry"
+          element={
+            <PrivateRoute>
+              <MoodEntry />
+            </PrivateRoute>
+          }
+        />
         <Route path="/spid-error" element={<SPIDError />} />
       </Routes>
     </Router>

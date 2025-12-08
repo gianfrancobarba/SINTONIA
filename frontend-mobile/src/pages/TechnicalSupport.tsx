@@ -41,6 +41,8 @@ const TechnicalSupport: React.FC = () => {
                 setTimeout(() => {
                     navigate('/settings');
                 }, 2000);
+            } else {
+                setError('Errore durante l\'invio: ' + (response.message || 'Riprova più tardi.'));
             }
         } catch (err) {
             setError('Errore durante l\'invio della richiesta. Riprova.');
@@ -93,6 +95,9 @@ const TechnicalSupport: React.FC = () => {
                                     value={titolo}
                                     onChange={(e) => setTitolo(e.target.value)}
                                     disabled={loading}
+                                    maxLength={60}
+                                    spellCheck={false}
+                                    autoComplete="off"
                                 />
                             </div>
                         </div>
@@ -106,7 +111,11 @@ const TechnicalSupport: React.FC = () => {
                                     value={descrizione}
                                     onChange={(e) => setDescrizione(e.target.value)}
                                     disabled={loading}
+                                    maxLength={500}
                                 />
+                                <div className="char-counter">
+                                    {descrizione.length}/500
+                                </div>
                             </div>
                         </div>
 

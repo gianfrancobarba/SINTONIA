@@ -1,6 +1,7 @@
 /* Profilo psicologo */
 
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { fetchDashboardData } from '../services/psychologist.service';
 import { getCurrentUser, logout } from '../services/auth.service';
@@ -8,6 +9,7 @@ import type { PsychologistDashboardData, LoadingState } from '../types/psycholog
 import profilePhoto from '../images/psychologist-photo.png';
 import notificationIcon from '../images/psi-notification.png';
 import '../css/PsychologistProfile.css';
+import '../css/ClinicalAlerts.css'; // For confirmation overlay styles
 
 // Modern SVG Icons
 const PatientIcon = () => (
@@ -41,6 +43,14 @@ const ForumIcon = () => (
     </svg>
 );
 
+const SupportIcon = () => (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" strokeWidth="1" />
+    </svg>
+);
+
 const LogoutIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -62,6 +72,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
         loading: true,
         error: null,
     });
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     useEffect(() => {
         loadDashboardData();
@@ -104,8 +115,16 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
     };
 
     const handleLogout = () => {
+        setShowLogoutConfirm(true);
+    };
+
+    const confirmLogout = () => {
         logout();
         navigate('/login');
+    };
+
+    const cancelLogout = () => {
+        setShowLogoutConfirm(false);
     };
 
     // Show loading state
@@ -143,24 +162,26 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
             <div className="profile-header">
                 <div className="header-background" />
                 <div className="profile-section">
+                    {/* Left icon - Area Personale */}
                     <button
                         className="side-btn left-side-btn"
-                        aria-label="Edit Profile"
+                        aria-label="Area Personale"
                         onClick={(e) => handleNavigation('area-personale', e)}
+                        title="Area Personale"
                     >
                         <svg
-                            width="24"
-                            height="24"
+                            width="22"
+                            height="22"
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="side-btn-icon edit-icon"
                         >
                             <circle cx="12" cy="7" r="4" fill="currentColor" />
                             <path d="M12 14C8.13 14 5 15.79 5 18V20H19V18C19 15.79 15.87 14 12 14Z" fill="currentColor" />
                         </svg>
                     </button>
 
+                    {/* Profile Photo */}
                     <div className="profile-photo">
                         <img
                             src={
@@ -175,7 +196,13 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                         />
                     </div>
 
-                    <button className="side-btn right-side-btn" aria-label="Notifications">
+                    {/* Right icon - Notifiche */}
+                    <button
+                        className="side-btn right-side-btn"
+                        aria-label="Notifiche"
+                        onClick={(e) => handleNavigation('notifiche', e)}
+                        title="Notifiche"
+                    >
                         <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
                     </button>
                 </div>
@@ -185,14 +212,23 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                 <h2 className="profile-name">{fullName}</h2>
                 <p className="profile-role">{role}</p>
 
-                {/* Modern Logout Button */}
-                <button
-                    onClick={(e) => { e.stopPropagation(); handleLogout(); }}
-                    className="modern-logout-btn"
-                >
-                    <LogoutIcon />
-                    <span>Esci</span>
-                </button>
+                {/* Action buttons row */}
+                <div className="profile-action-buttons">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); handleNavigation('supporto-tecnico', e); }}
+                        className="support-link-btn"
+                    >
+                        <SupportIcon />
+                        <span>Supporto</span>
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); handleLogout(); }}
+                        className="modern-logout-btn"
+                    >
+                        <LogoutIcon />
+                        <span>Esci</span>
+                    </button>
+                </div>
             </div>
 
             <div className="navigation-grid navigation-grid-2col">
@@ -228,6 +264,32 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                     <span className="nav-label">Forum</span>
                 </button>
             </div>
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutConfirm && ReactDOM.createPortal(
+                <div className="alerts-overlay" role="dialog" aria-modal="true" aria-labelledby="logout-confirm-title">
+                    <div className="alerts-overlay-backdrop" onClick={cancelLogout} />
+                    <div className="alerts-overlay-card" role="document" onClick={(e) => e.stopPropagation()}>
+                        <h3 id="logout-confirm-title" className="overlay-title" style={{ color: '#333' }}>Conferma Uscita</h3>
+                        <p className="overlay-text" style={{ color: '#666' }}>
+                            Sei sicuro di voler uscire dalla piattaforma?
+                        </p>
+                        <div className="overlay-actions">
+                            <button className="cancel-btn" onClick={(e) => { e.stopPropagation(); cancelLogout(); }}>
+                                Annulla
+                            </button>
+                            <button
+                                className="confirm-btn"
+                                onClick={(e) => { e.stopPropagation(); confirmLogout(); }}
+                                style={{ background: 'linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%)' }}
+                            >
+                                Esci
+                            </button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
         </div>
     );
 };

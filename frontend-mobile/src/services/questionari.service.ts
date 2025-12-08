@@ -39,13 +39,16 @@ export const getStoricoQuestionari = async (page: number = 1, limit: number = 10
 
 /**
  * Check if patient has completed all 4 initial questionnaires
- * Returns true if all initial questionnaires are completed, false otherwise
+ * Returns hasCompleted and the list of pending questionnaires
  */
-export const checkInitialQuestionnaires = async (): Promise<boolean> => {
+export const checkInitialQuestionnaires = async (): Promise<{
+    hasCompleted: boolean;
+    pendingQuestionnaires: string[];
+}> => {
     try {
         const token = localStorage.getItem('patient_token');
         if (!token) {
-            return true; // Don't show modal if not authenticated
+            return { hasCompleted: true, pendingQuestionnaires: [] }; // Don't show modal if not authenticated
         }
 
         const response = await fetch(`${API_BASE_URL}/paziente/questionari/initial-check`, {
@@ -56,13 +59,16 @@ export const checkInitialQuestionnaires = async (): Promise<boolean> => {
 
         if (!response.ok) {
             console.error('Error checking initial questionnaires:', response.status);
-            return true; // Don't show modal on error
+            return { hasCompleted: true, pendingQuestionnaires: [] }; // Don't show modal on error
         }
 
         const data = await response.json();
-        return data.hasCompleted;
+        return {
+            hasCompleted: data.hasCompleted,
+            pendingQuestionnaires: data.pendingQuestionnaires || []
+        };
     } catch (error) {
         console.error('Error checking initial questionnaires:', error);
-        return true; // Don't show modal on error
+        return { hasCompleted: true, pendingQuestionnaires: [] }; // Don't show modal on error
     }
 };

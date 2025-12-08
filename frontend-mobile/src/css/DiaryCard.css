@@ -13,6 +13,10 @@
     overflow: hidden;
 }
 
+.diary-card-no-transition {
+    transition: none !important;
+}
+
 .diary-card-expanded {
     position: fixed !important;
     top: 50% !important;

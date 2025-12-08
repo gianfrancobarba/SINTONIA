@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import { FileText, Clock, AlertCircle, CheckCircle, XCircle, MessageSquare, Check, X } from 'lucide-react';
 import type { InvalidationRequestData } from '../types/invalidation';
-import '../css/QuestionnaireDetailModal.css'; // Reuse existing styles
+import Toast from './Toast';
+import '../css/Modal.css';
 
 interface AdminInvalidationDetailModalProps {
     request: InvalidationRequestData | null;
@@ -15,6 +18,8 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
     onAccept,
     onReject,
 }) => {
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
     if (!request) return null;
 
     const [isAccepting, setIsAccepting] = useState(false);
@@ -23,124 +28,189 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
     const isPending = request.stato === 'pending';
 
     const handleAccept = async () => {
-        if (window.confirm('Sei sicuro di voler accettare questa richiesta di invalidazione?')) {
-            setIsAccepting(true);
-            try {
-                await onAccept(request.idRichiesta);
-                onClose();
-            } catch (error) {
-                console.error('Failed to accept invalidation request', error);
-                alert('Errore durante l\'accettazione della richiesta');
-            } finally {
-                setIsAccepting(false);
-            }
+        setIsAccepting(true);
+        try {
+            await onAccept(request.idRichiesta);
+            setToast({ message: 'Richiesta accettata con successo', type: 'success' });
+            setTimeout(() => onClose(), 1000);
+        } catch (error) {
+            console.error('Failed to accept invalidation request', error);
+            setToast({ message: 'Errore durante l\'accettazione della richiesta', type: 'error' });
+        } finally {
+            setIsAccepting(false);
         }
     };
 
     const handleReject = async () => {
-        if (window.confirm('Sei sicuro di voler rifiutare questa richiesta di invalidazione?')) {
-            setIsRejecting(true);
-            try {
-                await onReject(request.idRichiesta);
-                onClose();
-            } catch (error) {
-                console.error('Failed to reject invalidation request', error);
-                alert('Errore durante il rifiuto della richiesta');
-            } finally {
-                setIsRejecting(false);
-            }
+        setIsRejecting(true);
+        try {
+            await onReject(request.idRichiesta);
+            setToast({ message: 'Richiesta rifiutata con successo', type: 'success' });
+            setTimeout(() => onClose(), 1000);
+        } catch (error) {
+            console.error('Failed to reject invalidation request', error);
+            setToast({ message: 'Errore durante il rifiuto della richiesta', type: 'error' });
+        } finally {
+            setIsRejecting(false);
         }
     };
 
     const getStatusInfo = (stato: string) => {
         switch (stato) {
             case 'pending':
-                return { text: 'IN ATTESA', color: '#FFA726' };
+                return { text: 'IN ATTESA', color: '#FFA726', icon: <Clock size={16} /> };
             case 'approved':
-                return { text: 'APPROVATA', color: '#7FB77E' };
+                return { text: 'APPROVATA', color: '#7FB77E', icon: <CheckCircle size={16} /> };
             case 'rejected':
-                return { text: 'RIFIUTATA', color: '#E57373' };
+                return { text: 'RIFIUTATA', color: '#E57373', icon: <XCircle size={16} /> };
             default:
-                return { text: stato.toUpperCase(), color: '#999' };
+                return { text: stato.toUpperCase(), color: '#999', icon: <AlertCircle size={16} /> };
         }
     };
 
     const statusInfo = getStatusInfo(request.stato);
 
-    return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <div className="modal-title-section">
-                        <h2 className="modal-title">Dettagli Richiesta Invalidazione</h2>
+    return ReactDOM.createPortal(
+        <div className="modal-overlay-blur" onClick={onClose}>
+            <div
+                className="modal-card"
+                onClick={(e) => e.stopPropagation()}
+                style={{ maxWidth: '1100px' }}
+            >
+                {/* Modern Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Dettagli Richiesta Invalidazione
+                            </h2>
+                        </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            ✕
+                        </button>
                     </div>
-                    <button className="modal-close-btn" onClick={onClose} aria-label="Chiudi">
-                        ✕
-                    </button>
                 </div>
 
-                <div className="modal-body">
-                    <div className="questionnaire-info">
-                        <div className="info-grid">
-                            <div className="info-item">
-                                <label>ID Questionario:</label>
-                                <span>{request.idQuestionario}</span>
+                {/* Body with Modern Cards */}
+                <div className="modal-body-gray modal-body-scrollable">
+                    {/* Compact Info Section */}
+                    <div className="modal-data-section">
+                        <div className="modal-data-section-title">
+                            <div className="modal-data-section-title-icon">
+                                <FileText size={14} />
                             </div>
-                            <div className="info-item">
-                                <label>Tipologia Questionario:</label>
-                                <span>{request.nomeQuestionario}</span>
-                            </div>
-                            <div className="info-item">
-                                <label>Richiedente:</label>
-                                <span>{request.nomePsicologoRichiedente}</span>
-                            </div>
-                            <div className="info-item">
-                                <label>ID Psicologo:</label>
-                                <span>{request.idPsicologoRichiedente}</span>
-                            </div>
-                            <div className="info-item">
-                                <label>Stato Richiesta:</label>
-                                <span style={{
-                                    color: statusInfo.color,
-                                    fontWeight: 'bold'
-                                }}>
-                                    {statusInfo.text}
-                                </span>
-                            </div>
+                            Informazioni Richiesta
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                            <span className="modal-data-row-label">ID Questionario</span>
+                            <span className="modal-data-row-value">{request.idQuestionario}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">Tipologia</span>
+                            <span className="modal-data-row-value modal-data-row-value-highlight">{request.nomeQuestionario}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">Richiedente</span>
+                            <span className="modal-data-row-value">{request.nomePsicologoRichiedente}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                            <span className="modal-data-row-label">ID Psicologo</span>
+                            <span className="modal-data-row-value">{request.idPsicologoRichiedente}</span>
+                        </div>
+
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot" style={{ background: statusInfo.color }}></div>
+                            <span className="modal-data-row-label">Stato Richiesta</span>
+                            <span className="modal-data-row-value" style={{ color: statusInfo.color, fontWeight: '600' }}>{statusInfo.text}</span>
                         </div>
                     </div>
 
                     {/* Note section */}
                     {request.note && (
-                        <div className="notes-section">
-                            <h3 className="section-title">Note Richiesta</h3>
-                            <div className="notes-content">{request.note}</div>
+                        <div className="modal-info-card" style={{ marginTop: '24px', marginBottom: '24px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                                <div style={{
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '12px',
+                                    background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'white'
+                                }}>
+                                    <MessageSquare size={20} />
+                                </div>
+                                <h3 style={{
+                                    margin: 0,
+                                    fontSize: '18px',
+                                    fontWeight: '700',
+                                    color: '#1a1a1a'
+                                }}>Note Richiesta</h3>
+                            </div>
+                            <div style={{
+                                fontSize: '14px',
+                                color: '#666',
+                                lineHeight: '1.6',
+                                background: '#f8f9fa',
+                                padding: '16px',
+                                borderRadius: '12px',
+                                borderLeft: '3px solid #83B9C1'
+                            }}>
+                                {request.note}
+                            </div>
                         </div>
                     )}
 
-                    {/* Action buttons - visible only if pending */}
+                    {/* Action section for pending requests */}
                     {isPending && (
-                        <div className="invalidation-request-section">
-                            <h3 className="section-title">Gestione Richiesta</h3>
-                            <p style={{ marginBottom: '20px', color: '#666' }}>
+                        <div className="modal-info-card">
+                            <h3 style={{
+                                margin: '0 0 16px 0',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#1a1a1a'
+                            }}>Gestione Richiesta</h3>
+                            <p style={{ marginBottom: '20px', color: '#666', fontSize: '14px' }}>
                                 Questa richiesta è in attesa di approvazione. Puoi accettare o rifiutare la richiesta.
                             </p>
-                            <div className="action-buttons-container">
+                            <div className="modal-footer-actions">
                                 <button
-                                    className="btn-action btn-accept"
                                     onClick={handleAccept}
                                     disabled={isAccepting || isRejecting}
+                                    className="btn-modal-success"
+                                    style={{
+                                        flex: 1,
+                                        opacity: (isAccepting || isRejecting) ? 0.6 : 1,
+                                        cursor: (isAccepting || isRejecting) ? 'not-allowed' : 'pointer'
+                                    }}
                                 >
-                                    <span className="btn-icon">✓</span>
-                                    <span className="btn-text">{isAccepting ? 'Accettazione...' : 'Accetta'}</span>
+                                    <Check size={18} />
+                                    {isAccepting ? 'Accettazione...' : 'Accetta'}
                                 </button>
                                 <button
-                                    className="btn-action btn-reject"
                                     onClick={handleReject}
                                     disabled={isAccepting || isRejecting}
+                                    className="btn-modal-danger"
+                                    style={{
+                                        flex: 1,
+                                        opacity: (isAccepting || isRejecting) ? 0.6 : 1,
+                                        cursor: (isAccepting || isRejecting) ? 'not-allowed' : 'pointer'
+                                    }}
                                 >
-                                    <span className="btn-icon">✕</span>
-                                    <span className="btn-text">{isRejecting ? 'Rifiuto...' : 'Rifiuta'}</span>
+                                    <X size={18} />
+                                    {isRejecting ? 'Rifiuto...' : 'Rifiuta'}
                                 </button>
                             </div>
                         </div>
@@ -148,9 +218,14 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
 
                     {/* Message for already processed requests */}
                     {!isPending && (
-                        <div className="invalidation-request-section">
-                            <h3 className="section-title">Stato Richiesta</h3>
-                            <p style={{ marginBottom: '16px', color: '#666' }}>
+                        <div className="modal-info-card">
+                            <h3 style={{
+                                margin: '0 0 16px 0',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#1a1a1a'
+                            }}>Stato Richiesta</h3>
+                            <p style={{ marginBottom: '0', color: '#666', fontSize: '14px', lineHeight: '1.6' }}>
                                 {request.stato === 'approved'
                                     ? 'Questa richiesta è stata approvata e il questionario è stato invalidato.'
                                     : 'Questa richiesta è stata rifiutata.'}
@@ -159,12 +234,27 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                     )}
                 </div>
 
-                <div className="modal-footer">
+                {/* Modern Footer */}
+                <div style={{
+                    padding: '24px 32px',
+                    background: 'white',
+                    borderTop: '1px solid #e8e8e8'
+                }}>
                     {/* Footer vuoto - chiusura solo tramite X in alto */}
                 </div>
             </div>
-        </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
+        </div>,
+        document.body
     );
 };
+
+
 
 export default AdminInvalidationDetailModal;

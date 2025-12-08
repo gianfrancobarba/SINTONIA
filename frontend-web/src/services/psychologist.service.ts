@@ -3,7 +3,7 @@
  * Handles API calls to backend
  */
 
-import type { Psychologist, Questionnaire, PsychologistDashboardData } from '../types/psychologist';
+import type { Psychologist, QuestionnaireData, PsychologistDashboardData } from '../types/psychologist';
 import { getCurrentUser } from './auth.service';
 
 const API_URL = 'http://localhost:3000';
@@ -56,28 +56,61 @@ export const getPsychologistInfo = (): Psychologist => {
  * Get sample questionnaire data
  * Returns mock data matching the mockup (K10 questionnaires by Gianfranco Barba)
  */
-export const getQuestionnaires = (): Questionnaire[] => {
+export const getQuestionnaires = (): QuestionnaireData[] => {
     return [
         {
-            id: '1',
-            name: 'K10',
-            author: 'Gianfranco Barba',
-            status: 'Approvato',
-            revisionDate: '2023-10-26',
+            idQuestionario: '1',
+            idPaziente: 'paziente-1',
+            nomeTipologia: 'K10',
+            score: 25,
+            risposte: {},
+            cambiamento: false,
+            dataCompilazione: '2023-10-26',
+            revisionato: true,
+            invalidato: false,
+            noteInvalidazione: null,
+            dataInvalidazione: null,
+            idPsicologoRevisione: 'psi-1',
+            idPsicologoRichiedente: null,
+            idAmministratoreConferma: null,
+            domande: [],
+            campi: []
         },
         {
-            id: '2',
-            name: 'K10',
-            author: 'Gianfranco Barba',
-            status: 'Approvato',
-            revisionDate: '2023-10-26',
+            idQuestionario: '2',
+            idPaziente: 'paziente-2',
+            nomeTipologia: 'K10',
+            score: 18,
+            risposte: {},
+            cambiamento: false,
+            dataCompilazione: '2023-10-26',
+            revisionato: true,
+            invalidato: false,
+            noteInvalidazione: null,
+            dataInvalidazione: null,
+            idPsicologoRevisione: 'psi-1',
+            idPsicologoRichiedente: null,
+            idAmministratoreConferma: null,
+            domande: [],
+            campi: []
         },
         {
-            id: '3',
-            name: 'K10',
-            author: 'Gianfranco Barba',
-            status: 'Approvato',
-            revisionDate: '2023-10-26',
+            idQuestionario: '3',
+            idPaziente: 'paziente-3',
+            nomeTipologia: 'K10',
+            score: 32,
+            risposte: {},
+            cambiamento: true,
+            dataCompilazione: '2023-10-26',
+            revisionato: true,
+            invalidato: false,
+            noteInvalidazione: null,
+            dataInvalidazione: null,
+            idPsicologoRevisione: 'psi-1',
+            idPsicologoRichiedente: null,
+            idAmministratoreConferma: null,
+            domande: [],
+            campi: []
         },
     ];
 };
@@ -85,7 +118,7 @@ export const getQuestionnaires = (): Questionnaire[] => {
 /**
  * Get paginated questionnaires
  */
-export const getQuestionnairesPage = (page: number, itemsPerPage: number = 3): Questionnaire[] => {
+export const getQuestionnairesPage = (page: number, itemsPerPage: number = 3): QuestionnaireData[] => {
     const allQuestionnaires = getQuestionnaires();
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -265,3 +298,69 @@ export const updateProfile = async (codiceFiscale: string, data: { email: string
         throw error;
     }
 };
+
+/**
+ * Delete a psychologist (soft delete)
+ * @param codiceFiscale - Codice fiscale of the psychologist to delete
+ */
+export const deletePsychologist = async (codiceFiscale: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await fetch(`${API_URL}/admin/psychologists/${encodeURIComponent(codiceFiscale)}`, {
+            method: 'DELETE',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            // Extract error message from response body
+            let errorMessage = `HTTP error! status: ${response.status}`;
+            try {
+                const errorData = await response.json();
+                if (errorData.message) {
+                    errorMessage = errorData.message;
+                }
+            } catch (jsonError) {
+                // If response is not JSON, use default error message
+            }
+            throw new Error(errorMessage);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting psychologist:', error);
+        throw error;
+    }
+};
+
+/**
+ * Submit a technical support request
+ * @param data - Support request data (subject and description)
+ */
+export const submitSupportRequest = async (data: { oggetto: string; descrizione: string }): Promise<any> => {
+    try {
+        const url = `${API_URL}/psi/support-request`;
+        const token = getCurrentUser()?.access_token as string | undefined;
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to submit support request:', error);
+        throw error;
+    }
+};
+

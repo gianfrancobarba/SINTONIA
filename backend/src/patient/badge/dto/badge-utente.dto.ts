@@ -12,6 +12,6 @@ export class BadgeUtenteDto {
         nome: string;             // Nome del badge (es: "Voce Attiva")
         descrizione: string;      // Descrizione del badge
         immagineBadge?: string;   // Path immagine badge (opzionale)
-        dataAcquisizione: Date;   // Quando il paziente ha ottenuto il badge
+        dataAcquisizione?: Date;   // Quando il paziente ha ottenuto il badge (undefined se non acquisito)
     }[];
 }

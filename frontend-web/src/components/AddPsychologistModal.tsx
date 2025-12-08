@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { X, UserPlus, Search } from 'lucide-react';
-import '../css/AddPsychologistModal.css';
+import '../css/Modal.css';
+import Toast from './Toast';
 
 interface PsychologistFormData {
     codiceFiscale: string;
@@ -8,7 +10,7 @@ interface PsychologistFormData {
     cognome: string;
     email: string;
     aslAppartenenza: string;
-    stato: 'Attivo' | 'Disattivato';
+    stato: 'Attivo' | 'Inattivo';  // Changed from 'Disattivato' to 'Inattivo'
 }
 
 const ASL_OPTIONS = [
@@ -42,6 +44,8 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
 
     const [errors, setErrors] = useState<Partial<Record<keyof PsychologistFormData, string>>>({});
     const [aslSearch, setAslSearch] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     const [showAslDropdown, setShowAslDropdown] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -104,7 +108,7 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
 
         if (!formData.email.trim()) {
             newErrors.email = 'L\'email è obbligatoria';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
             newErrors.email = 'Inserisci un\'email valida';
         }
 
@@ -112,185 +116,181 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (validateForm()) {
-            onAdd(formData);
-            onClose();
+            setIsSubmitting(true);
+            try {
+                await onAdd(formData);
+                setToast({ message: 'Psicologo aggiunto con successo!', type: 'success' });
+                setTimeout(() => {
+                    onClose();
+                }, 1000);
+            } catch (error: any) {
+                console.error('Error adding psychologist:', error);
+                const errorMessage = error.message?.includes('localhost') || error.message?.includes('fetch')
+                    ? 'Errore di connessione al server.'
+                    : (error.message || 'Errore durante l\'aggiunta dello psicologo.');
+                setToast({ message: errorMessage, type: 'error' });
+                setIsSubmitting(false); // Re-enable button on error
+            }
         }
     };
 
-    return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="add-psychologist-modal" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <div className="modal-title-section">
-                        <UserPlus size={24} className="modal-icon" />
-                        <h2>Aggiungi Nuovo Psicologo</h2>
+    return ReactDOM.createPortal(
+        <div className="modal-overlay-blur" onClick={onClose}>
+            <div
+                className="modal-card modal-card-md"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Aggiungi Nuovo Psicologo
+                            </h2>
+                            <p className="modal-header-subtitle">
+                                Inserisci i dati del nuovo professionista
+                            </p>
+                        </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            <X size={24} />
+                        </button>
                     </div>
-                    <button className="close-btn" onClick={onClose}>
-                        <X size={24} />
-                    </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="psychologist-form">
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="nome">
-                                Nome <span className="required">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                value={formData.nome}
-                                onChange={handleChange}
-                                placeholder="Inserisci il nome"
-                                className={errors.nome ? 'error' : ''}
-                            />
-                            {errors.nome && (
-                                <span className="error-message">{errors.nome}</span>
-                            )}
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="cognome">
-                                Cognome <span className="required">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="cognome"
-                                name="cognome"
-                                value={formData.cognome}
-                                onChange={handleChange}
-                                placeholder="Inserisci il cognome"
-                                className={errors.cognome ? 'error' : ''}
-                            />
-                            {errors.cognome && (
-                                <span className="error-message">{errors.cognome}</span>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="codiceFiscale">
-                                Codice Fiscale <span className="required">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="codiceFiscale"
-                                name="codiceFiscale"
-                                value={formData.codiceFiscale}
-                                onChange={handleChange}
-                                maxLength={16}
-                                placeholder="16 caratteri"
-                                className={errors.codiceFiscale ? 'error' : ''}
-                            />
-                            {errors.codiceFiscale && (
-                                <span className="error-message">{errors.codiceFiscale}</span>
-                            )}
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="aslAppartenenza">
-                                ASL di Appartenenza <span className="required">*</span>
-                            </label>
-                            <div style={{ position: 'relative' }} ref={dropdownRef}>
-                                <div style={{ position: 'relative' }}>
-                                    <input
-                                        type="text"
-                                        id="aslAppartenenza"
-                                        name="aslAppartenenza"
-                                        value={formData.aslAppartenenza || aslSearch}
-                                        onChange={(e) => {
-                                            setAslSearch(e.target.value);
-                                            setFormData(prev => ({ ...prev, aslAppartenenza: '' })); // Clear selection when typing
-                                            setShowAslDropdown(true);
-                                        }}
-                                        onFocus={() => setShowAslDropdown(true)}
-                                        placeholder="Cerca ASL..."
-                                        className={errors.aslAppartenenza ? 'error' : ''}
-                                        autoComplete="off"
-                                    />
-                                    <div style={{
-                                        position: 'absolute',
-                                        right: '12px',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        pointerEvents: 'none',
-                                        color: '#999'
-                                    }}>
-                                        <Search size={18} />
-                                    </div>
-                                </div>
-
-                                {showAslDropdown && (
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: '100%',
-                                        left: 0,
-                                        right: 0,
-                                        marginTop: '4px',
-                                        backgroundColor: 'white',
-                                        border: '1px solid #e0e0e0',
-                                        borderRadius: '8px',
-                                        maxHeight: '200px',
-                                        overflowY: 'auto',
-                                        zIndex: 1000,
-                                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-                                    }}>
-                                        {filteredAslOptions.length > 0 ? (
-                                            filteredAslOptions.map(asl => (
-                                                <div
-                                                    key={asl}
-                                                    onClick={() => handleAslSelect(asl)}
-                                                    style={{
-                                                        padding: '10px 16px',
-                                                        cursor: 'pointer',
-                                                        fontSize: '14px',
-                                                        backgroundColor: formData.aslAppartenenza === asl ? '#f0f9f0' : 'white',
-                                                        color: formData.aslAppartenenza === asl ? '#7FB77E' : '#333',
-                                                        transition: 'background-color 0.2s'
-                                                    }}
-                                                    onMouseEnter={(e) => {
-                                                        if (formData.aslAppartenenza !== asl) {
-                                                            e.currentTarget.style.backgroundColor = '#f8f9fa';
-                                                        }
-                                                    }}
-                                                    onMouseLeave={(e) => {
-                                                        if (formData.aslAppartenenza !== asl) {
-                                                            e.currentTarget.style.backgroundColor = 'white';
-                                                        }
-                                                    }}
-                                                >
-                                                    {asl}
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div style={{
-                                                padding: '16px',
-                                                textAlign: 'center',
-                                                color: '#999',
-                                                fontSize: '13px'
-                                            }}>
-                                                Nessuna ASL trovata
-                                            </div>
-                                        )}
-                                    </div>
+                {/* Body */}
+                <div className="modal-body-gray modal-body-scrollable">
+                    <form onSubmit={handleSubmit}>
+                        {/* Nome & Cognome Row */}
+                        <div className="modal-form-grid">
+                            <div className="modal-form-group">
+                                <label htmlFor="nome" className="modal-form-label modal-form-label-required">
+                                    Nome
+                                </label>
+                                <input
+                                    type="text"
+                                    id="nome"
+                                    name="nome"
+                                    value={formData.nome}
+                                    onChange={handleChange}
+                                    placeholder="Inserisci il nome"
+                                    className={`modal-form-input ${errors.nome ? 'modal-form-input-error' : ''}`}
+                                />
+                                {errors.nome && (
+                                    <span className="modal-form-error-text">{errors.nome}</span>
                                 )}
                             </div>
-                            {errors.aslAppartenenza && (
-                                <span className="error-message">{errors.aslAppartenenza}</span>
-                            )}
-                        </div>
-                    </div>
 
-                    <div className="form-row">
-                        <div className="form-group" style={{ flex: 1 }}>
-                            <label htmlFor="email">
-                                Email <span className="required">*</span>
+                            <div className="modal-form-group">
+                                <label htmlFor="cognome" className="modal-form-label modal-form-label-required">
+                                    Cognome
+                                </label>
+                                <input
+                                    type="text"
+                                    id="cognome"
+                                    name="cognome"
+                                    value={formData.cognome}
+                                    onChange={handleChange}
+                                    placeholder="Inserisci il cognome"
+                                    className={`modal-form-input ${errors.cognome ? 'modal-form-input-error' : ''}`}
+                                />
+                                {errors.cognome && (
+                                    <span className="modal-form-error-text">{errors.cognome}</span>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Codice Fiscale & ASL Row */}
+                        <div className="modal-form-grid" style={{ position: 'relative', zIndex: 20 }}>
+                            <div className="modal-form-group">
+                                <label htmlFor="codiceFiscale" className="modal-form-label modal-form-label-required">
+                                    Codice Fiscale
+                                </label>
+                                <input
+                                    type="text"
+                                    id="codiceFiscale"
+                                    name="codiceFiscale"
+                                    value={formData.codiceFiscale}
+                                    onChange={handleChange}
+                                    maxLength={16}
+                                    placeholder="16 caratteri"
+                                    className={`modal-form-input ${errors.codiceFiscale ? 'modal-form-input-error' : ''}`}
+                                />
+                                {errors.codiceFiscale && (
+                                    <span className="modal-form-error-text">{errors.codiceFiscale}</span>
+                                )}
+                            </div>
+
+                            <div className="modal-form-group">
+                                <label htmlFor="aslAppartenenza" className="modal-form-label modal-form-label-required">
+                                    ASL di Appartenenza
+                                </label>
+                                <div style={{ position: 'relative', zIndex: 100 }} ref={dropdownRef}>
+                                    <div style={{ position: 'relative' }}>
+                                        <input
+                                            type="text"
+                                            id="aslAppartenenza"
+                                            name="aslAppartenenza"
+                                            value={formData.aslAppartenenza || aslSearch}
+                                            onChange={(e) => {
+                                                setAslSearch(e.target.value);
+                                                setFormData(prev => ({ ...prev, aslAppartenenza: '' }));
+                                                setShowAslDropdown(true);
+                                            }}
+                                            onFocus={() => setShowAslDropdown(true)}
+                                            placeholder="Cerca ASL..."
+                                            autoComplete="off"
+                                            className={`modal-form-input ${errors.aslAppartenenza ? 'modal-form-input-error' : ''}`}
+                                            style={{ paddingRight: '40px' }}
+                                        />
+                                        <div style={{
+                                            position: 'absolute',
+                                            right: '12px',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            pointerEvents: 'none',
+                                            color: '#999'
+                                        }}>
+                                            <Search size={18} />
+                                        </div>
+                                    </div>
+
+                                    {showAslDropdown && (
+                                        <div className="modal-dropdown" style={{ maxHeight: '120px', overflowY: 'auto' }}>
+                                            {filteredAslOptions.length > 0 ? (
+                                                filteredAslOptions.map(asl => (
+                                                    <div
+                                                        key={asl}
+                                                        onClick={() => handleAslSelect(asl)}
+                                                        className={`modal-dropdown-item ${formData.aslAppartenenza === asl ? 'modal-dropdown-item-selected' : ''}`}
+                                                    >
+                                                        {asl}
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className="modal-dropdown-empty">
+                                                    Nessuna ASL trovata
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                                {errors.aslAppartenenza && (
+                                    <span className="modal-form-error-text">{errors.aslAppartenenza}</span>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Email Row */}
+                        <div className="modal-form-group" style={{ position: 'relative', zIndex: 10 }}>
+                            <label htmlFor="email" className="modal-form-label modal-form-label-required">
+                                Email
                             </label>
                             <input
                                 type="email"
@@ -299,29 +299,46 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="esempio@email.it"
-                                className={errors.email ? 'error' : ''}
+                                className={`modal-form-input ${errors.email ? 'modal-form-input-error' : ''}`}
                             />
                             {errors.email && (
-                                <span className="error-message">{errors.email}</span>
+                                <span className="modal-form-error-text">{errors.email}</span>
                             )}
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-
-
-                    <div className="form-actions">
-                        <button type="button" className="cancel-btn" onClick={onClose}>
-                            Annulla
-                        </button>
-                        <button type="submit" className="submit-btn">
-                            <UserPlus size={18} />
-                            Aggiungi Psicologo
-                        </button>
-                    </div>
-                </form>
+                {/* Footer */}
+                <div className="modal-footer-actions">
+                    <button onClick={onClose} className="btn-modal-secondary">
+                        Annulla
+                    </button>
+                    <button onClick={handleSubmit} className="btn-modal-primary" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></div>
+                                Aggiunta in corso...
+                            </>
+                        ) : (
+                            <>
+                                <UserPlus size={18} />
+                                Aggiungi Psicologo
+                            </>
+                        )}
+                    </button>
+                </div>
             </div>
-        </div>
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
+        </div>,
+        document.body
     );
 };
 
 export default AddPsychologistModal;
+

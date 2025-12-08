@@ -3,6 +3,42 @@
     padding-bottom: 100px;
 }
 
+/* Filter Toggle Section */
+.forum-filter-section {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.forum-filter-toggle {
+    display: flex;
+    gap: 8px;
+    background: #E5E7EB;
+    padding: 4px;
+    border-radius: 20px;
+}
+
+.filter-btn {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+    color: #6B7280;
+}
+
+.filter-btn.active {
+    background: var(--primary-dark);
+    color: white;
+}
+
+.filter-btn:hover:not(.active) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
 .forum-content {
     padding: 16px 20px;
 }

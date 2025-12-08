@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
-import EditPenIcon from '../assets/icons/edit-pen.svg';
 import { updateDiaryPage } from '../services/diary.service';
 import Toast from '../components/Toast';
 import '../css/EditDiaryPage.css';
@@ -94,12 +93,9 @@ const EditDiaryPage: React.FC = () => {
                             onChange={(e) => setContent(e.target.value)}
                             maxLength={maxContentLength}
                         />
-                        <div className="char-counter">
-                            <img src={EditPenIcon} alt="" className="counter-icon" />
-                            <span className="counter-text">
-                                {content.length}/{maxContentLength}
-                            </span>
-                        </div>
+                        <span className="char-counter">
+                            {content.length}/{maxContentLength}
+                        </span>
                     </div>
                 </div>
 

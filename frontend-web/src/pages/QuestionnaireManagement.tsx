@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PsychologistProfile from '../components/PsychologistProfile';
+import { X } from 'lucide-react';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
@@ -8,8 +7,9 @@ import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation,
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 
+import Toast from '../components/Toast';
+
 const QuestionnaireManagement: React.FC = () => {
-    const navigate = useNavigate();
     const [questionnairesState, setQuestionnairesState] = useState<LoadingState<QuestionnaireData[]>>({
         data: null,
         loading: true,
@@ -18,6 +18,7 @@ const QuestionnaireManagement: React.FC = () => {
     const [selectedQuestionnaireId, setSelectedQuestionnaireId] = useState<string | null>(null);
     const [viewingQuestionnaire, setViewingQuestionnaire] = useState<QuestionnaireData | null>(null);
     const [patientFilter, setPatientFilter] = useState<string | null>(null);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     const user = getCurrentUser();
     const role = getUserRole();
@@ -93,7 +94,7 @@ const QuestionnaireManagement: React.FC = () => {
             setViewingQuestionnaire(questionnaireDetails);
         } catch (error) {
             console.error('Error loading questionnaire details:', error);
-            alert('Errore nel caricamento dei dettagli del questionario');
+            setToast({ message: 'Errore nel caricamento dei dettagli del questionario', type: 'error' });
         }
     };
 
@@ -104,39 +105,29 @@ const QuestionnaireManagement: React.FC = () => {
     const handleReview = async (id: string) => {
         try {
             await reviewQuestionnaire(id);
-            alert('Questionario revisionato con successo!');
+            setToast({ message: 'Questionario revisionato con successo!', type: 'success' });
             loadQuestionnaires(patientFilter || undefined);
         } catch (error) {
             console.error('Error reviewing questionnaire:', error);
-            alert('Errore durante la revisione del questionario');
+            setToast({ message: 'Errore durante la revisione del questionario', type: 'error' });
         }
     };
 
     const handleRequestInvalidation = async (id: string, notes: string) => {
         try {
             await requestInvalidation(id, notes);
-            alert('Richiesta di invalidazione inviata con successo!');
+            setToast({ message: 'Richiesta di invalidazione inviata con successo!', type: 'success' });
             loadQuestionnaires();
         } catch (error) {
             console.error('Error requesting invalidation:', error);
-            alert('Errore nell\'invio della richiesta di invalidazione');
+            setToast({ message: 'Errore nell\'invio della richiesta di invalidazione', type: 'error' });
         }
     };
 
     const handleUploadNewType = () => {
         console.log('Upload new questionnaire type');
         // TODO: Open upload modal
-        alert('Carica nuova tipologia di questionario');
-    };
-
-    const handleSectionSelect = (section: string) => {
-        if (section === 'forum') {
-            navigate('/forum');
-        } else if (section === 'alert') {
-            navigate('/clinical-alerts');
-        } else if (section !== 'questionari') {
-            navigate('/dashboard', { state: { selectedSection: section } });
-        }
+        setToast({ message: 'Carica nuova tipologia di questionario', type: 'success' });
     };
 
     if (!role) {
@@ -144,72 +135,61 @@ const QuestionnaireManagement: React.FC = () => {
     }
 
     return (
-        <div className="questionnaire-management-container">
-            <div className="management-grid">
-                <div className="management-sidebar">
-                    <PsychologistProfile
-                        onSelectSection={handleSectionSelect}
-                        activeSection="questionari"
-                    />
+        <div className="content-panel fade-in">
+            <h2 className="panel-title">Gestione Questionari</h2>
+            <div className="management-header">
+                <div className="header-actions">
+                    {role === 'admin' && (
+                        <button
+                            className="upload-btn"
+                            onClick={handleUploadNewType}
+                        >
+                            ⬆ Carica Nuova Tipologia
+                        </button>
+                    )}
                 </div>
-                <div className="management-content">
-                    <div className="content-panel fade-in">
-                        <h2 className="panel-title">Gestione Questionari</h2>
-                        <div className="management-header">
-                            <div className="header-actions">
-                                {role === 'admin' && (
-                                    <button
-                                        className="upload-btn"
-                                        onClick={handleUploadNewType}
-                                    >
-                                        ⬆ Carica Nuova Tipologia
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+            </div>
 
-                        {questionnairesState.error && (
-                            <div className="error-state">
-                                <p>Errore: {questionnairesState.error}</p>
-                                <button onClick={() => loadQuestionnaires()} className="retry-btn">
-                                    Riprova
+            {questionnairesState.error && (
+                <div className="error-state">
+                    <p>Errore: {questionnairesState.error}</p>
+                    <button onClick={() => loadQuestionnaires()} className="retry-btn">
+                        Riprova
+                    </button>
+                </div>
+            )}
+
+            {questionnairesState.data && !questionnairesState.loading && (
+                <>
+                    <div className="filter-controls">
+                        <button
+                            className="filter-btn"
+                            onClick={handleFilterByPatient}
+                            disabled={!selectedQuestionnaireId}
+                            title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
+                        >
+                            Filtra per Paziente
+                        </button>
+                        {patientFilter && (
+                            <div className="active-filter">
+                                <span>Filtro attivo</span>
+                                <button className="reset-filter-btn" onClick={handleResetFilter} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <X size={14} />
+                                    Rimuovi Filtro
                                 </button>
                             </div>
                         )}
-
-                        {questionnairesState.data && !questionnairesState.loading && (
-                            <>
-                                <div className="filter-controls">
-                                    <button
-                                        className="filter-btn"
-                                        onClick={handleFilterByPatient}
-                                        disabled={!selectedQuestionnaireId}
-                                        title={selectedQuestionnaireId ? "Filtra questionari per questo paziente" : "Seleziona un questionario per filtrare"}
-                                    >
-                                        Filtra per Paziente
-                                    </button>
-                                    {patientFilter && (
-                                        <div className="active-filter">
-                                            <span>Filtro attivo</span>
-                                            <button className="reset-filter-btn" onClick={handleResetFilter}>
-                                                ✕ Rimuovi Filtro
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                                <QuestionnaireTable
-                                    questionnaires={questionnairesState.data}
-                                    role={role === 'admin' ? 'admin' : 'psychologist'}
-                                    selectedId={selectedQuestionnaireId}
-                                    onSelect={handleSelectQuestionnaire}
-                                    onView={handleView}
-                                    onReview={handleReview}
-                                />
-                            </>
-                        )}
                     </div>
-                </div>
-            </div>
+                    <QuestionnaireTable
+                        questionnaires={questionnairesState.data}
+                        role={role === 'admin' ? 'admin' : 'psychologist'}
+                        selectedId={selectedQuestionnaireId}
+                        onSelect={handleSelectQuestionnaire}
+                        onView={handleView}
+                        onReview={handleReview}
+                    />
+                </>
+            )}
 
             {/* Modal for viewing questionnaire details */}
             {viewingQuestionnaire && (
@@ -221,9 +201,15 @@ const QuestionnaireManagement: React.FC = () => {
                     onReview={handleReview}
                 />
             )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
-
 };
 
 export default QuestionnaireManagement;

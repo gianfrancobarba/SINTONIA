@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { db } from '../../drizzle/db.js';
-import { paziente, ticket } from '../../drizzle/schema.js';
+import { paziente } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
 import { PersonalInfoDto } from './dto/personal-info.dto.js';
 import { SupportRequestDto } from './dto/support-request.dto.js';
+import { TicketService } from '../../ticket/ticket.service.js';
 
 @Injectable()
 export class SettingsService {
+    constructor(private readonly ticketService: TicketService) { }
+
     /**
      * Recupera le informazioni personali del paziente
      * Esclusi dati clinici: score, priorità, idPsicologo, dataIngresso
@@ -49,23 +52,10 @@ export class SettingsService {
         userId: string,
         data: SupportRequestDto,
     ): Promise<{ success: boolean; message: string }> {
-        try {
-            await db.insert(ticket).values({
-                oggetto: data.oggetto,
-                descrizione: data.descrizione,
-                risolto: 'Aperto',
-                idPaziente: userId,
-                idAmministratore: null,
-                idPsicologo: null,
-            });
-
-            return {
-                success: true,
-                message: 'Richiesta di supporto inviata con successo',
-            };
-        } catch (error) {
-            console.error('Errore creazione ticket supporto:', error);
-            throw new Error('Errore durante la creazione della richiesta di supporto');
-        }
+        return this.ticketService.createTicket({
+            oggetto: data.oggetto,
+            descrizione: data.descrizione,
+            idPaziente: userId,
+        });
     }
 }

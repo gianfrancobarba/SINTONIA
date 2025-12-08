@@ -17,7 +17,8 @@
 }
 
 .header-content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 40px 1fr 100px;
     align-items: center;
     gap: 15px;
     max-width: 600px;
@@ -58,6 +59,33 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
+    text-align: center;
+}
+
+.edit-button,
+.cancel-button {
+    justify-self: end;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.edit-button:hover,
+.cancel-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.edit-button:active,
+.cancel-button:active {
+    transform: scale(0.95);
 }
 
 .personal-info-content {
@@ -73,6 +101,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    position: relative;
 }
 
 .form-label {
@@ -114,6 +143,11 @@
     background-color: rgba(74, 157, 111, 0.05);
 }
 
+.title-input-container.error {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
 .title-input {
     border: none;
     outline: none;
@@ -126,6 +160,33 @@
 
 .title-input-container.disabled .title-input {
     color: var(--text-gray);
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 12px;
+    color: #991B1B;
+    font-size: 0.85rem;
+    font-weight: 500;
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .submit-button {
@@ -175,57 +236,4 @@
 
 .error {
     color: #ef4444;
-}
-
-/* Toast Notification */
-.toast-notification {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 24px;
-    border-radius: 30px;
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    animation: fadeInOut 3s ease-in-out forwards;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 200px;
-    text-align: center;
-}
-
-.toast-notification.success {
-    background-color: #4a9d6f;
-    /* Primary Light */
-}
-
-.toast-notification.error {
-    background-color: #ef4444;
-    /* Red */
-}
-
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-    }
-
-    10% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-
-    90% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -20px);
-    }
 }

@@ -51,7 +51,6 @@ const AdminPatientTable: React.FC<AdminPatientTableProps> = ({
                             >
                                 <td
                                     className="questionnaire-id-cell"
-                                    title={`ID Completo: ${p.idPaziente}`}
                                 >
                                     {p.idPaziente.substring(0, 8)}...
                                 </td>

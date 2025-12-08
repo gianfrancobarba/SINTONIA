@@ -4,9 +4,12 @@ import { Settings, Award, Smile, Clock } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
 import type { ProfileDto } from '../types/profile';
 import '../css/Profile.css';
-import profileAvatar from '../assets/images/profile-avatar.png';
+import profileAvatarWoman from '../assets/images/profile-avatar-woman.png';
+import profileAvatarMan from '../assets/images/profile-avatar-man.png';
 import diaryIcon from '../assets/icons/diary.svg';
 import questionnaireIcon from '../assets/icons/questionnaire.svg';
+import MoodIcon from '../components/MoodIcons';
+import type { Umore } from '../types/mood';
 
 
 const Profile: React.FC = () => {
@@ -54,10 +57,13 @@ const Profile: React.FC = () => {
     // Map backend data to UI format
     const { profilo, badge, statoAnimo, diario, questionari } = profileData;
 
+    // Select avatar based on gender
+    const profileAvatar = profilo.sesso === 'F' ? profileAvatarWoman : profileAvatarMan;
+
     const name = profilo.nome;
     const badges = {
         total: badge.numeroBadge,
-        progress: Math.min(badge.numeroBadge / 100, 1)  // Progress calcolato (max 100%)
+        progress: Math.min(badge.numeroBadge / 16, 1)  // Progress calcolato (16 badge totali)
     };
 
     // Mood data with placeholder if null
@@ -149,12 +155,14 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Mood Card */}
-                <div className="profile-card mood-card">
+                <div className="profile-card mood-card" onClick={() => navigate('/mood-entry')} style={{ cursor: 'pointer' }}>
                     <div className="card-header">
                         <Smile size={24} color="white" />
                         <span>Stato D'Animo</span>
                     </div>
-                    <div className="mood-title">{mood.current}</div>
+                    <div className="mood-title-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
+                        <div className="mood-title" style={{ margin: 0 }}>{mood.current}</div>
+                    </div>
                     <div className="mood-chart" style={{ opacity: hasMoodData ? 1 : 0.3 }}>
                         {normalizedData.map((height, index) => (
                             <div
@@ -162,11 +170,6 @@ const Profile: React.FC = () => {
                                 className="mood-bar"
                                 style={{ height: `${height}%` }}
                             ></div>
-                        ))}
-                    </div>
-                    <div className="mood-dots">
-                        {normalizedData.map((_, index) => (
-                            <div key={index} className="mood-dot"></div>
                         ))}
                     </div>
                     {!hasMoodData && (

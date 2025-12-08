@@ -8,8 +8,9 @@ import { eq, desc, and } from 'drizzle-orm';
 @Injectable()
 export class HomeService {
     async getDashboard(userId: string): Promise<HomeDashboardDto> {
-        const [firstName, mood, notificationsCount, suggestedPosts, calendarDays, consecutiveDays] = await Promise.all([
+        const [firstName, gender, mood, notificationsCount, suggestedPosts, calendarDays, consecutiveDays] = await Promise.all([
             this.getFirstName(userId),
+            this.getGender(userId),
             this.getLastMood(userId),
             this.getPendingQuestionnairesCount(userId),
             this.getSuggestedPosts(),
@@ -22,10 +23,12 @@ export class HomeService {
 
         return {
             firstName,
+            gender,
             mood,
             notificationsCount,
             streakLevel,
             streakProgress,
+            currentStreakDays: consecutiveDays,
             calendarDays,
             suggestedPosts,
         };
@@ -46,6 +49,16 @@ export class HomeService {
             .where(eq(paziente.idPaziente, userId))
             .limit(1);
         return rows[0]?.firstName ?? 'Utente';
+    }
+
+    //Ottieni il sesso dell'utente
+    private async getGender(userId: string): Promise<string> {
+        const rows = await db
+            .select({ sesso: paziente.sesso })
+            .from(paziente)
+            .where(eq(paziente.idPaziente, userId))
+            .limit(1);
+        return rows[0]?.sesso ?? 'M';
     }
     //Ottieni l'ultimo stato d'umore dell'utente
     private async getLastMood(userId: string): Promise<string> {
@@ -175,7 +188,8 @@ export class HomeService {
         return calendarDays;
     }
 
-    // Calcola i giorni consecutivi di compilazione stato d'animo fino a oggi (incluso)
+    // Calcola i giorni consecutivi di compilazione stato d'animo
+    // Se oggi non è stato inserito, parte da ieri per mostrare la streak attuale
     private async getConsecutiveMoodDays(userId: string): Promise<number> {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -189,10 +203,17 @@ export class HomeService {
             .limit(90);
 
         const moodSet = new Set(moods.map(m => this.formatLocalDate(new Date(m.date))));
+        const todayStr = this.formatLocalDate(today);
+
+        // Determina il giorno di partenza:
+        // - Se oggi è stato inserito, conta anche oggi
+        // - Altrimenti parte da ieri per mostrare la streak fino a ieri
+        const hasTodayEntry = moodSet.has(todayStr);
+        const startOffset = hasTodayEntry ? 0 : 1;
 
         let consecutive = 0;
-        // Partiamo da oggi e torniamo indietro fino a quando troviamo un giorno senza evento
-        for (let i = 0; i < 365; i++) { // safety cap
+        // Partiamo dal giorno appropriato e torniamo indietro
+        for (let i = startOffset; i < 365; i++) { // safety cap
             const d = new Date(today);
             d.setDate(today.getDate() - i);
             const key = this.formatLocalDate(d);

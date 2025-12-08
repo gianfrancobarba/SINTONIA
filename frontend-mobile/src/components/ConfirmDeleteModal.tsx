@@ -3,26 +3,39 @@ import ReactDOM from 'react-dom';
 import '../css/ConfirmDeleteModal.css';
 
 interface ConfirmDeleteModalProps {
+    isOpen?: boolean;
     onConfirm: () => void;
     onCancel: () => void;
+    title?: string;
+    message?: string;
 }
 
-const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ onConfirm, onCancel }) => {
+const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
+    isOpen = true,
+    onConfirm,
+    onCancel,
+    title = "Conferma eliminazione",
+    message = "Sei sicuro di voler procedere?"
+}) => {
     // Blocca lo scroll quando il modal è aperto
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
         return () => {
             document.body.style.overflow = 'unset';
         };
-    }, []);
+    }, [isOpen]);
+
+    if (!isOpen) return null;
 
     const handleCancel = () => {
-        document.body.style.overflow = 'unset';
         onCancel();
     };
 
     const handleConfirm = () => {
-        document.body.style.overflow = 'unset';
         onConfirm();
     };
 
@@ -31,12 +44,14 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ onConfirm, onCa
     return ReactDOM.createPortal(
         <div
             className="confirm-modal-overlay"
-            onClick={(e) => e.stopPropagation()}
+            onClick={onCancel}
         >
             <div
                 className="confirm-modal-box"
                 onClick={(e) => e.stopPropagation()}
             >
+                <h2 className="confirm-modal-title">{title}</h2>
+                <p className="confirm-modal-message">{message}</p>
                 <div className="confirm-modal-buttons">
                     <button
                         className="confirm-modal-btn cancel-btn"

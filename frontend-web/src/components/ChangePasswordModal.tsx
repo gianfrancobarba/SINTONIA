@@ -1,83 +1,160 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Eye, EyeOff, X } from 'lucide-react';
-import '../css/ChangePasswordModal.css';
+import '../css/Modal.css';
 
 interface ChangePasswordModalProps {
     onClose: () => void;
-    onConfirm: (newPassword: string) => void;
+    onConfirm: (oldPassword: string, newPassword: string) => Promise<void>;
 }
 
 const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onConfirm }) => {
-    const [password, setPassword] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validazione
-        if (!password || !confirmPassword) {
+        // Validazione client-side
+        if (!oldPassword || !newPassword || !confirmPassword) {
             setError('Tutti i campi sono obbligatori');
             return;
         }
 
-        if (password.length < 8) {
+        if (newPassword.length < 8) {
             setError('La password deve essere di almeno 8 caratteri');
             return;
         }
 
-        if (password !== confirmPassword) {
-            setError('Le password non corrispondono');
+        if (newPassword !== confirmPassword) {
+            setError('Le due password non coincidono');
             return;
         }
 
-        // Se tutto ok, chiama onConfirm
-        onConfirm(password);
-        onClose();
+        // Chiamata async al backend
+        try {
+            await onConfirm(oldPassword, newPassword);
+            onClose(); // Chiude solo se successo
+        } catch (error: any) {
+            // Mostra errore dal backend sotto il campo password attuale
+            const errorMessage = error.response?.data?.message || 'Errore durante la modifica della password';
+            setError(errorMessage);
+        }
     };
 
-    return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <h2 className="modal-title">Modifica Password</h2>
-                    <button className="modal-close-btn" onClick={onClose} aria-label="Chiudi">
-                        <X size={24} />
-                    </button>
+    return ReactDOM.createPortal(
+        <div className="modal-overlay-blur" onClick={onClose}>
+            <div className="modal-card modal-card-sm" onClick={(e) => e.stopPropagation()}>
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Modifica Password
+                            </h2>
+                        </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            <X size={20} />
+                        </button>
+                    </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="modal-form">
-                    {/* Nuova Password */}
-                    <div className="form-group">
-                        <label className="form-label">Nuova Password</label>
-                        <div className="password-input-wrapper">
+                {/* Body */}
+                <form onSubmit={handleSubmit} className="modal-body-white">
+                    {/* Password Vecchia */}
+                    <div className="modal-form-group" style={{ marginBottom: '20px' }}>
+                        <label className="modal-form-label">
+                            Password Attuale
+                        </label>
+                        <div style={{ position: 'relative' }}>
                             <input
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
+                                type={showOldPassword ? 'text' : 'password'}
+                                value={oldPassword}
                                 onChange={(e) => {
-                                    setPassword(e.target.value);
+                                    setOldPassword(e.target.value);
                                     setError('');
                                 }}
-                                className="form-control"
-                                placeholder="Inserisci la nuova password"
+                                className="modal-form-input"
+                                placeholder="Inserisci la password attuale"
+                                style={{ paddingRight: '40px' }}
                             />
                             <button
                                 type="button"
-                                className="toggle-password-btn"
-                                onClick={() => setShowPassword(!showPassword)}
-                                aria-label={showPassword ? 'Nascondi password' : 'Mostra password'}
+                                onClick={() => setShowOldPassword(!showOldPassword)}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    color: '#83B9C1',
+                                    padding: '4px',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                                aria-label={showOldPassword ? 'Nascondi password' : 'Mostra password'}
                             >
-                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                {showOldPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Nuova Password */}
+                    <div className="modal-form-group" style={{ marginBottom: '20px' }}>
+                        <label className="modal-form-label">
+                            Nuova Password
+                        </label>
+                        <div style={{ position: 'relative' }}>
+                            <input
+                                type={showNewPassword ? 'text' : 'password'}
+                                value={newPassword}
+                                onChange={(e) => {
+                                    setNewPassword(e.target.value);
+                                    setError('');
+                                }}
+                                className="modal-form-input"
+                                placeholder="Inserisci la nuova password"
+                                style={{ paddingRight: '40px' }}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowNewPassword(!showNewPassword)}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    color: '#83B9C1',
+                                    padding: '4px',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                                aria-label={showNewPassword ? 'Nascondi password' : 'Mostra password'}
+                            >
+                                {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
                     </div>
 
                     {/* Conferma Password */}
-                    <div className="form-group">
-                        <label className="form-label">Conferma Password</label>
-                        <div className="password-input-wrapper">
+                    <div className="modal-form-group" style={{ marginBottom: '20px' }}>
+                        <label className="modal-form-label">
+                            Conferma Nuova Password
+                        </label>
+                        <div style={{ position: 'relative' }}>
                             <input
                                 type={showConfirmPassword ? 'text' : 'password'}
                                 value={confirmPassword}
@@ -85,40 +162,67 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                                     setConfirmPassword(e.target.value);
                                     setError('');
                                 }}
-                                className="form-control"
+                                className="modal-form-input"
                                 placeholder="Reinserisci la nuova password"
+                                style={{ paddingRight: '40px' }}
                             />
                             <button
                                 type="button"
-                                className="toggle-password-btn"
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    color: '#83B9C1',
+                                    padding: '4px',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
                                 aria-label={showConfirmPassword ? 'Nascondi password' : 'Mostra password'}
                             >
-                                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
                     </div>
 
                     {/* Error Message */}
                     {error && (
-                        <div className="error-message">
-                            ⚠️ {error}
+                        <div className="modal-error-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            {error}
                         </div>
                     )}
 
                     {/* Buttons */}
-                    <div className="modal-actions">
-                        <button type="button" className="btn-secondary" onClick={onClose}>
+                    <div className="modal-footer-actions" style={{ marginTop: '24px', padding: 0, border: 'none' }}>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="btn-modal-secondary"
+                        >
                             Annulla
                         </button>
-                        <button type="submit" className="btn-primary">
+                        <button
+                            type="submit"
+                            className="btn-modal-primary"
+                        >
                             Conferma
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
 export default ChangePasswordModal;
+

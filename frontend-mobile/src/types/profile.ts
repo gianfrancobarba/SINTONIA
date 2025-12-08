@@ -7,6 +7,7 @@ export interface ProfileDto {
     profilo: {
         nome: string;
         cognome: string;
+        sesso: string; // 'M' | 'F'
         immagineProfilo?: string;
     };
     badge: {

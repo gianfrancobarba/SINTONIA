@@ -24,6 +24,28 @@ export const fetchPatients = async (): Promise<PatientData[]> => {
 };
 
 /**
+ * Search Campania municipalities (admin only)
+ */
+export const searchComuni = async (query: string): Promise<{ nome: string; provincia: string; codice: string }[]> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        // Se la query è vuota, potremmo voler restituire lista vuota o default
+        if (!query || query.length < 2) return [];
+
+        const response = await axios.get(`${API_URL}/admin/patients/comuni/search?q=${encodeURIComponent(query)}`, {
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error searching comuni:', error);
+        throw error;
+    }
+};
+
+/**
  * Cerca un paziente specifico per ID (admin only)
  * @param id - UUID del paziente da cercare
  * @returns Dati del paziente trovato
@@ -88,6 +110,30 @@ export const updatePatient = async (
         return response.data;
     } catch (error) {
         console.error('Error updating patient:', error);
+        throw error;
+    }
+};
+
+/**
+ * Aggiorna la priorità di un paziente
+ * @param id - ID del paziente
+ * @param idPriorita - Nuova priorità (Urgente, Breve, Differibile, Programmabile)
+ */
+export const updatePatientPriority = async (id: string, idPriorita: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await axios.patch(`${API_URL}/admin/patients/${id}/priority`,
+            { idPriorita },
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating patient priority:', error);
         throw error;
     }
 };
@@ -180,6 +226,83 @@ export const terminatePatientCare = async (idPaziente: string): Promise<any> => 
         return response.data;
     } catch (error) {
         console.error('Error terminating patient care:', error);
+        throw error;
+    }
+};
+
+/**
+ * Remove patient from waiting list (admin only)
+ * @param idPaziente - UUID del paziente
+ * @returns Response from the backend
+ */
+export const removePatientFromWaitingList = async (idPaziente: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+
+        const response = await axios.delete(
+            `${API_URL}/admin/patients/${idPaziente}`,
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error removing patient from waiting list:', error);
+        throw error;
+    }
+};
+
+
+/**
+ * Genera un report completo per il paziente (psicologo)
+ * @param idPaziente - UUID del paziente
+ * @returns Response from the backend
+ */
+export const generateReport = async (idPaziente: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const cf = getCurrentUser()?.fiscalCode || getCurrentUser()?.email;
+
+        const response = await axios.post(
+            `${API_URL}/psi/report/generate/${idPaziente}?cf=${cf}`,
+            {},
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error generating report:', error);
+        throw error;
+    }
+};
+
+/**
+ * Recupera l'ultimo report generato per il paziente
+ * @param idPaziente - UUID del paziente
+ * @returns Dati del report
+ */
+export const getReport = async (idPaziente: string): Promise<any> => {
+    try {
+        const token = getCurrentUser()?.access_token as string | undefined;
+        const response = await axios.get(
+            `${API_URL}/psi/report/view/${idPaziente}`,
+            {
+                headers: {
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching report:', error);
         throw error;
     }
 };

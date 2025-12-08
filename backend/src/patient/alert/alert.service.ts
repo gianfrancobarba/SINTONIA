@@ -3,11 +3,14 @@ import { eq, and, gte, sql } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
 import { alertClinico, questionario, paziente } from '../../drizzle/schema.js';
 import { AlertClinicoDto } from './dto/alert.dto.js';
+import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
 
 @Injectable()
 export class AlertService {
     private readonly SOGLIA_ALERT = 80; // Score >= 80 genera alert
     private readonly SCREENING_QUESTIONNAIRES = ['PHQ-9', 'GAD-7', 'WHO-5', 'PC-PTSD-5'];
+
+    constructor(private readonly notificationHelper: NotificationHelperService) { }
 
     /**
      * Verifica se il paziente ha completato lo screening iniziale
@@ -92,6 +95,22 @@ export class AlertService {
         });
 
         console.log(`Alert clinico creato per paziente ${idPaziente} con score ${scoreQuestionario}`);
+
+        // 5. Notifica lo psicologo del paziente
+        const patientData = await db
+            .select({ idPsicologo: paziente.idPsicologo })
+            .from(paziente)
+            .where(eq(paziente.idPaziente, idPaziente))
+            .limit(1);
+
+        if (patientData.length > 0 && patientData[0].idPsicologo) {
+            await this.notificationHelper.notifyPsicologo(
+                patientData[0].idPsicologo,
+                'Nuovo alert clinico',
+                `È stato generato un alert clinico per un tuo paziente (score: ${scoreQuestionario}%). Verifica nella sezione Alert.`,
+                'ALERT',
+            );
+        }
     }
 
     /**

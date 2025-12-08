@@ -33,6 +33,18 @@ const Questionari: React.FC = () => {
         fetchQuestionari();
     }, []);
 
+    const parseDate = (dateString: string): Date => {
+        // Check for DD/MM/YYYY or DD-MM-YYYY format
+        const ddmmyyyy = /^(\d{1,2})[-/](\d{1,2})[-/](\d{4})/;
+        const match = dateString.match(ddmmyyyy);
+
+        if (match) {
+            // match[1] is day, match[2] is month, match[3] is year
+            return new Date(parseInt(match[3]), parseInt(match[2]) - 1, parseInt(match[1]));
+        }
+        return new Date(dateString);
+    };
+
     // Group completed questionnaires by category (titolo)
     const groupedCategories = useMemo<QuestionnaireCategory[]>(() => {
         const categoryMap = new Map<string, QuestionarioItemDto[]>();
@@ -47,7 +59,7 @@ const Questionari: React.FC = () => {
             const dates = questionnaires
                 .map(q => q.dataCompletamento)
                 .filter((d): d is string => !!d)
-                .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+                .sort((a, b) => parseDate(b).getTime() - parseDate(a).getTime());
 
             return {
                 categoria,
@@ -55,7 +67,7 @@ const Questionari: React.FC = () => {
                 lastCompletionDate: dates[0] || '',
                 questionnaires: questionnaires.sort((a, b) => {
                     if (!a.dataCompletamento || !b.dataCompletamento) return 0;
-                    return new Date(b.dataCompletamento).getTime() - new Date(a.dataCompletamento).getTime();
+                    return parseDate(b.dataCompletamento).getTime() - parseDate(a.dataCompletamento).getTime();
                 })
             };
         });
@@ -79,7 +91,8 @@ const Questionari: React.FC = () => {
     };
 
     const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
+        if (!dateString) return '';
+        const date = parseDate(dateString);
         return date.toLocaleDateString('it-IT', {
             day: '2-digit',
             month: 'long',

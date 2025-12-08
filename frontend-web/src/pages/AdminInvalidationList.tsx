@@ -5,6 +5,8 @@ import type { InvalidationRequestData, InvalidationLoadingState } from '../types
 import { fetchInvalidationRequests, acceptInvalidationRequest, rejectInvalidationRequest } from '../services/invalidation.service';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 
+import Toast from '../components/Toast';
+
 const AdminInvalidationList: React.FC = () => {
     const [requestsState, setRequestsState] = useState<InvalidationLoadingState<InvalidationRequestData[]>>({
         data: null,
@@ -14,6 +16,7 @@ const AdminInvalidationList: React.FC = () => {
     const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
     const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
     const [viewingRequest, setViewingRequest] = useState<InvalidationRequestData | null>(null);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     useEffect(() => {
         loadRequests();
@@ -57,9 +60,10 @@ const AdminInvalidationList: React.FC = () => {
             if (viewingRequest?.idRichiesta === id) {
                 setViewingRequest(null);
             }
+            setToast({ message: 'Richiesta accettata con successo!', type: 'success' });
         } catch (error) {
             console.error('Error accepting invalidation request:', error);
-            alert('Errore durante l\'accettazione della richiesta. Riprova.');
+            setToast({ message: 'Errore durante l\'accettazione della richiesta. Riprova.', type: 'error' });
         }
     };
 
@@ -73,9 +77,10 @@ const AdminInvalidationList: React.FC = () => {
             if (viewingRequest?.idRichiesta === id) {
                 setViewingRequest(null);
             }
+            setToast({ message: 'Richiesta rifiutata con successo!', type: 'success' });
         } catch (error) {
             console.error('Error rejecting invalidation request:', error);
-            alert('Errore durante il rifiuto della richiesta. Riprova.');
+            setToast({ message: 'Errore durante il rifiuto della richiesta. Riprova.', type: 'error' });
         }
     };
 
@@ -208,6 +213,13 @@ const AdminInvalidationList: React.FC = () => {
                     onClose={handleCloseModal}
                     onAccept={handleAccept}
                     onReject={handleReject}
+                />
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>

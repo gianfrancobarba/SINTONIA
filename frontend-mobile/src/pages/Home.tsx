@@ -14,6 +14,7 @@ const Home: React.FC = () => {
     const [data, setData] = useState<HomeDashboardDto | null>(null);
     const [loading, setLoading] = useState(true);
     const [showInitialModal, setShowInitialModal] = useState(false);
+    const [pendingQuestionnaires, setPendingQuestionnaires] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,8 +27,9 @@ const Home: React.FC = () => {
                 const hasCheckedThisSession = sessionStorage.getItem('initialQuestionnairesChecked');
 
                 if (!hasCheckedThisSession) {
-                    const hasCompleted = await checkInitialQuestionnaires();
-                    if (!hasCompleted) {
+                    const result = await checkInitialQuestionnaires();
+                    if (!result.hasCompleted && result.pendingQuestionnaires.length > 0) {
+                        setPendingQuestionnaires(result.pendingQuestionnaires);
                         setShowInitialModal(true);
                     }
                     // Mark as checked for this session
@@ -61,9 +63,11 @@ const Home: React.FC = () => {
             <InitialQuestionnairesModal
                 isOpen={showInitialModal}
                 onClose={() => setShowInitialModal(false)}
+                pendingQuestionnaires={pendingQuestionnaires}
             />
         </div>
     );
 };
 
 export default Home;
+

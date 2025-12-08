@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminPsychologistTable from '../components/AdminPsychologistTable';
 import AdminPsychologistDetailModal from '../components/AdminPsychologistDetailModal';
 import AddPsychologistModal from '../components/AddPsychologistModal';
-import { User, Eye, LayoutGrid, List, UserPlus } from 'lucide-react';
+import { User, Eye, LayoutGrid, List, UserPlus, Search, RotateCcw } from 'lucide-react';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 import '../css/AdminPsychologistList.css';
 import { fetchAllPsychologists, createPsychologist, type PsychologistOption } from '../services/psychologist.service';
@@ -13,7 +13,7 @@ interface PsychologistData {
     cognome: string;
     email: string;
     aslAppartenenza: string;
-    stato: 'Attivo' | 'Disattivato';
+    stato: 'Attivo' | 'Inattivo';  // Changed from 'Disattivato' to 'Inattivo'
 }
 
 // Helper function to normalize backend data to frontend format
@@ -23,7 +23,7 @@ const normalizePsychologist = (psy: PsychologistOption): PsychologistData => ({
     cognome: psy.cognome,
     email: psy.email || '',
     aslAppartenenza: psy.aslAppartenenza || '',
-    stato: 'Attivo' // Default status, update when backend provides this field
+    stato: psy.stato === true ? 'Attivo' : 'Inattivo' // Convert boolean to string
 });
 
 const AdminPsychologistList: React.FC = () => {
@@ -36,6 +36,7 @@ const AdminPsychologistList: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [statusFilter, setStatusFilter] = useState<'Attivo' | 'Inattivo'>('Attivo'); // Filter for active/inactive
 
     // Fetch psychologists from backend on mount
     useEffect(() => {
@@ -96,12 +97,15 @@ const AdminPsychologistList: React.FC = () => {
     useEffect(() => {
         const query = searchQuery.trim().toLowerCase();
 
+        // First filter by status (active/inactive)
+        let statusFiltered = psychologists.filter(psy => psy.stato === statusFilter);
+
         if (!query) {
-            // Nessuna ricerca, mostra tutti
-            setFilteredPsychologists(psychologists);
+            // No search, show all psychologists with current status filter
+            setFilteredPsychologists(statusFiltered);
         } else {
-            // Filtra per Codice Fiscale, Nome o Cognome
-            const filtered = psychologists.filter(psy =>
+            // Filter by search query within the status-filtered list
+            const filtered = statusFiltered.filter(psy =>
                 psy.codiceFiscale.toLowerCase().includes(query) ||
                 psy.nome.toLowerCase().includes(query) ||
                 psy.cognome.toLowerCase().includes(query)
@@ -111,7 +115,7 @@ const AdminPsychologistList: React.FC = () => {
 
         // Reset alla prima pagina quando cambia il filtro
         setCurrentPage(1);
-    }, [searchQuery, psychologists]);
+    }, [searchQuery, psychologists, statusFilter]);
 
     const handleSelectPsychologist = (id: string) => {
         setSelectedPsychologistId(id);
@@ -155,14 +159,12 @@ const AdminPsychologistList: React.FC = () => {
             const normalized = data.map(normalizePsychologist);
             setPsychologists(normalized);
 
-            setShowAddModal(false);
+            // Modal closing is now handled by the modal itself after toast
+            // setShowAddModal(false); 
         } catch (err: any) {
             console.error('Error adding psychologist:', err);
-            const errorMessage = err.message?.includes('localhost') || err.message?.includes('fetch')
-                ? 'Errore di connessione al server.'
-                : (err.message || 'Errore durante la creazione dello psicologo. Riprova.');
-            setError(errorMessage);
-            // Keep modal open on error so user can retry
+            // Re-throw error so the modal can handle it with a toast
+            throw err;
         } finally {
             setLoading(false);
         }
@@ -237,7 +239,7 @@ const AdminPsychologistList: React.FC = () => {
     };
 
     return (
-        <div className="content-panel-flex">
+        <div className="content-panel">
             <h2 className="panel-title">Gestione Psicologi</h2>
 
             {loading && (
@@ -317,6 +319,46 @@ const AdminPsychologistList: React.FC = () => {
                         marginBottom: '16px',
                         gap: '12px'
                     }}>
+                        {/* Status Filter Toggle */}
+                        <div style={{
+                            display: 'flex',
+                            border: '2px solid #ddd',
+                            borderRadius: '8px',
+                            overflow: 'hidden'
+                        }}>
+                            <button
+                                onClick={() => setStatusFilter('Attivo')}
+                                style={{
+                                    padding: '8px 16px',
+                                    border: 'none',
+                                    background: statusFilter === 'Attivo' ? '#7FB77E' : 'white',
+                                    color: statusFilter === 'Attivo' ? 'white' : '#333',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: statusFilter === 'Attivo' ? '600' : '500',
+                                    transition: 'all 0.2s ease',
+                                    borderRight: '1px solid #ddd'
+                                }}
+                            >
+                                ✓ Attivi
+                            </button>
+                            <button
+                                onClick={() => setStatusFilter('Inattivo')}
+                                style={{
+                                    padding: '8px 16px',
+                                    border: 'none',
+                                    background: statusFilter === 'Inattivo' ? '#ef4444' : 'white',
+                                    color: statusFilter === 'Inattivo' ? 'white' : '#333',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: statusFilter === 'Inattivo' ? '600' : '500',
+                                    transition: 'all 0.2s ease'
+                                }}
+                            >
+                                ✕ Inattivi
+                            </button>
+                        </div>
+
                         <div className="view-toggle">
                             <button
                                 className={`toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
@@ -338,7 +380,7 @@ const AdminPsychologistList: React.FC = () => {
                             type="text"
                             value={searchQuery}
                             onChange={handleSearchInputChange}
-                            placeholder="🔍 Cerca per CF, nome o cognome..."
+                            placeholder="Cerca per CF, nome o cognome..."
                             style={{
                                 padding: '10px 16px',
                                 borderRadius: '8px',
@@ -352,8 +394,9 @@ const AdminPsychologistList: React.FC = () => {
                             onBlur={(e) => e.target.style.borderColor = '#ddd'}
                         />
                         {searchQuery && (
-                            <button onClick={handleReset} className="clear-filter-btn">
-                                ↺ Reset
+                            <button onClick={handleReset} className="clear-filter-btn" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <RotateCcw size={14} />
+                                Reset
                             </button>
                         )}
                     </div>
@@ -469,9 +512,14 @@ const AdminPsychologistList: React.FC = () => {
                             <p style={{
                                 fontSize: '16px',
                                 color: '#666',
-                                margin: 0
+                                margin: 0,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px'
                             }}>
-                                🔍 Nessuno psicologo trovato con "<strong>{searchQuery}</strong>"
+                                <Search size={18} style={{ flexShrink: 0 }} />
+                                <span>Nessuno psicologo trovato con "<strong>{searchQuery}</strong>"</span>
                             </p>
                             <p style={{
                                 fontSize: '14px',
