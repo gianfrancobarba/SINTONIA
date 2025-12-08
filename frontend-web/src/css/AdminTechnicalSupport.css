@@ -1,13 +1,15 @@
 /* Technical Support Page Styles */
 
 .support-page-header {
-    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #F5F5F5;
+    margin-bottom: 24px;
 }
 
 .support-page-title {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--color-teal-dark);
+    color: #1A5F5F;
     margin: 0 0 8px 0;
 }
 

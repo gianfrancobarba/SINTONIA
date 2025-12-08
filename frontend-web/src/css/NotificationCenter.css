@@ -1,24 +1,25 @@
 /* Centro Notifiche Styles */
 
 .notification-center {
-    padding: 30px;
-    max-width: 900px;
-    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .notification-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #F5F5F5;
+    flex-shrink: 0;
 }
 
 .notification-header h1 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #1a1a2e;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1A5F5F;
     margin: 0;
     display: flex;
     align-items: center;
@@ -26,7 +27,7 @@
 }
 
 .notification-header h1 svg {
-    color: #0D475D;
+    color: #1A5F5F;
 }
 
 .mark-all-read-btn {
@@ -60,6 +61,10 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 20px 0;
 }
 
 .notification-card {

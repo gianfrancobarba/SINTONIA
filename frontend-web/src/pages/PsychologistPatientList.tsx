@@ -179,7 +179,7 @@ const PsychologistPatientList: React.FC = () => {
     };
 
     return (
-        <div className="content-panel-flex">
+        <div className="content-panel">
             <h2 className="panel-title">I Miei Pazienti</h2>
 
             {patientsState.loading && (

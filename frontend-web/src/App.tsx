@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import AppLayout from './components/AppLayout';
-import EmptyState from './components/EmptyState';
 import PsychologistPatientList from './pages/PsychologistPatientList';
 import AdminPatientList from './pages/AdminPatientList';
 import AdminPsychologistList from './pages/AdminPsychologistList';
@@ -42,7 +41,7 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route index element={<EmptyState />} />
+          <Route index element={<Navigate to="personal-area" replace />} />
           <Route path="patients" element={<PsychologistPatientList />} />
           <Route path="questionnaires" element={<QuestionnaireManagement />} />
           <Route path="forum" element={<ForumPage />} />
@@ -61,7 +60,7 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route index element={<EmptyState />} />
+          <Route index element={<Navigate to="personal-area" replace />} />
           <Route path="patients" element={<AdminPatientList />} />
           <Route path="psychologists" element={<AdminPsychologistList />} />
           <Route path="questionnaires" element={<AdminQuestionnaireList />} />

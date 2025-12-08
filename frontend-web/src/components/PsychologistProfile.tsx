@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HelpCircle } from 'lucide-react';
 import { fetchDashboardData } from '../services/psychologist.service';
 import { getCurrentUser, logout } from '../services/auth.service';
 import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
@@ -39,6 +38,14 @@ const ForumIcon = () => (
         <path d="M20 2H4C2.9 2 2.01 2.9 2.01 4L2 22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M7 9H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <path d="M7 13H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+);
+
+const SupportIcon = () => (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" strokeWidth="1" />
     </svg>
 );
 
@@ -144,24 +151,26 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
             <div className="profile-header">
                 <div className="header-background" />
                 <div className="profile-section">
+                    {/* Left icon - Area Personale */}
                     <button
                         className="side-btn left-side-btn"
-                        aria-label="Edit Profile"
+                        aria-label="Area Personale"
                         onClick={(e) => handleNavigation('area-personale', e)}
+                        title="Area Personale"
                     >
                         <svg
-                            width="24"
-                            height="24"
+                            width="22"
+                            height="22"
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="side-btn-icon edit-icon"
                         >
                             <circle cx="12" cy="7" r="4" fill="currentColor" />
                             <path d="M12 14C8.13 14 5 15.79 5 18V20H19V18C19 15.79 15.87 14 12 14Z" fill="currentColor" />
                         </svg>
                     </button>
 
+                    {/* Profile Photo */}
                     <div className="profile-photo">
                         <img
                             src={
@@ -176,22 +185,15 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                         />
                     </div>
 
-                    <div style={{ marginLeft: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <button
-                            className="side-btn"
-                            aria-label="Supporto Tecnico"
-                            onClick={(e) => handleNavigation('supporto-tecnico', e)}
-                        >
-                            <HelpCircle className="side-btn-icon" size={24} />
-                        </button>
-                        <button
-                            className="side-btn"
-                            aria-label="Notifications"
-                            onClick={(e) => handleNavigation('notifiche', e)}
-                        >
-                            <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
-                        </button>
-                    </div>
+                    {/* Right icon - Notifiche */}
+                    <button
+                        className="side-btn right-side-btn"
+                        aria-label="Notifiche"
+                        onClick={(e) => handleNavigation('notifiche', e)}
+                        title="Notifiche"
+                    >
+                        <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
+                    </button>
                 </div>
             </div>
 
@@ -199,14 +201,23 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                 <h2 className="profile-name">{fullName}</h2>
                 <p className="profile-role">{role}</p>
 
-                {/* Modern Logout Button */}
-                <button
-                    onClick={(e) => { e.stopPropagation(); handleLogout(); }}
-                    className="modern-logout-btn"
-                >
-                    <LogoutIcon />
-                    <span>Esci</span>
-                </button>
+                {/* Action buttons row */}
+                <div className="profile-action-buttons">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); handleNavigation('supporto-tecnico', e); }}
+                        className="support-link-btn"
+                    >
+                        <SupportIcon />
+                        <span>Supporto</span>
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); handleLogout(); }}
+                        className="modern-logout-btn"
+                    >
+                        <LogoutIcon />
+                        <span>Esci</span>
+                    </button>
+                </div>
             </div>
 
             <div className="navigation-grid navigation-grid-2col">

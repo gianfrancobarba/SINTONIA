@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Hash, User, CreditCard, Mail, Calendar, Home, Users2, Award, AlertTriangle, FileText, Check, X, ClipboardList, Download } from 'lucide-react';
+import { User, AlertTriangle, FileText, Check, X, ClipboardList, Download } from 'lucide-react';
 import type { PatientData } from '../types/patient';
 import type { QuestionnaireData } from '../types/psychologist';
 import { getPatientDetailsByPsychologist, terminatePatientCare, generateReport, getReport } from '../services/patient.service';
@@ -8,7 +8,7 @@ import { fetchQuestionnairesByPatient, reviewQuestionnaire, requestInvalidation,
 import QuestionnaireDetailModal from './QuestionnaireDetailModal';
 import Toast from './Toast';
 import { jsPDF } from 'jspdf';
-import '../css/QuestionnaireDetailModal.css'; // Reuse existing styles
+import '../css/Modal.css'; // Unified modal styles
 
 interface PsychologistPatientDetailModalProps {
     patient: PatientData | null;
@@ -392,221 +392,126 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
 
     return ReactDOM.createPortal(
         <>
-            <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+            <div className="modal-overlay-blur" onClick={onClose}>
                 <div
-                    className="modal-content"
+                    className="modal-card modal-card-lg"
                     onClick={(e) => e.stopPropagation()}
-                    style={{
-                        maxWidth: '1100px',
-                        borderRadius: '20px',
-                        overflow: 'hidden',
-                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
-                    }}
                 >
-                    {/* Modern Header with Gradient */}
-                    <div style={{
-                        background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
-                        padding: '32px',
-                        position: 'relative',
-                        overflow: 'hidden'
-                    }}>
-                        <div style={{
-                            position: 'absolute',
-                            top: '-50%',
-                            right: '-10%',
-                            width: '300px',
-                            height: '300px',
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            borderRadius: '50%',
-                            filter: 'blur(40px)'
-                        }}></div>
-
-                        <div style={{ position: 'relative', zIndex: 1 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                <div>
-                                    <h2 style={{
-                                        margin: '0 0 8px 0',
-                                        fontSize: '28px',
-                                        fontWeight: '700',
-                                        color: 'white',
-                                        letterSpacing: '-0.5px'
-                                    }}>
-                                        {viewingReport ? 'Report Clinico' : 'Dettagli Paziente'}
-                                    </h2>
-                                    <p style={{
-                                        margin: 0,
-                                        fontSize: '14px',
-                                        color: 'rgba(255, 255, 255, 0.8)',
-                                        fontWeight: '500'
-                                    }}>
-                                        {viewingReport
-                                            ? `Generato il ${new Date(viewingReport.date).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}`
-                                            : `${patient.nome} ${patient.cognome}`
-                                        }
-                                    </p>
-                                </div>
-                                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                                    {!viewingReport ? (
-                                        <>
+                    {/* Header with Gradient */}
+                    <div className="modal-header-gradient">
+                        <div className="modal-header-content">
+                            <div className="modal-header-text">
+                                <h2 className="modal-header-title">
+                                    {viewingReport ? 'Report Clinico' : 'Dettagli Paziente'}
+                                </h2>
+                                <p className="modal-header-subtitle">
+                                    {viewingReport
+                                        ? `Generato il ${new Date(viewingReport.date).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}`
+                                        : `${patient.nome} ${patient.cognome}`
+                                    }
+                                </p>
+                            </div>
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                                {!viewingReport ? (
+                                    <>
+                                        <button
+                                            onClick={handleGenerateReport}
+                                            disabled={isGeneratingReport}
+                                            className="btn-modal-header"
+                                            style={{
+                                                background: 'rgba(255, 255, 255, 0.2)',
+                                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                color: 'white',
+                                                padding: '8px 16px',
+                                                borderRadius: '8px',
+                                                cursor: isGeneratingReport ? 'not-allowed' : 'pointer',
+                                                fontSize: '13px',
+                                                fontWeight: '600',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px'
+                                            }}
+                                        >
+                                            <FileText size={16} />
+                                            {isGeneratingReport ? 'Generazione...' : 'Genera Report'}
+                                        </button>
+                                        {patientDetails?.hasReport && (
                                             <button
-                                                onClick={handleGenerateReport}
-                                                disabled={isGeneratingReport}
+                                                onClick={handleViewReport}
+                                                disabled={isLoadingReport}
                                                 style={{
                                                     background: 'rgba(255, 255, 255, 0.2)',
                                                     border: '1px solid rgba(255, 255, 255, 0.3)',
                                                     color: 'white',
                                                     padding: '8px 16px',
                                                     borderRadius: '8px',
-                                                    cursor: isGeneratingReport ? 'not-allowed' : 'pointer',
+                                                    cursor: isLoadingReport ? 'not-allowed' : 'pointer',
                                                     fontSize: '13px',
                                                     fontWeight: '600',
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: '8px',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    if (!isGeneratingReport) {
-                                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
-                                                    }
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    if (!isGeneratingReport) {
-                                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                                                    }
+                                                    gap: '8px'
                                                 }}
                                             >
                                                 <FileText size={16} />
-                                                {isGeneratingReport ? 'Generazione...' : 'Genera Report'}
+                                                {isLoadingReport ? 'Caricamento...' : 'Visualizza Report'}
                                             </button>
-                                            {patientDetails?.hasReport && (
-                                                <button
-                                                    onClick={handleViewReport}
-                                                    disabled={isLoadingReport}
-                                                    style={{
-                                                        background: 'rgba(255, 255, 255, 0.2)',
-                                                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                                                        color: 'white',
-                                                        padding: '8px 16px',
-                                                        borderRadius: '8px',
-                                                        cursor: isLoadingReport ? 'not-allowed' : 'pointer',
-                                                        fontSize: '13px',
-                                                        fontWeight: '600',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: '8px',
-                                                        transition: 'all 0.2s ease'
-                                                    }}
-                                                    onMouseEnter={(e) => {
-                                                        if (!isLoadingReport) {
-                                                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
-                                                        }
-                                                    }}
-                                                    onMouseLeave={(e) => {
-                                                        if (!isLoadingReport) {
-                                                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                                                        }
-                                                    }}
-                                                >
-                                                    <FileText size={16} />
-                                                    {isLoadingReport ? 'Caricamento...' : 'Visualizza Report'}
-                                                </button>
-                                            )}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <button
-                                                onClick={() => setViewingReport(null)}
-                                                style={{
-                                                    background: 'rgba(255, 255, 255, 0.2)',
-                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                                                    color: 'white',
-                                                    padding: '8px 16px',
-                                                    borderRadius: '8px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '13px',
-                                                    fontWeight: '600',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: '8px',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                            >
-                                                Indietro
-                                            </button>
-                                            <button
-                                                onClick={handleDownloadPdf}
-                                                disabled={isDownloadingPdf}
-                                                style={{
-                                                    background: 'rgba(255, 255, 255, 0.2)',
-                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                                                    color: 'white',
-                                                    padding: '8px 16px',
-                                                    borderRadius: '8px',
-                                                    cursor: isDownloadingPdf ? 'not-allowed' : 'pointer',
-                                                    fontSize: '13px',
-                                                    fontWeight: '600',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: '8px',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    if (!isDownloadingPdf) {
-                                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
-                                                    }
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    if (!isDownloadingPdf) {
-                                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                                                    }
-                                                }}
-                                            >
-                                                <Download size={16} />
-                                                {isDownloadingPdf ? 'Download...' : 'Scarica PDF'}
-                                            </button>
-                                        </>
-                                    )}
-                                    <button
-                                        onClick={onClose}
-                                        style={{
-                                            background: 'rgba(255, 255, 255, 0.15)',
-                                            backdropFilter: 'blur(10px)',
-                                            border: 'none',
-                                            color: 'white',
-                                            width: '40px',
-                                            height: '40px',
-                                            borderRadius: '50%',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            transition: 'all 0.3s ease',
-                                            fontSize: '20px'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                                            e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                                            e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
-                                        }}
-                                    >
-                                        ✕
-                                    </button>
-                                </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => setViewingReport(null)}
+                                            style={{
+                                                background: 'rgba(255, 255, 255, 0.2)',
+                                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                color: 'white',
+                                                padding: '8px 16px',
+                                                borderRadius: '8px',
+                                                cursor: 'pointer',
+                                                fontSize: '13px',
+                                                fontWeight: '600',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px'
+                                            }}
+                                        >
+                                            Indietro
+                                        </button>
+                                        <button
+                                            onClick={handleDownloadPdf}
+                                            disabled={isDownloadingPdf}
+                                            style={{
+                                                background: 'rgba(255, 255, 255, 0.2)',
+                                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                color: 'white',
+                                                padding: '8px 16px',
+                                                borderRadius: '8px',
+                                                cursor: isDownloadingPdf ? 'not-allowed' : 'pointer',
+                                                fontSize: '13px',
+                                                fontWeight: '600',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px'
+                                            }}
+                                        >
+                                            <Download size={16} />
+                                            {isDownloadingPdf ? 'Download...' : 'Scarica PDF'}
+                                        </button>
+                                    </>
+                                )}
+                                <button
+                                    onClick={onClose}
+                                    className="modal-close-btn-rounded"
+                                >
+                                    ✕
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    {/* Body with Modern Cards */}
-                    <div style={{
-                        padding: '32px',
-                        background: '#f8f9fa',
-                        maxHeight: 'calc(90vh - 200px)',
-                        overflowY: 'auto'
-                    }}>
+                    {/* Body */}
+                    <div className="modal-body-gray modal-body-scrollable">
                         {viewingReport ? (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                 {/* Report Header Card */}
@@ -756,74 +661,80 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                             </div>
                         ) : patientDetails ? (
                             <>
-                                {/* Patient Info Cards Grid */}
-                                <div style={{
-                                    display: 'grid',
-                                    gridTemplateColumns: 'repeat(3, 1fr)',
-                                    gap: '16px',
-                                    marginBottom: '24px'
-                                }}>
-                                    <InfoCard
-                                        icon={<Hash size={16} />}
-                                        label="ID Paziente"
-                                        value={patientDetails.idPaziente.substring(0, 16) + '...'}
-                                        iconColor="#0D475D"
-                                        tooltip={patientDetails.idPaziente}
-                                    />
-                                    <InfoCard
-                                        icon={<User size={16} />}
-                                        label="Nome Completo"
-                                        value={`${patientDetails.nome} ${patientDetails.cognome}`}
-                                        iconColor="#83B9C1"
-                                    />
-                                    <InfoCard
-                                        icon={<CreditCard size={16} />}
-                                        label="Codice Fiscale"
-                                        value={patientDetails.codFiscale}
-                                        iconColor="#7FB77E"
-                                    />
-                                    <InfoCard
-                                        icon={<Mail size={16} />}
-                                        label="Email"
-                                        value={patientDetails.email}
-                                        iconColor="#5a9aa5"
-                                    />
-                                    <InfoCard
-                                        icon={<Calendar size={16} />}
-                                        label="Data di Nascita"
-                                        value={formatDate(patientDetails.dataNascita)}
-                                        iconColor="#FFB74D"
-                                    />
-                                    <InfoCard
-                                        icon={<Calendar size={16} />}
-                                        label="Data Ingresso"
-                                        value={formatDate(patientDetails.dataIngresso)}
-                                        iconColor="#9575CD"
-                                    />
-                                    <InfoCard
-                                        icon={<Home size={16} />}
-                                        label="Residenza"
-                                        value={patientDetails.residenza}
-                                        iconColor="#66BB6A"
-                                    />
-                                    <InfoCard
-                                        icon={<Users2 size={16} />}
-                                        label="Sesso"
-                                        value={patientDetails.sesso}
-                                        iconColor="#42A5F5"
-                                    />
-                                    <InfoCard
-                                        icon={<Award size={16} />}
-                                        label="Score"
-                                        value={patientDetails.score !== null ? String(patientDetails.score) : 'N/A'}
-                                        iconColor="#FFA726"
-                                    />
-                                    <InfoCard
-                                        icon={<AlertTriangle size={16} />}
-                                        label="Priorità"
-                                        value={patientDetails.idPriorita || 'N/A'}
-                                        iconColor="#EF5350"
-                                    />
+                                {/* Compact Patient Info Section */}
+                                <div className="modal-data-section">
+                                    <div className="modal-data-section-title">
+                                        <div className="modal-data-section-title-icon">
+                                            <User size={14} />
+                                        </div>
+                                        Informazioni Paziente
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                                        <span className="modal-data-row-label">ID Paziente</span>
+                                        <span className="modal-data-row-value" title={patientDetails.idPaziente}>
+                                            {patientDetails.idPaziente.length > 20
+                                                ? `${patientDetails.idPaziente.substring(0, 20)}...`
+                                                : patientDetails.idPaziente}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                        <span className="modal-data-row-label">Nome Completo</span>
+                                        <span className="modal-data-row-value">{patientDetails.nome} {patientDetails.cognome}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                        <span className="modal-data-row-label">Codice Fiscale</span>
+                                        <span className="modal-data-row-value">{patientDetails.codFiscale}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                        <span className="modal-data-row-label">Email</span>
+                                        <span className="modal-data-row-value">{patientDetails.email}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                        <span className="modal-data-row-label">Data di Nascita</span>
+                                        <span className="modal-data-row-value">{formatDate(patientDetails.dataNascita)}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-purple"></div>
+                                        <span className="modal-data-row-label">Data Ingresso</span>
+                                        <span className="modal-data-row-value">{formatDate(patientDetails.dataIngresso)}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                        <span className="modal-data-row-label">Residenza</span>
+                                        <span className="modal-data-row-value">{patientDetails.residenza}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                        <span className="modal-data-row-label">Sesso</span>
+                                        <span className="modal-data-row-value">{patientDetails.sesso}</span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                        <span className="modal-data-row-label">Score</span>
+                                        <span className="modal-data-row-value modal-data-row-value-highlight">
+                                            {patientDetails.score !== null ? patientDetails.score : 'N/A'}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-data-row">
+                                        <div className="modal-data-row-dot modal-data-row-dot-red"></div>
+                                        <span className="modal-data-row-label">Priorità</span>
+                                        <span className="modal-data-row-value">{patientDetails.idPriorita || 'N/A'}</span>
+                                    </div>
                                 </div>
 
                                 {/* Questionnaires Section */}
@@ -1019,7 +930,13 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                     </div>
 
                     {/* Footer vuoto - solo chiusura tramite X */}
-                    <div className="modal-footer">
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        padding: '16px 24px',
+                        borderTop: '1px solid #eef2f5',
+                        background: '#f8fafc'
+                    }}>
                         {!viewingReport && (
                             <button
                                 className="terminate-cure-btn"
@@ -1058,6 +975,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                     questionnaire={viewingQuestionnaire}
                     onClose={handleCloseQuestionnaireModal}
                     role="psychologist"
+                    readOnly={true}
                     onRequestInvalidation={handleRequestInvalidation}
                     onReview={handleReview}
                 />

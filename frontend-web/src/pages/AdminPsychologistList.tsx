@@ -239,7 +239,7 @@ const AdminPsychologistList: React.FC = () => {
     };
 
     return (
-        <div className="content-panel-flex">
+        <div className="content-panel">
             <h2 className="panel-title">Gestione Psicologi</h2>
 
             {loading && (

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { FileText, Calendar, User, Hash, Award, CheckCircle, AlertCircle, X, XCircle } from 'lucide-react';
+import { FileText, X } from 'lucide-react';
 import type { QuestionnaireData } from '../types/questionnaire';
 import Toast from './Toast';
+import '../css/Modal.css';
 
 interface AdminQuestionnaireDetailModalProps {
     questionnaire: QuestionnaireData | null;
@@ -57,192 +58,115 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
     };
 
     return ReactDOM.createPortal(
-        <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+        <div className="modal-overlay-blur" onClick={onClose}>
             <div
-                className="modal-content"
+                className="modal-card modal-card-lg"
                 onClick={(e) => e.stopPropagation()}
-                style={{
-                    maxWidth: '1100px',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
-                }}
             >
-                {/* Modern Header with Gradient */}
-                <div style={{
-                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
-                    padding: '32px',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        right: '-10%',
-                        width: '300px',
-                        height: '300px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '50%',
-                        filter: 'blur(40px)'
-                    }}></div>
-
-                    <div style={{ position: 'relative', zIndex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div>
-                                <h2 style={{
-                                    margin: '0 0 8px 0',
-                                    fontSize: '28px',
-                                    fontWeight: '700',
-                                    color: 'white',
-                                    letterSpacing: '-0.5px'
-                                }}>
-                                    Dettagli Questionario
-                                </h2>
-                                <p style={{
-                                    margin: 0,
-                                    fontSize: '14px',
-                                    color: 'rgba(255, 255, 255, 0.8)',
-                                    fontWeight: '500'
-                                }}>
-                                    {questionnaire.nomeTipologia}
-                                </p>
-                            </div>
-                            <button
-                                onClick={onClose}
-                                style={{
-                                    background: 'rgba(255, 255, 255, 0.15)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: 'none',
-                                    color: 'white',
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.3s ease',
-                                    fontSize: '20px'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
-                                }}
-                            >
-                                ✕
-                            </button>
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Dettagli Questionario
+                            </h2>
                         </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            ✕
+                        </button>
                     </div>
                 </div>
 
-                {/* Body with Modern Cards */}
-                <div style={{
-                    padding: '32px',
-                    background: '#f8f9fa',
-                    maxHeight: 'calc(90vh - 200px)',
-                    overflowY: 'auto'
-                }}>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: '16px',
-                        marginBottom: '24px'
-                    }}>
-                        {/* ID Questionario Card */}
-                        <InfoCard
-                            icon={<Hash size={16} />}
-                            label="ID Questionario"
-                            value={questionnaire.idQuestionario}
-                            iconColor="#0D475D"
-                        />
+                {/* Body */}
+                <div className="modal-body-gray modal-body-scrollable">
+                    {/* Compact Info Section */}
+                    <div className="modal-data-section">
+                        <div className="modal-data-section-title">
+                            <div className="modal-data-section-title-icon">
+                                <FileText size={14} />
+                            </div>
+                            Informazioni Questionario
+                        </div>
 
-                        {/* Tipologia Card */}
-                        <InfoCard
-                            icon={<FileText size={16} />}
-                            label="Tipologia"
-                            value={questionnaire.nomeTipologia}
-                            iconColor="#83B9C1"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                            <span className="modal-data-row-label">ID Questionario</span>
+                            <span className="modal-data-row-value">{questionnaire.idQuestionario}</span>
+                        </div>
 
-                        {/* ID Paziente Card */}
-                        <InfoCard
-                            icon={<User size={16} />}
-                            label="ID Paziente"
-                            value={questionnaire.idPaziente}
-                            iconColor="#5a9aa5"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">Tipologia</span>
+                            <span className="modal-data-row-value modal-data-row-value-highlight">{questionnaire.nomeTipologia}</span>
+                        </div>
 
-                        {/* Data Compilazione Card */}
-                        <InfoCard
-                            icon={<Calendar size={16} />}
-                            label="Data Compilazione"
-                            value={new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            })}
-                            iconColor="#7FB77E"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                            <span className="modal-data-row-label">ID Paziente</span>
+                            <span className="modal-data-row-value">{questionnaire.idPaziente}</span>
+                        </div>
 
-                        {/* Punteggio Card */}
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                            <span className="modal-data-row-label">Data Compilazione</span>
+                            <span className="modal-data-row-value">
+                                {new Date(questionnaire.dataCompilazione).toLocaleString('it-IT', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </span>
+                        </div>
+
                         {questionnaire.score !== null && (
-                            <InfoCard
-                                icon={<Award size={16} />}
-                                label="Punteggio"
-                                value={String(questionnaire.score)}
-                                iconColor="#FFB74D"
-                            />
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                <span className="modal-data-row-label">Punteggio</span>
+                                <span className="modal-data-row-value modal-data-row-value-highlight">{questionnaire.score}</span>
+                            </div>
                         )}
 
-                        {/* Stato Revisione Card */}
-                        <InfoCard
-                            icon={questionnaire.revisionato ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
-                            label="Stato Revisione"
-                            value={questionnaire.revisionato ? 'REVISIONATO' : 'DA REVISIONARE'}
-                            iconColor={questionnaire.revisionato ? '#7FB77E' : '#FFB74D'}
-                            valueColor={questionnaire.revisionato ? '#7FB77E' : '#FFB74D'}
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot" style={{ background: questionnaire.revisionato ? '#7FB77E' : '#FFB74D' }}></div>
+                            <span className="modal-data-row-label">Stato Revisione</span>
+                            <span className="modal-data-row-value" style={{ color: questionnaire.revisionato ? '#7FB77E' : '#FFB74D', fontWeight: '600' }}>
+                                {questionnaire.revisionato ? 'REVISIONATO' : 'DA REVISIONARE'}
+                            </span>
+                        </div>
 
-                        {/* Revisionato da */}
                         {questionnaire.revisionato && (
-                            <InfoCard
-                                icon={<User size={16} />}
-                                label="Revisionato da"
-                                value={questionnaire.idPsicologoRevisione || 'N/A'}
-                                iconColor="#83B9C1"
-                            />
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                <span className="modal-data-row-label">Revisionato da</span>
+                                <span className="modal-data-row-value">{questionnaire.idPsicologoRevisione || 'N/A'}</span>
+                            </div>
                         )}
 
-                        {/* Stato Invalidazione Card */}
-                        <InfoCard
-                            icon={questionnaire.invalidato ? <XCircle size={16} /> : <CheckCircle size={16} />}
-                            label="Stato Invalidazione"
-                            value={questionnaire.invalidato ? 'INVALIDATO' : 'VALIDO'}
-                            iconColor={questionnaire.invalidato ? '#E57373' : '#7FB77E'}
-                            valueColor={questionnaire.invalidato ? '#E57373' : '#7FB77E'}
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot" style={{ background: questionnaire.invalidato ? '#E57373' : '#7FB77E' }}></div>
+                            <span className="modal-data-row-label">Stato Invalidazione</span>
+                            <span className="modal-data-row-value" style={{ color: questionnaire.invalidato ? '#E57373' : '#7FB77E', fontWeight: '600' }}>
+                                {questionnaire.invalidato ? 'INVALIDATO' : 'VALIDO'}
+                            </span>
+                        </div>
 
-                        {/* Invalidation details */}
                         {questionnaire.invalidato && (
                             <>
-                                <InfoCard
-                                    icon={<Calendar size={16} />}
-                                    label="Data Invalidazione"
-                                    value={questionnaire.dataInvalidazione || 'N/A'}
-                                    iconColor="#E57373"
-                                />
-                                <InfoCard
-                                    icon={<User size={16} />}
-                                    label="Richiesta da"
-                                    value={questionnaire.idPsicologoRichiedente || 'N/A'}
-                                    iconColor="#E57373"
-                                />
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-red"></div>
+                                    <span className="modal-data-row-label">Data Invalidazione</span>
+                                    <span className="modal-data-row-value">{questionnaire.dataInvalidazione || 'N/A'}</span>
+                                </div>
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-red"></div>
+                                    <span className="modal-data-row-label">Richiesta da</span>
+                                    <span className="modal-data-row-value">{questionnaire.idPsicologoRichiedente || 'N/A'}</span>
+                                </div>
                             </>
                         )}
                     </div>
@@ -412,64 +336,6 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
     );
 };
 
-// Info Card Component
-const InfoCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-    valueColor?: string;
-}> = ({ icon, label, value, iconColor, valueColor }) => {
-    return (
-        <div style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '14px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e8e8e8',
-            transition: 'all 0.3s ease'
-        }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            <p style={{
-                margin: 0,
-                fontSize: '14px',
-                fontWeight: '600',
-                color: valueColor || '#1a1a1a'
-            }}>
-                {value}
-            </p>
-        </div>
-    );
-};
+
 
 export default AdminQuestionnaireDetailModal;

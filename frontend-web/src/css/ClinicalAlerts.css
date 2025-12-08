@@ -5,9 +5,7 @@
     margin-bottom: 20px;
 }
 
-.clinical-alerts-container .panel-title {
-    color: #000000;
-}
+/* Removed .panel-title override - now inherits from AppLayout.css */
 
 .alerts-count {
     font-size: 14px;

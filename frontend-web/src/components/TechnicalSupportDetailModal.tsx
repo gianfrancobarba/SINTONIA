@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Ticket, User, Calendar, FileText, AlertCircle, Check, Send } from 'lucide-react';
+import { Ticket, FileText, Check, Send } from 'lucide-react';
 import type { TechnicalSupportTicket } from '../types/technicalSupport';
 import Toast from './Toast';
-import '../css/QuestionnaireDetailModal.css';
+import '../css/Modal.css';
 
 interface TechnicalSupportDetailModalProps {
     ticket: TechnicalSupportTicket | null;
@@ -11,64 +11,6 @@ interface TechnicalSupportDetailModalProps {
     onTicketUpdated?: () => void;
 }
 
-// Info Card Component
-const InfoCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-}> = ({ icon, label, value, iconColor }) => {
-    return (
-        <div style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '14px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e8e8e8',
-            transition: 'all 0.3s ease'
-        }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            <p style={{
-                margin: 0,
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#1a1a1a'
-            }}>
-                {value}
-            </p>
-        </div>
-    );
-};
 
 const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = ({ ticket, onClose, onTicketUpdated }) => {
     const [showCloseConfirm, setShowCloseConfirm] = useState(false);
@@ -180,85 +122,26 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
     };
 
     return ReactDOM.createPortal(
-        <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+        <div className="modal-overlay-blur" onClick={onClose}>
             <div
-                className="modal-content"
+                className="modal-card modal-card-lg"
                 onClick={(e) => e.stopPropagation()}
-                style={{
-                    maxWidth: '900px',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
-                }}
+                style={{ maxWidth: '900px' }}
             >
-                {/* Modern Header with Gradient */}
-                <div style={{
-                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
-                    padding: '32px',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        right: '-10%',
-                        width: '300px',
-                        height: '300px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '50%',
-                        filter: 'blur(40px)'
-                    }}></div>
-
-                    <div style={{ position: 'relative', zIndex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div>
-                                <h2 style={{
-                                    margin: '0 0 8px 0',
-                                    fontSize: '28px',
-                                    fontWeight: '700',
-                                    color: 'white',
-                                    letterSpacing: '-0.5px'
-                                }}>
-                                    Dettagli Ticket di Supporto
-                                </h2>
-                                <p style={{
-                                    margin: 0,
-                                    fontSize: '14px',
-                                    color: 'rgba(255, 255, 255, 0.8)',
-                                    fontWeight: '500'
-                                }}>
-                                    ID: {ticket.idTicket}
-                                </p>
-                            </div>
-                            <button
-                                onClick={onClose}
-                                style={{
-                                    background: 'rgba(255, 255, 255, 0.15)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: 'none',
-                                    color: 'white',
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.3s ease',
-                                    fontSize: '20px'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
-                                }}
-                            >
-                                ✕
-                            </button>
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Dettagli Ticket di Supporto
+                            </h2>
                         </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            ✕
+                        </button>
                     </div>
                 </div>
 
@@ -269,88 +152,50 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                     maxHeight: 'calc(90vh - 200px)',
                     overflowY: 'auto'
                 }}>
-                    {/* Status and Date Row */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: '16px',
-                        marginBottom: '24px'
-                    }}>
-                        <div style={{
-                            background: 'white',
-                            borderRadius: '12px',
-                            padding: '14px',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                            border: '1px solid #e8e8e8'
-                        }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                                <div style={{
-                                    width: '32px',
-                                    height: '32px',
-                                    borderRadius: '10px',
-                                    background: `linear-gradient(135deg, ${getStatusColor(ticket.stato)} 0%, ${getStatusColor(ticket.stato)}dd 100%)`,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'white'
-                                }}>
-                                    <AlertCircle size={16} />
-                                </div>
-                                <span style={{
-                                    fontSize: '10px',
-                                    fontWeight: '600',
-                                    color: '#666',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.5px'
-                                }}>
-                                    Stato
-                                </span>
+                    {/* Compact Info Section */}
+                    <div className="modal-data-section">
+                        <div className="modal-data-section-title">
+                            <div className="modal-data-section-title-icon">
+                                <Ticket size={14} />
                             </div>
-                            <p style={{
-                                margin: 0,
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                color: getStatusColor(ticket.stato)
-                            }}>
-                                {getStatusLabel(ticket.stato)}
-                            </p>
+                            Informazioni Ticket
                         </div>
 
-                        <InfoCard
-                            icon={<Calendar size={16} />}
-                            label="Data Invio"
-                            value={formatDate(ticket.dataInvio)}
-                            iconColor="#FFB74D"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot" style={{ background: getStatusColor(ticket.stato) }}></div>
+                            <span className="modal-data-row-label">Stato</span>
+                            <span className="modal-data-row-value" style={{ color: getStatusColor(ticket.stato), fontWeight: '600' }}>
+                                {getStatusLabel(ticket.stato)}
+                            </span>
+                        </div>
 
-                        <InfoCard
-                            icon={<Ticket size={16} />}
-                            label="ID Ticket"
-                            value={ticket.idTicket}
-                            iconColor="#0D475D"
-                        />
-                    </div>
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                            <span className="modal-data-row-label">ID Ticket</span>
+                            <span className="modal-data-row-value">{ticket.idTicket}</span>
+                        </div>
 
-                    {/* IDs Row */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(2, 1fr)',
-                        gap: '16px',
-                        marginBottom: '24px'
-                    }}>
-                        <InfoCard
-                            icon={<User size={16} />}
-                            label="ID Paziente"
-                            value={ticket.idPaziente}
-                            iconColor="#83B9C1"
-                        />
+                        <div className="modal-data-row">
+                            <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                            <span className="modal-data-row-label">Data Invio</span>
+                            <span className="modal-data-row-value">{formatDate(ticket.dataInvio)}</span>
+                        </div>
 
-                        <InfoCard
-                            icon={<User size={16} />}
-                            label="ID Psicologo"
-                            value={ticket.idPsicologo || 'Non assegnato'}
-                            iconColor="#7FB77E"
-                        />
+                        {ticket.idPaziente && (
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                <span className="modal-data-row-label">ID Paziente</span>
+                                <span className="modal-data-row-value">{ticket.idPaziente}</span>
+                            </div>
+                        )}
+
+                        {ticket.idPsicologo && (
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                <span className="modal-data-row-label">ID Psicologo</span>
+                                <span className="modal-data-row-value">{ticket.idPsicologo}</span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Object Section */}

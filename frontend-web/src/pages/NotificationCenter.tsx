@@ -145,7 +145,7 @@ const NotificationCenter: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="notification-center">
+            <div className="content-panel notification-center">
                 <div className="notification-loading">
                     <div className="spinner"></div>
                     <p>Caricamento notifiche...</p>
@@ -156,7 +156,7 @@ const NotificationCenter: React.FC = () => {
 
     if (error) {
         return (
-            <div className="notification-center">
+            <div className="content-panel notification-center">
                 <div className="notification-error">
                     <h3>Si è verificato un errore</h3>
                     <p>{error}</p>
@@ -169,7 +169,7 @@ const NotificationCenter: React.FC = () => {
     }
 
     return (
-        <div className="notification-center">
+        <div className="content-panel notification-center">
             <div className="notification-header">
                 <h1>
                     <Bell size={28} />
