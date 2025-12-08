@@ -251,12 +251,104 @@
 }
 
 /* Responsive */
-@media (max-width: 640px) {
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+    .forum-filters {
+        gap: 6px;
+    }
+
+    .filter-pill {
+        padding: 7px 14px;
+        font-size: 12px;
+    }
+
+    .forum-questions-list {
+        gap: 14px;
+    }
+
+    .pagination {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .empty-icon-container {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .filter-pill {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .forum-questions-list {
+        gap: 12px;
+    }
+
+    .pagination {
+        margin: 0 -20px -20px -20px;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .delete-confirm-dialog {
+        padding: 20px;
+        max-width: 340px;
+    }
+}
+
+/* Mobile - 768px */
+@media (max-width: 768px) {
+    .forum-fixed-header {
+        margin-bottom: 16px;
+    }
+
     .forum-filters {
         flex-direction: column;
+        gap: 8px;
     }
 
     .filter-pill {
         text-align: center;
+        padding: 10px 16px;
+    }
+
+    .forum-questions-list {
+        gap: 10px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .empty-state {
+        padding: 40px 16px;
+        min-height: 200px;
+    }
+
+    .delete-confirm-dialog {
+        padding: 18px;
+    }
+
+    .delete-confirm-dialog h3 {
+        font-size: 16px;
+    }
+
+    .delete-confirm-dialog p {
+        font-size: 13px;
+    }
+
+    .delete-confirm-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-button,
+    .confirm-delete-button {
+        width: 100%;
+        justify-content: center;
     }
 }

@@ -1,6 +1,15 @@
-/* CSS Variables for Dashboard */
+/* ==========================================================================
+   INDEX.CSS - Global Styles & Design System
+   ========================================================================== */
+
+/* Import responsive utilities */
+@import './css/responsive.css';
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES - Design Tokens
+   ========================================================================== */
 :root {
-  /* Teal Colors */
+  /* Teal Colors - Primary Palette */
   --color-teal-dark: #1A5F5F;
   --color-teal-medium: #2B7A7A;
   --color-teal-secondary: #1A545F;
@@ -18,6 +27,19 @@
   --color-card: #FFFFFF;
   --color-text-primary: #1A5F5F;
   --color-text-secondary: #666666;
+  --color-border: #e0e0e0;
+  --color-border-light: #f0f0f0;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 
   /* Typography */
   font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -32,7 +54,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Reset */
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -52,48 +76,19 @@ body {
   width: 100%;
 }
 
-/* CSS Variables for Dashboard */
-:root {
-  /* Teal Colors */
-  --color-teal-dark: #1A5F5F;
-  --color-teal-medium: #2B7A7A;
-  --color-teal-secondary: #1A545F;
-  --color-teal-light: #A5C9C9;
-  --color-teal-accent: #6DA5A5;
-
-  /* Status Colors */
-  --color-approved: #7FB77E;
-  --color-pending: #FFB74D;
-  --color-rejected: #E57373;
-  --color-delete: #D32F2F;
-
-  /* Neutral Colors */
-  --color-background: #F5F5F5;
-  --color-card: #FFFFFF;
-  --color-text-primary: #1A5F5F;
-  --color-text-secondary: #666666;
-
-  /* Typography */
-  font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Reset */
-* {
-  margin: 0;
-  opacity: 1;
-  transform: translateY(0);
-  font-family: 'Urbanist', sans-serif !important;
-}
-
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
 .fade-in {
   animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

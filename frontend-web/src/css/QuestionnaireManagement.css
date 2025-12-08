@@ -221,6 +221,36 @@
 }
 
 /* Responsive */
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+    .management-grid {
+        grid-template-columns: 280px 1fr;
+        gap: 20px;
+    }
+
+    .filter-btn,
+    .clear-filter-btn,
+    .upload-btn,
+    .retry-btn {
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+
+    .filter-controls {
+        gap: 12px;
+    }
+
+    .active-filter {
+        padding: 6px 14px;
+        gap: 10px;
+    }
+
+    .active-filter span {
+        font-size: 13px;
+    }
+}
+
 @media (max-width: 1024px) {
     .management-grid {
         grid-template-columns: 1fr;

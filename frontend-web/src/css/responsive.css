@@ -1,0 +1,294 @@
+/* ==========================================================================
+   RESPONSIVE.CSS - Sistema Breakpoint Centralizzato
+   ==========================================================================
+   
+   BREAKPOINTS (Desktop-First):
+   - 1400px: Large desktop → standard desktop
+   - 1200px: Desktop → smaller desktop
+   - 1024px: Tablet landscape / small laptop
+   - 768px:  Tablet portrait
+   - 480px:  Mobile (se necessario)
+   
+   USAGE:
+   @media (max-width: 1200px) { ... }
+   
+   ========================================================================== */
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES - Breakpoint Reference Values
+   ========================================================================== */
+:root {
+    /* Breakpoint values (for reference, CSS doesn't support var() in media queries) */
+    --bp-desktop-lg: 1400px;
+    --bp-desktop: 1200px;
+    --bp-tablet: 1024px;
+    --bp-mobile-lg: 768px;
+    --bp-mobile: 480px;
+
+    /* Spacing scale */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+
+    /* Container max-widths */
+    --container-max: 1400px;
+    --container-lg: 1200px;
+    --container-md: 960px;
+    --container-sm: 720px;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Visibility
+   ========================================================================== */
+
+/* Hide on specific breakpoints */
+@media (max-width: 1024px) {
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .show-tablet-only {
+        display: none !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .show-mobile-only {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Layout
+   ========================================================================== */
+
+/* Responsive container */
+.container-responsive {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+@media (max-width: 1200px) {
+    .container-responsive {
+        padding: 0 var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .container-responsive {
+        padding: 0 var(--spacing-sm);
+    }
+}
+
+/* Flex utilities */
+.flex-wrap-tablet {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+@media (max-width: 1024px) {
+    .flex-wrap-tablet {
+        flex-wrap: wrap;
+    }
+}
+
+.flex-column-tablet {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 1024px) {
+    .flex-column-tablet {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Spacing (Responsive)
+   ========================================================================== */
+
+.gap-responsive {
+    gap: var(--spacing-lg);
+}
+
+@media (max-width: 1024px) {
+    .gap-responsive {
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .gap-responsive {
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Padding responsive utilities */
+.p-responsive {
+    padding: var(--spacing-xl);
+}
+
+@media (max-width: 1024px) {
+    .p-responsive {
+        padding: var(--spacing-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .p-responsive {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Tables (Horizontal Scroll)
+   ========================================================================== */
+
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(13, 71, 93, 0.3);
+    border-radius: 3px;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 71, 93, 0.5);
+}
+
+/* Ensure table doesn't shrink below readable width */
+.table-responsive-wrapper table {
+    min-width: 800px;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Grid Responsive
+   ========================================================================== */
+
+/* 2-column grid that stacks on tablet */
+.grid-2-col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .grid-2-col {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+}
+
+/* 3-column grid */
+.grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+@media (max-width: 1024px) {
+    .grid-3-col {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-3-col {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+}
+
+/* 4-column grid */
+.grid-4-col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+@media (max-width: 1200px) {
+    .grid-4-col {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .grid-4-col {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-4-col {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Text Responsive
+   ========================================================================== */
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Clamp to 2 lines */
+.text-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - Buttons (Touch-friendly on smaller screens)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .btn-responsive {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 20px;
+    }
+}
+
+/* Full-width button on mobile */
+.btn-full-mobile {
+    display: inline-flex;
+}
+
+@media (max-width: 768px) {
+    .btn-full-mobile {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -109,3 +109,117 @@
     background-color: #D32F2F;
     transform: scale(1.1);
 }
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Table wrapper for horizontal scroll */
+.data-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.data-table-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.data-table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.data-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Ensure table has minimum width for readability */
+.data-table-wrapper .data-table {
+    min-width: 700px;
+}
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+
+    .data-table th,
+    .data-table td {
+        padding: 14px 16px;
+        font-size: 13px;
+    }
+
+    .status-badge {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+
+    .action-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .data-table-container {
+        border-radius: 10px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+
+    .status-badge {
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: 12px;
+    }
+
+    .actions-cell {
+        gap: 6px;
+    }
+
+    .action-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+        border-radius: 5px;
+    }
+}
+
+/* Mobile - 768px */
+@media (max-width: 768px) {
+    .data-table-container {
+        border-radius: 8px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .data-table th {
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+
+    .action-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+    }
+}

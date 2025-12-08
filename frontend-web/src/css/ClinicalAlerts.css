@@ -409,7 +409,70 @@
     font-weight: 500;
 }
 
-/* Responsive */
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+
+    .alerts-table th,
+    .alerts-table td {
+        padding: 14px 16px;
+        font-size: 13px;
+    }
+
+    .status-badge {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+
+    .accept-btn {
+        padding: 7px 14px;
+        font-size: 12px;
+    }
+
+    .confirmation-banner {
+        padding: 18px;
+    }
+
+    .pagination {
+        gap: 12px;
+        margin-top: 24px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .alerts-table {
+        min-width: 600px;
+    }
+
+    .alerts-table th,
+    .alerts-table td {
+        padding: 12px 14px;
+    }
+
+    .alerts-overlay-card {
+        max-width: 480px;
+    }
+
+    .overlay-title {
+        font-size: 16px;
+    }
+
+    .pagination-button {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+
+/* Mobile - 768px */
 @media (max-width: 768px) {
     .alerts-table {
         font-size: 13px;
@@ -423,6 +486,16 @@
     .id-badge {
         font-size: 11px;
         padding: 3px 6px;
+    }
+
+    .status-badge {
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .accept-btn {
+        padding: 6px 12px;
+        font-size: 11px;
     }
 
     .confirmation-banner {
@@ -440,5 +513,18 @@
     .cancel-btn,
     .confirm-btn {
         width: 100%;
+    }
+
+    .alerts-overlay-card {
+        padding: 16px;
+    }
+
+    .overlay-actions {
+        flex-direction: column;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 8px;
     }
 }

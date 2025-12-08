@@ -129,3 +129,110 @@
     color: #0D475D;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+    .patient-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+
+    .patient-card {
+        padding: 18px 14px;
+    }
+
+    .patient-avatar {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 14px;
+    }
+
+    .patient-name {
+        font-size: 15px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .patient-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 14px;
+    }
+
+    .patient-card {
+        padding: 16px 12px;
+        border-radius: 14px;
+    }
+
+    .patient-avatar {
+        width: 52px;
+        height: 52px;
+        margin-bottom: 12px;
+    }
+
+    .patient-name {
+        font-size: 14px;
+    }
+
+    .patient-id {
+        font-size: 11px;
+    }
+
+    .profile-btn {
+        padding: 7px 14px;
+        font-size: 12px;
+        max-width: 110px;
+    }
+
+    .toggle-btn {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Mobile - 768px */
+@media (max-width: 768px) {
+    .patient-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    .patient-card {
+        padding: 14px 10px;
+        border-radius: 12px;
+    }
+
+    .patient-avatar {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 10px;
+    }
+
+    .patient-info {
+        margin-bottom: 14px;
+    }
+
+    .patient-name {
+        font-size: 13px;
+    }
+
+    .profile-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+        max-width: 100px;
+    }
+
+    .view-toggle {
+        padding: 3px;
+        border-radius: 6px;
+    }
+
+    .toggle-btn {
+        width: 30px;
+        height: 30px;
+    }
+}

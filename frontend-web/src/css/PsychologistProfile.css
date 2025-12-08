@@ -5,8 +5,7 @@
     overflow: visible;
     max-width: 320px;
     margin: 0 auto;
-    height: 100%;
-    min-height: fit-content;
+    /* Height determined by content, not forced */
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -416,4 +415,216 @@
 .retry-button:active {
     transform: translateY(0);
     box-shadow: 0 3px 10px rgba(13, 71, 93, 0.3);
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Large Desktop to Standard Desktop - 1200px */
+@media (max-width: 1200px) {
+    .psychologist-profile {
+        max-width: 300px;
+    }
+
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+        border: 5px solid #ffffff;
+    }
+
+    .header-background {
+        height: 160px;
+    }
+
+    .profile-section {
+        top: 70px;
+    }
+
+    .profile-header {
+        padding-bottom: 50px;
+    }
+
+    .profile-name {
+        font-size: 22px;
+    }
+
+    .navigation-grid {
+        padding: 14px 16px 16px 16px;
+        gap: 10px;
+    }
+
+    .navigation-grid-2col {
+        gap: 12px;
+    }
+
+    .nav-card {
+        padding: 14px 6px;
+        min-height: 80px;
+    }
+
+    .navigation-grid-2col .nav-card {
+        min-height: 90px;
+    }
+
+    .nav-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .nav-label {
+        font-size: 10px;
+    }
+
+    .navigation-grid-2col .nav-label {
+        font-size: 12px;
+    }
+
+    .side-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .profile-action-buttons {
+        gap: 10px;
+    }
+
+    .support-link-btn,
+    .modern-logout-btn {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
+
+/* Smaller Desktop - 1024px (Before sidebar collapse) */
+@media (max-width: 1100px) and (min-width: 1025px) {
+    .psychologist-profile {
+        max-width: 280px;
+    }
+
+    .profile-photo {
+        width: 100px;
+        height: 100px;
+        border: 4px solid #ffffff;
+    }
+
+    .header-background {
+        height: 140px;
+    }
+
+    .profile-section {
+        top: 60px;
+        gap: 12px;
+    }
+
+    .profile-header {
+        padding-bottom: 40px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+    }
+
+    .profile-role {
+        font-size: 12px;
+    }
+
+    .navigation-grid {
+        padding: 12px 14px 14px 14px;
+        gap: 8px;
+    }
+
+    .nav-card {
+        padding: 12px 4px;
+        min-height: 70px;
+        border-radius: 12px;
+    }
+
+    .nav-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .nav-label {
+        font-size: 9px;
+    }
+
+    .side-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .notification-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .support-link-btn,
+    .modern-logout-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+        border-radius: 10px;
+    }
+}
+
+/* Mobile sidebar (when hamburger menu opens) - 1024px and below */
+@media (max-width: 1024px) {
+    .psychologist-profile {
+        max-width: 100%;
+        border-radius: 20px;
+    }
+
+    .header-background {
+        border-radius: 20px 20px 0 0;
+        height: 160px;
+    }
+
+    .profile-photo {
+        width: 110px;
+        height: 110px;
+    }
+
+    .profile-section {
+        top: 65px;
+        gap: 14px;
+    }
+
+    .profile-header {
+        padding-bottom: 45px;
+    }
+
+    .navigation-grid {
+        border-radius: 0 0 20px 20px;
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .nav-card {
+        min-height: 85px;
+        padding: 14px 8px;
+    }
+}
+
+/* Tablet in sidebar - 768px */
+@media (max-width: 768px) {
+    .profile-name {
+        font-size: 20px;
+    }
+
+    .profile-role {
+        font-size: 13px;
+    }
+
+    .profile-info {
+        padding: 6px 16px 16px;
+    }
+
+    .profile-action-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }

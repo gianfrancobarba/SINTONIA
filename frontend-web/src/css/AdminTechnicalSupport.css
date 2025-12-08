@@ -238,9 +238,42 @@
     }
 }
 
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .support-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .support-table {
+        min-width: 700px;
+    }
+
+    .support-table th,
+    .support-table td {
+        padding: 11px 14px;
+        font-size: 13px;
+    }
+
+    .ticket-status-badge {
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .pagination {
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .pagination-button {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+
 @media (max-width: 768px) {
     .support-page-title {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .support-table {
@@ -254,5 +287,10 @@
 
     .ticket-object-cell {
         max-width: 150px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 8px;
     }
 }

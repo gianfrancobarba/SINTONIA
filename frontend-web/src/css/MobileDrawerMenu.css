@@ -1,0 +1,287 @@
+/* ==========================================================================
+   MOBILE DRAWER MENU - Modern Slide-out Navigation
+   ========================================================================== */
+
+/* Overlay */
+.mobile-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 1000;
+    visibility: hidden;
+    transition: background-color 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-drawer-overlay.open {
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: visible;
+}
+
+/* Drawer Panel */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafa 100%);
+    z-index: 1001;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-drawer.open {
+    transform: translateX(0);
+}
+
+/* Header */
+.mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 16px;
+    background: linear-gradient(135deg, #2B7A7A 0%, #1A5F5F 100%);
+    color: white;
+    flex-shrink: 0;
+}
+
+.mobile-drawer-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-drawer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.mobile-drawer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobile-drawer-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.2;
+}
+
+.mobile-drawer-role {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.mobile-drawer-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.mobile-drawer-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Navigation */
+.mobile-drawer-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 0;
+}
+
+.mobile-drawer-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    background: transparent;
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.mobile-drawer-item:hover {
+    background-color: rgba(43, 122, 122, 0.08);
+    color: #1A5F5F;
+}
+
+.mobile-drawer-item.active {
+    background: linear-gradient(90deg, rgba(43, 122, 122, 0.15) 0%, transparent 100%);
+    color: #1A5F5F;
+    border-left: 3px solid #1A5F5F;
+}
+
+.mobile-drawer-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: inherit;
+    opacity: 0.85;
+}
+
+.mobile-drawer-item-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.mobile-drawer-item.active .mobile-drawer-item-icon {
+    opacity: 1;
+}
+
+.mobile-drawer-item-label {
+    flex: 1;
+}
+
+/* Footer */
+.mobile-drawer-footer {
+    padding: 16px;
+    border-top: 1px solid #e5e5e5;
+    flex-shrink: 0;
+}
+
+.mobile-drawer-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: linear-gradient(135deg, #E57373 0%, #D32F2F 100%);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.25);
+}
+
+.mobile-drawer-logout:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.35);
+}
+
+.mobile-drawer-logout svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ==========================================================================
+   LOGOUT CONFIRMATION MODAL
+   ========================================================================== */
+
+.mobile-drawer-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+}
+
+.mobile-drawer-confirm-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.mobile-drawer-confirm-card {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 320px;
+    width: calc(100% - 40px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.25s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mobile-drawer-confirm-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.mobile-drawer-confirm-card p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.mobile-drawer-confirm-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.mobile-drawer-confirm-cancel,
+.mobile-drawer-confirm-logout {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mobile-drawer-confirm-cancel {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.mobile-drawer-confirm-cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.mobile-drawer-confirm-logout {
+    background: linear-gradient(135deg, #E57373 0%, #D32F2F 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.25);
+}
+
+.mobile-drawer-confirm-logout:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.35);
+}

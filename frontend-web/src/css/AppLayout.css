@@ -79,36 +79,16 @@ body {
     border-top: 1px solid rgba(13, 71, 93, 0.1);
 }
 
-/* Fixed Sidebar - Scrollable independently */
+/* Fixed Sidebar - NO scroll, card fits naturally */
 .app-layout-sidebar {
     position: sticky;
-    top: 0;
+    top: 30px;
     align-self: start;
-    height: 100%;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* Let content determine height, no forced max-height */
+    overflow: visible;
     /* Isolate sidebar from content animations */
     transform: translateZ(0);
     will-change: auto;
-}
-
-/* Custom scrollbar for sidebar */
-.app-layout-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.app-layout-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.app-layout-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
-
-.app-layout-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Dynamic Content Area - Scrollable independently */
@@ -270,31 +250,9 @@ body {
         overflow: hidden;
     }
 
-    /* Sidebar - Hidden by default, slides in from left */
+    /* Desktop Sidebar - HIDDEN on mobile (MobileDrawerMenu used instead) */
     .app-layout-sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 320px;
-        max-width: 85vw;
-        height: 100vh;
-        max-height: 100vh;
-        z-index: 1000;
-        background-color: #F5F5F5;
-        transform: translateX(-100%);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-        padding: 20px;
-        padding-top: 80px;
-        padding-bottom: 40px;
-        box-sizing: border-box;
-        box-shadow: none;
-    }
-
-    /* Sidebar open state */
-    .app-layout-sidebar.sidebar-open {
-        transform: translateX(0);
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+        display: none;
     }
 
     .app-layout-content {

@@ -59,3 +59,83 @@
     opacity: 0.8;
     margin: 0;
 }
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+    .psychologist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+
+    .psychologist-card {
+        padding: 18px 14px;
+    }
+
+    .psychologist-avatar {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 14px;
+    }
+
+    .psychologist-name {
+        font-size: 15px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .psychologist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 14px;
+    }
+
+    .psychologist-card {
+        padding: 16px 12px;
+        border-radius: 14px;
+    }
+
+    .psychologist-avatar {
+        width: 52px;
+        height: 52px;
+        margin-bottom: 12px;
+    }
+
+    .psychologist-name {
+        font-size: 14px;
+    }
+
+    .psychologist-specialization {
+        font-size: 11px;
+    }
+}
+
+/* Mobile - 768px */
+@media (max-width: 768px) {
+    .psychologist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    .psychologist-card {
+        padding: 14px 10px;
+        border-radius: 12px;
+    }
+
+    .psychologist-avatar {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 10px;
+    }
+
+    .psychologist-info {
+        margin-bottom: 14px;
+    }
+
+    .psychologist-name {
+        font-size: 13px;
+    }
+}

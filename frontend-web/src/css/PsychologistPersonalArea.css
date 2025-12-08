@@ -257,11 +257,100 @@
 }
 
 /* Responsive */
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+    .personal-area-header {
+        padding: 20px 24px;
+    }
+
+    .personal-area-title {
+        font-size: 20px;
+    }
+
+    .personal-area-content {
+        padding: 28px 24px;
+    }
+
+    .profile-image-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .form-section {
+        max-width: 540px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 9px 18px;
+        font-size: 13px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .personal-area-header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .personal-area-content {
+        padding: 24px 20px;
+    }
+
+    .profile-image-wrapper {
+        width: 130px;
+        height: 130px;
+    }
+
+    .profile-image-section {
+        margin-bottom: 28px;
+    }
+
+    .form-row {
+        margin-bottom: 20px;
+    }
+
+    .field-input {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+}
+
+/* Mobile - 768px */
 @media (max-width: 768px) {
     .personal-area-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
+        padding: 16px 18px;
+    }
+
+    .personal-area-title {
+        font-size: 18px;
+    }
+
+    .btn-group {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .personal-area-content {
+        padding: 20px 16px;
+    }
+
+    .profile-image-wrapper {
+        width: 120px;
+        height: 120px;
     }
 
     .form-row-double {
@@ -270,6 +359,10 @@
 
     .form-row-centered .form-field {
         width: 100%;
+    }
+
+    .info-banner {
+        padding: 14px 16px;
     }
 }
 

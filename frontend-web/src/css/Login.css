@@ -389,3 +389,173 @@ input:checked+.slider:before {
     max-width: 120px;
     object-fit: contain;
 }
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Tablet Landscape - 1024px */
+@media (max-width: 1024px) {
+    .login-card {
+        max-width: 360px;
+        padding: 28px 36px;
+    }
+
+    .logo-image {
+        width: 160px;
+    }
+}
+
+/* Tablet Portrait - 768px */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-card {
+        max-width: 100%;
+        padding: 24px 28px;
+        border-radius: 20px;
+    }
+
+    .logo-image {
+        width: 150px;
+    }
+
+    .logo-text {
+        font-size: 1.75rem;
+        margin-bottom: 24px;
+    }
+
+    .input-group {
+        margin-bottom: 16px;
+    }
+
+    .input-wrapper {
+        padding: 10px 14px;
+    }
+
+    .login-tabs {
+        margin-bottom: 24px;
+    }
+
+    .tab-btn {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
+    .remember-me {
+        padding: 10px 14px;
+        margin-bottom: 24px;
+    }
+
+    .login-button,
+    .spid-button {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .spid-dropdown-container {
+        margin-bottom: 30px;
+    }
+
+    .spid-logo-footer img {
+        max-width: 12rem;
+    }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 16px;
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+
+    .login-card {
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo-image {
+        width: 130px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .input-group label {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+        padding: 10px 12px;
+        border-radius: 6px;
+    }
+
+    .input-wrapper input {
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+    }
+
+    .login-tabs {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        padding: 3px;
+    }
+
+    .tab-btn {
+        padding: 8px 6px;
+        font-size: 12px;
+        border-radius: 8px;
+    }
+
+    .remember-me {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px;
+        margin-bottom: 20px;
+    }
+
+    .toggle-wrapper {
+        font-size: 0.85rem;
+    }
+
+    .login-button,
+    .spid-button {
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .spid-info-text {
+        font-size: 13px;
+        margin-bottom: 24px;
+    }
+
+    .spid-providers-list {
+        max-height: 200px;
+    }
+
+    .provider-item {
+        padding: 10px 14px;
+    }
+
+    .provider-logo-img {
+        height: 28px;
+        max-width: 100px;
+    }
+
+    .spid-logo-footer img {
+        max-width: 10rem;
+    }
+
+    .error-message {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
