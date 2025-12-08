@@ -19,6 +19,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
     if (!questionnaire) return null;
 
     const [isCancelling, setIsCancelling] = useState(false);
+    const [showCancelConfirm, setShowCancelConfirm] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     // Get questions from questionnaire data (from backend)
@@ -280,7 +281,7 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                                 Questo questionario è stato revisionato. Puoi annullare la revisione se necessario.
                             </p>
                             <button
-                                onClick={handleCancelRevision}
+                                onClick={() => setShowCancelConfirm(true)}
                                 disabled={isCancelling}
                                 style={{
                                     padding: '12px 24px',
@@ -330,6 +331,96 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                     type={toast.type}
                     onClose={() => setToast(null)}
                 />
+            )}
+
+            {/* Cancel Revision Confirmation Dialog */}
+            {showCancelConfirm && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10001
+                    }}
+                    onClick={() => setShowCancelConfirm(false)}
+                >
+                    <div
+                        style={{
+                            background: 'white',
+                            borderRadius: '12px',
+                            padding: '24px',
+                            maxWidth: '400px',
+                            width: '90%',
+                            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 style={{
+                            margin: '0 0 12px 0',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            color: '#333'
+                        }}>
+                            Conferma Annullamento Revisione
+                        </h3>
+                        <p style={{
+                            margin: '0 0 20px 0',
+                            fontSize: '14px',
+                            lineHeight: '1.5',
+                            color: '#666'
+                        }}>
+                            Sei sicuro di voler annullare la revisione di questo questionario? Il questionario tornerà nello stato "da revisionare".
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            justifyContent: 'flex-end'
+                        }}>
+                            <button
+                                onClick={() => setShowCancelConfirm(false)}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: '#f3f4f6',
+                                    border: '1px solid #e5e7eb',
+                                    color: '#374151'
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowCancelConfirm(false);
+                                    handleCancelRevision();
+                                }}
+                                disabled={isCancelling}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: isCancelling ? 'not-allowed' : 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: 'linear-gradient(135deg, #E57373 0%, #d55353 100%)',
+                                    border: 'none',
+                                    color: 'white'
+                                }}
+                            >
+                                {isCancelling ? 'Attendi...' : 'Conferma'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>,
         document.body

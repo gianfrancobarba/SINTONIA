@@ -289,28 +289,46 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             fontWeight: '700',
                             color: '#1a1a1a'
                         }}>Rispondi al Ticket</h3>
-                        <textarea
-                            placeholder="Scrivi una risposta..."
-                            value={responseText}
-                            onChange={(e) => setResponseText(e.target.value)}
-                            rows={4}
+                        <div
                             style={{
-                                width: '100%',
-                                padding: '12px',
                                 border: '2px solid #e0e0e0',
                                 borderRadius: '12px',
-                                fontSize: '14px',
-                                fontFamily: 'inherit',
-                                resize: 'vertical',
-                                minHeight: '100px',
-                                maxHeight: '250px',
-                                outline: 'none',
-                                transition: 'border-color 0.2s ease',
-                                marginBottom: '12px'
+                                overflow: 'hidden',
+                                marginBottom: '4px',
+                                transition: 'border-color 0.2s ease'
                             }}
-                            onFocus={(e) => e.target.style.borderColor = '#83B9C1'}
-                            onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
-                        />
+                            onFocus={(e) => e.currentTarget.style.borderColor = '#83B9C1'}
+                            onBlur={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
+                        >
+                            <textarea
+                                placeholder="Scrivi una risposta..."
+                                value={responseText}
+                                onChange={(e) => setResponseText(e.target.value)}
+                                rows={4}
+                                maxLength={2000}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: 'none',
+                                    fontSize: '14px',
+                                    fontFamily: 'inherit',
+                                    resize: 'none',
+                                    minHeight: '180px',
+                                    maxHeight: '290px',
+                                    overflowY: 'auto',
+                                    outline: 'none',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                        </div>
+                        <div style={{
+                            textAlign: 'right',
+                            fontSize: '12px',
+                            color: responseText.length >= 2000 ? '#E57373' : '#999',
+                            marginBottom: '12px'
+                        }}>
+                            {responseText.length}/2000 caratteri
+                        </div>
                         <button
                             onClick={() => setShowReplyConfirm(true)}
                             disabled={!responseText.trim()}

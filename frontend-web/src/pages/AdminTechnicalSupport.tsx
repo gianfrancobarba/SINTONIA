@@ -2,10 +2,19 @@ import React, { useState, useEffect } from 'react';
 import TechnicalSupportDetailModal from '../components/TechnicalSupportDetailModal';
 import type { TechnicalSupportTicket } from '../types/technicalSupport';
 import '../css/AdminTechnicalSupport.css';
+import '../css/QuestionnaireTable.css'; // Reuse table styles for consistency
+
+// SVG Icon Component for View Button
+const ViewIcon = () => (
+    <svg viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="10.24">
+        <path d="M112,44H48a4,4,0,0,0-4,4v64a4,4,0,0,0,4,4h64a4,4,0,0,0,4-4V48A4,4,0,0,0,112,44Zm-4,64H52V52h56ZM208,44H144a4,4,0,0,0-4,4v64a4,4,0,0,0,4,4h64a4,4,0,0,0,4-4V48A4,4,0,0,0,208,44Zm-4,64H148V52h56Zm-92,32H48a4,4,0,0,0-4,4v64a4.0002,4.0002,0,0,0,4,4h64a4.0002,4.0002,0,0,0,4-4V144A4,4,0,0,0,112,140Zm-4,64H52V148h56Zm100-64H144a4,4,0,0,0-4,4v64a4.0002,4.0002,0,0,0,4,4h64a4.0002,4.0002,0,0,0,4-4V144A4,4,0,0,0,208,140Zm-4,64H148V148h56Z" />
+    </svg>
+);
 
 const AdminTechnicalSupport: React.FC = () => {
     const [tickets, setTickets] = useState<TechnicalSupportTicket[]>([]);
     const [selectedTicket, setSelectedTicket] = useState<TechnicalSupportTicket | null>(null);
+    const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const TICKETS_PER_PAGE = 5;
@@ -129,24 +138,42 @@ const AdminTechnicalSupport: React.FC = () => {
                                     <th>Stato</th>
                                     <th>Oggetto</th>
                                     <th>Data Invio</th>
+                                    <th>Azioni</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {getPaginatedTickets().map((ticket) => (
-                                    <tr
-                                        key={ticket.idTicket}
-                                        onClick={() => setSelectedTicket(ticket)}
-                                    >
-                                        <td className="ticket-id-cell">{ticket.idTicket}</td>
-                                        <td>
-                                            <span className={getStatusClass(ticket.stato)}>
-                                                {getStatusLabel(ticket.stato)}
-                                            </span>
-                                        </td>
-                                        <td className="ticket-object-cell">{ticket.oggetto}</td>
-                                        <td className="ticket-date-cell">{formatDate(ticket.dataInvio)}</td>
-                                    </tr>
-                                ))}
+                                {getPaginatedTickets().map((ticket) => {
+                                    const isSelected = selectedTicketId === ticket.idTicket;
+                                    return (
+                                        <tr
+                                            key={ticket.idTicket}
+                                            className={isSelected ? 'selected' : ''}
+                                            onClick={() => setSelectedTicketId(ticket.idTicket)}
+                                        >
+                                            <td className="ticket-id-cell">{ticket.idTicket}</td>
+                                            <td>
+                                                <span className={getStatusClass(ticket.stato)}>
+                                                    {getStatusLabel(ticket.stato)}
+                                                </span>
+                                            </td>
+                                            <td className="ticket-object-cell">{ticket.oggetto}</td>
+                                            <td className="ticket-date-cell">{formatDate(ticket.dataInvio)}</td>
+                                            <td className="actions-cell">
+                                                <button
+                                                    className="action-btn view-btn"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setSelectedTicket(ticket);
+                                                    }}
+                                                    aria-label="Visualizza"
+                                                    title="Visualizza dettagli"
+                                                >
+                                                    <ViewIcon />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>

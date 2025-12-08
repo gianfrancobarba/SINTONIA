@@ -56,7 +56,6 @@ const AdminPsychologistTable: React.FC<AdminPsychologistTableProps> = ({
                             >
                                 <td
                                     className="questionnaire-id-cell"
-                                    title={`Codice Fiscale: ${psy.codiceFiscale}`}
                                 >
                                     {psy.codiceFiscale}
                                 </td>

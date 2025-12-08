@@ -78,19 +78,69 @@ const PsychologistTechnicalSupport: React.FC = () => {
                                         placeholder="Es. Errore nel caricamento pazienti..."
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
+                                        maxLength={100}
                                         required
                                     />
+                                    <div style={{
+                                        textAlign: 'right',
+                                        fontSize: '12px',
+                                        color: subject.length >= 100 ? '#E57373' : '#999',
+                                        marginTop: '4px'
+                                    }}>
+                                        {subject.length}/100 caratteri
+                                    </div>
                                 </div>
 
                                 <div className="form-group">
                                     <label className="form-label">Descrizione dettagliata</label>
-                                    <textarea
-                                        className="form-textarea"
-                                        placeholder="Descrivi il problema riscontrato, includendo eventuali messaggi di errore..."
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        required
-                                    />
+                                    <div style={{
+                                        border: '2px solid #e0e0e0',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        backgroundColor: '#fafafa',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                        onFocus={(e) => {
+                                            e.currentTarget.style.borderColor = 'var(--color-teal-medium)';
+                                            e.currentTarget.style.backgroundColor = 'white';
+                                            e.currentTarget.style.boxShadow = '0 0 0 4px rgba(43, 122, 122, 0.1)';
+                                        }}
+                                        onBlur={(e) => {
+                                            e.currentTarget.style.borderColor = '#e0e0e0';
+                                            e.currentTarget.style.backgroundColor = '#fafafa';
+                                            e.currentTarget.style.boxShadow = 'none';
+                                        }}
+                                    >
+                                        <textarea
+                                            placeholder="Descrivi il problema riscontrato, includendo eventuali messaggi di errore..."
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            maxLength={2000}
+                                            required
+                                            style={{
+                                                width: '100%',
+                                                padding: '16px 20px',
+                                                border: 'none',
+                                                fontSize: '15px',
+                                                fontFamily: 'inherit',
+                                                resize: 'none',
+                                                minHeight: '200px',
+                                                maxHeight: '260px',
+                                                overflowY: 'auto',
+                                                outline: 'none',
+                                                boxSizing: 'border-box',
+                                                backgroundColor: 'transparent'
+                                            }}
+                                        />
+                                    </div>
+                                    <div style={{
+                                        textAlign: 'right',
+                                        fontSize: '12px',
+                                        color: description.length >= 2000 ? '#E57373' : '#999',
+                                        marginTop: '4px'
+                                    }}>
+                                        {description.length}/2000 caratteri
+                                    </div>
                                 </div>
 
                                 <div className="form-actions">

@@ -1,6 +1,7 @@
 /* Profilo psicologo */
 
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { fetchDashboardData } from '../services/psychologist.service';
 import { getCurrentUser, logout } from '../services/auth.service';
@@ -8,6 +9,7 @@ import type { PsychologistDashboardData, LoadingState } from '../types/psycholog
 import profilePhoto from '../images/psychologist-photo.png';
 import notificationIcon from '../images/psi-notification.png';
 import '../css/PsychologistProfile.css';
+import '../css/ClinicalAlerts.css'; // For confirmation overlay styles
 
 // Modern SVG Icons
 const PatientIcon = () => (
@@ -70,6 +72,7 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
         loading: true,
         error: null,
     });
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     useEffect(() => {
         loadDashboardData();
@@ -112,8 +115,16 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
     };
 
     const handleLogout = () => {
+        setShowLogoutConfirm(true);
+    };
+
+    const confirmLogout = () => {
         logout();
         navigate('/login');
+    };
+
+    const cancelLogout = () => {
+        setShowLogoutConfirm(false);
     };
 
     // Show loading state
@@ -253,6 +264,32 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                     <span className="nav-label">Forum</span>
                 </button>
             </div>
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutConfirm && ReactDOM.createPortal(
+                <div className="alerts-overlay" role="dialog" aria-modal="true" aria-labelledby="logout-confirm-title">
+                    <div className="alerts-overlay-backdrop" onClick={cancelLogout} />
+                    <div className="alerts-overlay-card" role="document" onClick={(e) => e.stopPropagation()}>
+                        <h3 id="logout-confirm-title" className="overlay-title" style={{ color: '#333' }}>Conferma Uscita</h3>
+                        <p className="overlay-text" style={{ color: '#666' }}>
+                            Sei sicuro di voler uscire dalla piattaforma?
+                        </p>
+                        <div className="overlay-actions">
+                            <button className="cancel-btn" onClick={(e) => { e.stopPropagation(); cancelLogout(); }}>
+                                Annulla
+                            </button>
+                            <button
+                                className="confirm-btn"
+                                onClick={(e) => { e.stopPropagation(); confirmLogout(); }}
+                                style={{ background: 'linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%)' }}
+                            >
+                                Esci
+                            </button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
         </div>
     );
 };

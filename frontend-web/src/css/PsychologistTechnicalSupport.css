@@ -120,8 +120,9 @@
 
 .form-textarea {
     min-height: 200px;
-    max-height: 280px;
-    resize: vertical;
+    max-height: 260px;
+    resize: none;
+    overflow-y: auto;
 }
 
 .form-actions {

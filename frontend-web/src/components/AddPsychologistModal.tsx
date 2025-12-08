@@ -108,7 +108,7 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
 
         if (!formData.email.trim()) {
             newErrors.email = 'L\'email è obbligatoria';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
             newErrors.email = 'Inserisci un\'email valida';
         }
 
@@ -262,7 +262,7 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                     </div>
 
                                     {showAslDropdown && (
-                                        <div className="modal-dropdown">
+                                        <div className="modal-dropdown" style={{ maxHeight: '120px', overflowY: 'auto' }}>
                                             {filteredAslOptions.length > 0 ? (
                                                 filteredAslOptions.map(asl => (
                                                     <div

@@ -65,7 +65,6 @@ const QuestionnaireTable: React.FC<QuestionnaireTableProps> = ({
                             >
                                 <td
                                     className="questionnaire-id-cell"
-                                    title={`ID Completo: ${q.idQuestionario}`}
                                 >
                                     {q.idQuestionario.substring(0, 8)}...
                                 </td>

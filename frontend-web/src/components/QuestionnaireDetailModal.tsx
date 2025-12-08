@@ -28,6 +28,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
 
     const [invalidationNotes, setInvalidationNotes] = useState<string>('');
     const [isReviewing, setIsReviewing] = useState(false);
+    const [showReviewConfirm, setShowReviewConfirm] = useState(false);
 
     // Get questions from questionnaire data (from backend)
     const questions = questionnaire.domande || [];
@@ -281,45 +282,66 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                 fontWeight: '700',
                                 color: '#1a1a1a'
                             }}>Richiesta Invalidazione</h3>
-                            <textarea
-                                placeholder="Inserisci il motivo della richiesta di invalidazione..."
-                                value={invalidationNotes}
-                                onChange={(e) => setInvalidationNotes(e.target.value)}
-                                rows={4}
+                            <div
                                 style={{
-                                    width: '100%',
-                                    padding: '12px',
                                     border: '2px solid #e0e0e0',
                                     borderRadius: '12px',
-                                    fontSize: '14px',
-                                    fontFamily: 'inherit',
-                                    resize: 'vertical',
-                                    outline: 'none',
-                                    transition: 'border-color 0.2s ease',
-                                    marginBottom: '12px'
+                                    overflow: 'hidden',
+                                    marginBottom: '4px',
+                                    transition: 'border-color 0.2s ease'
                                 }}
-                                onFocus={(e) => e.target.style.borderColor = '#83B9C1'}
-                                onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
-                            />
+                                onFocus={(e) => e.currentTarget.style.borderColor = '#83B9C1'}
+                                onBlur={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
+                            >
+                                <textarea
+                                    placeholder="Inserisci il motivo della richiesta di invalidazione..."
+                                    value={invalidationNotes}
+                                    onChange={(e) => setInvalidationNotes(e.target.value)}
+                                    rows={4}
+                                    maxLength={2000}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        border: 'none',
+                                        fontSize: '14px',
+                                        fontFamily: 'inherit',
+                                        resize: 'none',
+                                        minHeight: '150px',
+                                        maxHeight: '300px',
+                                        overflowY: 'auto',
+                                        outline: 'none',
+                                        boxSizing: 'border-box'
+                                    }}
+                                />
+                            </div>
+                            <div style={{
+                                textAlign: 'right',
+                                fontSize: '12px',
+                                color: invalidationNotes.length >= 2000 ? '#E57373' :
+                                    invalidationNotes.length < 50 && invalidationNotes.length > 0 ? '#FFB74D' : '#999',
+                                marginBottom: '12px'
+                            }}>
+                                {invalidationNotes.length}/2000 caratteri {invalidationNotes.length > 0 && invalidationNotes.length < 50 && `(minimo 50)`}
+                            </div>
                             <button
                                 onClick={() => {
-                                    if (invalidationNotes.trim()) {
+                                    if (invalidationNotes.trim().length >= 50) {
                                         onRequestInvalidation?.(questionnaire.idQuestionario, invalidationNotes);
                                         setInvalidationNotes('');
                                         onClose();
                                     }
                                 }}
-                                disabled={!invalidationNotes.trim()}
+                                disabled={invalidationNotes.trim().length < 50}
                                 style={{
                                     width: '100%',
                                     padding: '12px 24px',
                                     borderRadius: '12px',
                                     border: 'none',
-                                    background: invalidationNotes.trim()
+                                    background: invalidationNotes.trim().length >= 50
                                         ? 'linear-gradient(135deg, #E57373 0%, #d55353 100%)'
                                         : '#e0e0e0',
                                     color: 'white',
-                                    cursor: invalidationNotes.trim() ? 'pointer' : 'not-allowed',
+                                    cursor: invalidationNotes.trim().length >= 50 ? 'pointer' : 'not-allowed',
                                     fontSize: '15px',
                                     fontWeight: '600',
                                     transition: 'all 0.2s ease',
@@ -327,17 +349,17 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     gap: '8px',
-                                    boxShadow: invalidationNotes.trim() ? '0 4px 12px rgba(229, 115, 115, 0.3)' : 'none'
+                                    boxShadow: invalidationNotes.trim().length >= 50 ? '0 4px 12px rgba(229, 115, 115, 0.3)' : 'none'
                                 }}
                                 onMouseEnter={(e) => {
-                                    if (invalidationNotes.trim()) {
+                                    if (invalidationNotes.trim().length >= 50) {
                                         e.currentTarget.style.transform = 'translateY(-2px)';
                                         e.currentTarget.style.boxShadow = '0 6px 20px rgba(229, 115, 115, 0.4)';
                                     }
                                 }}
                                 onMouseLeave={(e) => {
                                     e.currentTarget.style.transform = 'translateY(0)';
-                                    if (invalidationNotes.trim()) {
+                                    if (invalidationNotes.trim().length >= 50) {
                                         e.currentTarget.style.boxShadow = '0 4px 12px rgba(229, 115, 115, 0.3)';
                                     }
                                 }}
@@ -359,7 +381,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                 }}>
                     {role === 'psychologist' && !readOnly && !questionnaire.revisionato && !questionnaire.invalidato && (
                         <button
-                            onClick={handleReview}
+                            onClick={() => setShowReviewConfirm(true)}
                             disabled={isReviewing}
                             style={{
                                 padding: '12px 32px',
@@ -367,24 +389,24 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                 border: 'none',
                                 background: isReviewing
                                     ? '#e0e0e0'
-                                    : 'linear-gradient(135deg, #7FB77E 0%, #5fa05d 100%)',
+                                    : 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
                                 color: 'white',
                                 cursor: isReviewing ? 'not-allowed' : 'pointer',
                                 fontSize: '15px',
                                 fontWeight: '600',
                                 transition: 'all 0.2s ease',
-                                boxShadow: isReviewing ? 'none' : '0 4px 12px rgba(127, 183, 126, 0.3)'
+                                boxShadow: isReviewing ? 'none' : '0 4px 12px rgba(131, 185, 193, 0.3)'
                             }}
                             onMouseEnter={(e) => {
                                 if (!isReviewing) {
                                     e.currentTarget.style.transform = 'translateY(-2px)';
-                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(127, 183, 126, 0.4)';
+                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
                                 }
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = 'translateY(0)';
                                 if (!isReviewing) {
-                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(127, 183, 126, 0.3)';
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
                                 }
                             }}
                         >
@@ -399,6 +421,96 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                     type={toast.type}
                     onClose={() => setToast(null)}
                 />
+            )}
+
+            {/* Review Confirmation Dialog */}
+            {showReviewConfirm && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10001
+                    }}
+                    onClick={() => setShowReviewConfirm(false)}
+                >
+                    <div
+                        style={{
+                            background: 'white',
+                            borderRadius: '12px',
+                            padding: '24px',
+                            maxWidth: '400px',
+                            width: '90%',
+                            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 style={{
+                            margin: '0 0 12px 0',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            color: '#333'
+                        }}>
+                            Conferma Revisione
+                        </h3>
+                        <p style={{
+                            margin: '0 0 20px 0',
+                            fontSize: '14px',
+                            lineHeight: '1.5',
+                            color: '#666'
+                        }}>
+                            Sei sicuro di voler contrassegnare questo questionario come revisionato?
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            justifyContent: 'flex-end'
+                        }}>
+                            <button
+                                onClick={() => setShowReviewConfirm(false)}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: '#f3f4f6',
+                                    border: '1px solid #e5e7eb',
+                                    color: '#374151'
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowReviewConfirm(false);
+                                    handleReview();
+                                }}
+                                disabled={isReviewing}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: isReviewing ? 'not-allowed' : 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
+                                    border: 'none',
+                                    color: 'white'
+                                }}
+                            >
+                                {isReviewing ? 'Attendi...' : 'Conferma'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>,
         document.body
