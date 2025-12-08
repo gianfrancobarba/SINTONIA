@@ -70,9 +70,6 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                             <h2 className="modal-header-title">
                                 Dettagli Questionario
                             </h2>
-                            <p className="modal-header-subtitle">
-                                {questionnaire.nomeTipologia}
-                            </p>
                         </div>
                         <button
                             onClick={onClose}

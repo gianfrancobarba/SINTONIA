@@ -218,7 +218,7 @@ const AdminPsychologistDetailModal: React.FC<AdminPsychologistDetailModalProps> 
                                 Dettagli Psicologo
                             </h2>
                             <p className="modal-header-subtitle">
-                                {psychologist.nome} {psychologist.cognome}
+                                Dr. {psychologist.nome} {psychologist.cognome}
                             </p>
                         </div>
                         <button

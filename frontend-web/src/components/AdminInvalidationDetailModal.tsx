@@ -84,9 +84,6 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                             <h2 className="modal-header-title">
                                 Dettagli Richiesta Invalidazione
                             </h2>
-                            <p className="modal-header-subtitle">
-                                {request.nomeQuestionario}
-                            </p>
                         </div>
                         <button
                             onClick={onClose}

@@ -135,9 +135,6 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             <h2 className="modal-header-title">
                                 Dettagli Ticket di Supporto
                             </h2>
-                            <p className="modal-header-subtitle">
-                                ID: {ticket.idTicket}
-                            </p>
                         </div>
                         <button
                             onClick={onClose}
@@ -184,17 +181,21 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             <span className="modal-data-row-value">{formatDate(ticket.dataInvio)}</span>
                         </div>
 
-                        <div className="modal-data-row">
-                            <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
-                            <span className="modal-data-row-label">ID Paziente</span>
-                            <span className="modal-data-row-value">{ticket.idPaziente}</span>
-                        </div>
+                        {ticket.idPaziente && (
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                <span className="modal-data-row-label">ID Paziente</span>
+                                <span className="modal-data-row-value">{ticket.idPaziente}</span>
+                            </div>
+                        )}
 
-                        <div className="modal-data-row">
-                            <div className="modal-data-row-dot modal-data-row-dot-green"></div>
-                            <span className="modal-data-row-label">ID Psicologo</span>
-                            <span className="modal-data-row-value">{ticket.idPsicologo || 'Non assegnato'}</span>
-                        </div>
+                        {ticket.idPsicologo && (
+                            <div className="modal-data-row">
+                                <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                <span className="modal-data-row-label">ID Psicologo</span>
+                                <span className="modal-data-row-value">{ticket.idPsicologo}</span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Object Section */}
