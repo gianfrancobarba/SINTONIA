@@ -103,7 +103,14 @@ export async function getTodayMood(): Promise<MoodResponse & CreateMoodDto | nul
     const token = localStorage.getItem('patient_token');
     if (!token) throw new Error('Token non trovato');
 
-    const response = await fetch(`${API_BASE_URL}/paziente/stato-animo/oggi`, {
+    // Calcola la data locale in formato YYYY-MM-DD
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const localDate = `${year}-${month}-${day}`;
+
+    const response = await fetch(`${API_BASE_URL}/paziente/stato-animo/oggi?date=${localDate}`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
 

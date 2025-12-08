@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
 import '../css/Badges.css';
+import { BadgeIcon } from '../components/BadgeIcons';
 
 interface Badge {
     nome: string;
     descrizione: string;
     immagineBadge?: string;
-    dataAcquisizione: Date;
+    dataAcquisizione?: string;
 }
 
 interface BadgeData {
@@ -15,11 +16,42 @@ interface BadgeData {
     badges: Badge[];
 }
 
+// Badge to category mapping
+type CategoryType = 'questionari' | 'diario' | 'umore' | 'forum';
+
+const BADGE_CATEGORIES: Record<string, CategoryType> = {
+    'Primo Questionario': 'questionari',
+    'Cinque Questionari': 'questionari',
+    'Dieci Questionari': 'questionari',
+    'Venticinque Questionari': 'questionari',
+    'Screening Completo': 'questionari',
+    'Prima Nota Diario': 'diario',
+    'Diario Costante': 'diario',
+    'Narratore': 'diario',
+    'Diario Esperto': 'diario',
+    'Primo Stato dAnimo': 'umore',
+    'Monitoraggio Umore': 'umore',
+    'Streak Week': 'umore',
+    'Streak Master': 'umore',
+    'Prima Domanda Forum': 'forum',
+    'Voce Attiva': 'forum',
+    'Prima Risposta Ricevuta': 'forum',
+};
+
+const FILTER_OPTIONS: { key: 'all' | CategoryType; label: string }[] = [
+    { key: 'all', label: 'Tutti' },
+    { key: 'questionari', label: 'Questionari' },
+    { key: 'diario', label: 'Diario' },
+    { key: 'umore', label: 'Umore' },
+    { key: 'forum', label: 'Forum' },
+];
+
 const Badges: React.FC = () => {
     const navigate = useNavigate();
     const [badgeData, setBadgeData] = useState<BadgeData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [selectedFilter, setSelectedFilter] = useState<'all' | CategoryType>('all');
 
     useEffect(() => {
         const fetchBadges = async () => {
@@ -79,35 +111,10 @@ const Badges: React.FC = () => {
         );
     }
 
-    // Creare array di 28 badge (7x4 griglia) con colori assegnati
-    const totalBadgeSlots = 28;
-    const badgeColors = [
-        '#FFFFFF', '#FF6B4A', '#B8A391', '#B8A391', '#CDB4A8', '#A89080', '#8FAF69',
-        '#CDB4A8', '#1E4A5F', '#8FAF69', '#8FAF69', '#FF6B4A', '#E8B84D', '#FFFFFF',
-        '#FFFFFF', '#FFFFFF', '#FFFFFF', '#8FAF69', '#1E4A5F', '#1E4A5F', '#CDB4A8',
-        '#CDB4A8', '#A89080', '#FF6B4A', '#E8B84D', '#FFFFFF', '#FFFFFF', '#FFFFFF',
-    ];
-
-    const renderBadgeGrid = () => {
-        const badgeSlots = [];
-        for (let i = 0; i < totalBadgeSlots; i++) {
-            const isEarned = i < badgeData.numeroBadge;
-            const backgroundColor = isEarned ? badgeColors[i] : '#FFFFFF';
-            const borderColor = backgroundColor === '#FFFFFF' ? '#E5E7EB' : backgroundColor;
-
-            badgeSlots.push(
-                <div
-                    key={i}
-                    className="badge-circle"
-                    style={{
-                        backgroundColor,
-                        border: `2px solid ${borderColor}`,
-                    }}
-                />
-            );
-        }
-        return badgeSlots;
-    };
+    // Filter badges based on selected category
+    const filteredBadges = selectedFilter === 'all'
+        ? badgeData.badges
+        : badgeData.badges.filter(b => BADGE_CATEGORIES[b.nome] === selectedFilter);
 
     return (
         <div className="badges-page">
@@ -120,17 +127,54 @@ const Badges: React.FC = () => {
                 </div>
             </div>
 
-            <div className="badges-content">
-                <div className="badges-summary">
-                    <div className="badges-count">{badgeData.numeroBadge}</div>
-                    <p className="badges-subtitle">Badge ottenuti fino ad ora</p>
-                </div>
+            <div className="badges-summary">
+                <div className="badges-count">{badgeData.numeroBadge} / {badgeData.badges.length}</div>
+                <p className="badges-subtitle">Badge collezionati</p>
+            </div>
 
-                <div className="badges-history-card">
-                    <h2 className="badges-history-title">Storico Badge</h2>
-                    <div className="badges-grid">
-                        {renderBadgeGrid()}
-                    </div>
+            {/* Filter Buttons */}
+            <div className="filter-buttons">
+                {FILTER_OPTIONS.map(opt => (
+                    <button
+                        key={opt.key}
+                        className={`filter-btn ${selectedFilter === opt.key ? 'active' : ''}`}
+                        onClick={() => setSelectedFilter(opt.key)}
+                    >
+                        {opt.label}
+                    </button>
+                ))}
+            </div>
+
+            <div className="badges-container">
+                <div className="badges-grid">
+                    {filteredBadges.map((badge, index) => {
+                        const isUnlocked = !!badge.dataAcquisizione;
+
+                        return (
+                            <div
+                                key={index}
+                                className={`badge-item ${isUnlocked ? 'unlocked' : 'locked'}`}
+                            >
+                                <div className="badge-icon-wrapper">
+                                    <BadgeIcon name={badge.nome} size={48} />
+                                </div>
+                                <h3 className="badge-name">{badge.nome}</h3>
+                                <p className="badge-desc">{badge.descrizione}</p>
+
+                                {isUnlocked ? (
+                                    <div className="badge-date">
+                                        {new Date(badge.dataAcquisizione!).toLocaleDateString('it-IT', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div className="badge-locked-label">BLOCCATO</div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>

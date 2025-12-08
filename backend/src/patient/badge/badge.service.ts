@@ -39,26 +39,35 @@ export class BadgeService {
      * Recupera tutti i badge acquisiti dal paziente
      */
     async getBadgeUtente(userId: string): Promise<BadgeUtenteDto> {
-        const badgeRows = await db
+        // LEFT JOIN to get ALL badges, with acquisition data if exists
+        const allBadges = await db
             .select({
                 nome: badge.nome,
                 descrizione: badge.descrizione,
                 immagineBadge: badge.immagineBadge,
                 dataAcquisizione: acquisizioneBadge.dataAcquisizione,
             })
-            .from(acquisizioneBadge)
-            .innerJoin(badge, eq(acquisizioneBadge.nomeBadge, badge.nome))
-            .where(eq(acquisizioneBadge.idPaziente, userId));
+            .from(badge)
+            .leftJoin(
+                acquisizioneBadge,
+                and(
+                    eq(acquisizioneBadge.nomeBadge, badge.nome),
+                    eq(acquisizioneBadge.idPaziente, userId)
+                )
+            );
 
-        const badges = badgeRows.map(row => ({
+        const badges = allBadges.map(row => ({
             nome: row.nome,
             descrizione: row.descrizione,
             immagineBadge: row.immagineBadge ?? undefined,
-            dataAcquisizione: row.dataAcquisizione ?? new Date(),
+            dataAcquisizione: row.dataAcquisizione ?? undefined, // undefined if not acquired
         }));
 
+        // Count only acquired badges
+        const acquiredCount = badges.filter(b => b.dataAcquisizione).length;
+
         return {
-            numeroBadge: badges.length,
+            numeroBadge: acquiredCount,
             badges,
         };
     }

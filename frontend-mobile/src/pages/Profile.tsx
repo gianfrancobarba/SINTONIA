@@ -63,7 +63,7 @@ const Profile: React.FC = () => {
     const name = profilo.nome;
     const badges = {
         total: badge.numeroBadge,
-        progress: Math.min(badge.numeroBadge / 100, 1)  // Progress calcolato (max 100%)
+        progress: Math.min(badge.numeroBadge / 16, 1)  // Progress calcolato (16 badge totali)
     };
 
     // Mood data with placeholder if null
@@ -170,11 +170,6 @@ const Profile: React.FC = () => {
                                 className="mood-bar"
                                 style={{ height: `${height}%` }}
                             ></div>
-                        ))}
-                    </div>
-                    <div className="mood-dots">
-                        {normalizedData.map((_, index) => (
-                            <div key={index} className="mood-dot"></div>
                         ))}
                     </div>
                     {!hasMoodData && (

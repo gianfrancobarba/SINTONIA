@@ -4,6 +4,7 @@ import { domandaForum, rispostaForum, psicologo } from '../../drizzle/schema.js'
 import { eq, not, exists, and } from 'drizzle-orm';
 import { ForumQuestionDto } from '../../forum-comune/dto/forum.dto.js';
 import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
+import { BadgeService } from '../../patient/badge/badge.service.js';
 
 type DrizzleDB = typeof db;
 
@@ -12,6 +13,7 @@ export class PsiForumService {
     constructor(
         @Inject('drizzle') private db: DrizzleDB,
         private readonly notificationHelper: NotificationHelperService,
+        private readonly badgeService: BadgeService,
     ) { }
 
     async getAllQuestions(categoria?: string) {
@@ -190,6 +192,9 @@ export class PsiForumService {
                 `Uno psicologo ha risposto alla tua domanda: "${question.titolo}"`,
                 'FORUM',
             );
+
+            // 4. Verifica e assegna badge (es. "Prima Risposta Ricevuta")
+            await this.badgeService.checkAndAwardBadges(question.idPaziente);
         }
 
         return newAnswer;
