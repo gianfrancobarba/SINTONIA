@@ -24,6 +24,7 @@ export class PsiForumService {
                 psicologo: {
                     nome: psicologo.nome,
                     cognome: psicologo.cognome,
+                    immagineProfilo: psicologo.immagineProfilo,
                 }
             })
             .from(domandaForum)
@@ -97,6 +98,7 @@ export class PsiForumService {
                 psicologo: {
                     nome: psicologo.nome,
                     cognome: psicologo.cognome,
+                    immagineProfilo: psicologo.immagineProfilo,
                 }
             })
             .from(domandaForum)
@@ -130,6 +132,7 @@ export class PsiForumService {
                 psicologo: { // Sarà null
                     nome: psicologo.nome,
                     cognome: psicologo.cognome,
+                    immagineProfilo: psicologo.immagineProfilo,
                 }
             })
             .from(domandaForum)
@@ -163,6 +166,7 @@ export class PsiForumService {
                         idPsicologo: a.idPsicologo,
                         nomePsicologo: p?.nome || 'Sconosciuto',
                         cognomePsicologo: p?.cognome || '',
+                        immagineProfilo: p?.immagineProfilo || null,
                     });
                 }
             }

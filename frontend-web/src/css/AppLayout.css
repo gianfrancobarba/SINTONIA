@@ -247,24 +247,27 @@ body {
         display: flex;
     }
 
+    /* Keep viewport fixed on mobile too */
     html,
     body {
-        overflow: auto;
-        height: auto;
+        overflow: hidden;
+        height: 100%;
     }
 
     .app-layout-container {
-        height: auto;
+        height: 100vh;
         min-height: 100vh;
-        overflow: visible;
+        max-height: 100vh;
+        overflow: hidden;
     }
 
     .app-layout-grid {
-        padding: 80px 12px 20px 12px;
-        /* Extra top padding for hamburger */
+        padding: 70px 12px 10px 12px;
         grid-template-columns: 1fr;
-        gap: 24px;
-        height: auto;
+        gap: 16px;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
     }
 
     /* Sidebar - Hidden by default, slides in from left */
@@ -295,15 +298,28 @@ body {
     }
 
     .app-layout-content {
+        flex: 1;
+        min-height: 0;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    .content-panel {
+        flex: 1;
+        min-height: 0;
         height: auto;
-        overflow: visible;
+    }
+
+    .app-footer {
+        padding: 12px 16px 10px 16px;
+        font-size: 10px;
     }
 }
 
 @media (max-width: 768px) {
     .app-layout-grid {
-        padding: 80px 8px 16px 8px;
-        gap: 16px;
+        padding: 65px 8px 8px 8px;
+        gap: 12px;
     }
 
     .content-panel {

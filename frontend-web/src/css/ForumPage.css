@@ -1,131 +1,48 @@
-/* Forum Page Styles */
-/* Note: .content-panel inherits global styles from AppLayout.css */
+/* Forum Page - Clean Modern Design */
 
-/* Fixed Header Section */
+/* Fixed Header */
 .forum-fixed-header {
     flex-shrink: 0;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 }
 
-/* Forum Header */
-.forum-header {
+/* Compact Filter Pills - Inline Row */
+.forum-filters {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #f3f4f6;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
 }
 
-.forum-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: black;
-    text-align: center;
-    margin: 0 0 12px 0;
-}
-
-/* Removed .panel-title override - now inherits from AppLayout.css */
-
-.panel-subtitle {
+.filter-pill {
+    padding: 8px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
     font-size: 13px;
-    color: #6b7280;
-    margin: 0;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
 }
 
-/* Scrollable Content Section */
+.filter-pill:hover:not(.active) {
+    border-color: #0D475D;
+    color: #0D475D;
+}
+
+.filter-pill.active {
+    background: #0D475D;
+    border-color: #0D475D;
+    color: white;
+}
+
+/* Scrollable Content */
 .forum-scroll-container {
     flex: 1;
     overflow-y: auto;
-    padding-right: 4px;
-    /* Prevent scrollbar from overlapping content */
     min-height: 0;
-    /* Critical for flex scrolling */
-}
-
-/* Forum Stats */
-.forum-stats {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 12px;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 6px;
-    border: 1px solid #e5e7eb;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    opacity: 0.7;
-    flex: 1;
-    max-width: 140px;
-}
-
-.stat-item:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Active state - All questions (Blue) */
-.stat-item.stat-active {
-    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-    border-color: #1E40AF;
-    opacity: 1;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-}
-
-.stat-item.stat-active .stat-value,
-.stat-item.stat-active .stat-label {
-    color: white;
-}
-
-/* Unanswered questions (Yellow) */
-.stat-unanswered.stat-active {
-    background: linear-gradient(135deg, #FDE047 0%, #FACC15 100%);
-    border-color: #CA8A04;
-    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.2);
-}
-
-.stat-unanswered.stat-active .stat-value,
-.stat-unanswered.stat-active .stat-label {
-    color: #78350F;
-}
-
-/* Answered questions (Green) */
-.stat-answered.stat-active {
-    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
-    border-color: #059669;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-}
-
-.stat-answered.stat-active .stat-value,
-.stat-answered.stat-active .stat-label {
-    color: white;
-}
-
-.stat-value {
-    font-size: 14px;
-    font-weight: 700;
-    color: #374151;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-
-.stat-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: #6B7280;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-align: center;
 }
 
 /* Questions List */
@@ -135,24 +52,24 @@
     gap: 16px;
 }
 
-/* Loading State */
+/* Loading */
 .loading-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 60px 20px;
-    color: #6b7280;
+    color: #9ca3af;
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #e5e7eb;
-    border-top-color: var(--color-teal-medium);
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #0D475D;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 16px;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
 }
 
 @keyframes spin {
@@ -161,153 +78,116 @@
     }
 }
 
-.loading-state p {
-    font-size: 15px;
-    margin: 0;
+/* Error */
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
 }
 
-/* Error State */
-.error-state {
+.error-state p {
+    color: #ef4444;
+    margin: 0 0 16px 0;
+}
+
+.retry-button {
+    padding: 10px 20px;
+    background: #0D475D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.retry-button:hover {
+    background: #1A5F5F;
+}
+
+/* Modern Empty State */
+.empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 60px 20px;
     text-align: center;
+    flex: 1;
+    min-height: 300px;
 }
 
-.error-state p {
-    font-size: 16px;
-    color: #ef4444;
-    margin: 0 0 16px 0;
-}
-
-.retry-button {
-    padding: 10px 24px;
-    background: var(--color-teal-medium);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.retry-button:hover {
-    background: var(--color-teal-dark);
-}
-
-/* Empty State */
-.empty-state {
+.empty-icon-container {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(13, 71, 93, 0.1) 0%, rgba(26, 95, 95, 0.1) 100%);
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.empty-icon {
-    font-size: 64px;
     margin-bottom: 16px;
-    opacity: 0.5;
 }
 
 .empty-state h3 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
-    color: #111827;
-    margin: 0 0 8px 0;
+    color: #374151;
+    margin: 0 0 6px 0;
 }
 
 .empty-state p {
-    font-size: 15px;
-    color: #6b7280;
+    font-size: 13px;
+    color: #9ca3af;
     margin: 0;
-    max-width: 400px;
 }
 
-/* Pagination */
+/* Subtle Card Pagination */
 .pagination {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 16px;
-    margin-top: 32px;
-    padding-top: 24px;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
     border-top: 1px solid #e5e7eb;
+    margin: 0 -32px -32px -32px;
+    background: white;
+    border-radius: 0 0 16px 16px;
 }
 
-.pagination-button {
-    padding: 10px 20px;
-    background: var(--color-teal-medium);
-    color: white;
-    border: none;
-    border-radius: 8px;
+.pagination-btn {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    background: white;
+    color: #6B7280;
     font-size: 14px;
-    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
 }
 
-.pagination-button:hover:not(:disabled) {
-    background: var(--color-teal-dark);
+.pagination-btn:hover:not(:disabled) {
+    border-color: #0D475D;
+    color: #0D475D;
 }
 
-.pagination-button:disabled {
-    background: #e5e7eb;
-    color: #9ca3af;
+.pagination-btn:disabled {
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
-.pagination-info {
-    font-size: 14px;
-    color: #6b7280;
-    font-weight: 500;
+.pagination-current {
+    font-size: 12px;
+    color: #9ca3af;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .forum-scroll-container {
-        overflow: visible;
-        flex: none;
-    }
-}
-
-@media (max-width: 768px) {
-    .content-panel {
-        padding: 20px;
-        border-radius: 12px;
-    }
-
-    /* Removed .panel-title override */
-
-    .forum-stats {
-        gap: 8px;
-    }
-
-    .stat-item {
-        padding: 6px 12px;
-    }
-
-    .stat-label {
-        font-size: 9px;
-    }
-
-    .stat-value {
-        font-size: 16px;
-    }
-}
-
-/* Delete Confirmation Dialog */
+/* Delete Dialog */
 .delete-confirm-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -316,16 +196,16 @@
 
 .delete-confirm-dialog {
     background: white;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 24px;
-    max-width: 400px;
+    max-width: 380px;
     width: 90%;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .delete-confirm-dialog h3 {
-    margin: 0 0 12px 0;
-    font-size: 18px;
+    margin: 0 0 8px 0;
+    font-size: 17px;
     font-weight: 600;
     color: #111827;
 }
@@ -333,29 +213,27 @@
 .delete-confirm-dialog p {
     margin: 0 0 20px 0;
     font-size: 14px;
-    line-height: 1.5;
     color: #6b7280;
 }
 
 .delete-confirm-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: flex-end;
 }
 
 .cancel-button,
 .confirm-delete-button {
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 8px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    border: none;
 }
 
 .cancel-button {
     background: #f3f4f6;
-    border: 1px solid #e5e7eb;
     color: #374151;
 }
 
@@ -365,16 +243,20 @@
 
 .confirm-delete-button {
     background: #ef4444;
-    border: none;
     color: white;
-    border-radius: 8px;
 }
 
 .confirm-delete-button:hover {
     background: #dc2626;
 }
 
-.confirm-delete-button:active,
-.cancel-button:active {
-    transform: scale(0.98);
+/* Responsive */
+@media (max-width: 640px) {
+    .forum-filters {
+        flex-direction: column;
+    }
+
+    .filter-pill {
+        text-align: center;
+    }
 }

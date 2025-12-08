@@ -1,16 +1,63 @@
 import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import profilePhoto from '../images/psychologist-photo.png';
 import '../css/PsychologistPersonalArea.css';
 import { getProfile, updateProfile } from '../services/psychologist.service';
 import { getCurrentUser } from '../services/auth.service';
-
-interface PsychologistPersonalAreaProps {
-    onProfileUpdate?: () => void;
-}
+import type { OutletContextType } from './AppLayout';
 
 import Toast from './Toast';
 
-const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onProfileUpdate }) => {
+/**
+ * Compress image using Canvas API
+ * @param file - Original image file
+ * @param maxSize - Max width/height in pixels (default 200)
+ * @param quality - JPEG quality 0-1 (default 0.7)
+ * @returns Promise with base64 data URL
+ */
+const compressImage = (file: File, maxSize = 200, quality = 0.7): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let { width, height } = img;
+
+                // Calculate new dimensions maintaining aspect ratio
+                if (width > height) {
+                    if (width > maxSize) {
+                        height = Math.round((height * maxSize) / width);
+                        width = maxSize;
+                    }
+                } else {
+                    if (height > maxSize) {
+                        width = Math.round((width * maxSize) / height);
+                        height = maxSize;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    reject(new Error('Failed to get canvas context'));
+                    return;
+                }
+                ctx.drawImage(img, 0, 0, width, height);
+                const base64 = canvas.toDataURL('image/jpeg', quality);
+                resolve(base64);
+            };
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = e.target?.result as string;
+        };
+        reader.onerror = () => reject(new Error('Failed to read file'));
+        reader.readAsDataURL(file);
+    });
+};
+
+const PsychologistPersonalArea: React.FC = () => {
+    const { onProfileUpdate } = useOutletContext<OutletContextType>();
     const [isEditing, setIsEditing] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -21,7 +68,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
         asl: string;
         email: string;
         profileImageUrl: string;
-        profileImageFile?: File | null;
+        profileImageBase64?: string | null;
     }>({
         codiceFiscale: '',
         nome: '',
@@ -29,7 +76,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
         asl: '',
         email: '',
         profileImageUrl: profilePhoto,
-        profileImageFile: null
+        profileImageBase64: null
     });
     const [originalData, setOriginalData] = useState(formData);
 
@@ -40,13 +87,16 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
                 const cf = user?.fiscalCode || user?.id || user?.email;
                 if (cf) {
                     const data = await getProfile(cf);
-                    // Construct full URL if it's a filename
+                    // Handle base64 or URL
                     let imageUrl = profilePhoto;
                     if (data.immagineProfilo) {
-                        if (data.immagineProfilo.startsWith('http')) {
+                        if (data.immagineProfilo.startsWith('data:')) {
+                            // Base64 image
+                            imageUrl = data.immagineProfilo;
+                        } else if (data.immagineProfilo.startsWith('http')) {
                             imageUrl = data.immagineProfilo;
                         } else {
-                            // Assuming backend serves uploads at /uploads/
+                            // Legacy: filename - serve from uploads
                             imageUrl = `http://localhost:3000/uploads/${data.immagineProfilo}`;
                         }
                     }
@@ -58,7 +108,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
                         asl: data.aslAppartenenza,
                         email: data.email,
                         profileImageUrl: imageUrl,
-                        profileImageFile: null
+                        profileImageBase64: null
                     };
                     setFormData(mappedData);
                     setOriginalData(mappedData);
@@ -95,18 +145,16 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
             if (cf) {
                 await updateProfile(cf, {
                     email: formData.email,
-                    immagineProfilo: formData.profileImageFile
+                    immagineProfilo: formData.profileImageBase64 || undefined
                 });
 
                 // Refresh data or update state
-                setOriginalData({ ...formData, profileImageFile: null });
+                setOriginalData({ ...formData, profileImageBase64: null });
                 setIsEditing(false);
                 setToast({ message: 'Dati salvati con successo!', type: 'success' });
 
                 // Notify parent to refresh profile
-                if (onProfileUpdate) {
-                    onProfileUpdate();
-                }
+                onProfileUpdate();
             }
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -119,18 +167,20 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
         setEmailError(''); // Clear error when user types
     };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
+            try {
+                const compressedBase64 = await compressImage(file, 200, 0.7);
                 setFormData({
                     ...formData,
-                    profileImageUrl: reader.result as string,
-                    profileImageFile: file
+                    profileImageUrl: compressedBase64,
+                    profileImageBase64: compressedBase64
                 });
-            };
-            reader.readAsDataURL(file);
+            } catch (error) {
+                console.error('Error compressing image:', error);
+                setToast({ message: 'Errore durante la compressione dell\'immagine', type: 'error' });
+            }
         }
     };
 

@@ -2,7 +2,7 @@
     background-color: #F4FAFB;
     border-radius: 24px;
     /* Removed box-shadow to prevent visual artifacts */
-    overflow: hidden;
+    overflow: visible;
     max-width: 320px;
     margin: 0 auto;
     height: 100%;
@@ -23,6 +23,7 @@
     background: #0D475D;
     height: 180px;
     border-radius: 24px 24px 0 0;
+    overflow: hidden;
 }
 
 /* Profile Section with Photo and Side Buttons */
@@ -31,18 +32,21 @@
     top: 80px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    width: calc(100% - 40px);
+    max-width: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
-    gap: 24px;
+    padding: 0;
+    gap: 16px;
 }
 
 /* Side Buttons - Single icon on each side */
 .side-btn {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     border-radius: 50%;
     background: linear-gradient(135deg, #83B9C1 0%, #6FA8AF 100%);
     border: 3px solid white;

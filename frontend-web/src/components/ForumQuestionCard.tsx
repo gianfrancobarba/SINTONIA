@@ -45,7 +45,9 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
     };
 
     const [isExpanded, setIsExpanded] = React.useState(false);
+    const [isTextExpanded, setIsTextExpanded] = React.useState(false);
     const ANSWERS_THRESHOLD = 2;
+    const TEXT_TRUNCATE_LENGTH = 200;
 
     const displayedAnswers = question.risposte && question.risposte.length > 0
         ? (isExpanded ? question.risposte : question.risposte.slice(0, ANSWERS_THRESHOLD))
@@ -53,16 +55,22 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
 
     const hasMoreAnswers = question.risposte && question.risposte.length > ANSWERS_THRESHOLD;
 
+    const isTextLong = question.testo.length > TEXT_TRUNCATE_LENGTH;
+    const displayText = isTextLong && !isTextExpanded
+        ? question.testo.slice(0, TEXT_TRUNCATE_LENGTH) + '...'
+        : question.testo;
+
     return (
         <div className="forum-question-card">
             <div className="card-header">
                 <div className="header-left">
-                    <span
-                        className="category-badge"
-                        style={{ backgroundColor: getCategoryColor(question.categoria) }}
-                    >
-                        {question.categoria}
-                    </span>
+                    <div className="category-indicator">
+                        <span
+                            className="category-dot"
+                            style={{ backgroundColor: getCategoryColor(question.categoria) }}
+                        />
+                        <span className="category-label">{question.categoria}</span>
+                    </div>
                     <h3 className="question-title">{question.titolo}</h3>
                 </div>
                 <div className="header-right">
@@ -72,14 +80,23 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
             </div>
 
             <div className="card-body">
-                <p className="question-text">{question.testo}</p>
+                <p className="question-text">{displayText}</p>
+                {isTextLong && (
+                    <button
+                        className="expand-text-button"
+                        onClick={() => setIsTextExpanded(!isTextExpanded)}
+                    >
+                        {isTextExpanded ? 'Mostra meno' : 'Mostra di più'}
+                    </button>
+                )}
             </div>
 
             {question.risposte && question.risposte.length > 0 && (
                 <div className="answers-list">
                     {displayedAnswers.map(answer => {
                         const currentUser = getCurrentUser();
-                        const isMyAnswer = !!(currentUser && answer.idPsicologo === currentUser.id);
+                        // Compare with fiscalCode since idPsicologo is the codice fiscale
+                        const isMyAnswer = !!(currentUser && answer.idPsicologo === currentUser.fiscalCode);
 
                         return (
                             <ForumAnswerSection

@@ -8,10 +8,16 @@ interface AppLayoutProps {
     role: 'psychologist' | 'admin';
 }
 
+// Context type for Outlet
+export interface OutletContextType {
+    onProfileUpdate: () => void;
+}
+
 const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [profileRefreshKey, setProfileRefreshKey] = useState(0);
 
     // Close sidebar on route change
     useEffect(() => {
@@ -99,6 +105,16 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    // Callback to trigger profile refresh in sidebar
+    const handleProfileUpdate = useCallback(() => {
+        setProfileRefreshKey(prev => prev + 1);
+    }, []);
+
+    // Context to pass to Outlet children
+    const outletContext: OutletContextType = useMemo(() => ({
+        onProfileUpdate: handleProfileUpdate
+    }), [handleProfileUpdate]);
+
     return (
         <div className="app-layout-container">
             {/* Mobile Hamburger Button */}
@@ -124,13 +140,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
                         <PsychologistProfile
                             onSelectSection={handleSectionSelect}
                             activeSection={activeSection}
+                            refreshKey={profileRefreshKey}
                         />
                     )}
                 </div>
 
                 {/* Dynamic Content Area */}
                 <div className="app-layout-content">
-                    <Outlet />
+                    <Outlet context={outletContext} />
                 </div>
             </div>
 
@@ -143,3 +160,4 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
 };
 
 export default AppLayout;
+
