@@ -134,8 +134,10 @@ export class StatoAnimoService {
         // Recupera tutti gli stati d'animo del paziente (limite 100 per sicurezza)
         const rows = await db
             .select({
+                idStatoAnimo: statoAnimo.idStatoAnimo,
                 umore: statoAnimo.umore,
                 intensita: statoAnimo.intensita,
+                note: statoAnimo.note,
                 dataInserimento: statoAnimo.dataInserimento,
             })
             .from(statoAnimo)
@@ -147,9 +149,11 @@ export class StatoAnimoService {
         const entries = rows
             .filter(row => new Date(row.dataInserimento) >= dataLimite)
             .map(row => ({
+                id: row.idStatoAnimo,
                 date: this.formatLocalDate(new Date(row.dataInserimento)),
                 umore: row.umore,
                 intensita: row.intensita ?? undefined,
+                note: row.note ?? undefined,
             }))
             .reverse(); // Ordine cronologico crescente (dal passato al presente) per il grafico
 

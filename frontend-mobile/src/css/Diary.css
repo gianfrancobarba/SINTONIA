@@ -173,11 +173,14 @@
     transform: translateY(-2px);
 }
 
-/* Floating Action Button */
+/* Add Button - Bottom Right (not floating) */
+.diary-fab-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0px 20px 0px;
+}
+
 .diary-fab {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -187,7 +190,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 200;
     box-shadow: 0 8px 20px rgba(44, 95, 111, 0.4);
     transition: all 0.3s ease;
     padding: 0;

@@ -86,6 +86,7 @@ export class PatientNotificheService {
                 descrizione: 'Hai un questionario da compilare. Prenditi qualche minuto per completarlo.',
                 dataInvio: new Date(),
                 letto: false,
+                isDynamic: true,
             });
         }
 
@@ -99,6 +100,7 @@ export class PatientNotificheService {
                 descrizione: 'Non hai ancora inserito il tuo stato d\'animo di oggi. Fallo ora!',
                 dataInvio: new Date(),
                 letto: false,
+                isDynamic: true,
             });
         }
 
@@ -113,11 +115,11 @@ export class PatientNotificheService {
         // 1. Recupera notifiche dinamiche (solo prima pagina)
         const dynamicNotifications = page === 1 ? await this.getDynamicNotifications(idPaziente) : [];
 
-        // 2. Recupera notifiche dal database
+        // 2. Recupera notifiche dal database (solo non lette)
         const dbNotifications = await db
             .select()
             .from(notifica)
-            .where(eq(notifica.idPaziente, idPaziente))
+            .where(and(eq(notifica.idPaziente, idPaziente), eq(notifica.letto, false)))
             .orderBy(desc(notifica.dataInvio));
 
         const mappedDbNotifications = dbNotifications.map((n) => ({
@@ -127,6 +129,7 @@ export class PatientNotificheService {
             descrizione: n.descrizione,
             dataInvio: n.dataInvio,
             letto: n.letto ?? false,
+            isDynamic: false,
         }));
 
         // 3. Combina: dinamiche in cima + database

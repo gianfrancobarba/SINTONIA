@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/BottomNavigation.css';
+import { getUnreadCount } from '../services/notification.service';
 
 // Import SVG icons
 import forumIcon from '../assets/icons/forum.svg';
@@ -18,6 +19,7 @@ interface NavItem {
 const BottomNavigation: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [unreadCount, setUnreadCount] = useState(0);
 
     const navItems: NavItem[] = [
         { path: '/forum', icon: forumIcon, label: 'Forum' },
@@ -27,6 +29,22 @@ const BottomNavigation: React.FC = () => {
         { path: '/profile', icon: userIcon, label: 'Profilo' }
     ];
 
+    useEffect(() => {
+        const fetchUnreadCount = async () => {
+            try {
+                const data = await getUnreadCount();
+                setUnreadCount(data.count);
+            } catch (err) {
+                console.error('Error fetching unread count:', err);
+            }
+        };
+        fetchUnreadCount();
+
+        // Refresh count when navigating back from notifications
+        const interval = setInterval(fetchUnreadCount, 30000);
+        return () => clearInterval(interval);
+    }, [location.pathname]);
+
     const isActive = (path: string) => location.pathname === path;
 
     return (
@@ -35,6 +53,7 @@ const BottomNavigation: React.FC = () => {
             <div className="bottom-nav-items">
                 {navItems.map((item) => {
                     const active = isActive(item.path);
+                    const isNotification = item.path === '/notifications';
 
                     return (
                         <button
@@ -44,11 +63,18 @@ const BottomNavigation: React.FC = () => {
                             aria-label={item.label}
                             aria-current={active ? 'page' : undefined}
                         >
-                            <img
-                                src={item.icon}
-                                alt={item.label}
-                                className="nav-icon"
-                            />
+                            <div className="nav-icon-wrapper">
+                                <img
+                                    src={item.icon}
+                                    alt={item.label}
+                                    className="nav-icon"
+                                />
+                                {isNotification && unreadCount > 0 && (
+                                    <span className="notification-badge">
+                                        {unreadCount > 9 ? '9+' : unreadCount}
+                                    </span>
+                                )}
+                            </div>
                         </button>
                     );
                 })}

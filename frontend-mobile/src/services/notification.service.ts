@@ -6,6 +6,7 @@ export interface NotificationDto {
     descrizione: string;
     dataInvio: string | null;
     letto: boolean;
+    isDynamic: boolean;
 }
 
 export interface PaginatedNotificationsDto {
