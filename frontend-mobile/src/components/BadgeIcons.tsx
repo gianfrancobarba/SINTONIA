@@ -17,35 +17,87 @@ export const BadgeIcon: React.FC<BadgeIconProps> = ({ name, className, size = 48
                         <path d="M20 20H44" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" />
                         <path d="M20 28H44" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" />
                         <path d="M20 36H30" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" />
-                        <circle cx="46" cy="46" r="14" fill="#FCD34D" stroke="#B45309" strokeWidth="2" />
-                        <text x="46" y="52" textAnchor="middle" fill="#78350F" fontSize="16" fontWeight="bold">1</text>
+                        {/* Checkmark */}
+                        <circle cx="46" cy="46" r="12" fill="#10B981" stroke="#059669" strokeWidth="2" />
+                        <path d="M40 46L44 50L52 42" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 );
             case 'Cinque Questionari':
+                // Clipboard con checkmarks - questionario singolo completato
                 return (
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="8" y="12" width="36" height="44" rx="3" fill="#C7D2FE" stroke="#4F46E5" strokeWidth="2" />
-                        <rect x="14" y="8" width="36" height="44" rx="3" fill="#E0E7FF" stroke="#4F46E5" strokeWidth="2" />
-                        <circle cx="44" cy="44" r="16" fill="#60A5FA" stroke="#1D4ED8" strokeWidth="2" />
-                        <text x="44" y="50" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">5</text>
+                        {/* Clipboard body */}
+                        <rect x="10" y="10" width="40" height="50" rx="4" fill="#E0E7FF" stroke="#6366F1" strokeWidth="2.5" />
+                        {/* Clipboard clip */}
+                        <rect x="22" y="4" width="16" height="12" rx="3" fill="#818CF8" stroke="#6366F1" strokeWidth="2" />
+                        <circle cx="30" cy="10" r="3" fill="#C7D2FE" />
+                        {/* Checkmark rows */}
+                        <rect x="16" y="24" width="6" height="6" rx="1" fill="#10B981" />
+                        <path d="M17 27L19 29L21 25" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M26 27H42" stroke="#A5B4FC" strokeWidth="2" strokeLinecap="round" />
+
+                        <rect x="16" y="34" width="6" height="6" rx="1" fill="#10B981" />
+                        <path d="M17 37L19 39L21 35" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M26 37H38" stroke="#A5B4FC" strokeWidth="2" strokeLinecap="round" />
+
+                        <rect x="16" y="44" width="6" height="6" rx="1" fill="#10B981" />
+                        <path d="M17 47L19 49L21 45" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M26 47H35" stroke="#A5B4FC" strokeWidth="2" strokeLinecap="round" />
+                        {/* Star badge */}
+                        <path d="M50 38L52 44H58L53 48L55 54L50 50L45 54L47 48L42 44H48L50 38Z" fill="#FBBF24" stroke="#D97706" strokeWidth="1.5" />
                     </svg>
                 );
             case 'Dieci Questionari':
+                // Cartella aperta con documenti - rappresenta raccolta di questionari
                 return (
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="32" cy="32" r="26" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="3" />
-                        <path d="M14 42C14 42 18 24 32 16C46 24 50 42 50 42" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" fill="none" />
-                        <text x="32" y="40" textAnchor="middle" fill="#78350F" fontSize="20" fontWeight="bold">10</text>
+                        {/* Folder back */}
+                        <path d="M6 18H58V54C58 56.2 56.2 58 54 58H10C7.8 58 6 56.2 6 54V18Z" fill="#34D399" stroke="#059669" strokeWidth="2" />
+                        {/* Folder tab */}
+                        <path d="M6 18V14C6 11.8 7.8 10 10 10H24L28 18H6Z" fill="#34D399" stroke="#059669" strokeWidth="2" />
+                        {/* Document 1 (back) */}
+                        <rect x="14" y="22" width="22" height="28" rx="2" fill="#F3F4F6" stroke="#9CA3AF" strokeWidth="1.5" transform="rotate(-5 14 22)" />
+                        <path d="M20 30H32" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" />
+                        <path d="M20 35H28" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" />
+                        {/* Document 2 (front) */}
+                        <rect x="24" y="24" width="22" height="28" rx="2" fill="#FAFAFA" stroke="#6B7280" strokeWidth="1.5" transform="rotate(5 24 24)" />
+                        <path d="M30 32H46" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" />
+                        <path d="M30 37H42" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" />
+                        <path d="M30 42H38" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" />
+                        {/* Big checkmark on folder */}
+                        <circle cx="48" cy="48" r="10" fill="#10B981" stroke="#059669" strokeWidth="2" />
+                        <path d="M42 48L46 52L54 44" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 );
             case 'Venticinque Questionari':
+                // Certificato/diploma con sigillo - rappresenta eccellenza
                 return (
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 14H46L42 44C42 50.6 37.6 56 32 56C26.4 56 22 50.6 22 44L18 14Z" fill="#FCD34D" stroke="#B45309" strokeWidth="2" />
-                        <path d="M18 18H10C7.8 18 6 19.8 6 22V26C6 28.2 7.8 30 10 30H19" stroke="#B45309" strokeWidth="2" fill="none" />
-                        <path d="M46 18H54C56.2 18 58 19.8 58 22V26C58 28.2 56.2 30 54 30H45" stroke="#B45309" strokeWidth="2" fill="none" />
-                        <rect x="26" y="56" width="12" height="4" rx="1" fill="#B45309" />
-                        <text x="32" y="38" textAnchor="middle" fill="#78350F" fontSize="14" fontWeight="bold">25</text>
+                        {/* Certificate paper */}
+                        <rect x="6" y="8" width="52" height="40" rx="3" fill="#FFFBEB" stroke="#D97706" strokeWidth="2" />
+                        {/* Decorative border */}
+                        <rect x="10" y="12" width="44" height="32" rx="2" fill="none" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="3 2" />
+                        {/* Title text lines */}
+                        <path d="M22 20H42" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M18 28H46" stroke="#FDE68A" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M20 33H44" stroke="#FDE68A" strokeWidth="2" strokeLinecap="round" />
+                        {/* Star decorations */}
+                        <path d="M14 18L15 20L17 20L15.5 21.5L16 24L14 22.5L12 24L12.5 21.5L11 20L13 20Z" fill="#FBBF24" />
+                        <path d="M50 18L51 20L53 20L51.5 21.5L52 24L50 22.5L48 24L48.5 21.5L47 20L49 20Z" fill="#FBBF24" />
+                        {/* Seal/Stamp with star */}
+                        <circle cx="32" cy="50" r="12" fill="url(#sealGrad)" stroke="#B45309" strokeWidth="2" />
+                        <circle cx="32" cy="50" r="8" fill="#FEF3C7" stroke="#D97706" strokeWidth="1" />
+                        <path d="M32 44L33.5 48H38L34.5 50.5L35.5 54.5L32 52L28.5 54.5L29.5 50.5L26 48H30.5Z" fill="#D97706" />
+                        {/* Ribbons */}
+                        <path d="M24 56L20 64L24 60L28 64L26 56" fill="#EF4444" stroke="#DC2626" strokeWidth="1" />
+                        <path d="M40 56L44 64L40 60L36 64L38 56" fill="#EF4444" stroke="#DC2626" strokeWidth="1" />
+                        <defs>
+                            <linearGradient id="sealGrad" x1="20" y1="38" x2="44" y2="62">
+                                <stop stopColor="#FCD34D" />
+                                <stop offset="0.5" stopColor="#FBBF24" />
+                                <stop offset="1" stopColor="#F59E0B" />
+                            </linearGradient>
+                        </defs>
                     </svg>
                 );
             case 'Screening Completo':
@@ -171,7 +223,8 @@ export const BadgeIcon: React.FC<BadgeIconProps> = ({ name, className, size = 48
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M32 6C32 6 18 22 18 38C18 48 24 56 32 56C40 56 46 48 46 38C46 22 32 6 32 6Z" fill="#F97316" stroke="#C2410C" strokeWidth="2" />
                         <path d="M32 20C32 20 24 32 24 40C24 46 28 50 32 50C36 50 40 46 40 40C40 32 32 20 32 20Z" fill="#FCD34D" />
-                        <text x="32" y="44" textAnchor="middle" fill="#9A3412" fontSize="16" fontWeight="bold">7</text>
+                        {/* Inner glow */}
+                        <circle cx="32" cy="38" r="4" fill="#FEF3C7" opacity="0.7" />
                     </svg>
                 );
             case 'Streak Master':
@@ -179,8 +232,11 @@ export const BadgeIcon: React.FC<BadgeIconProps> = ({ name, className, size = 48
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M32 10C32 10 14 28 14 44C14 56 22 62 32 62C42 62 50 56 50 44C50 28 32 10 32 10Z" fill="#EF4444" stroke="#991B1B" strokeWidth="2" />
                         <path d="M32 24C32 24 20 38 20 48C20 54 26 58 32 58C38 58 44 54 44 48C44 38 32 24 32 24Z" fill="#FCD34D" />
+                        {/* Crown on top */}
                         <path d="M20 14L24 22L32 10L40 22L44 14" stroke="#F59E0B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        <text x="32" y="52" textAnchor="middle" fill="#991B1B" fontSize="14" fontWeight="bold">30</text>
+                        {/* Inner bright core */}
+                        <circle cx="32" cy="45" r="6" fill="#FEF3C7" opacity="0.8" />
+                        <circle cx="32" cy="45" r="3" fill="white" opacity="0.6" />
                     </svg>
                 );
 
@@ -206,9 +262,10 @@ export const BadgeIcon: React.FC<BadgeIconProps> = ({ name, className, size = 48
                         {/* Sound waves */}
                         <path d="M48 22C54 28 54 44 48 50" stroke="#EC4899" strokeWidth="3" strokeLinecap="round" />
                         <path d="M54 14C62 24 62 48 54 58" stroke="#F9A8D4" strokeWidth="2.5" strokeLinecap="round" />
-                        {/* Number 5 badge */}
-                        <circle cx="48" cy="14" r="10" fill="#FBBF24" stroke="#F59E0B" strokeWidth="2" />
-                        <text x="48" y="18" textAnchor="middle" fill="#78350F" fontSize="12" fontWeight="bold">5</text>
+                        {/* Sparkles */}
+                        <circle cx="52" cy="18" r="2" fill="#FBBF24" />
+                        <circle cx="58" cy="28" r="1.5" fill="#FBBF24" />
+                        <circle cx="56" cy="40" r="2" fill="#FBBF24" />
                     </svg>
                 );
             case 'Prima Risposta Ricevuta':
