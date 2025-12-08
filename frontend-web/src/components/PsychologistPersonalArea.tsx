@@ -12,6 +12,7 @@ import Toast from './Toast';
 
 const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onProfileUpdate }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [emailError, setEmailError] = useState('');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [formData, setFormData] = useState<{
         codiceFiscale: string;
@@ -80,6 +81,14 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
     };
 
     const handleSave = async () => {
+        // Email validation
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            setEmailError('Email non valida');
+            return;
+        }
+        setEmailError('');
+
         try {
             const user = getCurrentUser();
             const cf = user?.fiscalCode || user?.email;
@@ -107,6 +116,7 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, email: e.target.value });
+        setEmailError(''); // Clear error when user types
     };
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,7 +223,13 @@ const PsychologistPersonalArea: React.FC<PsychologistPersonalAreaProps> = ({ onP
                                 onChange={handleEmailChange}
                                 disabled={!isEditing}
                                 className={`field-input ${isEditing ? 'field-editable' : 'field-disabled'}`}
+                                style={{ borderColor: emailError ? '#ef4444' : undefined }}
                             />
+                            {emailError && (
+                                <div style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', fontWeight: 500 }}>
+                                    {emailError}
+                                </div>
+                            )}
                         </div>
                     </div>
 

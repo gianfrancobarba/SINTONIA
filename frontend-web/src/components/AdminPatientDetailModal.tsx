@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import { User, Mail, MapPin, IdCard, Calendar, Award, Flag, UserCog, X, Save, Edit2, Loader2, Hash, Users, Trash2 } from 'lucide-react';
+import { User, Flag, UserCog, X, Save, Edit2, Loader2, Trash2, ChevronDown, Check, PenLine } from 'lucide-react';
 import type { PatientData } from '../types/patient';
-import { getPatientDetails, updatePatient, removePatientFromWaitingList, updatePatientPriority} from '../services/patient.service';
+import { getPatientDetails, updatePatient, removePatientFromWaitingList, updatePatientPriority, searchComuni } from '../services/patient.service';
 import { fetchAllPsychologists, type PsychologistOption } from '../services/psychologist.service';
 import Toast from './Toast';
-import '../css/AdminPatientDetailModal.css';
+import '../css/Modal.css';
 
 interface AdminPatientDetailModalProps {
     patient: PatientData | null;
     onClose: () => void;
-    onUpdate?: () => void; // Callback to refresh list after update
+    onUpdate?: () => void;
 }
 
 const PRIORITY_OPTIONS = [
@@ -35,15 +35,53 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
 
     // Psychologists list
     const [psychologists, setPsychologists] = useState<PsychologistOption[]>([]);
-    const [loadingPsychologists, setLoadingPsychologists] = useState(false);
+    // Removed unused loadingPsychologists variable
 
     // Editable fields
     const [editedEmail, setEditedEmail] = useState('');
+    const [tempEmail, setTempEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
     const [editedResidenza, setEditedResidenza] = useState('');
+    const [isValidResidence, setIsValidResidence] = useState(true);
     const [editedPsicologo, setEditedPsicologo] = useState('');
     const [editedPriorita, setEditedPriorita] = useState('');
+    const [comuniOptions, setComuniOptions] = useState<{ nome: string; provincia: string; codice: string }[]>([]);
     const [psychologistSearch, setPsychologistSearch] = useState('');
     const [showPsychologistDropdown, setShowPsychologistDropdown] = useState(false);
+
+    // Chip dropdown states
+    const [showPriorityDropdown, setShowPriorityDropdown] = useState(false);
+    const [showResidenzaInput, setShowResidenzaInput] = useState(false);
+    const [showEmailInput, setShowEmailInput] = useState(false);
+
+    const psychologistDropdownRef = useRef<HTMLDivElement>(null);
+    const priorityDropdownRef = useRef<HTMLDivElement>(null);
+    const residenzaInputRef = useRef<HTMLDivElement>(null);
+    const emailInputRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (psychologistDropdownRef.current && !psychologistDropdownRef.current.contains(event.target as Node)) {
+                setShowPsychologistDropdown(false);
+            }
+            if (priorityDropdownRef.current && !priorityDropdownRef.current.contains(event.target as Node)) {
+                setShowPriorityDropdown(false);
+            }
+            if (residenzaInputRef.current && !residenzaInputRef.current.contains(event.target as Node)) {
+                setShowResidenzaInput(false);
+            }
+            if (emailInputRef.current && !emailInputRef.current.contains(event.target as Node)) {
+                setShowEmailInput(false);
+            }
+        }
+
+        if (showPsychologistDropdown || showPriorityDropdown || showResidenzaInput || showEmailInput) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showPsychologistDropdown, showPriorityDropdown, showResidenzaInput, showEmailInput]);
 
     useEffect(() => {
         if (patient) {
@@ -53,14 +91,11 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
     }, [patient]);
 
     const loadPsychologists = async () => {
-        setLoadingPsychologists(true);
         try {
             const data = await fetchAllPsychologists();
             setPsychologists(data);
         } catch (error) {
             console.error('Error loading psychologists:', error);
-        } finally {
-            setLoadingPsychologists(false);
         }
     };
 
@@ -184,529 +219,411 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
     };
 
     return ReactDOM.createPortal(
-        <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+        <div className="modal-overlay-blur" onClick={onClose}>
             <div
-                className="modal-content"
+                className="modal-card modal-card-lg"
                 onClick={(e) => e.stopPropagation()}
-                style={{
-                    maxWidth: '1100px',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
-                }}
             >
-                {/* Modern Header with Gradient */}
-                <div style={{
-                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
-                    padding: '32px',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        right: '-10%',
-                        width: '300px',
-                        height: '300px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '50%',
-                        filter: 'blur(40px)'
-                    }}></div>
-
-                    <div style={{ position: 'relative', zIndex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div>
-                                <h2 style={{
-                                    margin: '0 0 8px 0',
-                                    fontSize: '28px',
-                                    fontWeight: '700',
-                                    color: 'white',
-                                    letterSpacing: '-0.5px'
-                                }}>
-                                    Dettagli Paziente
-                                </h2>
-                                <p style={{
-                                    margin: 0,
-                                    fontSize: '14px',
-                                    color: 'rgba(255, 255, 255, 0.8)',
-                                    fontWeight: '500'
-                                }}>
-                                    {patientDetails ? `${patientDetails.nome} ${patientDetails.cognome}` : ''}
-                                </p>
-                            </div>
-                            <button
-                                onClick={onClose}
-                                style={{
-                                    background: 'rgba(255, 255, 255, 0.15)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: 'none',
-                                    color: 'white',
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.3s ease',
-                                    fontSize: '20px'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
-                                }}
-                            >
-                                ✕
-                            </button>
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Dettagli Paziente
+                            </h2>
+                            <p className="modal-header-subtitle">
+                                {patientDetails ? `${patientDetails.nome} ${patientDetails.cognome}` : ''}
+                            </p>
                         </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            <X size={20} />
+                        </button>
                     </div>
                 </div>
 
-                {/* Body with Modern Cards */}
-                <div style={{
-                    padding: '32px',
-                    background: '#f8f9fa',
-                    maxHeight: 'calc(90vh - 200px)',
-                    overflowY: 'auto'
-                }}>
+                {/* Body */}
+                <div className="modal-body-gray modal-body-scrollable">
                     {loading ? (
-                        <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-                            <Loader2 size={32} style={{ animation: 'spin 1s linear infinite' }} />
+                        <div className="modal-loading">
+                            <Loader2 size={32} className="modal-loading-spinner" />
                             <p style={{ marginTop: '16px' }}>Caricamento dettagli...</p>
                         </div>
                     ) : patientDetails ? (
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
-                            gap: '16px'
-                        }}>
-                            {/* ID Paziente Card */}
-                            <InfoCard
-                                icon={<Hash size={20} />}
-                                label="ID Paziente"
-                                value={`${patientDetails.idPaziente.substring(0, 16)}...`}
-                                iconColor="#0D475D"
-                                tooltip={patientDetails.idPaziente}
-                            />
-
-                            {/* Nome Card */}
-                            <InfoCard
-                                icon={<User size={20} />}
-                                label="Nome"
-                                value={patientDetails.nome}
-                                iconColor="#83B9C1"
-                            />
-
-                            {/* Cognome Card */}
-                            <InfoCard
-                                icon={<User size={16} />}
-                                label="Cognome"
-                                value={patientDetails.cognome}
-                                iconColor="#83B9C1"
-                            />
-
-                            {/* Codice Fiscale Card */}
-                            <InfoCard
-                                icon={<IdCard size={16} />}
-                                label="Codice Fiscale"
-                                value={patientDetails.codFiscale}
-                                iconColor="#0D475D"
-                            />
-
-                            {/* Data di Nascita Card */}
-                            <InfoCard
-                                icon={<Calendar size={16} />}
-                                label="Data di Nascita"
-                                value={formatDate(patientDetails.dataNascita)}
-                                iconColor="#7FB77E"
-                            />
-
-                            {/* Data Ingresso Card */}
-                            <InfoCard
-                                icon={<Calendar size={16} />}
-                                label="Data Ingresso"
-                                value={formatDate(patientDetails.dataIngresso)}
-                                iconColor="#7FB77E"
-                            />
-
-                            {/* Sesso Card */}
-                            <InfoCard
-                                icon={<Users size={16} />}
-                                label="Sesso"
-                                value={patientDetails.sesso}
-                                iconColor="#5a9aa5"
-                            />
-
-                            {/* Score Card */}
-                            <InfoCard
-                                icon={<Award size={16} />}
-                                label="Score"
-                                value={patientDetails.score !== null ? String(patientDetails.score) : 'N/A'}
-                                iconColor="#FFB74D"
-                            />
-
-                            {/* Priorità Card */}
-                            {isEditing ? (
-                                <div style={{
-                                    background: 'white',
-                                    borderRadius: '12px',
-                                    padding: '16px',
-                                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                                    border: '1px solid #e8e8e8',
-                                    gridColumn: '1 / -1'
-                                }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                                        <div style={{
-                                            width: '32px',
-                                            height: '32px',
-                                            borderRadius: '10px',
-                                            background: 'linear-gradient(135deg, #E57373 0%, #E57373dd 100%)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            color: 'white'
-                                        }}>
-                                            <Flag size={16} />
-                                        </div>
-                                        <span style={{
-                                            fontSize: '10px',
-                                            fontWeight: '600',
-                                            color: '#666',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.5px'
-                                        }}>
-                                            Priorità
-                                        </span>
+                        <div>
+                            {/* Compact Info Section */}
+                            <div className="modal-data-section">
+                                <div className="modal-data-section-title">
+                                    <div className="modal-data-section-title-icon">
+                                        <User size={14} />
                                     </div>
-                                    {/* Grid di card selezionabili */}
-                                    <div style={{
-                                        display: 'grid',
-                                        gridTemplateColumns: 'repeat(2, 1fr)',
-                                        gap: '12px'
-                                    }}>
-                                        {PRIORITY_OPTIONS.map(option => {
-                                            const isSelected = editedPriorita === option.value;
-                                            const colors = {
-                                                'Urgente': { bg: '#ef4444', bgLight: '#fee2e2', border: '#dc2626' },
-                                                'Breve': { bg: '#f97316', bgLight: '#ffedd5', border: '#ea580c' },
-                                                'Differibile': { bg: '#eab308', bgLight: '#fef9c3', border: '#ca8a04' },
-                                                'Programmabile': { bg: '#22c55e', bgLight: '#dcfce7', border: '#16a34a' }
-                                            };
-                                            const color = colors[option.value as keyof typeof colors];
+                                    Informazioni Paziente
+                                </div>
 
-                                            return (
-                                                <div
-                                                    key={option.value}
-                                                    onClick={() => setEditedPriorita(option.value)}
-                                                    style={{
-                                                        padding: '14px',
-                                                        borderRadius: '10px',
-                                                        border: `2px solid ${isSelected ? color.border : '#e5e7eb'}`,
-                                                        background: isSelected ? color.bgLight : 'white',
-                                                        cursor: 'pointer',
-                                                        transition: 'all 0.2s ease',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: '10px',
-                                                        position: 'relative',
-                                                        overflow: 'hidden'
-                                                    }}
-                                                    onMouseEnter={(e) => {
-                                                        if (!isSelected) {
-                                                            e.currentTarget.style.borderColor = color.border;
-                                                            e.currentTarget.style.background = color.bgLight;
-                                                            e.currentTarget.style.transform = 'translateY(-2px)';
-                                                            e.currentTarget.style.boxShadow = `0 4px 12px ${color.bg}33`;
-                                                        }
-                                                    }}
-                                                    onMouseLeave={(e) => {
-                                                        if (!isSelected) {
-                                                            e.currentTarget.style.borderColor = '#e5e7eb';
-                                                            e.currentTarget.style.background = 'white';
-                                                            e.currentTarget.style.transform = 'translateY(0)';
-                                                            e.currentTarget.style.boxShadow = 'none';
-                                                        }
-                                                    }}
-                                                >
-                                                    {/* Icona priorità */}
-                                                    <div style={{
-                                                        width: '36px',
-                                                        height: '36px',
-                                                        borderRadius: '8px',
-                                                        background: isSelected
-                                                            ? `linear-gradient(135deg, ${color.bg} 0%, ${color.border} 100%)`
-                                                            : '#f3f4f6',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        color: isSelected ? 'white' : '#9ca3af',
-                                                        transition: 'all 0.2s ease'
-                                                    }}>
-                                                        <Flag size={18} />
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                                    <span className="modal-data-row-label">ID Paziente</span>
+                                    <span className="modal-data-row-value" title={patientDetails.idPaziente}>
+                                        {patientDetails.idPaziente.length > 20
+                                            ? `${patientDetails.idPaziente.substring(0, 20)}...`
+                                            : patientDetails.idPaziente}
+                                    </span>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                    <span className="modal-data-row-label">Nome</span>
+                                    <span className="modal-data-row-value">{patientDetails.nome}</span>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                    <span className="modal-data-row-label">Cognome</span>
+                                    <span className="modal-data-row-value">{patientDetails.cognome}</span>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                                    <span className="modal-data-row-label">Codice Fiscale</span>
+                                    <span className="modal-data-row-value">{patientDetails.codFiscale}</span>
+                                </div>
+
+                                {/* Psicologo - Editable Chip (only if already assigned) */}
+                                <div className="modal-data-row modal-data-row-editable">
+                                    <div className="modal-data-row-dot modal-data-row-dot-purple"></div>
+                                    <span className="modal-data-row-label">Psicologo</span>
+                                    <div style={{ position: 'relative' }} ref={psychologistDropdownRef}>
+                                        <button
+                                            onClick={() => {
+                                                // Only allow editing if patient already has a psychologist
+                                                if (isEditing && patientDetails.idPsicologo) {
+                                                    setShowPsychologistDropdown(!showPsychologistDropdown);
+                                                }
+                                            }}
+                                            className="modal-editable-chip"
+                                            style={{
+                                                cursor: isEditing && patientDetails.idPsicologo ? 'pointer' : 'default',
+                                                opacity: isEditing && patientDetails.idPsicologo ? 1 : 0.7,
+                                                paddingRight: '12px'
+                                            }}
+                                        >
+                                            {editedPsicologo ? (
+                                                <span style={{ fontWeight: 600 }}>
+                                                    {psychologists.find(p => p.codFiscale === editedPsicologo)
+                                                        ? `Dr. ${psychologists.find(p => p.codFiscale === editedPsicologo)!.cognome}`
+                                                        : editedPsicologo}
+                                                </span>
+                                            ) : 'Non assegnato'}
+                                            {isEditing && patientDetails.idPsicologo && <UserCog size={14} className="modal-editable-chip-icon" style={{ marginLeft: '6px' }} />}
+                                        </button>
+
+                                        {showPsychologistDropdown && (
+                                            <div className="modal-chip-input-popover" style={{ width: '300px', zIndex: 10001 }}>
+                                                <input
+                                                    type="text"
+                                                    value={psychologistSearch}
+                                                    onChange={(e) => setPsychologistSearch(e.target.value)}
+                                                    placeholder="Cerca per nome o ID..."
+                                                    className="modal-chip-input"
+                                                    autoFocus
+                                                    style={{ marginBottom: '10px' }}
+                                                />
+
+                                                <div style={{ maxHeight: '140px', overflowY: 'auto' }}>
+                                                    {/* Non assegnato option */}
+                                                    <div
+                                                        onClick={() => handlePsychologistSelect('')}
+                                                        className="modal-chip-dropdown-option"
+                                                        style={{ fontStyle: 'italic', color: '#666' }}
+                                                    >
+                                                        -- Non assegnato --
                                                     </div>
-                                                    {/* Label */}
-                                                    <div style={{ flex: 1 }}>
-                                                        <div style={{
-                                                            fontSize: '14px',
-                                                            fontWeight: '600',
-                                                            color: isSelected ? color.border : '#374151'
-                                                        }}>
-                                                            {option.label}
-                                                        </div>
-                                                    </div>
-                                                    {/* Check icon quando selezionato */}
-                                                    {isSelected && (
-                                                        <div style={{
-                                                            width: '20px',
-                                                            height: '20px',
-                                                            borderRadius: '50%',
-                                                            background: color.bg,
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            color: 'white',
-                                                            fontSize: '12px',
-                                                            fontWeight: 'bold'
-                                                        }}>
-                                                            ✓
+
+                                                    {filteredPsychologists.length > 0 ? (
+                                                        filteredPsychologists.map(psy => (
+                                                            <div
+                                                                key={psy.codFiscale}
+                                                                onClick={() => handlePsychologistSelect(psy.codFiscale)}
+                                                                className={`modal-chip-dropdown-option ${editedPsicologo === psy.codFiscale ? 'modal-chip-dropdown-option-selected' : ''}`}
+                                                            >
+                                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1 }}>
+                                                                    <span style={{ fontWeight: 600, fontSize: '13px' }}>{psy.cognome} {psy.nome}</span>
+                                                                    <span style={{ fontSize: '11px', color: '#64748b' }}>{psy.codFiscale}</span>
+                                                                </div>
+                                                                {editedPsicologo === psy.codFiscale && (
+                                                                    <div className="modal-chip-dropdown-option-check">
+                                                                        <Check size={12} />
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <div style={{ padding: '12px', textAlign: 'center', color: '#999', fontSize: '13px' }}>
+                                                            Nessuno psicologo trovato
                                                         </div>
                                                     )}
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            ) : (
-                                <InfoCard
-                                    icon={<Flag size={16} />}
-                                    label="Priorità"
-                                    value={patientDetails.idPriorita || 'N/A'}
-                                    iconColor="#E57373"
-                                />
-                            )}
-
-                            {/* Residenza Card - Editable */}
-                            <EditableCard
-                                icon={<MapPin size={16} />}
-                                label="Residenza"
-                                value={patientDetails.residenza}
-                                iconColor="#5a9aa5"
-                                isEditing={isEditing}
-                                editedValue={editedResidenza}
-                                onValueChange={setEditedResidenza}
-                            />
-
-                            {/* Psicologo Assegnato Card - Full Width & Editable with Dropdown */}
-                            <div style={{
-                                gridColumn: '1 / -1',
-                                background: 'white',
-                                borderRadius: '12px',
-                                padding: '14px',
-                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                                border: '1px solid #e8e8e8',
-                                transition: 'all 0.3s ease',
-                                position: 'relative',
-                                zIndex: isEditing ? 10 : 1
-                            }}
-                                onMouseEnter={(e) => {
-                                    if (!isEditing) {
-                                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                                        e.currentTarget.style.transform = 'translateY(-2px)';
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (!isEditing) {
-                                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                                        e.currentTarget.style.transform = 'translateY(0)';
-                                    }
-                                }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                                    <div style={{
-                                        width: '32px',
-                                        height: '32px',
-                                        borderRadius: '10px',
-                                        background: 'linear-gradient(135deg, #7FB77E 0%, #5fa05d 100%)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: 'white'
-                                    }}>
-                                        <UserCog size={16} />
-                                    </div>
-                                    <span style={{
-                                        fontSize: '10px',
-                                        fontWeight: '600',
-                                        color: '#666',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.5px'
-                                    }}>
-                                        Psicologo Assegnato
-                                    </span>
-                                </div>
-                                {isEditing ? (
-                                    <div style={{ position: 'relative' }}>
-                                        <input
-                                            type="text"
-                                            value={psychologistSearch}
-                                            onChange={(e) => {
-                                                setPsychologistSearch(e.target.value);
-                                                setShowPsychologistDropdown(true);
-                                            }}
-                                            onFocus={(e) => {
-                                                setShowPsychologistDropdown(true);
-                                                e.target.style.borderColor = '#7FB77E';
-                                            }}
-                                            placeholder={
-                                                editedPsicologo
-                                                    ? psychologists.find(p => p.codFiscale === editedPsicologo)
-                                                        ? `${psychologists.find(p => p.codFiscale === editedPsicologo)!.codFiscale} - Dr. ${psychologists.find(p => p.codFiscale === editedPsicologo)!.nome} ${psychologists.find(p => p.codFiscale === editedPsicologo)!.cognome}`
-                                                        : 'Non assegnato'
-                                                    : 'Cerca psicologo...'
-                                            }
-                                            disabled={loadingPsychologists}
-                                            style={{
-                                                width: '100%',
-                                                padding: '12px 16px',
-                                                border: '2px solid #e0e0e0',
-                                                borderRadius: '10px',
-                                                fontSize: '15px',
-                                                fontWeight: '500',
-                                                transition: 'all 0.2s ease',
-                                                outline: 'none'
-                                            }}
-                                            onBlur={(e) => {
-                                                setTimeout(() => {
-                                                    e.target.style.borderColor = '#e0e0e0';
-                                                    setShowPsychologistDropdown(false);
-                                                }, 200);
-                                            }}
-                                        />
-
-                                        {showPsychologistDropdown && !loadingPsychologists && (
-                                            <div style={{
-                                                position: 'absolute',
-                                                top: '100%',
-                                                left: 0,
-                                                right: 0,
-                                                marginTop: '8px',
-                                                backgroundColor: 'white',
-                                                border: '1px solid #e0e0e0',
-                                                borderRadius: '12px',
-                                                maxHeight: '200px',
-                                                overflowY: 'auto',
-                                                zIndex: 9999,
-                                                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)'
-                                            }}>
-                                                {/* Non assegnato option */}
-                                                <div
-                                                    onClick={() => handlePsychologistSelect('')}
-                                                    style={{
-                                                        padding: '12px 16px',
-                                                        cursor: 'pointer',
-                                                        fontSize: '14px',
-                                                        fontWeight: '500',
-                                                        borderBottom: '1px solid #f0f0f0',
-                                                        color: '#999',
-                                                        fontStyle: 'italic',
-                                                        backgroundColor: editedPsicologo === '' ? '#f0f9f0' : 'white'
-                                                    }}
-                                                    onMouseEnter={(e) => {
-                                                        if (editedPsicologo !== '') {
-                                                            e.currentTarget.style.backgroundColor = '#f8f9fa';
-                                                        }
-                                                    }}
-                                                    onMouseLeave={(e) => {
-                                                        if (editedPsicologo !== '') {
-                                                            e.currentTarget.style.backgroundColor = 'white';
-                                                        }
-                                                    }}
-                                                >
-                                                    -- Non assegnato --
-                                                </div>
-
-                                                {filteredPsychologists.length > 0 ? (
-                                                    filteredPsychologists.map(psy => (
-                                                        <div
-                                                            key={psy.codFiscale}
-                                                            onClick={() => handlePsychologistSelect(psy.codFiscale)}
-                                                            style={{
-                                                                padding: '12px 16px',
-                                                                cursor: 'pointer',
-                                                                borderBottom: '1px solid #f0f0f0',
-                                                                fontSize: '13px',
-                                                                backgroundColor: editedPsicologo === psy.codFiscale ? '#e8f5e9' : 'white',
-                                                                transition: 'background-color 0.2s ease'
-                                                            }}
-                                                            onMouseEnter={(e) => {
-                                                                if (editedPsicologo !== psy.codFiscale) {
-                                                                    e.currentTarget.style.backgroundColor = '#f8f9fa';
-                                                                }
-                                                            }}
-                                                            onMouseLeave={(e) => {
-                                                                if (editedPsicologo !== psy.codFiscale) {
-                                                                    e.currentTarget.style.backgroundColor = 'white';
-                                                                }
-                                                            }}
-                                                        >
-                                                            <div style={{ fontWeight: 500, color: '#333' }}>{psy.codFiscale}</div>
-                                                            <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
-                                                                Dr. {psy.nome} {psy.cognome}
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                ) : (
-                                                    <div style={{
-                                                        padding: '20px',
-                                                        textAlign: 'center',
-                                                        color: '#999',
-                                                        fontSize: '13px'
-                                                    }}>
-                                                        Nessun psicologo trovato
-                                                    </div>
-                                                )}
                                             </div>
                                         )}
+                                    </div>
+                                </div>
 
-                                        {!showPsychologistDropdown && editedPsicologo && (
-                                            <span style={{
-                                                fontSize: '11px',
-                                                color: '#7FB77E',
-                                                display: 'block',
-                                                marginTop: '6px',
-                                                fontWeight: '500'
-                                            }}>
-                                                ✓ Selezionato: {psychologists.find(p => p.codFiscale === editedPsicologo)?.codFiscale || 'Non assegnato'}
-                                            </span>
+                                {/* Priorità - Editable Chip */}
+                                <div className="modal-data-row modal-data-row-editable">
+                                    <div className="modal-data-row-dot modal-data-row-dot-red"></div>
+                                    <span className="modal-data-row-label">Priorità</span>
+                                    <div style={{ position: 'relative' }} ref={priorityDropdownRef}>
+                                        <button
+                                            onClick={() => isEditing && setShowPriorityDropdown(!showPriorityDropdown)}
+                                            className={`modal-editable-chip modal-editable-chip-priority-${(editedPriorita || patientDetails.idPriorita || '').toLowerCase()}`}
+                                            style={{ cursor: isEditing ? 'pointer' : 'default', opacity: isEditing ? 1 : 0.8 }}
+                                        >
+                                            {editedPriorita || patientDetails.idPriorita || 'N/A'}
+                                            {isEditing && <ChevronDown size={14} className="modal-editable-chip-icon" />}
+                                        </button>
+
+                                        {showPriorityDropdown && (
+                                            <div className="modal-chip-dropdown">
+                                                {PRIORITY_OPTIONS.map(option => {
+                                                    const isSelected = (editedPriorita || patientDetails.idPriorita) === option.value;
+                                                    const colors: Record<string, string> = {
+                                                        'Urgente': '#ef4444',
+                                                        'Breve': '#f97316',
+                                                        'Differibile': '#eab308',
+                                                        'Programmabile': '#22c55e'
+                                                    };
+                                                    return (
+                                                        <div
+                                                            key={option.value}
+                                                            onClick={() => {
+                                                                setEditedPriorita(option.value);
+                                                                setShowPriorityDropdown(false);
+                                                            }}
+                                                            className={`modal-chip-dropdown-option ${isSelected ? 'modal-chip-dropdown-option-selected' : ''}`}
+                                                        >
+                                                            <div
+                                                                className="modal-chip-dropdown-option-icon"
+                                                                style={{ background: colors[option.value] }}
+                                                            >
+                                                                <Flag size={14} />
+                                                            </div>
+                                                            <span className="modal-chip-dropdown-option-label">{option.label}</span>
+                                                            {isSelected && (
+                                                                <div className="modal-chip-dropdown-option-check">
+                                                                    <Check size={12} />
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
                                         )}
                                     </div>
-                                ) : (
-                                    <p style={{
-                                        margin: 0,
-                                        fontSize: '16px',
-                                        fontWeight: '600',
-                                        color: '#1a1a1a'
-                                    }}>
-                                        {patientDetails.nomePsicologo || 'Non assegnato'}
-                                    </p>
-                                )}
-                            </div>
+                                </div>
 
-                            {/* Email Card - Full Width & Editable */}
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <EditableCard
-                                    icon={<Mail size={16} />}
-                                    label="Email"
-                                    value={patientDetails.email}
-                                    iconColor="#5a9aa5"
-                                    isEditing={isEditing}
-                                    editedValue={editedEmail}
-                                    onValueChange={setEditedEmail}
-                                    type="email"
-                                />
+                                {/* Residenza - Editable Chip with Autocomplete */}
+                                <div className="modal-data-row modal-data-row-editable">
+                                    <div className="modal-data-row-dot modal-data-row-dot-teal"></div>
+                                    <span className="modal-data-row-label">Residenza</span>
+                                    <div style={{ position: 'relative' }} ref={residenzaInputRef}>
+                                        <button
+                                            onClick={() => {
+                                                if (isEditing) {
+                                                    setEditedResidenza(patientDetails.residenza || '');
+                                                    setIsValidResidence(true); // Assume current is valid initially
+                                                    setShowResidenzaInput(!showResidenzaInput);
+                                                }
+                                            }}
+                                            className="modal-editable-chip"
+                                            style={{ cursor: isEditing ? 'pointer' : 'default', opacity: isEditing ? 1 : 0.8 }}
+                                        >
+                                            {editedResidenza || patientDetails.residenza || 'N/A'}
+                                            {isEditing && <PenLine size={12} className="modal-editable-chip-icon" />}
+                                        </button>
+
+                                        {showResidenzaInput && (
+                                            <div className="modal-chip-input-popover" style={{ width: '280px', zIndex: 10002 }}>
+                                                <input
+                                                    type="text"
+                                                    value={editedResidenza} // Used as search term
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        setEditedResidenza(val);
+                                                        setIsValidResidence(false); // Invalid while typing unless selected
+                                                        // Trigger search
+                                                        if (val.length >= 2) {
+                                                            searchComuni(val).then(setComuniOptions).catch(console.error);
+                                                        } else {
+                                                            setComuniOptions([]);
+                                                        }
+                                                    }}
+                                                    placeholder="Cerca comune..."
+                                                    className="modal-chip-input"
+                                                    autoFocus
+                                                />
+                                                {/* Suggestions List */}
+                                                {comuniOptions.length > 0 && (
+                                                    <div style={{
+                                                        maxHeight: '150px',
+                                                        overflowY: 'auto',
+                                                        border: '1px solid #eee',
+                                                        borderTop: 'none',
+                                                        borderRadius: '0 0 8px 8px',
+                                                        marginTop: '4px',
+                                                        background: 'white',
+                                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                                                    }}>
+                                                        {comuniOptions.map((comune) => (
+                                                            <div
+                                                                key={comune.codice}
+                                                                onClick={() => {
+                                                                    setEditedResidenza(`${comune.nome} (${comune.provincia})`);
+                                                                    setIsValidResidence(true); // Valid selection
+                                                                    setComuniOptions([]); // Close suggestions
+                                                                    // We keep the popover open until user clicks OK or Cancel
+                                                                }}
+                                                                style={{
+                                                                    padding: '8px 12px',
+                                                                    cursor: 'pointer',
+                                                                    fontSize: '13px',
+                                                                    borderBottom: '1px solid #f0f0f0'
+                                                                }}
+                                                                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; }}
+                                                                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'white'; }}
+                                                            >
+                                                                <span style={{ fontWeight: 500 }}>{comune.nome}</span>
+                                                                <span style={{ color: '#64748b', fontSize: '11px', marginLeft: '4px' }}>({comune.provincia})</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+
+                                                <div className="modal-chip-input-actions" style={{ marginTop: '8px' }}>
+                                                    <button
+                                                        onClick={() => {
+                                                            // Revert to original if cancelled
+                                                            setEditedResidenza(patientDetails.residenza || '');
+                                                            setShowResidenzaInput(false);
+                                                        }}
+                                                        className="modal-chip-btn modal-chip-btn-cancel"
+                                                    >
+                                                        Annulla
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setShowResidenzaInput(false);
+                                                            setComuniOptions([]);
+                                                        }}
+                                                        disabled={!isValidResidence}
+                                                        className="modal-chip-btn modal-chip-btn-save"
+                                                        style={{ opacity: isValidResidence ? 1 : 0.5, cursor: isValidResidence ? 'pointer' : 'not-allowed' }}
+                                                    >
+                                                        <Check size={14} /> OK
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Email - Editable Chip */}
+                                <div className="modal-data-row modal-data-row-editable">
+                                    <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                    <span className="modal-data-row-label">Email</span>
+                                    <div style={{ position: 'relative' }} ref={emailInputRef}>
+                                        <button
+                                            onClick={() => {
+                                                if (isEditing) {
+                                                    setTempEmail(editedEmail);
+                                                    setEmailError('');
+                                                    setShowEmailInput(!showEmailInput);
+                                                }
+                                            }}
+                                            className="modal-editable-chip"
+                                            style={{ cursor: isEditing ? 'pointer' : 'default', opacity: isEditing ? 1 : 0.8 }}
+                                        >
+                                            {editedEmail || patientDetails.email || 'N/A'}
+                                            {isEditing && <PenLine size={12} className="modal-editable-chip-icon" />}
+                                        </button>
+
+                                        {showEmailInput && (
+                                            <div className="modal-chip-input-popover">
+                                                <input
+                                                    type="email"
+                                                    value={tempEmail}
+                                                    onChange={(e) => {
+                                                        setTempEmail(e.target.value);
+                                                        setEmailError('');
+                                                    }}
+                                                    placeholder="Inserisci email..."
+                                                    className="modal-chip-input"
+                                                    autoFocus
+                                                    style={{ borderColor: emailError ? '#ef4444' : undefined }}
+                                                />
+                                                {emailError && (
+                                                    <div style={{ color: '#ef4444', fontSize: '11px', marginTop: '6px', fontWeight: 500 }}>
+                                                        {emailError}
+                                                    </div>
+                                                )}
+                                                <div className="modal-chip-input-actions">
+                                                    <button
+                                                        onClick={() => setShowEmailInput(false)}
+                                                        className="modal-chip-btn modal-chip-btn-cancel"
+                                                    >
+                                                        Annulla
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            // Robust email regex: Standard chars @ Standard domain . TLD (min 2 chars)
+                                                            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                                                            if (!tempEmail || emailRegex.test(tempEmail)) {
+                                                                setEditedEmail(tempEmail);
+                                                                setShowEmailInput(false);
+                                                            } else {
+                                                                setEmailError('Email non valida');
+                                                            }
+                                                        }}
+                                                        className="modal-chip-btn modal-chip-btn-save"
+                                                    >
+                                                        <Check size={14} /> OK
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                    <span className="modal-data-row-label">Data di Nascita</span>
+                                    <span className="modal-data-row-value">{formatDate(patientDetails.dataNascita)}</span>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-green"></div>
+                                    <span className="modal-data-row-label">Data Ingresso</span>
+                                    <span className="modal-data-row-value">{formatDate(patientDetails.dataIngresso)}</span>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-cyan"></div>
+                                    <span className="modal-data-row-label">Sesso</span>
+                                    <span className="modal-data-row-value">{patientDetails.sesso}</span>
+                                </div>
+
+                                <div className="modal-data-row">
+                                    <div className="modal-data-row-dot modal-data-row-dot-orange"></div>
+                                    <span className="modal-data-row-label">Score</span>
+                                    <span className="modal-data-row-value modal-data-row-value-highlight">
+                                        {patientDetails.score !== null ? patientDetails.score : 'N/A'}
+                                    </span>
+                                </div>
+
+
+
+
                             </div>
                         </div>
                     ) : (
@@ -870,6 +787,7 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
                     )}
                 </div>
             </div>
+
             {toast && (
                 <Toast
                     message={toast.message}
@@ -915,156 +833,6 @@ const AdminPatientDetailModal: React.FC<AdminPatientDetailModalProps> = ({
             )}
         </div>,
         document.body
-    );
-};
-
-// Info Card Component
-const InfoCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-    tooltip?: string;
-}> = ({ icon, label, value, iconColor, tooltip }) => {
-    return (
-        <div
-            style={{
-                background: 'white',
-                borderRadius: '12px',
-                padding: '14px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                border: '1px solid #e8e8e8',
-                transition: 'all 0.3s ease'
-            }}
-            title={tooltip}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            <p style={{
-                margin: 0,
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#1a1a1a'
-            }}>
-                {value}
-            </p>
-        </div>
-    );
-};
-
-// Editable Card Component
-const EditableCard: React.FC<{
-    icon: React.ReactNode;
-    label: string;
-    value: string;
-    iconColor: string;
-    isEditing: boolean;
-    editedValue: string;
-    onValueChange: (value: string) => void;
-    type?: string;
-}> = ({ icon, label, value, iconColor, isEditing, editedValue, onValueChange, type = 'text' }) => {
-    return (
-        <div style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '14px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e8e8e8',
-            transition: 'all 0.3s ease'
-        }}
-            onMouseEnter={(e) => {
-                if (!isEditing) {
-                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                }
-            }}
-            onMouseLeave={(e) => {
-                if (!isEditing) {
-                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                }
-            }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: `linear-gradient(135deg, ${iconColor} 0%, ${iconColor}dd 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}>
-                    {icon}
-                </div>
-                <span style={{
-                    fontSize: '10px',
-                    fontWeight: '600',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    {label}
-                </span>
-            </div>
-            {isEditing ? (
-                <input
-                    type={type}
-                    value={editedValue}
-                    onChange={(e) => onValueChange(e.target.value)}
-                    placeholder={value}
-                    style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: '8px',
-                        fontSize: '13px',
-                        fontWeight: '500',
-                        transition: 'all 0.2s ease',
-                        outline: 'none'
-                    }}
-                    onFocus={(e) => e.target.style.borderColor = iconColor}
-                    onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
-                />
-            ) : (
-                <p style={{
-                    margin: 0,
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    color: '#1a1a1a'
-                }}>
-                    {value}
-                </p>
-            )}
-        </div>
     );
 };
 

@@ -1,0 +1,2752 @@
+[
+  {
+    "nome": "Acerno",
+    "provincia": "SA",
+    "codice": "065001"
+  },
+  {
+    "nome": "Acerra",
+    "provincia": "NA",
+    "codice": "063001"
+  },
+  {
+    "nome": "Afragola",
+    "provincia": "NA",
+    "codice": "063002"
+  },
+  {
+    "nome": "Agerola",
+    "provincia": "NA",
+    "codice": "063003"
+  },
+  {
+    "nome": "Agropoli",
+    "provincia": "SA",
+    "codice": "065002"
+  },
+  {
+    "nome": "Aiello del Sabato",
+    "provincia": "AV",
+    "codice": "064001"
+  },
+  {
+    "nome": "Ailano",
+    "provincia": "CE",
+    "codice": "061001"
+  },
+  {
+    "nome": "Airola",
+    "provincia": "BN",
+    "codice": "062001"
+  },
+  {
+    "nome": "Albanella",
+    "provincia": "SA",
+    "codice": "065003"
+  },
+  {
+    "nome": "Alfano",
+    "provincia": "SA",
+    "codice": "065004"
+  },
+  {
+    "nome": "Alife",
+    "provincia": "CE",
+    "codice": "061002"
+  },
+  {
+    "nome": "Altavilla Irpina",
+    "provincia": "AV",
+    "codice": "064002"
+  },
+  {
+    "nome": "Altavilla Silentina",
+    "provincia": "SA",
+    "codice": "065005"
+  },
+  {
+    "nome": "Alvignano",
+    "provincia": "CE",
+    "codice": "061003"
+  },
+  {
+    "nome": "Amalfi",
+    "provincia": "SA",
+    "codice": "065006"
+  },
+  {
+    "nome": "Amorosi",
+    "provincia": "BN",
+    "codice": "062002"
+  },
+  {
+    "nome": "Anacapri",
+    "provincia": "NA",
+    "codice": "063004"
+  },
+  {
+    "nome": "Andretta",
+    "provincia": "AV",
+    "codice": "064003"
+  },
+  {
+    "nome": "Angri",
+    "provincia": "SA",
+    "codice": "065007"
+  },
+  {
+    "nome": "Apice",
+    "provincia": "BN",
+    "codice": "062003"
+  },
+  {
+    "nome": "Apollosa",
+    "provincia": "BN",
+    "codice": "062004"
+  },
+  {
+    "nome": "Aquara",
+    "provincia": "SA",
+    "codice": "065008"
+  },
+  {
+    "nome": "Aquilonia",
+    "provincia": "AV",
+    "codice": "064004"
+  },
+  {
+    "nome": "Ariano Irpino",
+    "provincia": "AV",
+    "codice": "064005"
+  },
+  {
+    "nome": "Arienzo",
+    "provincia": "CE",
+    "codice": "061004"
+  },
+  {
+    "nome": "Arpaia",
+    "provincia": "BN",
+    "codice": "062005"
+  },
+  {
+    "nome": "Arpaise",
+    "provincia": "BN",
+    "codice": "062006"
+  },
+  {
+    "nome": "Arzano",
+    "provincia": "NA",
+    "codice": "063005"
+  },
+  {
+    "nome": "Ascea",
+    "provincia": "SA",
+    "codice": "065009"
+  },
+  {
+    "nome": "Atena Lucana",
+    "provincia": "SA",
+    "codice": "065010"
+  },
+  {
+    "nome": "Atrani",
+    "provincia": "SA",
+    "codice": "065011"
+  },
+  {
+    "nome": "Atripalda",
+    "provincia": "AV",
+    "codice": "064006"
+  },
+  {
+    "nome": "Auletta",
+    "provincia": "SA",
+    "codice": "065012"
+  },
+  {
+    "nome": "Avella",
+    "provincia": "AV",
+    "codice": "064007"
+  },
+  {
+    "nome": "Avellino",
+    "provincia": "AV",
+    "codice": "064008"
+  },
+  {
+    "nome": "Aversa",
+    "provincia": "CE",
+    "codice": "061005"
+  },
+  {
+    "nome": "Bacoli",
+    "provincia": "NA",
+    "codice": "063006"
+  },
+  {
+    "nome": "Bagnoli Irpino",
+    "provincia": "AV",
+    "codice": "064009"
+  },
+  {
+    "nome": "Baia e Latina",
+    "provincia": "CE",
+    "codice": "061006"
+  },
+  {
+    "nome": "Baiano",
+    "provincia": "AV",
+    "codice": "064010"
+  },
+  {
+    "nome": "Barano d'Ischia",
+    "provincia": "NA",
+    "codice": "063007"
+  },
+  {
+    "nome": "Baronissi",
+    "provincia": "SA",
+    "codice": "065013"
+  },
+  {
+    "nome": "Baselice",
+    "provincia": "BN",
+    "codice": "062007"
+  },
+  {
+    "nome": "Battipaglia",
+    "provincia": "SA",
+    "codice": "065014"
+  },
+  {
+    "nome": "Bellizzi",
+    "provincia": "SA",
+    "codice": "065158"
+  },
+  {
+    "nome": "Bellona",
+    "provincia": "CE",
+    "codice": "061007"
+  },
+  {
+    "nome": "Bellosguardo",
+    "provincia": "SA",
+    "codice": "065015"
+  },
+  {
+    "nome": "Benevento",
+    "provincia": "BN",
+    "codice": "062008"
+  },
+  {
+    "nome": "Bisaccia",
+    "provincia": "AV",
+    "codice": "064011"
+  },
+  {
+    "nome": "Bonea",
+    "provincia": "BN",
+    "codice": "062009"
+  },
+  {
+    "nome": "Bonito",
+    "provincia": "AV",
+    "codice": "064012"
+  },
+  {
+    "nome": "Boscoreale",
+    "provincia": "NA",
+    "codice": "063008"
+  },
+  {
+    "nome": "Boscotrecase",
+    "provincia": "NA",
+    "codice": "063009"
+  },
+  {
+    "nome": "Bracigliano",
+    "provincia": "SA",
+    "codice": "065016"
+  },
+  {
+    "nome": "Brusciano",
+    "provincia": "NA",
+    "codice": "063010"
+  },
+  {
+    "nome": "Bucciano",
+    "provincia": "BN",
+    "codice": "062010"
+  },
+  {
+    "nome": "Buccino",
+    "provincia": "SA",
+    "codice": "065017"
+  },
+  {
+    "nome": "Buonabitacolo",
+    "provincia": "SA",
+    "codice": "065018"
+  },
+  {
+    "nome": "Buonalbergo",
+    "provincia": "BN",
+    "codice": "062011"
+  },
+  {
+    "nome": "Caggiano",
+    "provincia": "SA",
+    "codice": "065019"
+  },
+  {
+    "nome": "Caianello",
+    "provincia": "CE",
+    "codice": "061008"
+  },
+  {
+    "nome": "Caiazzo",
+    "provincia": "CE",
+    "codice": "061009"
+  },
+  {
+    "nome": "Cairano",
+    "provincia": "AV",
+    "codice": "064013"
+  },
+  {
+    "nome": "Caivano",
+    "provincia": "NA",
+    "codice": "063011"
+  },
+  {
+    "nome": "Calabritto",
+    "provincia": "AV",
+    "codice": "064014"
+  },
+  {
+    "nome": "Calitri",
+    "provincia": "AV",
+    "codice": "064015"
+  },
+  {
+    "nome": "Calvanico",
+    "provincia": "SA",
+    "codice": "065020"
+  },
+  {
+    "nome": "Calvi",
+    "provincia": "BN",
+    "codice": "062012"
+  },
+  {
+    "nome": "Calvi Risorta",
+    "provincia": "CE",
+    "codice": "061010"
+  },
+  {
+    "nome": "Calvizzano",
+    "provincia": "NA",
+    "codice": "063012"
+  },
+  {
+    "nome": "Camerota",
+    "provincia": "SA",
+    "codice": "065021"
+  },
+  {
+    "nome": "Camigliano",
+    "provincia": "CE",
+    "codice": "061011"
+  },
+  {
+    "nome": "Campagna",
+    "provincia": "SA",
+    "codice": "065022"
+  },
+  {
+    "nome": "Campolattaro",
+    "provincia": "BN",
+    "codice": "062013"
+  },
+  {
+    "nome": "Campoli del Monte Taburno",
+    "provincia": "BN",
+    "codice": "062014"
+  },
+  {
+    "nome": "Campora",
+    "provincia": "SA",
+    "codice": "065023"
+  },
+  {
+    "nome": "Camposano",
+    "provincia": "NA",
+    "codice": "063013"
+  },
+  {
+    "nome": "Cancello ed Arnone",
+    "provincia": "CE",
+    "codice": "061012"
+  },
+  {
+    "nome": "Candida",
+    "provincia": "AV",
+    "codice": "064016"
+  },
+  {
+    "nome": "Cannalonga",
+    "provincia": "SA",
+    "codice": "065024"
+  },
+  {
+    "nome": "Capaccio Paestum",
+    "provincia": "SA",
+    "codice": "065025"
+  },
+  {
+    "nome": "Capodrise",
+    "provincia": "CE",
+    "codice": "061013"
+  },
+  {
+    "nome": "Caposele",
+    "provincia": "AV",
+    "codice": "064017"
+  },
+  {
+    "nome": "Capri",
+    "provincia": "NA",
+    "codice": "063014"
+  },
+  {
+    "nome": "Capriati a Volturno",
+    "provincia": "CE",
+    "codice": "061014"
+  },
+  {
+    "nome": "Capriglia Irpina",
+    "provincia": "AV",
+    "codice": "064018"
+  },
+  {
+    "nome": "Capua",
+    "provincia": "CE",
+    "codice": "061015"
+  },
+  {
+    "nome": "Carbonara di Nola",
+    "provincia": "NA",
+    "codice": "063015"
+  },
+  {
+    "nome": "Cardito",
+    "provincia": "NA",
+    "codice": "063016"
+  },
+  {
+    "nome": "Carife",
+    "provincia": "AV",
+    "codice": "064019"
+  },
+  {
+    "nome": "Carinaro",
+    "provincia": "CE",
+    "codice": "061016"
+  },
+  {
+    "nome": "Carinola",
+    "provincia": "CE",
+    "codice": "061017"
+  },
+  {
+    "nome": "Casagiove",
+    "provincia": "CE",
+    "codice": "061018"
+  },
+  {
+    "nome": "Casal di Principe",
+    "provincia": "CE",
+    "codice": "061019"
+  },
+  {
+    "nome": "Casal Velino",
+    "provincia": "SA",
+    "codice": "065028"
+  },
+  {
+    "nome": "Casalbore",
+    "provincia": "AV",
+    "codice": "064020"
+  },
+  {
+    "nome": "Casalbuono",
+    "provincia": "SA",
+    "codice": "065026"
+  },
+  {
+    "nome": "Casalduni",
+    "provincia": "BN",
+    "codice": "062015"
+  },
+  {
+    "nome": "Casaletto Spartano",
+    "provincia": "SA",
+    "codice": "065027"
+  },
+  {
+    "nome": "Casalnuovo di Napoli",
+    "provincia": "NA",
+    "codice": "063017"
+  },
+  {
+    "nome": "Casaluce",
+    "provincia": "CE",
+    "codice": "061020"
+  },
+  {
+    "nome": "Casamarciano",
+    "provincia": "NA",
+    "codice": "063018"
+  },
+  {
+    "nome": "Casamicciola Terme",
+    "provincia": "NA",
+    "codice": "063019"
+  },
+  {
+    "nome": "Casandrino",
+    "provincia": "NA",
+    "codice": "063020"
+  },
+  {
+    "nome": "Casapesenna",
+    "provincia": "CE",
+    "codice": "061103"
+  },
+  {
+    "nome": "Casapulla",
+    "provincia": "CE",
+    "codice": "061021"
+  },
+  {
+    "nome": "Casavatore",
+    "provincia": "NA",
+    "codice": "063021"
+  },
+  {
+    "nome": "Caselle in Pittari",
+    "provincia": "SA",
+    "codice": "065029"
+  },
+  {
+    "nome": "Caserta",
+    "provincia": "CE",
+    "codice": "061022"
+  },
+  {
+    "nome": "Casola di Napoli",
+    "provincia": "NA",
+    "codice": "063022"
+  },
+  {
+    "nome": "Casoria",
+    "provincia": "NA",
+    "codice": "063023"
+  },
+  {
+    "nome": "Cassano Irpino",
+    "provincia": "AV",
+    "codice": "064021"
+  },
+  {
+    "nome": "Castel Baronia",
+    "provincia": "AV",
+    "codice": "064022"
+  },
+  {
+    "nome": "Castel Campagnano",
+    "provincia": "CE",
+    "codice": "061023"
+  },
+  {
+    "nome": "Castel di Sasso",
+    "provincia": "CE",
+    "codice": "061024"
+  },
+  {
+    "nome": "Castel Morrone",
+    "provincia": "CE",
+    "codice": "061026"
+  },
+  {
+    "nome": "Castel San Giorgio",
+    "provincia": "SA",
+    "codice": "065034"
+  },
+  {
+    "nome": "Castel San Lorenzo",
+    "provincia": "SA",
+    "codice": "065035"
+  },
+  {
+    "nome": "Castel Volturno",
+    "provincia": "CE",
+    "codice": "061027"
+  },
+  {
+    "nome": "Castelcivita",
+    "provincia": "SA",
+    "codice": "065030"
+  },
+  {
+    "nome": "Castelfranci",
+    "provincia": "AV",
+    "codice": "064023"
+  },
+  {
+    "nome": "Castelfranco in Miscano",
+    "provincia": "BN",
+    "codice": "062016"
+  },
+  {
+    "nome": "Castellabate",
+    "provincia": "SA",
+    "codice": "065031"
+  },
+  {
+    "nome": "Castellammare di Stabia",
+    "provincia": "NA",
+    "codice": "063024"
+  },
+  {
+    "nome": "Castello del Matese",
+    "provincia": "CE",
+    "codice": "061025"
+  },
+  {
+    "nome": "Castello di Cisterna",
+    "provincia": "NA",
+    "codice": "063025"
+  },
+  {
+    "nome": "Castelnuovo Cilento",
+    "provincia": "SA",
+    "codice": "065032"
+  },
+  {
+    "nome": "Castelnuovo di Conza",
+    "provincia": "SA",
+    "codice": "065033"
+  },
+  {
+    "nome": "Castelpagano",
+    "provincia": "BN",
+    "codice": "062017"
+  },
+  {
+    "nome": "Castelpoto",
+    "provincia": "BN",
+    "codice": "062018"
+  },
+  {
+    "nome": "Castelvenere",
+    "provincia": "BN",
+    "codice": "062019"
+  },
+  {
+    "nome": "Castelvetere in Val Fortore",
+    "provincia": "BN",
+    "codice": "062020"
+  },
+  {
+    "nome": "Castelvetere sul Calore",
+    "provincia": "AV",
+    "codice": "064024"
+  },
+  {
+    "nome": "Castiglione del Genovesi",
+    "provincia": "SA",
+    "codice": "065036"
+  },
+  {
+    "nome": "Cautano",
+    "provincia": "BN",
+    "codice": "062021"
+  },
+  {
+    "nome": "Cava de' Tirreni",
+    "provincia": "SA",
+    "codice": "065037"
+  },
+  {
+    "nome": "Celle di Bulgheria",
+    "provincia": "SA",
+    "codice": "065038"
+  },
+  {
+    "nome": "Cellole",
+    "provincia": "CE",
+    "codice": "061102"
+  },
+  {
+    "nome": "Centola",
+    "provincia": "SA",
+    "codice": "065039"
+  },
+  {
+    "nome": "Ceppaloni",
+    "provincia": "BN",
+    "codice": "062022"
+  },
+  {
+    "nome": "Ceraso",
+    "provincia": "SA",
+    "codice": "065040"
+  },
+  {
+    "nome": "Cercola",
+    "provincia": "NA",
+    "codice": "063026"
+  },
+  {
+    "nome": "Cerreto Sannita",
+    "provincia": "BN",
+    "codice": "062023"
+  },
+  {
+    "nome": "Cervinara",
+    "provincia": "AV",
+    "codice": "064025"
+  },
+  {
+    "nome": "Cervino",
+    "provincia": "CE",
+    "codice": "061028"
+  },
+  {
+    "nome": "Cesa",
+    "provincia": "CE",
+    "codice": "061029"
+  },
+  {
+    "nome": "Cesinali",
+    "provincia": "AV",
+    "codice": "064026"
+  },
+  {
+    "nome": "Cetara",
+    "provincia": "SA",
+    "codice": "065041"
+  },
+  {
+    "nome": "Chianche",
+    "provincia": "AV",
+    "codice": "064027"
+  },
+  {
+    "nome": "Chiusano di San Domenico",
+    "provincia": "AV",
+    "codice": "064028"
+  },
+  {
+    "nome": "Cicciano",
+    "provincia": "NA",
+    "codice": "063027"
+  },
+  {
+    "nome": "Cicerale",
+    "provincia": "SA",
+    "codice": "065042"
+  },
+  {
+    "nome": "Cimitile",
+    "provincia": "NA",
+    "codice": "063028"
+  },
+  {
+    "nome": "Ciorlano",
+    "provincia": "CE",
+    "codice": "061030"
+  },
+  {
+    "nome": "Circello",
+    "provincia": "BN",
+    "codice": "062024"
+  },
+  {
+    "nome": "Colle Sannita",
+    "provincia": "BN",
+    "codice": "062025"
+  },
+  {
+    "nome": "Colliano",
+    "provincia": "SA",
+    "codice": "065043"
+  },
+  {
+    "nome": "Comiziano",
+    "provincia": "NA",
+    "codice": "063029"
+  },
+  {
+    "nome": "Conca dei Marini",
+    "provincia": "SA",
+    "codice": "065044"
+  },
+  {
+    "nome": "Conca della Campania",
+    "provincia": "CE",
+    "codice": "061031"
+  },
+  {
+    "nome": "Contrada",
+    "provincia": "AV",
+    "codice": "064029"
+  },
+  {
+    "nome": "Controne",
+    "provincia": "SA",
+    "codice": "065045"
+  },
+  {
+    "nome": "Contursi Terme",
+    "provincia": "SA",
+    "codice": "065046"
+  },
+  {
+    "nome": "Conza della Campania",
+    "provincia": "AV",
+    "codice": "064030"
+  },
+  {
+    "nome": "Corbara",
+    "provincia": "SA",
+    "codice": "065047"
+  },
+  {
+    "nome": "Corleto Monforte",
+    "provincia": "SA",
+    "codice": "065048"
+  },
+  {
+    "nome": "Crispano",
+    "provincia": "NA",
+    "codice": "063030"
+  },
+  {
+    "nome": "Cuccaro Vetere",
+    "provincia": "SA",
+    "codice": "065049"
+  },
+  {
+    "nome": "Curti",
+    "provincia": "CE",
+    "codice": "061032"
+  },
+  {
+    "nome": "Cusano Mutri",
+    "provincia": "BN",
+    "codice": "062026"
+  },
+  {
+    "nome": "Domicella",
+    "provincia": "AV",
+    "codice": "064031"
+  },
+  {
+    "nome": "Dragoni",
+    "provincia": "CE",
+    "codice": "061033"
+  },
+  {
+    "nome": "Dugenta",
+    "provincia": "BN",
+    "codice": "062027"
+  },
+  {
+    "nome": "Durazzano",
+    "provincia": "BN",
+    "codice": "062028"
+  },
+  {
+    "nome": "Eboli",
+    "provincia": "SA",
+    "codice": "065050"
+  },
+  {
+    "nome": "Ercolano",
+    "provincia": "NA",
+    "codice": "063064"
+  },
+  {
+    "nome": "Faicchio",
+    "provincia": "BN",
+    "codice": "062029"
+  },
+  {
+    "nome": "Falciano del Massico",
+    "provincia": "CE",
+    "codice": "061101"
+  },
+  {
+    "nome": "Felitto",
+    "provincia": "SA",
+    "codice": "065051"
+  },
+  {
+    "nome": "Fisciano",
+    "provincia": "SA",
+    "codice": "065052"
+  },
+  {
+    "nome": "Flumeri",
+    "provincia": "AV",
+    "codice": "064032"
+  },
+  {
+    "nome": "Foglianise",
+    "provincia": "BN",
+    "codice": "062030"
+  },
+  {
+    "nome": "Foiano di Val Fortore",
+    "provincia": "BN",
+    "codice": "062031"
+  },
+  {
+    "nome": "Fontanarosa",
+    "provincia": "AV",
+    "codice": "064033"
+  },
+  {
+    "nome": "Fontegreca",
+    "provincia": "CE",
+    "codice": "061034"
+  },
+  {
+    "nome": "Forchia",
+    "provincia": "BN",
+    "codice": "062032"
+  },
+  {
+    "nome": "Forino",
+    "provincia": "AV",
+    "codice": "064034"
+  },
+  {
+    "nome": "Forio",
+    "provincia": "NA",
+    "codice": "063031"
+  },
+  {
+    "nome": "Formicola",
+    "provincia": "CE",
+    "codice": "061035"
+  },
+  {
+    "nome": "Fragneto l'Abate",
+    "provincia": "BN",
+    "codice": "062033"
+  },
+  {
+    "nome": "Fragneto Monforte",
+    "provincia": "BN",
+    "codice": "062034"
+  },
+  {
+    "nome": "Francolise",
+    "provincia": "CE",
+    "codice": "061036"
+  },
+  {
+    "nome": "Frasso Telesino",
+    "provincia": "BN",
+    "codice": "062035"
+  },
+  {
+    "nome": "Frattamaggiore",
+    "provincia": "NA",
+    "codice": "063032"
+  },
+  {
+    "nome": "Frattaminore",
+    "provincia": "NA",
+    "codice": "063033"
+  },
+  {
+    "nome": "Frigento",
+    "provincia": "AV",
+    "codice": "064035"
+  },
+  {
+    "nome": "Frignano",
+    "provincia": "CE",
+    "codice": "061037"
+  },
+  {
+    "nome": "Furore",
+    "provincia": "SA",
+    "codice": "065053"
+  },
+  {
+    "nome": "Futani",
+    "provincia": "SA",
+    "codice": "065054"
+  },
+  {
+    "nome": "Gallo Matese",
+    "provincia": "CE",
+    "codice": "061038"
+  },
+  {
+    "nome": "Galluccio",
+    "provincia": "CE",
+    "codice": "061039"
+  },
+  {
+    "nome": "Gesualdo",
+    "provincia": "AV",
+    "codice": "064036"
+  },
+  {
+    "nome": "Giano Vetusto",
+    "provincia": "CE",
+    "codice": "061040"
+  },
+  {
+    "nome": "Giffoni Sei Casali",
+    "provincia": "SA",
+    "codice": "065055"
+  },
+  {
+    "nome": "Giffoni Valle Piana",
+    "provincia": "SA",
+    "codice": "065056"
+  },
+  {
+    "nome": "Ginestra degli Schiavoni",
+    "provincia": "BN",
+    "codice": "062036"
+  },
+  {
+    "nome": "Gioi",
+    "provincia": "SA",
+    "codice": "065057"
+  },
+  {
+    "nome": "Gioia Sannitica",
+    "provincia": "CE",
+    "codice": "061041"
+  },
+  {
+    "nome": "Giugliano in Campania",
+    "provincia": "NA",
+    "codice": "063034"
+  },
+  {
+    "nome": "Giungano",
+    "provincia": "SA",
+    "codice": "065058"
+  },
+  {
+    "nome": "Gragnano",
+    "provincia": "NA",
+    "codice": "063035"
+  },
+  {
+    "nome": "Grazzanise",
+    "provincia": "CE",
+    "codice": "061042"
+  },
+  {
+    "nome": "Greci",
+    "provincia": "AV",
+    "codice": "064037"
+  },
+  {
+    "nome": "Gricignano di Aversa",
+    "provincia": "CE",
+    "codice": "061043"
+  },
+  {
+    "nome": "Grottaminarda",
+    "provincia": "AV",
+    "codice": "064038"
+  },
+  {
+    "nome": "Grottolella",
+    "provincia": "AV",
+    "codice": "064039"
+  },
+  {
+    "nome": "Grumo Nevano",
+    "provincia": "NA",
+    "codice": "063036"
+  },
+  {
+    "nome": "Guardia Lombardi",
+    "provincia": "AV",
+    "codice": "064040"
+  },
+  {
+    "nome": "Guardia Sanframondi",
+    "provincia": "BN",
+    "codice": "062037"
+  },
+  {
+    "nome": "Ischia",
+    "provincia": "NA",
+    "codice": "063037"
+  },
+  {
+    "nome": "Ispani",
+    "provincia": "SA",
+    "codice": "065059"
+  },
+  {
+    "nome": "Lacco Ameno",
+    "provincia": "NA",
+    "codice": "063038"
+  },
+  {
+    "nome": "Lacedonia",
+    "provincia": "AV",
+    "codice": "064041"
+  },
+  {
+    "nome": "Lapio",
+    "provincia": "AV",
+    "codice": "064042"
+  },
+  {
+    "nome": "Laureana Cilento",
+    "provincia": "SA",
+    "codice": "065060"
+  },
+  {
+    "nome": "Laurino",
+    "provincia": "SA",
+    "codice": "065061"
+  },
+  {
+    "nome": "Laurito",
+    "provincia": "SA",
+    "codice": "065062"
+  },
+  {
+    "nome": "Lauro",
+    "provincia": "AV",
+    "codice": "064043"
+  },
+  {
+    "nome": "Laviano",
+    "provincia": "SA",
+    "codice": "065063"
+  },
+  {
+    "nome": "Letino",
+    "provincia": "CE",
+    "codice": "061044"
+  },
+  {
+    "nome": "Lettere",
+    "provincia": "NA",
+    "codice": "063039"
+  },
+  {
+    "nome": "Liberi",
+    "provincia": "CE",
+    "codice": "061045"
+  },
+  {
+    "nome": "Limatola",
+    "provincia": "BN",
+    "codice": "062038"
+  },
+  {
+    "nome": "Lioni",
+    "provincia": "AV",
+    "codice": "064044"
+  },
+  {
+    "nome": "Liveri",
+    "provincia": "NA",
+    "codice": "063040"
+  },
+  {
+    "nome": "Luogosano",
+    "provincia": "AV",
+    "codice": "064045"
+  },
+  {
+    "nome": "Lusciano",
+    "provincia": "CE",
+    "codice": "061046"
+  },
+  {
+    "nome": "Lustra",
+    "provincia": "SA",
+    "codice": "065064"
+  },
+  {
+    "nome": "Macerata Campania",
+    "provincia": "CE",
+    "codice": "061047"
+  },
+  {
+    "nome": "Maddaloni",
+    "provincia": "CE",
+    "codice": "061048"
+  },
+  {
+    "nome": "Magliano Vetere",
+    "provincia": "SA",
+    "codice": "065065"
+  },
+  {
+    "nome": "Maiori",
+    "provincia": "SA",
+    "codice": "065066"
+  },
+  {
+    "nome": "Manocalzati",
+    "provincia": "AV",
+    "codice": "064046"
+  },
+  {
+    "nome": "Marano di Napoli",
+    "provincia": "NA",
+    "codice": "063041"
+  },
+  {
+    "nome": "Marcianise",
+    "provincia": "CE",
+    "codice": "061049"
+  },
+  {
+    "nome": "Mariglianella",
+    "provincia": "NA",
+    "codice": "063042"
+  },
+  {
+    "nome": "Marigliano",
+    "provincia": "NA",
+    "codice": "063043"
+  },
+  {
+    "nome": "Marzano Appio",
+    "provincia": "CE",
+    "codice": "061050"
+  },
+  {
+    "nome": "Marzano di Nola",
+    "provincia": "AV",
+    "codice": "064047"
+  },
+  {
+    "nome": "Massa di Somma",
+    "provincia": "NA",
+    "codice": "063092"
+  },
+  {
+    "nome": "Massa Lubrense",
+    "provincia": "NA",
+    "codice": "063044"
+  },
+  {
+    "nome": "Melito di Napoli",
+    "provincia": "NA",
+    "codice": "063045"
+  },
+  {
+    "nome": "Melito Irpino",
+    "provincia": "AV",
+    "codice": "064048"
+  },
+  {
+    "nome": "Melizzano",
+    "provincia": "BN",
+    "codice": "062039"
+  },
+  {
+    "nome": "Mercato San Severino",
+    "provincia": "SA",
+    "codice": "065067"
+  },
+  {
+    "nome": "Mercogliano",
+    "provincia": "AV",
+    "codice": "064049"
+  },
+  {
+    "nome": "Meta",
+    "provincia": "NA",
+    "codice": "063046"
+  },
+  {
+    "nome": "Mignano Monte Lungo",
+    "provincia": "CE",
+    "codice": "061051"
+  },
+  {
+    "nome": "Minori",
+    "provincia": "SA",
+    "codice": "065068"
+  },
+  {
+    "nome": "Mirabella Eclano",
+    "provincia": "AV",
+    "codice": "064050"
+  },
+  {
+    "nome": "Moiano",
+    "provincia": "BN",
+    "codice": "062040"
+  },
+  {
+    "nome": "Moio della Civitella",
+    "provincia": "SA",
+    "codice": "065069"
+  },
+  {
+    "nome": "Molinara",
+    "provincia": "BN",
+    "codice": "062041"
+  },
+  {
+    "nome": "Mondragone",
+    "provincia": "CE",
+    "codice": "061052"
+  },
+  {
+    "nome": "Montaguto",
+    "provincia": "AV",
+    "codice": "064051"
+  },
+  {
+    "nome": "Montano Antilia",
+    "provincia": "SA",
+    "codice": "065070"
+  },
+  {
+    "nome": "Monte di Procida",
+    "provincia": "NA",
+    "codice": "063047"
+  },
+  {
+    "nome": "Monte San Giacomo",
+    "provincia": "SA",
+    "codice": "065075"
+  },
+  {
+    "nome": "Montecalvo Irpino",
+    "provincia": "AV",
+    "codice": "064052"
+  },
+  {
+    "nome": "Montecorice",
+    "provincia": "SA",
+    "codice": "065071"
+  },
+  {
+    "nome": "Montecorvino Pugliano",
+    "provincia": "SA",
+    "codice": "065072"
+  },
+  {
+    "nome": "Montecorvino Rovella",
+    "provincia": "SA",
+    "codice": "065073"
+  },
+  {
+    "nome": "Montefalcione",
+    "provincia": "AV",
+    "codice": "064053"
+  },
+  {
+    "nome": "Montefalcone di Val Fortore",
+    "provincia": "BN",
+    "codice": "062042"
+  },
+  {
+    "nome": "Monteforte Cilento",
+    "provincia": "SA",
+    "codice": "065074"
+  },
+  {
+    "nome": "Monteforte Irpino",
+    "provincia": "AV",
+    "codice": "064054"
+  },
+  {
+    "nome": "Montefredane",
+    "provincia": "AV",
+    "codice": "064055"
+  },
+  {
+    "nome": "Montefusco",
+    "provincia": "AV",
+    "codice": "064056"
+  },
+  {
+    "nome": "Montella",
+    "provincia": "AV",
+    "codice": "064057"
+  },
+  {
+    "nome": "Montemarano",
+    "provincia": "AV",
+    "codice": "064058"
+  },
+  {
+    "nome": "Montemiletto",
+    "provincia": "AV",
+    "codice": "064059"
+  },
+  {
+    "nome": "Montesano sulla Marcellana",
+    "provincia": "SA",
+    "codice": "065076"
+  },
+  {
+    "nome": "Montesarchio",
+    "provincia": "BN",
+    "codice": "062043"
+  },
+  {
+    "nome": "Monteverde",
+    "provincia": "AV",
+    "codice": "064060"
+  },
+  {
+    "nome": "Montoro",
+    "provincia": "AV",
+    "codice": "064121"
+  },
+  {
+    "nome": "Morcone",
+    "provincia": "BN",
+    "codice": "062044"
+  },
+  {
+    "nome": "Morigerati",
+    "provincia": "SA",
+    "codice": "065077"
+  },
+  {
+    "nome": "Morra De Sanctis",
+    "provincia": "AV",
+    "codice": "064063"
+  },
+  {
+    "nome": "Moschiano",
+    "provincia": "AV",
+    "codice": "064064"
+  },
+  {
+    "nome": "Mugnano del Cardinale",
+    "provincia": "AV",
+    "codice": "064065"
+  },
+  {
+    "nome": "Mugnano di Napoli",
+    "provincia": "NA",
+    "codice": "063048"
+  },
+  {
+    "nome": "Napoli",
+    "provincia": "NA",
+    "codice": "063049"
+  },
+  {
+    "nome": "Nocera Inferiore",
+    "provincia": "SA",
+    "codice": "065078"
+  },
+  {
+    "nome": "Nocera Superiore",
+    "provincia": "SA",
+    "codice": "065079"
+  },
+  {
+    "nome": "Nola",
+    "provincia": "NA",
+    "codice": "063050"
+  },
+  {
+    "nome": "Novi Velia",
+    "provincia": "SA",
+    "codice": "065080"
+  },
+  {
+    "nome": "Nusco",
+    "provincia": "AV",
+    "codice": "064066"
+  },
+  {
+    "nome": "Ogliastro Cilento",
+    "provincia": "SA",
+    "codice": "065081"
+  },
+  {
+    "nome": "Olevano sul Tusciano",
+    "provincia": "SA",
+    "codice": "065082"
+  },
+  {
+    "nome": "Oliveto Citra",
+    "provincia": "SA",
+    "codice": "065083"
+  },
+  {
+    "nome": "Omignano",
+    "provincia": "SA",
+    "codice": "065084"
+  },
+  {
+    "nome": "Orria",
+    "provincia": "SA",
+    "codice": "065085"
+  },
+  {
+    "nome": "Orta di Atella",
+    "provincia": "CE",
+    "codice": "061053"
+  },
+  {
+    "nome": "Ospedaletto d'Alpinolo",
+    "provincia": "AV",
+    "codice": "064067"
+  },
+  {
+    "nome": "Ottati",
+    "provincia": "SA",
+    "codice": "065086"
+  },
+  {
+    "nome": "Ottaviano",
+    "provincia": "NA",
+    "codice": "063051"
+  },
+  {
+    "nome": "Padula",
+    "provincia": "SA",
+    "codice": "065087"
+  },
+  {
+    "nome": "Paduli",
+    "provincia": "BN",
+    "codice": "062045"
+  },
+  {
+    "nome": "Pagani",
+    "provincia": "SA",
+    "codice": "065088"
+  },
+  {
+    "nome": "Pago del Vallo di Lauro",
+    "provincia": "AV",
+    "codice": "064068"
+  },
+  {
+    "nome": "Pago Veiano",
+    "provincia": "BN",
+    "codice": "062046"
+  },
+  {
+    "nome": "Palma Campania",
+    "provincia": "NA",
+    "codice": "063052"
+  },
+  {
+    "nome": "Palomonte",
+    "provincia": "SA",
+    "codice": "065089"
+  },
+  {
+    "nome": "Pannarano",
+    "provincia": "BN",
+    "codice": "062047"
+  },
+  {
+    "nome": "Paolisi",
+    "provincia": "BN",
+    "codice": "062048"
+  },
+  {
+    "nome": "Parete",
+    "provincia": "CE",
+    "codice": "061054"
+  },
+  {
+    "nome": "Parolise",
+    "provincia": "AV",
+    "codice": "064069"
+  },
+  {
+    "nome": "Pastorano",
+    "provincia": "CE",
+    "codice": "061055"
+  },
+  {
+    "nome": "Paternopoli",
+    "provincia": "AV",
+    "codice": "064070"
+  },
+  {
+    "nome": "Paupisi",
+    "provincia": "BN",
+    "codice": "062049"
+  },
+  {
+    "nome": "Pellezzano",
+    "provincia": "SA",
+    "codice": "065090"
+  },
+  {
+    "nome": "Perdifumo",
+    "provincia": "SA",
+    "codice": "065091"
+  },
+  {
+    "nome": "Perito",
+    "provincia": "SA",
+    "codice": "065092"
+  },
+  {
+    "nome": "Pertosa",
+    "provincia": "SA",
+    "codice": "065093"
+  },
+  {
+    "nome": "Pesco Sannita",
+    "provincia": "BN",
+    "codice": "062050"
+  },
+  {
+    "nome": "Petina",
+    "provincia": "SA",
+    "codice": "065094"
+  },
+  {
+    "nome": "Petruro Irpino",
+    "provincia": "AV",
+    "codice": "064071"
+  },
+  {
+    "nome": "Piaggine",
+    "provincia": "SA",
+    "codice": "065095"
+  },
+  {
+    "nome": "Piana di Monte Verna",
+    "provincia": "CE",
+    "codice": "061056"
+  },
+  {
+    "nome": "Piano di Sorrento",
+    "provincia": "NA",
+    "codice": "063053"
+  },
+  {
+    "nome": "Piedimonte Matese",
+    "provincia": "CE",
+    "codice": "061057"
+  },
+  {
+    "nome": "Pietradefusi",
+    "provincia": "AV",
+    "codice": "064072"
+  },
+  {
+    "nome": "Pietramelara",
+    "provincia": "CE",
+    "codice": "061058"
+  },
+  {
+    "nome": "Pietraroja",
+    "provincia": "BN",
+    "codice": "062051"
+  },
+  {
+    "nome": "Pietrastornina",
+    "provincia": "AV",
+    "codice": "064073"
+  },
+  {
+    "nome": "Pietravairano",
+    "provincia": "CE",
+    "codice": "061059"
+  },
+  {
+    "nome": "Pietrelcina",
+    "provincia": "BN",
+    "codice": "062052"
+  },
+  {
+    "nome": "Pignataro Maggiore",
+    "provincia": "CE",
+    "codice": "061060"
+  },
+  {
+    "nome": "Pimonte",
+    "provincia": "NA",
+    "codice": "063054"
+  },
+  {
+    "nome": "Pisciotta",
+    "provincia": "SA",
+    "codice": "065096"
+  },
+  {
+    "nome": "Poggiomarino",
+    "provincia": "NA",
+    "codice": "063055"
+  },
+  {
+    "nome": "Polla",
+    "provincia": "SA",
+    "codice": "065097"
+  },
+  {
+    "nome": "Pollena Trocchia",
+    "provincia": "NA",
+    "codice": "063056"
+  },
+  {
+    "nome": "Pollica",
+    "provincia": "SA",
+    "codice": "065098"
+  },
+  {
+    "nome": "Pomigliano d'Arco",
+    "provincia": "NA",
+    "codice": "063057"
+  },
+  {
+    "nome": "Pompei",
+    "provincia": "NA",
+    "codice": "063058"
+  },
+  {
+    "nome": "Ponte",
+    "provincia": "BN",
+    "codice": "062053"
+  },
+  {
+    "nome": "Pontecagnano Faiano",
+    "provincia": "SA",
+    "codice": "065099"
+  },
+  {
+    "nome": "Pontelandolfo",
+    "provincia": "BN",
+    "codice": "062054"
+  },
+  {
+    "nome": "Pontelatone",
+    "provincia": "CE",
+    "codice": "061061"
+  },
+  {
+    "nome": "Portici",
+    "provincia": "NA",
+    "codice": "063059"
+  },
+  {
+    "nome": "Portico di Caserta",
+    "provincia": "CE",
+    "codice": "061062"
+  },
+  {
+    "nome": "Positano",
+    "provincia": "SA",
+    "codice": "065100"
+  },
+  {
+    "nome": "Postiglione",
+    "provincia": "SA",
+    "codice": "065101"
+  },
+  {
+    "nome": "Pozzuoli",
+    "provincia": "NA",
+    "codice": "063060"
+  },
+  {
+    "nome": "Praiano",
+    "provincia": "SA",
+    "codice": "065102"
+  },
+  {
+    "nome": "Prata di Principato Ultra",
+    "provincia": "AV",
+    "codice": "064074"
+  },
+  {
+    "nome": "Prata Sannita",
+    "provincia": "CE",
+    "codice": "061063"
+  },
+  {
+    "nome": "Pratella",
+    "provincia": "CE",
+    "codice": "061064"
+  },
+  {
+    "nome": "Pratola Serra",
+    "provincia": "AV",
+    "codice": "064075"
+  },
+  {
+    "nome": "Presenzano",
+    "provincia": "CE",
+    "codice": "061065"
+  },
+  {
+    "nome": "Prignano Cilento",
+    "provincia": "SA",
+    "codice": "065103"
+  },
+  {
+    "nome": "Procida",
+    "provincia": "NA",
+    "codice": "063061"
+  },
+  {
+    "nome": "Puglianello",
+    "provincia": "BN",
+    "codice": "062055"
+  },
+  {
+    "nome": "Quadrelle",
+    "provincia": "AV",
+    "codice": "064076"
+  },
+  {
+    "nome": "Qualiano",
+    "provincia": "NA",
+    "codice": "063062"
+  },
+  {
+    "nome": "Quarto",
+    "provincia": "NA",
+    "codice": "063063"
+  },
+  {
+    "nome": "Quindici",
+    "provincia": "AV",
+    "codice": "064077"
+  },
+  {
+    "nome": "Ravello",
+    "provincia": "SA",
+    "codice": "065104"
+  },
+  {
+    "nome": "Raviscanina",
+    "provincia": "CE",
+    "codice": "061066"
+  },
+  {
+    "nome": "Recale",
+    "provincia": "CE",
+    "codice": "061067"
+  },
+  {
+    "nome": "Reino",
+    "provincia": "BN",
+    "codice": "062056"
+  },
+  {
+    "nome": "Riardo",
+    "provincia": "CE",
+    "codice": "061068"
+  },
+  {
+    "nome": "Ricigliano",
+    "provincia": "SA",
+    "codice": "065105"
+  },
+  {
+    "nome": "Rocca d'Evandro",
+    "provincia": "CE",
+    "codice": "061069"
+  },
+  {
+    "nome": "Rocca San Felice",
+    "provincia": "AV",
+    "codice": "064079"
+  },
+  {
+    "nome": "Roccabascerana",
+    "provincia": "AV",
+    "codice": "064078"
+  },
+  {
+    "nome": "Roccadaspide",
+    "provincia": "SA",
+    "codice": "065106"
+  },
+  {
+    "nome": "Roccagloriosa",
+    "provincia": "SA",
+    "codice": "065107"
+  },
+  {
+    "nome": "Roccamonfina",
+    "provincia": "CE",
+    "codice": "061070"
+  },
+  {
+    "nome": "Roccapiemonte",
+    "provincia": "SA",
+    "codice": "065108"
+  },
+  {
+    "nome": "Roccarainola",
+    "provincia": "NA",
+    "codice": "063065"
+  },
+  {
+    "nome": "Roccaromana",
+    "provincia": "CE",
+    "codice": "061071"
+  },
+  {
+    "nome": "Rocchetta e Croce",
+    "provincia": "CE",
+    "codice": "061072"
+  },
+  {
+    "nome": "Rofrano",
+    "provincia": "SA",
+    "codice": "065109"
+  },
+  {
+    "nome": "Romagnano al Monte",
+    "provincia": "SA",
+    "codice": "065110"
+  },
+  {
+    "nome": "Roscigno",
+    "provincia": "SA",
+    "codice": "065111"
+  },
+  {
+    "nome": "Rotondi",
+    "provincia": "AV",
+    "codice": "064080"
+  },
+  {
+    "nome": "Rutino",
+    "provincia": "SA",
+    "codice": "065112"
+  },
+  {
+    "nome": "Ruviano",
+    "provincia": "CE",
+    "codice": "061073"
+  },
+  {
+    "nome": "Sacco",
+    "provincia": "SA",
+    "codice": "065113"
+  },
+  {
+    "nome": "Sala Consilina",
+    "provincia": "SA",
+    "codice": "065114"
+  },
+  {
+    "nome": "Salento",
+    "provincia": "SA",
+    "codice": "065115"
+  },
+  {
+    "nome": "Salerno",
+    "provincia": "SA",
+    "codice": "065116"
+  },
+  {
+    "nome": "Salvitelle",
+    "provincia": "SA",
+    "codice": "065117"
+  },
+  {
+    "nome": "Salza Irpina",
+    "provincia": "AV",
+    "codice": "064081"
+  },
+  {
+    "nome": "San Bartolomeo in Galdo",
+    "provincia": "BN",
+    "codice": "062057"
+  },
+  {
+    "nome": "San Cipriano d'Aversa",
+    "provincia": "CE",
+    "codice": "061074"
+  },
+  {
+    "nome": "San Cipriano Picentino",
+    "provincia": "SA",
+    "codice": "065118"
+  },
+  {
+    "nome": "San Felice a Cancello",
+    "provincia": "CE",
+    "codice": "061075"
+  },
+  {
+    "nome": "San Gennaro Vesuviano",
+    "provincia": "NA",
+    "codice": "063066"
+  },
+  {
+    "nome": "San Giorgio a Cremano",
+    "provincia": "NA",
+    "codice": "063067"
+  },
+  {
+    "nome": "San Giorgio del Sannio",
+    "provincia": "BN",
+    "codice": "062058"
+  },
+  {
+    "nome": "San Giorgio La Molara",
+    "provincia": "BN",
+    "codice": "062059"
+  },
+  {
+    "nome": "San Giovanni a Piro",
+    "provincia": "SA",
+    "codice": "065119"
+  },
+  {
+    "nome": "San Giuseppe Vesuviano",
+    "provincia": "NA",
+    "codice": "063068"
+  },
+  {
+    "nome": "San Gregorio Magno",
+    "provincia": "SA",
+    "codice": "065120"
+  },
+  {
+    "nome": "San Gregorio Matese",
+    "provincia": "CE",
+    "codice": "061076"
+  },
+  {
+    "nome": "San Leucio del Sannio",
+    "provincia": "BN",
+    "codice": "062060"
+  },
+  {
+    "nome": "San Lorenzello",
+    "provincia": "BN",
+    "codice": "062061"
+  },
+  {
+    "nome": "San Lorenzo Maggiore",
+    "provincia": "BN",
+    "codice": "062062"
+  },
+  {
+    "nome": "San Lupo",
+    "provincia": "BN",
+    "codice": "062063"
+  },
+  {
+    "nome": "San Mango Piemonte",
+    "provincia": "SA",
+    "codice": "065121"
+  },
+  {
+    "nome": "San Mango sul Calore",
+    "provincia": "AV",
+    "codice": "064082"
+  },
+  {
+    "nome": "San Marcellino",
+    "provincia": "CE",
+    "codice": "061077"
+  },
+  {
+    "nome": "San Marco dei Cavoti",
+    "provincia": "BN",
+    "codice": "062064"
+  },
+  {
+    "nome": "San Marco Evangelista",
+    "provincia": "CE",
+    "codice": "061104"
+  },
+  {
+    "nome": "San Martino Sannita",
+    "provincia": "BN",
+    "codice": "062065"
+  },
+  {
+    "nome": "San Martino Valle Caudina",
+    "provincia": "AV",
+    "codice": "064083"
+  },
+  {
+    "nome": "San Marzano sul Sarno",
+    "provincia": "SA",
+    "codice": "065122"
+  },
+  {
+    "nome": "San Mauro Cilento",
+    "provincia": "SA",
+    "codice": "065123"
+  },
+  {
+    "nome": "San Mauro la Bruca",
+    "provincia": "SA",
+    "codice": "065124"
+  },
+  {
+    "nome": "San Michele di Serino",
+    "provincia": "AV",
+    "codice": "064084"
+  },
+  {
+    "nome": "San Nazzaro",
+    "provincia": "BN",
+    "codice": "062066"
+  },
+  {
+    "nome": "San Nicola Baronia",
+    "provincia": "AV",
+    "codice": "064085"
+  },
+  {
+    "nome": "San Nicola la Strada",
+    "provincia": "CE",
+    "codice": "061078"
+  },
+  {
+    "nome": "San Nicola Manfredi",
+    "provincia": "BN",
+    "codice": "062067"
+  },
+  {
+    "nome": "San Paolo Bel Sito",
+    "provincia": "NA",
+    "codice": "063069"
+  },
+  {
+    "nome": "San Pietro al Tanagro",
+    "provincia": "SA",
+    "codice": "065125"
+  },
+  {
+    "nome": "San Pietro Infine",
+    "provincia": "CE",
+    "codice": "061079"
+  },
+  {
+    "nome": "San Potito Sannitico",
+    "provincia": "CE",
+    "codice": "061080"
+  },
+  {
+    "nome": "San Potito Ultra",
+    "provincia": "AV",
+    "codice": "064086"
+  },
+  {
+    "nome": "San Prisco",
+    "provincia": "CE",
+    "codice": "061081"
+  },
+  {
+    "nome": "San Rufo",
+    "provincia": "SA",
+    "codice": "065126"
+  },
+  {
+    "nome": "San Salvatore Telesino",
+    "provincia": "BN",
+    "codice": "062068"
+  },
+  {
+    "nome": "San Sebastiano al Vesuvio",
+    "provincia": "NA",
+    "codice": "063070"
+  },
+  {
+    "nome": "San Sossio Baronia",
+    "provincia": "AV",
+    "codice": "064087"
+  },
+  {
+    "nome": "San Tammaro",
+    "provincia": "CE",
+    "codice": "061085"
+  },
+  {
+    "nome": "San Valentino Torio",
+    "provincia": "SA",
+    "codice": "065132"
+  },
+  {
+    "nome": "San Vitaliano",
+    "provincia": "NA",
+    "codice": "063075"
+  },
+  {
+    "nome": "Sant'Agata de' Goti",
+    "provincia": "BN",
+    "codice": "062070"
+  },
+  {
+    "nome": "Sant'Agnello",
+    "provincia": "NA",
+    "codice": "063071"
+  },
+  {
+    "nome": "Sant'Anastasia",
+    "provincia": "NA",
+    "codice": "063072"
+  },
+  {
+    "nome": "Sant'Andrea di Conza",
+    "provincia": "AV",
+    "codice": "064089"
+  },
+  {
+    "nome": "Sant'Angelo a Cupolo",
+    "provincia": "BN",
+    "codice": "062071"
+  },
+  {
+    "nome": "Sant'Angelo a Fasanella",
+    "provincia": "SA",
+    "codice": "065128"
+  },
+  {
+    "nome": "Sant'Angelo a Scala",
+    "provincia": "AV",
+    "codice": "064091"
+  },
+  {
+    "nome": "Sant'Angelo all'Esca",
+    "provincia": "AV",
+    "codice": "064090"
+  },
+  {
+    "nome": "Sant'Angelo d'Alife",
+    "provincia": "CE",
+    "codice": "061086"
+  },
+  {
+    "nome": "Sant'Angelo dei Lombardi",
+    "provincia": "AV",
+    "codice": "064092"
+  },
+  {
+    "nome": "Sant'Antimo",
+    "provincia": "NA",
+    "codice": "063073"
+  },
+  {
+    "nome": "Sant'Antonio Abate",
+    "provincia": "NA",
+    "codice": "063074"
+  },
+  {
+    "nome": "Sant'Arcangelo Trimonte",
+    "provincia": "BN",
+    "codice": "062078"
+  },
+  {
+    "nome": "Sant'Arpino",
+    "provincia": "CE",
+    "codice": "061087"
+  },
+  {
+    "nome": "Sant'Arsenio",
+    "provincia": "SA",
+    "codice": "065129"
+  },
+  {
+    "nome": "Sant'Egidio del Monte Albino",
+    "provincia": "SA",
+    "codice": "065130"
+  },
+  {
+    "nome": "Santa Croce del Sannio",
+    "provincia": "BN",
+    "codice": "062069"
+  },
+  {
+    "nome": "Santa Lucia di Serino",
+    "provincia": "AV",
+    "codice": "064088"
+  },
+  {
+    "nome": "Santa Maria a Vico",
+    "provincia": "CE",
+    "codice": "061082"
+  },
+  {
+    "nome": "Santa Maria Capua Vetere",
+    "provincia": "CE",
+    "codice": "061083"
+  },
+  {
+    "nome": "Santa Maria la Carità",
+    "provincia": "NA",
+    "codice": "063090"
+  },
+  {
+    "nome": "Santa Maria la Fossa",
+    "provincia": "CE",
+    "codice": "061084"
+  },
+  {
+    "nome": "Santa Marina",
+    "provincia": "SA",
+    "codice": "065127"
+  },
+  {
+    "nome": "Santa Paolina",
+    "provincia": "AV",
+    "codice": "064093"
+  },
+  {
+    "nome": "Santo Stefano del Sole",
+    "provincia": "AV",
+    "codice": "064095"
+  },
+  {
+    "nome": "Santomenna",
+    "provincia": "SA",
+    "codice": "065131"
+  },
+  {
+    "nome": "Sanza",
+    "provincia": "SA",
+    "codice": "065133"
+  },
+  {
+    "nome": "Sapri",
+    "provincia": "SA",
+    "codice": "065134"
+  },
+  {
+    "nome": "Sarno",
+    "provincia": "SA",
+    "codice": "065135"
+  },
+  {
+    "nome": "Sassano",
+    "provincia": "SA",
+    "codice": "065136"
+  },
+  {
+    "nome": "Sassinoro",
+    "provincia": "BN",
+    "codice": "062072"
+  },
+  {
+    "nome": "Saviano",
+    "provincia": "NA",
+    "codice": "063076"
+  },
+  {
+    "nome": "Savignano Irpino",
+    "provincia": "AV",
+    "codice": "064096"
+  },
+  {
+    "nome": "Scafati",
+    "provincia": "SA",
+    "codice": "065137"
+  },
+  {
+    "nome": "Scala",
+    "provincia": "SA",
+    "codice": "065138"
+  },
+  {
+    "nome": "Scampitella",
+    "provincia": "AV",
+    "codice": "064097"
+  },
+  {
+    "nome": "Scisciano",
+    "provincia": "NA",
+    "codice": "063077"
+  },
+  {
+    "nome": "Senerchia",
+    "provincia": "AV",
+    "codice": "064098"
+  },
+  {
+    "nome": "Serino",
+    "provincia": "AV",
+    "codice": "064099"
+  },
+  {
+    "nome": "Serramezzana",
+    "provincia": "SA",
+    "codice": "065139"
+  },
+  {
+    "nome": "Serrara Fontana",
+    "provincia": "NA",
+    "codice": "063078"
+  },
+  {
+    "nome": "Serre",
+    "provincia": "SA",
+    "codice": "065140"
+  },
+  {
+    "nome": "Sessa Aurunca",
+    "provincia": "CE",
+    "codice": "061088"
+  },
+  {
+    "nome": "Sessa Cilento",
+    "provincia": "SA",
+    "codice": "065141"
+  },
+  {
+    "nome": "Siano",
+    "provincia": "SA",
+    "codice": "065142"
+  },
+  {
+    "nome": "Sicignano degli Alburni",
+    "provincia": "SA",
+    "codice": "065143"
+  },
+  {
+    "nome": "Sirignano",
+    "provincia": "AV",
+    "codice": "064100"
+  },
+  {
+    "nome": "Solofra",
+    "provincia": "AV",
+    "codice": "064101"
+  },
+  {
+    "nome": "Solopaca",
+    "provincia": "BN",
+    "codice": "062073"
+  },
+  {
+    "nome": "Somma Vesuviana",
+    "provincia": "NA",
+    "codice": "063079"
+  },
+  {
+    "nome": "Sorbo Serpico",
+    "provincia": "AV",
+    "codice": "064102"
+  },
+  {
+    "nome": "Sorrento",
+    "provincia": "NA",
+    "codice": "063080"
+  },
+  {
+    "nome": "Sparanise",
+    "provincia": "CE",
+    "codice": "061089"
+  },
+  {
+    "nome": "Sperone",
+    "provincia": "AV",
+    "codice": "064103"
+  },
+  {
+    "nome": "Stella Cilento",
+    "provincia": "SA",
+    "codice": "065144"
+  },
+  {
+    "nome": "Stio",
+    "provincia": "SA",
+    "codice": "065145"
+  },
+  {
+    "nome": "Striano",
+    "provincia": "NA",
+    "codice": "063081"
+  },
+  {
+    "nome": "Sturno",
+    "provincia": "AV",
+    "codice": "064104"
+  },
+  {
+    "nome": "Succivo",
+    "provincia": "CE",
+    "codice": "061090"
+  },
+  {
+    "nome": "Summonte",
+    "provincia": "AV",
+    "codice": "064105"
+  },
+  {
+    "nome": "Taurano",
+    "provincia": "AV",
+    "codice": "064106"
+  },
+  {
+    "nome": "Taurasi",
+    "provincia": "AV",
+    "codice": "064107"
+  },
+  {
+    "nome": "Teano",
+    "provincia": "CE",
+    "codice": "061091"
+  },
+  {
+    "nome": "Teggiano",
+    "provincia": "SA",
+    "codice": "065146"
+  },
+  {
+    "nome": "Telese Terme",
+    "provincia": "BN",
+    "codice": "062074"
+  },
+  {
+    "nome": "Teora",
+    "provincia": "AV",
+    "codice": "064108"
+  },
+  {
+    "nome": "Terzigno",
+    "provincia": "NA",
+    "codice": "063082"
+  },
+  {
+    "nome": "Teverola",
+    "provincia": "CE",
+    "codice": "061092"
+  },
+  {
+    "nome": "Tocco Caudio",
+    "provincia": "BN",
+    "codice": "062075"
+  },
+  {
+    "nome": "Tora e Piccilli",
+    "provincia": "CE",
+    "codice": "061093"
+  },
+  {
+    "nome": "Torchiara",
+    "provincia": "SA",
+    "codice": "065147"
+  },
+  {
+    "nome": "Torella dei Lombardi",
+    "provincia": "AV",
+    "codice": "064109"
+  },
+  {
+    "nome": "Torraca",
+    "provincia": "SA",
+    "codice": "065148"
+  },
+  {
+    "nome": "Torre Annunziata",
+    "provincia": "NA",
+    "codice": "063083"
+  },
+  {
+    "nome": "Torre del Greco",
+    "provincia": "NA",
+    "codice": "063084"
+  },
+  {
+    "nome": "Torre Le Nocelle",
+    "provincia": "AV",
+    "codice": "064110"
+  },
+  {
+    "nome": "Torre Orsaia",
+    "provincia": "SA",
+    "codice": "065149"
+  },
+  {
+    "nome": "Torrecuso",
+    "provincia": "BN",
+    "codice": "062076"
+  },
+  {
+    "nome": "Torrioni",
+    "provincia": "AV",
+    "codice": "064111"
+  },
+  {
+    "nome": "Tortorella",
+    "provincia": "SA",
+    "codice": "065150"
+  },
+  {
+    "nome": "Tramonti",
+    "provincia": "SA",
+    "codice": "065151"
+  },
+  {
+    "nome": "Trecase",
+    "provincia": "NA",
+    "codice": "063091"
+  },
+  {
+    "nome": "Trentinara",
+    "provincia": "SA",
+    "codice": "065152"
+  },
+  {
+    "nome": "Trentola Ducenta",
+    "provincia": "CE",
+    "codice": "061094"
+  },
+  {
+    "nome": "Trevico",
+    "provincia": "AV",
+    "codice": "064112"
+  },
+  {
+    "nome": "Tufino",
+    "provincia": "NA",
+    "codice": "063085"
+  },
+  {
+    "nome": "Tufo",
+    "provincia": "AV",
+    "codice": "064113"
+  },
+  {
+    "nome": "Vairano Patenora",
+    "provincia": "CE",
+    "codice": "061095"
+  },
+  {
+    "nome": "Vallata",
+    "provincia": "AV",
+    "codice": "064114"
+  },
+  {
+    "nome": "Valle Agricola",
+    "provincia": "CE",
+    "codice": "061096"
+  },
+  {
+    "nome": "Valle dell'Angelo",
+    "provincia": "SA",
+    "codice": "065153"
+  },
+  {
+    "nome": "Valle di Maddaloni",
+    "provincia": "CE",
+    "codice": "061097"
+  },
+  {
+    "nome": "Vallesaccarda",
+    "provincia": "AV",
+    "codice": "064115"
+  },
+  {
+    "nome": "Vallo della Lucania",
+    "provincia": "SA",
+    "codice": "065154"
+  },
+  {
+    "nome": "Valva",
+    "provincia": "SA",
+    "codice": "065155"
+  },
+  {
+    "nome": "Venticano",
+    "provincia": "AV",
+    "codice": "064116"
+  },
+  {
+    "nome": "Vibonati",
+    "provincia": "SA",
+    "codice": "065156"
+  },
+  {
+    "nome": "Vico Equense",
+    "provincia": "NA",
+    "codice": "063086"
+  },
+  {
+    "nome": "Vietri sul Mare",
+    "provincia": "SA",
+    "codice": "065157"
+  },
+  {
+    "nome": "Villa di Briano",
+    "provincia": "CE",
+    "codice": "061098"
+  },
+  {
+    "nome": "Villa Literno",
+    "provincia": "CE",
+    "codice": "061099"
+  },
+  {
+    "nome": "Villamaina",
+    "provincia": "AV",
+    "codice": "064117"
+  },
+  {
+    "nome": "Villanova del Battista",
+    "provincia": "AV",
+    "codice": "064118"
+  },
+  {
+    "nome": "Villaricca",
+    "provincia": "NA",
+    "codice": "063087"
+  },
+  {
+    "nome": "Visciano",
+    "provincia": "NA",
+    "codice": "063088"
+  },
+  {
+    "nome": "Vitulano",
+    "provincia": "BN",
+    "codice": "062077"
+  },
+  {
+    "nome": "Vitulazio",
+    "provincia": "CE",
+    "codice": "061100"
+  },
+  {
+    "nome": "Volla",
+    "provincia": "NA",
+    "codice": "063089"
+  },
+  {
+    "nome": "Volturara Irpina",
+    "provincia": "AV",
+    "codice": "064119"
+  },
+  {
+    "nome": "Zungoli",
+    "provincia": "AV",
+    "codice": "064120"
+  }
+]

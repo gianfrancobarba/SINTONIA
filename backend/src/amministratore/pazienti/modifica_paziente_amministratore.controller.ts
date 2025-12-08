@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Patch, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { Modifica_paziente_amministratoreService } from './modifica_paziente_amministratore.service.js';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard.js';
 import { RolesGuard } from '../../auth/roles.guard.js';
@@ -7,6 +7,17 @@ import { Roles } from '../../auth/roles.decorator.js';
 @Controller('admin/patients')
 export class Modifica_paziente_amministratoreController {
     constructor(private readonly service: Modifica_paziente_amministratoreService) { }
+
+    /**
+     * Cerca comuni della Campania
+     * Endpoint: GET /admin/patients/comuni/search?q=napoli
+     */
+    @Get('comuni/search')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('admin')
+    async searchComuni(@Query('q') query: string) {
+        return this.service.searchComuni(query);
+    }
 
     /**
      * Ottiene i dettagli completi di un paziente

@@ -2,9 +2,41 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { db } from '../../drizzle/db.js';
 import { paziente, psicologo } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
+import comuniCampania from '../../common/data/comuni-campania.json' with { type: 'json' };
+
+export interface Comune {
+    nome: string;
+    provincia: string;
+    codice: string;
+}
 
 @Injectable()
 export class Modifica_paziente_amministratoreService {
+    private readonly comuni: Comune[] = comuniCampania as unknown as Comune[];
+
+    /**
+     * Cerca comuni per nome (case-insensitive, partial match)
+     */
+    searchComuni(query: string): Comune[] {
+        const searchTerm = query.toLowerCase().trim();
+        if (!searchTerm) {
+            return this.comuni;
+        }
+        return this.comuni.filter(c =>
+            c.nome.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    /**
+     * Verifica se un comune esiste nella lista
+     */
+    isValidComune(nome: string): boolean {
+        const normalizedName = nome.toLowerCase().trim();
+        return this.comuni.some(c =>
+            c.nome.toLowerCase() === normalizedName
+        );
+    }
+
     /**
      * Aggiorna i campi modificabili di un paziente
      */
@@ -27,11 +59,34 @@ export class Modifica_paziente_amministratoreService {
             throw new NotFoundException(`Paziente con ID ${idPaziente} non trovato`);
         }
 
+        // Validazione Residenza
+        if (updates.residenza) {
+            // Estrai solo il nome del comune se il formato è "Nome Comune (PROV)"
+            // Ma per ora assumiamo che arrivi il nome del comune pulito o che dobbiamo validarlo
+            // Se l'input è "Napoli (NA)", la validazione fallirebbe se cerchiamo match esatto su "Napoli"
+            // Tuttavia, se il frontend manda il valore selezionato dal dropdown, dovrebbe essere corretto.
+            // Facciamo una validazione flessibile: se il comune non è valido, lanciamo errore.
+
+            // Tentativo di pulizia: se c'è una parentesi, prendiamo la parte prima
+            let nomeComune = updates.residenza;
+            if (updates.residenza.includes('(')) {
+                nomeComune = updates.residenza.split('(')[0].trim();
+            }
+
+            if (!this.isValidComune(nomeComune)) {
+                throw new BadRequestException(`Il comune "${updates.residenza}" non è un comune valido della Campania.`);
+            }
+        }
+
         // Aggiorna solo i campi forniti
         const updateData: any = {};
         if (updates.email !== undefined) updateData.email = updates.email;
-        if (updates.residenza !== undefined) updateData.residenza = updates.residenza;
-        if (updates.idPsicologo !== undefined) updateData.idPsicologo = updates.idPsicologo;
+        if (updates.residenza !== undefined) updateData.residenza = updates.residenza; // Salviamo quello che arriva, assumendo sia corretto dopo validazione
+
+        if (updates.idPsicologo !== undefined) {
+            // Se arriva una stringa vuota, significa "nessuno psicologo" -> NULL nel DB
+            updateData.idPsicologo = updates.idPsicologo === '' ? null : updates.idPsicologo;
+        }
 
         await db
             .update(paziente)

@@ -90,7 +90,9 @@ export class Visualizzazione_questionariService {
         idAmministratoreConferma: questionario.idAmministratoreConferma,
       })
       .from(questionario)
+      .innerJoin(paziente, eq(questionario.idPaziente, paziente.idPaziente))
       .where(and(
+        isNull(paziente.idPsicologo), // Mostra SOLO se il paziente NON ha psicologo
         eq(questionario.invalidato, false),
         eq(questionario.revisionato, false),
         // Mostra se: NON c'è richiesta OPPURE l'admin ha già risposto

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Eye, EyeOff, X } from 'lucide-react';
-import '../css/QuestionnaireDetailModal.css';
+import '../css/Modal.css';
 
 interface ChangePasswordModalProps {
     onClose: () => void;
@@ -48,75 +48,30 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
     };
 
     return ReactDOM.createPortal(
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                {/* Modern Header with Gradient - Same as AdminPsychologistDetailModal */}
-                <div style={{
-                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
-                    padding: '32px',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        right: '-10%',
-                        width: '300px',
-                        height: '300px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '50%',
-                        filter: 'blur(40px)'
-                    }}></div>
-
-                    <div style={{ position: 'relative', zIndex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div>
-                                <h2 style={{
-                                    margin: '0',
-                                    fontSize: '28px',
-                                    fontWeight: '700',
-                                    color: 'white',
-                                    letterSpacing: '-0.5px'
-                                }}>
-                                    Modifica Password
-                                </h2>
-                            </div>
-                            <button
-                                onClick={onClose}
-                                style={{
-                                    background: 'rgba(255, 255, 255, 0.15)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: 'none',
-                                    color: 'white',
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.3s ease',
-                                    fontSize: '20px'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
-                                }}
-                            >
-                                <X size={20} />
-                            </button>
+        <div className="modal-overlay-blur" onClick={onClose}>
+            <div className="modal-card modal-card-sm" onClick={(e) => e.stopPropagation()}>
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Modifica Password
+                            </h2>
                         </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            <X size={20} />
+                        </button>
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="modal-body">
+                {/* Body */}
+                <form onSubmit={handleSubmit} className="modal-body-white">
                     {/* Password Vecchia */}
-                    <div className="info-item" style={{ marginBottom: '20px' }}>
-                        <label className="info-label" style={{ fontSize: '14px', fontWeight: '600', color: '#1A5F5F', marginBottom: '8px', display: 'block' }}>
+                    <div className="modal-form-group" style={{ marginBottom: '20px' }}>
+                        <label className="modal-form-label">
                             Password Attuale
                         </label>
                         <div style={{ position: 'relative' }}>
@@ -127,7 +82,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                                     setOldPassword(e.target.value);
                                     setError('');
                                 }}
-                                className="modal-input"
+                                className="modal-form-input"
                                 placeholder="Inserisci la password attuale"
                                 style={{ paddingRight: '40px' }}
                             />
@@ -155,8 +110,8 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                     </div>
 
                     {/* Nuova Password */}
-                    <div className="info-item" style={{ marginBottom: '20px' }}>
-                        <label className="info-label" style={{ fontSize: '14px', fontWeight: '600', color: '#1A5F5F', marginBottom: '8px', display: 'block' }}>
+                    <div className="modal-form-group" style={{ marginBottom: '20px' }}>
+                        <label className="modal-form-label">
                             Nuova Password
                         </label>
                         <div style={{ position: 'relative' }}>
@@ -167,7 +122,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                                     setNewPassword(e.target.value);
                                     setError('');
                                 }}
-                                className="modal-input"
+                                className="modal-form-input"
                                 placeholder="Inserisci la nuova password"
                                 style={{ paddingRight: '40px' }}
                             />
@@ -195,8 +150,8 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                     </div>
 
                     {/* Conferma Password */}
-                    <div className="info-item" style={{ marginBottom: '20px' }}>
-                        <label className="info-label" style={{ fontSize: '14px', fontWeight: '600', color: '#1A5F5F', marginBottom: '8px', display: 'block' }}>
+                    <div className="modal-form-group" style={{ marginBottom: '20px' }}>
+                        <label className="modal-form-label">
                             Conferma Nuova Password
                         </label>
                         <div style={{ position: 'relative' }}>
@@ -207,7 +162,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                                     setConfirmPassword(e.target.value);
                                     setError('');
                                 }}
-                                className="modal-input"
+                                className="modal-form-input"
                                 placeholder="Reinserisci la nuova password"
                                 style={{ paddingRight: '40px' }}
                             />
@@ -236,18 +191,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
 
                     {/* Error Message */}
                     {error && (
-                        <div style={{
-                            padding: '12px',
-                            background: '#fee',
-                            border: '1px solid #fcc',
-                            borderRadius: '6px',
-                            color: '#c00',
-                            fontSize: '14px',
-                            marginBottom: '20px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                        }}>
+                        <div className="modal-error-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -258,35 +202,17 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
                     )}
 
                     {/* Buttons */}
-                    <div className="modal-footer" style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '24px' }}>
+                    <div className="modal-footer-actions" style={{ marginTop: '24px', padding: 0, border: 'none' }}>
                         <button
                             type="button"
                             onClick={onClose}
-                            style={{
-                                padding: '10px 20px',
-                                borderRadius: '6px',
-                                border: '1px solid #ddd',
-                                background: '#fff',
-                                cursor: 'pointer',
-                                fontSize: '14px',
-                                fontWeight: '500',
-                                color: '#666'
-                            }}
+                            className="btn-modal-secondary"
                         >
                             Annulla
                         </button>
                         <button
                             type="submit"
-                            style={{
-                                padding: '10px 20px',
-                                borderRadius: '6px',
-                                border: 'none',
-                                background: '#83B9C1',
-                                color: '#fff',
-                                cursor: 'pointer',
-                                fontSize: '14px',
-                                fontWeight: '600'
-                            }}
+                            className="btn-modal-primary"
                         >
                             Conferma
                         </button>
@@ -299,3 +225,4 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose, onCo
 };
 
 export default ChangePasswordModal;
+

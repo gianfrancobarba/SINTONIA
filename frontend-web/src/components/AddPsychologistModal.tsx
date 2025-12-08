@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { X, UserPlus, Search } from 'lucide-react';
-import '../css/AddPsychologistModal.css';
+import '../css/Modal.css';
 import Toast from './Toast';
 
 interface PsychologistFormData {
@@ -139,105 +139,39 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
     };
 
     return ReactDOM.createPortal(
-        <div className="modal-overlay" onClick={onClose} style={{ backdropFilter: 'blur(4px)' }}>
+        <div className="modal-overlay-blur" onClick={onClose}>
             <div
-                className="modal-content"
+                className="modal-card modal-card-md"
                 onClick={(e) => e.stopPropagation()}
-                style={{
-                    maxWidth: '700px',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
-                }}
             >
-                {/* Modern Header with Gradient */}
-                <div style={{
-                    background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 50%, #83B9C1 100%)',
-                    padding: '32px',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        right: '-10%',
-                        width: '300px',
-                        height: '300px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '50%',
-                        filter: 'blur(40px)'
-                    }}></div>
-
-                    <div style={{ position: 'relative', zIndex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div>
-                                <h2 style={{
-                                    margin: '0 0 8px 0',
-                                    fontSize: '28px',
-                                    fontWeight: '700',
-                                    color: 'white',
-                                    letterSpacing: '-0.5px'
-                                }}>
-                                    Aggiungi Nuovo Psicologo
-                                </h2>
-                                <p style={{
-                                    margin: 0,
-                                    fontSize: '14px',
-                                    color: 'rgba(255, 255, 255, 0.8)',
-                                    fontWeight: '500'
-                                }}>
-                                    Inserisci i dati del nuovo professionista
-                                </p>
-                            </div>
-                            <button
-                                onClick={onClose}
-                                style={{
-                                    background: 'rgba(255, 255, 255, 0.15)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: 'none',
-                                    color: 'white',
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.3s ease',
-                                    fontSize: '20px'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                                    e.currentTarget.style.transform = 'rotate(90deg) scale(1.1)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                                    e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
-                                }}
-                            >
-                                <X size={24} />
-                            </button>
+                {/* Header with Gradient */}
+                <div className="modal-header-gradient">
+                    <div className="modal-header-content">
+                        <div className="modal-header-text">
+                            <h2 className="modal-header-title">
+                                Aggiungi Nuovo Psicologo
+                            </h2>
+                            <p className="modal-header-subtitle">
+                                Inserisci i dati del nuovo professionista
+                            </p>
                         </div>
+                        <button
+                            onClick={onClose}
+                            className="modal-close-btn-rounded"
+                        >
+                            <X size={24} />
+                        </button>
                     </div>
                 </div>
 
-                {/* Body with Modern Styling */}
-                <div style={{
-                    padding: '32px',
-                    background: '#f8f9fa',
-                    maxHeight: 'calc(90vh - 200px)',
-                    overflowY: 'auto'
-                }}>
-                    <form onSubmit={handleSubmit} className="psychologist-form">
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr',
-                            gap: '20px',
-                            marginBottom: '20px'
-                        }}>
-                            <div className="form-group">
-                                <label htmlFor="nome" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600', color: '#1a1a1a' }}>
-                                    Nome <span style={{ color: '#E57373' }}>*</span>
+                {/* Body */}
+                <div className="modal-body-gray modal-body-scrollable">
+                    <form onSubmit={handleSubmit}>
+                        {/* Nome & Cognome Row */}
+                        <div className="modal-form-grid">
+                            <div className="modal-form-group">
+                                <label htmlFor="nome" className="modal-form-label modal-form-label-required">
+                                    Nome
                                 </label>
                                 <input
                                     type="text"
@@ -246,26 +180,16 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                     value={formData.nome}
                                     onChange={handleChange}
                                     placeholder="Inserisci il nome"
-                                    style={{
-                                        width: '100%',
-                                        padding: '12px 16px',
-                                        border: errors.nome ? '2px solid #E57373' : '2px solid #e0e0e0',
-                                        borderRadius: '10px',
-                                        fontSize: '15px',
-                                        outline: 'none',
-                                        transition: 'all 0.2s ease'
-                                    }}
-                                    onFocus={(e) => e.target.style.borderColor = '#0D475D'}
-                                    onBlur={(e) => e.target.style.borderColor = errors.nome ? '#E57373' : '#e0e0e0'}
+                                    className={`modal-form-input ${errors.nome ? 'modal-form-input-error' : ''}`}
                                 />
                                 {errors.nome && (
-                                    <span style={{ color: '#E57373', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.nome}</span>
+                                    <span className="modal-form-error-text">{errors.nome}</span>
                                 )}
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="cognome" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600', color: '#1a1a1a' }}>
-                                    Cognome <span style={{ color: '#E57373' }}>*</span>
+                            <div className="modal-form-group">
+                                <label htmlFor="cognome" className="modal-form-label modal-form-label-required">
+                                    Cognome
                                 </label>
                                 <input
                                     type="text"
@@ -274,35 +198,19 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                     value={formData.cognome}
                                     onChange={handleChange}
                                     placeholder="Inserisci il cognome"
-                                    style={{
-                                        width: '100%',
-                                        padding: '12px 16px',
-                                        border: errors.cognome ? '2px solid #E57373' : '2px solid #e0e0e0',
-                                        borderRadius: '10px',
-                                        fontSize: '15px',
-                                        outline: 'none',
-                                        transition: 'all 0.2s ease'
-                                    }}
-                                    onFocus={(e) => e.target.style.borderColor = '#0D475D'}
-                                    onBlur={(e) => e.target.style.borderColor = errors.cognome ? '#E57373' : '#e0e0e0'}
+                                    className={`modal-form-input ${errors.cognome ? 'modal-form-input-error' : ''}`}
                                 />
                                 {errors.cognome && (
-                                    <span style={{ color: '#E57373', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.cognome}</span>
+                                    <span className="modal-form-error-text">{errors.cognome}</span>
                                 )}
                             </div>
                         </div>
 
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr',
-                            gap: '20px',
-                            marginBottom: '20px',
-                            position: 'relative',
-                            zIndex: 20
-                        }}>
-                            <div className="form-group">
-                                <label htmlFor="codiceFiscale" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600', color: '#1a1a1a' }}>
-                                    Codice Fiscale <span style={{ color: '#E57373' }}>*</span>
+                        {/* Codice Fiscale & ASL Row */}
+                        <div className="modal-form-grid" style={{ position: 'relative', zIndex: 20 }}>
+                            <div className="modal-form-group">
+                                <label htmlFor="codiceFiscale" className="modal-form-label modal-form-label-required">
+                                    Codice Fiscale
                                 </label>
                                 <input
                                     type="text"
@@ -312,26 +220,16 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                     onChange={handleChange}
                                     maxLength={16}
                                     placeholder="16 caratteri"
-                                    style={{
-                                        width: '100%',
-                                        padding: '12px 16px',
-                                        border: errors.codiceFiscale ? '2px solid #E57373' : '2px solid #e0e0e0',
-                                        borderRadius: '10px',
-                                        fontSize: '15px',
-                                        outline: 'none',
-                                        transition: 'all 0.2s ease'
-                                    }}
-                                    onFocus={(e) => e.target.style.borderColor = '#0D475D'}
-                                    onBlur={(e) => e.target.style.borderColor = errors.codiceFiscale ? '#E57373' : '#e0e0e0'}
+                                    className={`modal-form-input ${errors.codiceFiscale ? 'modal-form-input-error' : ''}`}
                                 />
                                 {errors.codiceFiscale && (
-                                    <span style={{ color: '#E57373', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.codiceFiscale}</span>
+                                    <span className="modal-form-error-text">{errors.codiceFiscale}</span>
                                 )}
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="aslAppartenenza" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600', color: '#1a1a1a' }}>
-                                    ASL di Appartenenza <span style={{ color: '#E57373' }}>*</span>
+                            <div className="modal-form-group">
+                                <label htmlFor="aslAppartenenza" className="modal-form-label modal-form-label-required">
+                                    ASL di Appartenenza
                                 </label>
                                 <div style={{ position: 'relative', zIndex: 100 }} ref={dropdownRef}>
                                     <div style={{ position: 'relative' }}>
@@ -348,17 +246,8 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                             onFocus={() => setShowAslDropdown(true)}
                                             placeholder="Cerca ASL..."
                                             autoComplete="off"
-                                            style={{
-                                                width: '100%',
-                                                padding: '12px 40px 12px 16px',
-                                                border: errors.aslAppartenenza ? '2px solid #E57373' : '2px solid #e0e0e0',
-                                                borderRadius: '10px',
-                                                fontSize: '15px',
-                                                outline: 'none',
-                                                transition: 'all 0.2s ease'
-                                            }}
-                                            onFocusCapture={(e) => e.target.style.borderColor = '#0D475D'}
-                                            onBlur={(e) => e.target.style.borderColor = errors.aslAppartenenza ? '#E57373' : '#e0e0e0'}
+                                            className={`modal-form-input ${errors.aslAppartenenza ? 'modal-form-input-error' : ''}`}
+                                            style={{ paddingRight: '40px' }}
                                         />
                                         <div style={{
                                             position: 'absolute',
@@ -373,54 +262,19 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                     </div>
 
                                     {showAslDropdown && (
-                                        <div style={{
-                                            position: 'absolute',
-                                            top: '100%',
-                                            left: 0,
-                                            right: 0,
-                                            marginTop: '4px',
-                                            backgroundColor: 'white',
-                                            border: '1px solid #e0e0e0',
-                                            borderRadius: '12px',
-                                            maxHeight: '200px',
-                                            overflowY: 'auto',
-                                            zIndex: 1000,
-                                            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)'
-                                        }}>
+                                        <div className="modal-dropdown">
                                             {filteredAslOptions.length > 0 ? (
                                                 filteredAslOptions.map(asl => (
                                                     <div
                                                         key={asl}
                                                         onClick={() => handleAslSelect(asl)}
-                                                        style={{
-                                                            padding: '12px 16px',
-                                                            cursor: 'pointer',
-                                                            fontSize: '14px',
-                                                            backgroundColor: formData.aslAppartenenza === asl ? '#f0f9f0' : 'white',
-                                                            color: formData.aslAppartenenza === asl ? '#7FB77E' : '#333',
-                                                            transition: 'background-color 0.2s'
-                                                        }}
-                                                        onMouseEnter={(e) => {
-                                                            if (formData.aslAppartenenza !== asl) {
-                                                                e.currentTarget.style.backgroundColor = '#f8f9fa';
-                                                            }
-                                                        }}
-                                                        onMouseLeave={(e) => {
-                                                            if (formData.aslAppartenenza !== asl) {
-                                                                e.currentTarget.style.backgroundColor = 'white';
-                                                            }
-                                                        }}
+                                                        className={`modal-dropdown-item ${formData.aslAppartenenza === asl ? 'modal-dropdown-item-selected' : ''}`}
                                                     >
                                                         {asl}
                                                     </div>
                                                 ))
                                             ) : (
-                                                <div style={{
-                                                    padding: '16px',
-                                                    textAlign: 'center',
-                                                    color: '#999',
-                                                    fontSize: '13px'
-                                                }}>
+                                                <div className="modal-dropdown-empty">
                                                     Nessuna ASL trovata
                                                 </div>
                                             )}
@@ -428,14 +282,15 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                     )}
                                 </div>
                                 {errors.aslAppartenenza && (
-                                    <span style={{ color: '#E57373', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.aslAppartenenza}</span>
+                                    <span className="modal-form-error-text">{errors.aslAppartenenza}</span>
                                 )}
                             </div>
                         </div>
 
-                        <div className="form-group" style={{ marginBottom: '20px', position: 'relative', zIndex: 10 }}>
-                            <label htmlFor="email" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600', color: '#1a1a1a' }}>
-                                Email <span style={{ color: '#E57373' }}>*</span>
+                        {/* Email Row */}
+                        <div className="modal-form-group" style={{ position: 'relative', zIndex: 10 }}>
+                            <label htmlFor="email" className="modal-form-label modal-form-label-required">
+                                Email
                             </label>
                             <input
                                 type="email"
@@ -444,86 +299,32 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="esempio@email.it"
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 16px',
-                                    border: errors.email ? '2px solid #E57373' : '2px solid #e0e0e0',
-                                    borderRadius: '10px',
-                                    fontSize: '15px',
-                                    outline: 'none',
-                                    transition: 'all 0.2s ease'
-                                }}
-                                onFocus={(e) => e.target.style.borderColor = '#0D475D'}
-                                onBlur={(e) => e.target.style.borderColor = errors.email ? '#E57373' : '#e0e0e0'}
+                                className={`modal-form-input ${errors.email ? 'modal-form-input-error' : ''}`}
                             />
                             {errors.email && (
-                                <span style={{ color: '#E57373', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.email}</span>
+                                <span className="modal-form-error-text">{errors.email}</span>
                             )}
                         </div>
                     </form>
                 </div>
 
-                {/* Modern Footer */}
-                <div style={{
-                    padding: '24px 32px',
-                    background: 'white',
-                    borderTop: '1px solid #e8e8e8',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    gap: '12px'
-                }}>
-                    <button
-                        onClick={onClose}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '12px',
-                            border: '2px solid #e0e0e0',
-                            background: 'white',
-                            color: '#666',
-                            cursor: 'pointer',
-                            fontSize: '15px',
-                            fontWeight: '600',
-                            transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.background = '#f8f9fa';
-                            e.currentTarget.style.borderColor = '#d0d0d0';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'white';
-                            e.currentTarget.style.borderColor = '#e0e0e0';
-                        }}
-                    >
+                {/* Footer */}
+                <div className="modal-footer-actions">
+                    <button onClick={onClose} className="btn-modal-secondary">
                         Annulla
                     </button>
-                    <button
-                        onClick={handleSubmit}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '12px',
-                            border: 'none',
-                            background: 'linear-gradient(135deg, #0D475D 0%, #1a5f7a 100%)',
-                            color: 'white',
-                            cursor: 'pointer',
-                            fontSize: '15px',
-                            fontWeight: '600',
-                            transition: 'all 0.2s ease',
-                            boxShadow: '0 4px 12px rgba(13, 71, 93, 0.3)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(13, 71, 93, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 71, 93, 0.3)';
-                        }}
-                    >
-                        <UserPlus size={18} />
-                        Aggiungi Psicologo
+                    <button onClick={handleSubmit} className="btn-modal-primary" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></div>
+                                Aggiunta in corso...
+                            </>
+                        ) : (
+                            <>
+                                <UserPlus size={18} />
+                                Aggiungi Psicologo
+                            </>
+                        )}
                     </button>
                 </div>
             </div>
@@ -540,3 +341,4 @@ const AddPsychologistModal: React.FC<AddPsychologistModalProps> = ({ onClose, on
 };
 
 export default AddPsychologistModal;
+
