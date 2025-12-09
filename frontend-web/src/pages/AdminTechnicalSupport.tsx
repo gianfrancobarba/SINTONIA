@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Mail } from 'lucide-react';
 import TechnicalSupportDetailModal from '../components/TechnicalSupportDetailModal';
 import type { TechnicalSupportTicket } from '../types/technicalSupport';
 import '../css/AdminTechnicalSupport.css';
 import '../css/QuestionnaireTable.css'; // Reuse table styles for consistency
+import '../css/EmptyState.css';
 
 // SVG Icon Component for View Button
 const ViewIcon = () => (
@@ -201,11 +203,13 @@ const AdminTechnicalSupport: React.FC = () => {
                     )}
                 </>
             ) : (
-                <div className="support-empty-state">
-                    <div className="support-empty-icon">📧</div>
-                    <h3 className="support-empty-title">Nessun Ticket di Supporto</h3>
-                    <p className="support-empty-message">
-                        Al momento non ci sono richieste di supporto tecnico.
+                <div className="unified-empty-state">
+                    <div className="unified-empty-icon">
+                        <Mail size={48} />
+                    </div>
+                    <h3 className="unified-empty-title">Nessun Ticket di Supporto</h3>
+                    <p className="unified-empty-message">
+                        Al momento non ci sono richieste di supporto tecnico da gestire.
                     </p>
                 </div>
             )}

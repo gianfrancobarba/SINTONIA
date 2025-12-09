@@ -1,5 +1,7 @@
 import React from 'react';
-import '../css/QuestionnaireTable.css'; // Reuse existing styles
+import { UserCheck } from 'lucide-react';
+import '../css/QuestionnaireTable.css';
+import '../css/EmptyState.css';
 
 // SVG Icon Component
 const ViewIcon = () => (
@@ -95,8 +97,14 @@ const AdminPsychologistTable: React.FC<AdminPsychologistTableProps> = ({
             </table>
 
             {psychologists.length === 0 && (
-                <div className="empty-state">
-                    <p>Nessuno psicologo trovato</p>
+                <div className="unified-empty-state">
+                    <div className="unified-empty-icon">
+                        <UserCheck size={48} />
+                    </div>
+                    <h3 className="unified-empty-title">Nessuno Psicologo</h3>
+                    <p className="unified-empty-message">
+                        Non sono stati trovati psicologi con i criteri selezionati.
+                    </p>
                 </div>
             )}
         </div>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { FileX } from 'lucide-react';
 import AdminInvalidationTable from '../components/AdminInvalidationTable';
 import AdminInvalidationDetailModal from '../components/AdminInvalidationDetailModal';
 import type { InvalidationRequestData, InvalidationLoadingState } from '../types/invalidation';
 import { fetchInvalidationRequests, acceptInvalidationRequest, rejectInvalidationRequest } from '../services/invalidation.service';
-import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
+import '../css/QuestionnaireManagement.css';
+import '../css/EmptyState.css';
 
 import Toast from '../components/Toast';
 
@@ -199,8 +201,14 @@ const AdminInvalidationList: React.FC = () => {
                             onView={handleView}
                         />
                     ) : (
-                        <div className="empty-state" style={{ marginTop: '20px' }}>
-                            <p>Nessuna richiesta trovata per questo filtro</p>
+                        <div className="unified-empty-state">
+                            <div className="unified-empty-icon">
+                                <FileX size={48} />
+                            </div>
+                            <h3 className="unified-empty-title">Nessuna Richiesta</h3>
+                            <p className="unified-empty-message">
+                                Non ci sono richieste di invalidazione per il filtro selezionato.
+                            </p>
                         </div>
                     )}
                 </>

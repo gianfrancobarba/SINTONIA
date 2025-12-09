@@ -7,6 +7,7 @@ import type { ForumQuestion, LoadingState, ForumCategory } from '../types/forum'
 import { fetchForumQuestions, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
 import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumPage.css';
+import '../css/EmptyState.css';
 
 type FilterType = 'all' | 'unanswered' | 'answered';
 
@@ -264,14 +265,16 @@ const ForumPage: React.FC = () => {
                 {questionsState.data && !questionsState.loading && (
                     <>
                         {getFilteredQuestions().length === 0 ? (
-                            <div className="empty-state">
-                                <div className="empty-icon-container">
-                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0D475D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <div className="unified-empty-state">
+                                <div className="unified-empty-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                     </svg>
                                 </div>
-                                <h3>Nessuna domanda</h3>
-                                <p>Non ci sono domande con i filtri selezionati</p>
+                                <h3 className="unified-empty-title">Nessuna Domanda</h3>
+                                <p className="unified-empty-message">
+                                    Non ci sono domande con i filtri selezionati.
+                                </p>
                             </div>
                         ) : (
                             <>

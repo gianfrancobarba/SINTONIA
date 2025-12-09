@@ -5,6 +5,7 @@ import ClinicalAlertsTable from '../components/ClinicalAlertsTable';
 import { fetchClinicalAlerts, acceptClinicalAlert } from '../services/alert-clinici.service';
 import type { ClinicalAlert, LoadingState } from '../types/alert';
 import '../css/ClinicalAlerts.css';
+import '../css/EmptyState.css';
 
 import Toast from '../components/Toast';
 

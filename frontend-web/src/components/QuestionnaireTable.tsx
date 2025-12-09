@@ -1,6 +1,8 @@
 import React from 'react';
+import { ClipboardList } from 'lucide-react';
 import type { QuestionnaireData } from '../types/psychologist';
 import '../css/QuestionnaireTable.css';
+import '../css/EmptyState.css';
 
 // SVG Icon Component
 const ViewIcon = () => (
@@ -120,8 +122,14 @@ const QuestionnaireTable: React.FC<QuestionnaireTableProps> = ({
             </table>
 
             {questionnaires.length === 0 && (
-                <div className="empty-state">
-                    <p>Nessun questionario trovato</p>
+                <div className="unified-empty-state">
+                    <div className="unified-empty-icon">
+                        <ClipboardList size={48} />
+                    </div>
+                    <h3 className="unified-empty-title">Nessun Questionario</h3>
+                    <p className="unified-empty-message">
+                        Non sono presenti questionari da visualizzare.
+                    </p>
                 </div>
             )}
         </div>

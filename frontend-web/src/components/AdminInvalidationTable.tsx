@@ -1,6 +1,8 @@
 import React from 'react';
+import { FileX } from 'lucide-react';
 import type { InvalidationRequestData } from '../types/invalidation';
-import '../css/QuestionnaireTable.css'; // Reuse existing styles
+import '../css/QuestionnaireTable.css';
+import '../css/EmptyState.css';
 
 // SVG Icon Component
 const ViewIcon = () => (
@@ -125,8 +127,14 @@ const AdminInvalidationTable: React.FC<AdminInvalidationTableProps> = ({
             </table>
 
             {requests.length === 0 && (
-                <div className="empty-state">
-                    <p>Nessuna richiesta di invalidazione trovata</p>
+                <div className="unified-empty-state">
+                    <div className="unified-empty-icon">
+                        <FileX size={48} />
+                    </div>
+                    <h3 className="unified-empty-title">Nessuna Richiesta di Invalidazione</h3>
+                    <p className="unified-empty-message">
+                        Non sono presenti richieste di invalidazione con i criteri selezionati.
+                    </p>
                 </div>
             )}
         </div>

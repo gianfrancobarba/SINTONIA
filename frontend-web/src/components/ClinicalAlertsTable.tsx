@@ -1,5 +1,7 @@
 import React from 'react';
+import { AlertCircle } from 'lucide-react';
 import type { ClinicalAlert } from '../types/alert';
+import '../css/EmptyState.css';
 
 interface ClinicalAlertsTableProps {
     alerts: ClinicalAlert[];
@@ -19,8 +21,14 @@ const ClinicalAlertsTable: React.FC<ClinicalAlertsTableProps> = ({ alerts, onAcc
 
     if (alerts.length === 0) {
         return (
-            <div className="empty-state">
-                <p>Nessun alert clinico da gestire</p>
+            <div className="unified-empty-state">
+                <div className="unified-empty-icon">
+                    <AlertCircle size={48} />
+                </div>
+                <h3 className="unified-empty-title">Nessun Alert Clinico</h3>
+                <p className="unified-empty-message">
+                    Non ci sono alert clinici da gestire al momento.
+                </p>
             </div>
         );
     }

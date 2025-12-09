@@ -2,6 +2,9 @@ import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import PsychologistProfile from './PsychologistProfile';
 import AdminProfile from './AdminProfile';
+import MobileDrawerMenu from './MobileDrawerMenu';
+import { getCurrentUser } from '../services/auth.service';
+import { fetchDashboardData } from '../services/psychologist.service';
 import '../css/AppLayout.css';
 
 interface AppLayoutProps {
@@ -18,6 +21,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [profileRefreshKey, setProfileRefreshKey] = useState(0);
+    const [userData, setUserData] = useState<{ name: string; profileImageUrl?: string }>({ name: '' });
 
     // Close sidebar on route change
     useEffect(() => {
@@ -34,6 +38,51 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    // Fetch user data for mobile menu
+    useEffect(() => {
+        const loadUserData = async () => {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            if (role === 'psychologist') {
+                try {
+                    const cf = user.fiscalCode || user.email;
+                    if (cf) {
+                        const data = await fetchDashboardData(cf);
+                        setUserData({
+                            name: data.fullName,
+                            profileImageUrl: data.profileImageUrl
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error fetching psychologist data:', error);
+                }
+            } else {
+                try {
+                    const token = user.access_token;
+                    const response = await fetch(`http://localhost:3000/admin/dashboard/me?email=${encodeURIComponent(user.email)}`, {
+                        headers: {
+                            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUserData({ name: `${data.nome} ${data.cognome}` });
+                    } else {
+                        const name = user.email.split('@')[0];
+                        setUserData({ name: name.charAt(0).toUpperCase() + name.slice(1) });
+                    }
+                } catch (error) {
+                    console.error('Error fetching admin data:', error);
+                }
+            }
+        };
+
+        loadUserData();
+    }, [role, profileRefreshKey]);
 
     // Memoize active section calculation to prevent unnecessary re-renders
     const activeSection = useMemo(() => {
@@ -105,6 +154,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    const closeSidebar = () => {
+        setIsSidebarOpen(false);
+    };
+
     // Callback to trigger profile refresh in sidebar
     const handleProfileUpdate = useCallback(() => {
         setProfileRefreshKey(prev => prev + 1);
@@ -128,9 +181,20 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
                 <span className="hamburger-line"></span>
             </button>
 
+            {/* Mobile Drawer Menu */}
+            <MobileDrawerMenu
+                isOpen={isSidebarOpen}
+                onClose={closeSidebar}
+                role={role}
+                activeSection={activeSection}
+                onSelectSection={handleSectionSelect}
+                userName={userData.name}
+                profileImageUrl={userData.profileImageUrl}
+            />
+
             <div className="app-layout-grid">
-                {/* Fixed Sidebar */}
-                <div className={`app-layout-sidebar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+                {/* Desktop Sidebar - Hidden on mobile */}
+                <div className="app-layout-sidebar">
                     {role === 'admin' ? (
                         <AdminProfile
                             onSelectSection={handleSectionSelect}
@@ -160,4 +224,5 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
 };
 
 export default AppLayout;
+
 

@@ -1,0 +1,212 @@
+/* ==========================================================================
+   UNIFIED EMPTY STATE - Design System
+   ========================================================================== */
+
+/* Make wrapper a flex container so empty state fills height */
+.table-overlay-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 350px;
+}
+
+.unified-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 32px;
+    text-align: center;
+    min-height: 350px;
+    flex: 1;
+    background: linear-gradient(135deg, rgba(244, 250, 251, 0.8) 0%, rgba(255, 255, 255, 0.9) 100%);
+    border-radius: 16px;
+    margin: 10px 0;
+}
+
+.unified-empty-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, rgba(13, 71, 93, 0.1) 0%, rgba(26, 95, 95, 0.15) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: #1A5F5F;
+    position: relative;
+}
+
+/* Decorative ring around icon */
+.unified-empty-icon::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    border: 2px dashed rgba(26, 95, 95, 0.2);
+    animation: emptyStateRotate 20s linear infinite;
+}
+
+@keyframes emptyStateRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.unified-empty-icon svg {
+    width: 48px;
+    height: 48px;
+    stroke-width: 1.5;
+}
+
+.unified-empty-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1A5F5F;
+    margin: 0 0 12px 0;
+}
+
+.unified-empty-message {
+    font-size: 15px;
+    color: #6B7280;
+    margin: 0;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .unified-empty-state {
+        padding: 40px 20px;
+        min-height: 280px;
+    }
+
+    .unified-empty-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+    }
+
+    .unified-empty-icon::before {
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+    }
+
+    .unified-empty-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .unified-empty-title {
+        font-size: 18px;
+    }
+
+    .unified-empty-message {
+        font-size: 14px;
+    }
+}
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS
+   ========================================================================== */
+
+@media (min-width: 1600px) {
+    .unified-empty-state {
+        padding: 70px 40px;
+        min-height: 400px;
+    }
+
+    .unified-empty-icon {
+        width: 110px;
+        height: 110px;
+    }
+
+    .unified-empty-icon svg {
+        width: 54px;
+        height: 54px;
+    }
+
+    .unified-empty-title {
+        font-size: 22px;
+    }
+
+    .unified-empty-message {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .unified-empty-state {
+        padding: 80px 48px;
+        min-height: 450px;
+    }
+
+    .unified-empty-icon {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 28px;
+    }
+
+    .unified-empty-icon svg {
+        width: 58px;
+        height: 58px;
+    }
+
+    .unified-empty-title {
+        font-size: 24px;
+        margin-bottom: 14px;
+    }
+
+    .unified-empty-message {
+        font-size: 17px;
+        max-width: 450px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .unified-empty-state {
+        padding: 100px 56px;
+        min-height: 500px;
+        border-radius: 24px;
+    }
+
+    .unified-empty-icon {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 32px;
+    }
+
+    .unified-empty-icon::before {
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+    }
+
+    .unified-empty-icon svg {
+        width: 68px;
+        height: 68px;
+    }
+
+    .unified-empty-title {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+
+    .unified-empty-message {
+        font-size: 18px;
+        max-width: 500px;
+    }
+}

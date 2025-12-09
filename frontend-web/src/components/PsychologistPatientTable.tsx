@@ -1,6 +1,8 @@
 import React from 'react';
+import { Users } from 'lucide-react';
 import type { PatientData } from '../types/patient';
-import '../css/QuestionnaireTable.css'; // Reuse existing styles
+import '../css/QuestionnaireTable.css';
+import '../css/EmptyState.css';
 
 // SVG Icon Component
 const ViewIcon = () => (
@@ -79,8 +81,14 @@ const PsychologistPatientTable: React.FC<PsychologistPatientTableProps> = ({
             </table>
 
             {patients.length === 0 && (
-                <div className="empty-state">
-                    <p>Nessun paziente assegnato</p>
+                <div className="unified-empty-state">
+                    <div className="unified-empty-icon">
+                        <Users size={48} />
+                    </div>
+                    <h3 className="unified-empty-title">Nessun Paziente Assegnato</h3>
+                    <p className="unified-empty-message">
+                        Non hai ancora pazienti assegnati al tuo profilo.
+                    </p>
                 </div>
             )}
         </div>

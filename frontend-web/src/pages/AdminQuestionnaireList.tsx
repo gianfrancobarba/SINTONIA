@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { X, Search, RotateCcw } from 'lucide-react';
+import { X, Search, RotateCcw, ClipboardList } from 'lucide-react';
 import AdminQuestionnaireTable from '../components/AdminQuestionnaireTable';
 import AdminQuestionnaireDetailModal from '../components/AdminQuestionnaireDetailModal';
 import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision, viewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
-import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
+import '../css/QuestionnaireManagement.css';
+import '../css/EmptyState.css';
 
 import Toast from '../components/Toast';
 
@@ -222,31 +223,18 @@ const AdminQuestionnaireList: React.FC = () => {
                             />
                         </>
                     ) : (
-                        <div style={{
-                            textAlign: 'center',
-                            padding: '40px 20px',
-                            background: '#f8f9fa',
-                            borderRadius: '8px',
-                            marginTop: '20px'
-                        }}>
-                            <p style={{
-                                fontSize: '16px',
-                                color: '#666',
-                                margin: 0,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px'
-                            }}>
-                                <Search size={18} style={{ flexShrink: 0 }} />
-                                <span>Nessun questionario trovato con ID "<strong>{searchQuery}</strong>"</span>
-                            </p>
-                            <p style={{
-                                fontSize: '14px',
-                                color: '#999',
-                                marginTop: '8px'
-                            }}>
-                                Prova con un altro ID o clicca Reset
+                        <div className="unified-empty-state">
+                            <div className="unified-empty-icon">
+                                {searchQuery ? <Search size={48} /> : <ClipboardList size={48} />}
+                            </div>
+                            <h3 className="unified-empty-title">
+                                {searchQuery ? 'Nessun Risultato' : 'Nessun Questionario'}
+                            </h3>
+                            <p className="unified-empty-message">
+                                {searchQuery
+                                    ? `Nessun questionario trovato con ID "${searchQuery}". Prova con un altro ID.`
+                                    : 'Non sono presenti questionari da visualizzare.'
+                                }
                             </p>
                         </div>
                     )}
