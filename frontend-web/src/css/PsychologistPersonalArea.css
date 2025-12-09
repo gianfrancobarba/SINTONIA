@@ -1,11 +1,9 @@
 .personal-area-container {
     background-color: #ffffff;
     border-radius: 16px;
-    /* Fill available height from parent .content-panel */
-    height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    box-sizing: border-box;
 }
 
 /* Header Section */
@@ -13,13 +11,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 28px;
+    padding: 16px 24px;
     border-bottom: 2px solid #F5F5F5;
 }
 
 .personal-area-title {
     margin: 0;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #1A5F5F;
 }
@@ -96,23 +94,32 @@
 
 /* Content Section */
 .personal-area-content {
-    padding: 32px 28px;
+    padding: 16px 24px;
     flex: 1;
-    overflow-y: auto;
-    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Profile Image Section */
-.profile-image-section {
+/* Vertical Layout - Photo on top, fields below */
+.personal-area-layout-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+/* Centered Profile Photo */
+.profile-photo-center {
     display: flex;
     justify-content: center;
-    margin-bottom: 32px;
 }
 
 .profile-image-wrapper {
     position: relative;
-    width: 160px;
-    height: 160px;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
 }
 
 .profile-image-preview {
@@ -120,8 +127,17 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 6px solid #A5C9C9;
-    box-shadow: 0 8px 24px rgba(26, 95, 95, 0.15);
+    border: 4px solid #A5C9C9;
+    box-shadow: 0 4px 16px rgba(26, 95, 95, 0.15);
+}
+
+/* Fields Section */
+.profile-fields-section {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .image-upload-overlay {
@@ -133,9 +149,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     opacity: 0;
@@ -147,8 +163,26 @@
 }
 
 .image-upload-overlay svg {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
+}
+
+/* Right Column: Form Fields */
+.profile-fields-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-actions-inline {
+    align-self: flex-end;
+    margin-bottom: 18px;
 }
 
 /* Form Section */
@@ -158,23 +192,37 @@
 }
 
 .form-row {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .form-row-double {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 12px;
 }
 
 .form-field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
+}
+
+.field-email-wrapper {
+    position: relative;
+    padding-bottom: 18px;
+}
+
+.email-error-message {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 .field-label {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #1A5F5F;
     display: flex;
@@ -195,11 +243,11 @@
 }
 
 .field-input {
-    padding: 12px 16px;
-    font-size: 15px;
+    padding: 8px 12px;
+    font-size: 13px;
     font-weight: 500;
     border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 8px;
     transition: all 0.3s ease;
     font-family: inherit;
 }
@@ -233,12 +281,12 @@
 .info-banner {
     background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
     border-left: 4px solid #2196F3;
-    padding: 16px 20px;
+    padding: 12px 16px;
     border-radius: 8px;
-    margin-top: 24px;
+    margin-top: 12px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .info-banner svg {
