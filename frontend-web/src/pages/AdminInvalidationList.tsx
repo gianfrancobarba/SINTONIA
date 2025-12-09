@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FileX } from 'lucide-react';
 import AdminInvalidationTable from '../components/AdminInvalidationTable';
 import AdminInvalidationDetailModal from '../components/AdminInvalidationDetailModal';
+import PageHeader from '../components/PageHeader';
 import type { InvalidationRequestData, InvalidationLoadingState } from '../types/invalidation';
 import { fetchInvalidationRequests, acceptInvalidationRequest, rejectInvalidationRequest } from '../services/invalidation.service';
 import '../css/QuestionnaireManagement.css';
@@ -100,7 +101,11 @@ const AdminInvalidationList: React.FC = () => {
 
     return (
         <div className="content-panel" style={{ height: '100%', boxSizing: 'border-box' }}>
-            <h2 className="panel-title">Richieste di Invalidazione</h2>
+            <PageHeader
+                title="Richieste di Invalidazione"
+                subtitle="Gestisci le richieste di invalidazione"
+                icon={<FileX size={24} />}
+            />
 
             {requestsState.loading && (
                 <div className="loading-state">Caricamento richieste...</div>

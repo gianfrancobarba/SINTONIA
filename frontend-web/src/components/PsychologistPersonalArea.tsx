@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { User } from 'lucide-react';
 import profilePhoto from '../images/psychologist-photo.png';
 import '../css/PsychologistPersonalArea.css';
 import { getProfile, updateProfile } from '../services/psychologist.service';
 import { getCurrentUser } from '../services/auth.service';
 import type { OutletContextType } from './AppLayout';
+import PageHeader from './PageHeader';
 
 import Toast from './Toast';
 
@@ -187,9 +189,11 @@ const PsychologistPersonalArea: React.FC = () => {
 
     return (
         <div className="personal-area-container">
-            <div className="personal-area-header">
-                <h2 className="personal-area-title">Area Personale</h2>
-            </div>
+            <PageHeader
+                title="Area Personale"
+                subtitle="Gestisci il tuo profilo"
+                icon={<User size={24} />}
+            />
 
             <div className="personal-area-content">
                 <div className="personal-area-layout-vertical">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Bell, CheckCheck, Inbox } from 'lucide-react';
 import { getCurrentUser } from '../services/auth.service';
+import PageHeader from '../components/PageHeader';
 import {
     fetchPsychologistNotifications,
     fetchAdminNotifications,
@@ -170,11 +171,12 @@ const NotificationCenter: React.FC = () => {
 
     return (
         <div className="content-panel notification-center">
+            <PageHeader
+                title="Centro Notifiche"
+                subtitle="Tutte le tue notifiche in un unico posto"
+                icon={<Bell size={24} />}
+            />
             <div className="notification-header">
-                <h1>
-                    <Bell size={28} />
-                    Centro Notifiche
-                </h1>
                 {unreadCount > 0 && (
                     <button
                         className="mark-all-read-btn"

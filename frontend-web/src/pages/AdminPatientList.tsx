@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AdminPatientTable from '../components/AdminPatientTable';
 import AdminPatientDetailModal from '../components/AdminPatientDetailModal';
+import PageHeader from '../components/PageHeader';
 import type { PatientData, LoadingState } from '../types/patient';
 import { fetchPatients } from '../services/patient.service';
-import { User, Eye, LayoutGrid, List, Search, RotateCcw } from 'lucide-react';
+import { Users, User, Eye, LayoutGrid, List, Search, RotateCcw } from 'lucide-react';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 import '../css/AdminPatientList.css';
 
@@ -178,7 +179,11 @@ const AdminPatientList: React.FC = () => {
 
     return (
         <div className="content-panel">
-            <h2 className="panel-title">Gestione Pazienti</h2>
+            <PageHeader
+                title="Gestione Pazienti"
+                subtitle="Visualizza e gestisci tutti i pazienti del sistema"
+                icon={<Users size={24} />}
+            />
 
             {patientsState.loading && (
                 <div className="loading-state">Caricamento pazienti...</div>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { User } from 'lucide-react';
 import profilePhoto from '../images/psychologist-photo.png';
 import ChangePasswordModal from './ChangePasswordModal';
+import PageHeader from './PageHeader';
 import Toast from './Toast';
 import '../css/AdminPersonalArea.css';
 
@@ -28,9 +30,11 @@ const AdminPersonalArea: React.FC = () => {
 
     return (
         <div className="personal-area-container">
-            <div className="personal-area-header">
-                <h2 className="personal-area-title">Area Personale</h2>
-            </div>
+            <PageHeader
+                title="Area Personale"
+                subtitle="Gestisci il tuo profilo"
+                icon={<User size={24} />}
+            />
 
             <div className="personal-area-content">
                 {/* Profile Image Section */}

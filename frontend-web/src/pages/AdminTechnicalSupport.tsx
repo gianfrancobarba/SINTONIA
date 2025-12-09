@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Mail } from 'lucide-react';
+import { Mail, Headphones } from 'lucide-react';
 import TechnicalSupportDetailModal from '../components/TechnicalSupportDetailModal';
+import PageHeader from '../components/PageHeader';
 import type { TechnicalSupportTicket } from '../types/technicalSupport';
 import '../css/AdminTechnicalSupport.css';
 import '../css/QuestionnaireTable.css'; // Reuse table styles for consistency
@@ -93,37 +94,36 @@ const AdminTechnicalSupport: React.FC = () => {
 
     return (
         <div className="content-panel">
-            <div className="support-page-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                    <h1 className="support-page-title" style={{ margin: 0 }}>Supporto Tecnico</h1>
-                    {openTicketsCount > 0 && (
+            <PageHeader
+                title="Supporto Tecnico"
+                subtitle="Gestisci le richieste di supporto tecnico"
+                icon={<Headphones size={24} />}
+            />
+            {openTicketsCount > 0 && (
+                <div style={{ marginTop: '-16px', marginBottom: '20px' }}>
+                    <span style={{
+                        background: '#FFF3E0',
+                        color: '#E65100',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        border: '1px solid #FFB74D',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                    }}>
                         <span style={{
-                            background: '#FFF3E0',
-                            color: '#E65100',
-                            padding: '4px 12px',
-                            borderRadius: '20px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            border: '1px solid #FFB74D',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px'
-                        }}>
-                            <span style={{
-                                width: '8px',
-                                height: '8px',
-                                borderRadius: '50%',
-                                background: '#EF6C00',
-                                display: 'inline-block'
-                            }}></span>
-                            {openTicketsCount} aperti
-                        </span>
-                    )}
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            background: '#EF6C00',
+                            display: 'inline-block'
+                        }}></span>
+                        {openTicketsCount} aperti
+                    </span>
                 </div>
-                <p className="support-page-subtitle">
-                    Gestisci le richieste di supporto tecnico inviate dai pazienti
-                </p>
-            </div>
+            )}
 
             {isLoading ? (
                 <div className="support-loading-state" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>

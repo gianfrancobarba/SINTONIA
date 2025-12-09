@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, ClipboardList } from 'lucide-react';
 import QuestionnaireTable from '../components/QuestionnaireTable';
 import QuestionnaireDetailModal from '../components/QuestionnaireDetailModal';
+import PageHeader from '../components/PageHeader';
 import { getCurrentUser, getUserRole } from '../services/auth.service';
 import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation, reviewQuestionnaire, viewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
@@ -136,7 +137,11 @@ const QuestionnaireManagement: React.FC = () => {
 
     return (
         <div className="content-panel fade-in">
-            <h2 className="panel-title">Gestione Questionari</h2>
+            <PageHeader
+                title="Gestione Questionari"
+                subtitle="Revisiona e gestisci i questionari compilati"
+                icon={<ClipboardList size={24} />}
+            />
             <div className="management-header">
                 <div className="header-actions">
                     {role === 'admin' && (

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { MessageCircle } from 'lucide-react';
 import ForumQuestionCard from '../components/ForumQuestionCard';
 import ForumCategoryFilter from '../components/ForumCategoryFilter';
 import ForumReplyModal from '../components/ForumReplyModal';
+import PageHeader from '../components/PageHeader';
 import type { ForumQuestion, LoadingState, ForumCategory } from '../types/forum';
 import { fetchForumQuestions, answerQuestion, updateAnswer, deleteAnswer } from '../services/forum.service';
 import { getCurrentUser } from '../services/auth.service';
@@ -212,9 +214,11 @@ const ForumPage: React.FC = () => {
         <div className="content-panel fade-in">
             {/* Fixed Header Section */}
             <div className="forum-fixed-header">
-                <h2 className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    Forum
-                </h2>
+                <PageHeader
+                    title="Forum"
+                    subtitle="Rispondi alle domande dei pazienti"
+                    icon={<MessageCircle size={24} />}
+                />
 
                 {/* Compact Filter Pills */}
                 <div className="forum-filters">

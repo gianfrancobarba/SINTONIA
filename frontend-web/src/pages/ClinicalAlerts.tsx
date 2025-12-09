@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { AlertTriangle } from 'lucide-react';
 import ClinicalAlertsTable from '../components/ClinicalAlertsTable';
+import PageHeader from '../components/PageHeader';
 import { fetchClinicalAlerts, acceptClinicalAlert } from '../services/alert-clinici.service';
 import type { ClinicalAlert, LoadingState } from '../types/alert';
 import '../css/ClinicalAlerts.css';
@@ -96,10 +97,11 @@ const ClinicalAlerts: React.FC = () => {
 
     return (
         <div className="content-panel fade-in">
-            <h2 className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <AlertTriangle size={28} color="#E57373" />
-                Alert Clinici
-            </h2>
+            <PageHeader
+                title="Alert Clinici"
+                subtitle="Gestisci gli alert che richiedono attenzione"
+                icon={<AlertTriangle size={24} />}
+            />
 
             {alertsState.error && (
                 <div className="error-state">

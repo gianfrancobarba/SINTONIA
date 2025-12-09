@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AdminPsychologistTable from '../components/AdminPsychologistTable';
 import AdminPsychologistDetailModal from '../components/AdminPsychologistDetailModal';
 import AddPsychologistModal from '../components/AddPsychologistModal';
-import { User, Eye, LayoutGrid, List, UserPlus, Search, RotateCcw } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
+import { User, UserCog, Eye, LayoutGrid, List, UserPlus, Search, RotateCcw } from 'lucide-react';
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 import '../css/AdminPsychologistList.css';
 import { fetchAllPsychologists, createPsychologist, type PsychologistOption } from '../services/psychologist.service';
@@ -240,7 +241,11 @@ const AdminPsychologistList: React.FC = () => {
 
     return (
         <div className="content-panel">
-            <h2 className="panel-title">Gestione Psicologi</h2>
+            <PageHeader
+                title="Gestione Psicologi"
+                subtitle="Gestisci il team di psicologi della piattaforma"
+                icon={<UserCog size={24} />}
+            />
 
             {loading && (
                 <div className="loading-state">Caricamento psicologi...</div>

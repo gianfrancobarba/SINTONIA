@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X, Search, RotateCcw, ClipboardList } from 'lucide-react';
+import { X, Search, RotateCcw, ClipboardList, FileCheck } from 'lucide-react';
 import AdminQuestionnaireTable from '../components/AdminQuestionnaireTable';
 import AdminQuestionnaireDetailModal from '../components/AdminQuestionnaireDetailModal';
+import PageHeader from '../components/PageHeader';
 import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision, viewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
@@ -124,7 +125,11 @@ const AdminQuestionnaireList: React.FC = () => {
 
     return (
         <div className="content-panel" style={{ height: '100%', boxSizing: 'border-box' }}>
-            <h2 className="panel-title">Lista Questionari</h2>
+            <PageHeader
+                title="Lista Questionari"
+                subtitle="Supervisiona tutti i questionari compilati"
+                icon={<FileCheck size={24} />}
+            />
 
             <div className="management-header">
                 <div className="header-actions">
