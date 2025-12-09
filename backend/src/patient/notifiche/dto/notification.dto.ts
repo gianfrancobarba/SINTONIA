@@ -5,6 +5,7 @@ export class NotificationResponseDto {
     descrizione: string;
     dataInvio: Date | null;
     letto: boolean;
+    isDynamic: boolean;
 }
 
 export class NotificationCountDto {

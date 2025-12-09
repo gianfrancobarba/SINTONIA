@@ -302,13 +302,15 @@ const Diary: React.FC = () => {
                     </>
                 )}
 
-                <button
-                    className="diary-fab"
-                    onClick={handleAddPage}
-                    aria-label="Nuova pagina"
-                >
-                    <img src={NewForumQuestionIcon} alt="" />
-                </button>
+                <div className="diary-fab-container">
+                    <button
+                        className="diary-fab"
+                        onClick={handleAddPage}
+                        aria-label="Nuova pagina"
+                    >
+                        <img src={NewForumQuestionIcon} alt="" />
+                    </button>
+                </div>
             </div>
 
 

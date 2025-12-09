@@ -8,9 +8,6 @@ import profileAvatarWoman from '../assets/images/profile-avatar-woman.png';
 import profileAvatarMan from '../assets/images/profile-avatar-man.png';
 import diaryIcon from '../assets/icons/diary.svg';
 import questionnaireIcon from '../assets/icons/questionnaire.svg';
-import MoodIcon from '../components/MoodIcons';
-import type { Umore } from '../types/mood';
-
 
 const Profile: React.FC = () => {
     const navigate = useNavigate();
@@ -155,12 +152,12 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Mood Card */}
-                <div className="profile-card mood-card" onClick={() => navigate('/mood-entry')} style={{ cursor: 'pointer' }}>
+                <div className="profile-card mood-card" onClick={() => navigate('/mood-history')} style={{ cursor: 'pointer' }}>
                     <div className="card-header">
                         <Smile size={24} color="white" />
                         <span>Stato D'Animo</span>
                     </div>
-                    <div className="mood-title-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
+                    <div className="mood-title-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
                         <div className="mood-title" style={{ margin: 0 }}>{mood.current}</div>
                     </div>
                     <div className="mood-chart" style={{ opacity: hasMoodData ? 1 : 0.3 }}>

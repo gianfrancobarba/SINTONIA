@@ -135,3 +135,39 @@ export async function deleteMood(id: string): Promise<void> {
 
     if (!response.ok) throw new Error('Errore durante l\'eliminazione');
 }
+
+/**
+ * Interfaccia per un singolo entry dello storico mood
+ */
+export interface MoodHistoryEntry {
+    id: string;
+    date: string;
+    umore: string;
+    intensita?: number;
+    note?: string;
+}
+
+/**
+ * Interfaccia per la risposta dello storico
+ */
+export interface MoodHistoryResponse {
+    entries: MoodHistoryEntry[];
+}
+
+/**
+ * Recupera lo storico degli stati d'animo del paziente
+ * @param giorni Numero di giorni da recuperare (default: 90)
+ */
+export async function getMoodHistory(giorni: number = 90): Promise<MoodHistoryResponse> {
+    const token = localStorage.getItem('patient_token');
+    if (!token) throw new Error('Token non trovato');
+
+    const response = await fetch(`${API_BASE_URL}/paziente/stato-animo/storico?giorni=${giorni}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Errore nel recupero dello storico');
+
+    return response.json();
+}
+

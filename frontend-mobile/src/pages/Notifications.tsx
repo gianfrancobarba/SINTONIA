@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, MessageSquare, Bell, ChevronRight, ChevronLeft, Loader2, Smile } from 'lucide-react';
-import { getNotifications, markAsRead, markAllAsRead, type NotificationDto, type PaginatedNotificationsDto } from '../services/notification.service';
+import { FileText, MessageSquare, Bell, ChevronRight, ChevronLeft, Loader2, Smile, Check } from 'lucide-react';
+import { getNotifications, markAsRead, type NotificationDto, type PaginatedNotificationsDto } from '../services/notification.service';
 import '../css/Notifications.css';
 
 const Notifications: React.FC = () => {
@@ -33,22 +33,7 @@ const Notifications: React.FC = () => {
         }
     };
 
-    const handleNotificationClick = async (notification: NotificationDto) => {
-        // Mark as read when clicked
-        if (!notification.letto) {
-            try {
-                await markAsRead(notification.idNotifica);
-                // Update local state
-                setNotifications(prev =>
-                    prev.map(n =>
-                        n.idNotifica === notification.idNotifica ? { ...n, letto: true } : n
-                    )
-                );
-            } catch (err) {
-                console.error('Error marking notification as read:', err);
-            }
-        }
-
+    const handleNotificationClick = (notification: NotificationDto) => {
         // Navigate based on tipologia
         switch (notification.tipologia) {
             case 'FORUM':
@@ -58,20 +43,22 @@ const Notifications: React.FC = () => {
                 navigate('/questionari');
                 break;
             case 'STATO_ANIMO':
-                navigate('/stato-animo');
+                navigate('/mood-entry');
                 break;
             default:
-                // No navigation for other types
                 break;
         }
     };
 
-    const handleMarkAllAsRead = async () => {
+    const handleMarkAsRead = async (e: React.MouseEvent, notification: NotificationDto) => {
+        e.stopPropagation(); // Prevent card click
         try {
-            await markAllAsRead();
-            setNotifications(prev => prev.map(n => ({ ...n, letto: true })));
+            await markAsRead(notification.idNotifica);
+            // Remove notification from local state
+            setNotifications(prev => prev.filter(n => n.idNotifica !== notification.idNotifica));
+            setTotal(prev => prev - 1);
         } catch (err) {
-            console.error('Error marking all as read:', err);
+            console.error('Error marking notification as read:', err);
         }
     };
 
@@ -119,23 +106,12 @@ const Notifications: React.FC = () => {
 
     return (
         <div className="notifications-page">
-            {/* Header - Matching app style */}
+            {/* Header */}
             <div className="notifications-header">
                 <div className="notifications-header-content">
                     <div className="notifications-title-section">
                         <h1 className="notifications-title">Notifiche</h1>
-                        {total > 0 && (
-                            <span className="notifications-count">{total}</span>
-                        )}
                     </div>
-                    {notifications.some(n => !n.letto) && (
-                        <button
-                            className="mark-all-read-btn"
-                            onClick={handleMarkAllAsRead}
-                        >
-                            Segna tutte lette
-                        </button>
-                    )}
                 </div>
             </div>
 
@@ -172,7 +148,7 @@ const Notifications: React.FC = () => {
                         {notifications.map((notification) => (
                             <div
                                 key={notification.idNotifica}
-                                className={`notification-card ${!notification.letto ? 'unread' : ''}`}
+                                className="notification-card"
                                 onClick={() => handleNotificationClick(notification)}
                             >
                                 <div className={`notification-icon ${getIconClass(notification.tipologia)}`}>
@@ -187,7 +163,19 @@ const Notifications: React.FC = () => {
                                         {formatDate(notification.dataInvio)}
                                     </span>
                                 </div>
-                                <ChevronRight size={20} className="notification-arrow" />
+
+                                {/* Mark as read button - only for persistent notifications */}
+                                {!notification.isDynamic ? (
+                                    <button
+                                        className="mark-read-btn"
+                                        onClick={(e) => handleMarkAsRead(e, notification)}
+                                        aria-label="Segna come letta"
+                                    >
+                                        <Check size={18} />
+                                    </button>
+                                ) : (
+                                    <ChevronRight size={20} className="notification-arrow" />
+                                )}
                             </div>
                         ))}
                     </div>

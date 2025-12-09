@@ -72,7 +72,9 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.12),
+        0 2px 4px rgba(0, 0, 0, 0.08);
     transition: all 0.2s ease;
 }
 
@@ -157,11 +159,7 @@
     }
 }
 
-/* ===== Unread State ===== */
-.notification-card.unread {
-    border-left: 4px solid var(--primary-dark, #1E4A5F);
-    background: linear-gradient(135deg, #f8fbfc 0%, #ffffff 100%);
-}
+/* (Removed: unread state stripe) */
 
 /* ===== Notification Date ===== */
 .notification-date {
@@ -234,21 +232,29 @@
     margin-left: 8px;
 }
 
-/* ===== Mark All Read Button ===== */
-.mark-all-read-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+/* ===== Mark Read Button ===== */
+.mark-read-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #E8F5E9;
     border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background 0.2s;
+    color: #4CAF50;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
-.mark-all-read-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+.mark-read-btn:hover {
+    background: #C8E6C9;
+    transform: scale(1.1);
+}
+
+.mark-read-btn:active {
+    transform: scale(0.95);
 }
 
 /* ===== Pagination ===== */
