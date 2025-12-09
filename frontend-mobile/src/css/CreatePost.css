@@ -31,7 +31,7 @@
     padding: 0;
 }
 
-.back-arrow-btn-circle:hover:not(:disabled) {
+.back-arrow-btn-circle:active:not(:disabled) {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -211,7 +211,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.category-selector:hover {
+.category-selector:active {
     border-color: #2C5F6F;
     box-shadow:
         0 0 0 3px rgba(44, 95, 111, 0.1),
@@ -248,7 +248,7 @@
     z-index: 100;
 }
 
-.publish-button-fixed:hover:not(:disabled) {
+.publish-button-fixed:active:not(:disabled) {
     transform: translateX(-50%) translateY(-2px);
     box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }

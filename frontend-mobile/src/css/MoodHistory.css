@@ -41,7 +41,7 @@
     filter: brightness(0) invert(1);
 }
 
-.mood-history-header .back-button:hover {
+.mood-history-header .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -89,7 +89,7 @@
     transition: opacity 0.2s ease;
 }
 
-.month-navigator .nav-arrow:hover:not(.disabled) {
+.month-navigator .nav-arrow:active:not(.disabled) {
     opacity: 1;
 }
 
@@ -271,7 +271,7 @@
     transition: all 0.3s ease;
 }
 
-.mood-fab:hover {
+.mood-fab:active {
     transform: scale(1.1);
     background: #1F4554;
 }
@@ -405,7 +405,7 @@
     transition: all 0.2s ease;
 }
 
-.modal-close-btn:hover {
+.modal-close-btn:active {
     background: #E0E0E0;
     color: #333;
 }

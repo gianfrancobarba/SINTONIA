@@ -39,7 +39,7 @@
     filter: brightness(0) invert(1);
 }
 
-.questionari-page .back-button:hover {
+.questionari-page .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -144,7 +144,7 @@
     box-shadow: 0 4px 10px rgba(74, 157, 111, 0.3);
 }
 
-.compila-button:hover {
+.compila-button:active {
     opacity: 0.95;
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(74, 157, 111, 0.4);
@@ -174,7 +174,7 @@
     position: relative;
 }
 
-.category-card:hover {
+.category-card:active {
     transform: translateY(-2px);
     box-shadow: 0 12px 15px -5px rgba(0, 0, 0, 0.4);
 }

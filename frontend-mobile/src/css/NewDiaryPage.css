@@ -39,7 +39,7 @@
     filter: brightness(0) invert(1);
 }
 
-.new-diary-header .back-button:hover {
+.new-diary-header .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -214,7 +214,7 @@
     z-index: 100;
 }
 
-.publish-button-fixed:hover:not(:disabled) {
+.publish-button-fixed:active:not(:disabled) {
     transform: translateX(-50%) translateY(-2px);
     box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }

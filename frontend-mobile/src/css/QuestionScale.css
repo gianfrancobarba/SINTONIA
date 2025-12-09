@@ -65,7 +65,7 @@
     background-color: #ffffff;
 }
 
-.scale-point:hover {
+.scale-point:active {
     transform: scale(1.1);
 }
 

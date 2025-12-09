@@ -78,7 +78,7 @@
     transition: all 0.2s ease;
 }
 
-.notification-card:hover {
+.notification-card:active {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
@@ -248,7 +248,7 @@
     flex-shrink: 0;
 }
 
-.mark-read-btn:hover {
+.mark-read-btn:active {
     background: #C8E6C9;
     transform: scale(1.1);
 }

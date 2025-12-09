@@ -49,7 +49,7 @@
     margin-top: 3rem;
 }
 
-.btn-home:hover {
+.btn-home:active {
     background-color: #0a3647;
 }
 

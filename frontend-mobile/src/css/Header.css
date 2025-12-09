@@ -86,7 +86,7 @@
     transition: all 0.3s ease;
 }
 
-.notification-icon:hover {
+.notification-icon:active {
     transform: translateY(-3px);
 }
 
@@ -110,7 +110,7 @@
     position: relative;
 }
 
-.notification-icon:hover .icon-box {
+.notification-icon:active .icon-box {
     box-shadow:
         0 12px 30px rgba(0, 0, 0, 0.2),
         0 5px 10px rgba(0, 0, 0, 0.15),
@@ -150,7 +150,7 @@
     filter: brightness(0) invert(1);
 }
 
-.notification-icon:hover .icon-box img {
+.notification-icon:active .icon-box img {
     transform: scale(1.1);
 }
 
@@ -176,7 +176,7 @@
     z-index: 2;
 }
 
-.notification-icon:hover .badge {
+.notification-icon:active .badge {
     transform: scale(1.1);
     box-shadow:
         0 6px 12px rgba(0, 0, 0, 0.2),

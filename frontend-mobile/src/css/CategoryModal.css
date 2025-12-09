@@ -75,7 +75,7 @@
     font-family: var(--font-family);
 }
 
-.category-option:hover {
+.category-option:active {
     opacity: 0.8;
     transform: scale(1.02);
 }

@@ -41,7 +41,7 @@
     filter: brightness(0) invert(1);
 }
 
-.settings-back-btn:hover {
+.settings-back-btn:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -98,7 +98,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.settings-item:hover {
+.settings-item:active {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }

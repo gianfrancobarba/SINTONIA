@@ -69,7 +69,7 @@
     /* Red color */
 }
 
-.text-side-delete-button:hover {
+.text-side-delete-button:active {
     background-color: #ffe5e5;
     transform: scale(1.05);
 }

@@ -172,7 +172,7 @@ input:checked+.slider:before {
     box-shadow: 0 4px 10px rgba(140, 198, 140, 0.4);
 }
 
-.accept-button:hover {
+.accept-button:active {
     background-color: #7ab57a;
 }
 

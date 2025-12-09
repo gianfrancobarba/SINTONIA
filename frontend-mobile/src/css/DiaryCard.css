@@ -125,7 +125,7 @@
     font-size: 24px;
 }
 
-.diary-action-btn:hover {
+.diary-action-btn:active {
     background: rgba(255, 255, 255, 0.9);
     transform: scale(1.1);
 }
@@ -219,7 +219,7 @@
     transform: rotate(180deg);
 }
 
-.diary-nav-arrow:hover:not(:disabled) {
+.diary-nav-arrow:active:not(:disabled) {
     background: white;
     transform: scale(1.1);
 }
@@ -233,7 +233,7 @@
     cursor: not-allowed;
 }
 
-.diary-card-center:hover {
+.diary-card-center:active {
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
 }
 

@@ -28,7 +28,7 @@
     transition: all 0.2s ease;
 }
 
-.month-nav-arrow:hover:not(:disabled) {
+.month-nav-arrow:active:not(:disabled) {
     transform: scale(1.1);
 }
 

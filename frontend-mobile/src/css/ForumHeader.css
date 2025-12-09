@@ -53,7 +53,7 @@
     padding: 0;
 }
 
-.add-post-button:hover {
+.add-post-button:active {
     background: rgba(255, 255, 255, 0.35);
 }
 
@@ -87,7 +87,7 @@
     color: var(--primary-dark);
 }
 
-.filter-btn:hover:not(.active) {
+.filter-btn:active:not(.active) {
     background: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.9);
 }

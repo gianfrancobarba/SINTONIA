@@ -61,7 +61,7 @@
     transition: background 0.3s;
 }
 
-.spid-login-btn:hover {
+.spid-login-btn:active {
     background-color: #0052a3;
 }
 
@@ -82,7 +82,7 @@
     font-size: 0.9rem;
 }
 
-.spid-links a:hover {
+.spid-links a:active {
     text-decoration: underline;
 }
 
@@ -176,7 +176,7 @@
     border-bottom: none;
 }
 
-.provider-item:hover {
+.provider-item:active {
     background: #f5f9ff;
 }
 

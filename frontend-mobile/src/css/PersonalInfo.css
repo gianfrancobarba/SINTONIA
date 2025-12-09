@@ -46,7 +46,7 @@
     filter: brightness(0) invert(1);
 }
 
-.personal-info-page .back-button:hover {
+.personal-info-page .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -77,8 +77,8 @@
     white-space: nowrap;
 }
 
-.edit-button:hover,
-.cancel-button:hover {
+.edit-button:active,
+.cancel-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -209,7 +209,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.submit-button.active:hover {
+.submit-button.active:active {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     background-color: #3a8d5f;

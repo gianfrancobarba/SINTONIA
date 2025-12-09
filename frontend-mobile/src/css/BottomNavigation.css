@@ -58,8 +58,8 @@
     transform: scale(1.05);
 }
 
-/* Hover Effects */
-.nav-item:hover:not(.active) {
+/* Touch Press Effects */
+.nav-item:active:not(.active) {
     background: rgba(0, 0, 0, 0.05);
     transform: translateY(-2px);
 }

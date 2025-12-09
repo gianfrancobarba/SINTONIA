@@ -40,7 +40,7 @@
     filter: brightness(0) invert(1);
 }
 
-.technical-support-header .back-button:hover {
+.technical-support-header .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -183,7 +183,7 @@
     box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
 }
 
-.submit-button:hover:not(:disabled) {
+.submit-button:active:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }

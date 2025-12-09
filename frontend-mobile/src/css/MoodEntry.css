@@ -36,7 +36,7 @@
     transition: background-color 0.2s;
 }
 
-.delete-button:hover {
+.delete-button:active {
     background-color: rgba(255, 59, 48, 0.1);
 }
 
@@ -64,7 +64,7 @@
     height: 16px;
 }
 
-.mood-entry-page .back-button:hover {
+.mood-entry-page .back-button:active {
     background-color: rgba(0, 0, 0, 0.1);
     transform: scale(1.05);
 }
@@ -134,7 +134,7 @@
     /* Ensure above wheel */
 }
 
-.btn-continue:hover:not(:disabled) {
+.btn-continue:active:not(:disabled) {
     background-color: #0a3647;
     transform: none;
     /* Reset previous transform */

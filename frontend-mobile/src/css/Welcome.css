@@ -45,6 +45,6 @@
     transition: background 0.3s;
 }
 
-.welcome-btn:hover {
+.welcome-btn:active {
     background-color: #1f3f46;
 }
