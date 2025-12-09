@@ -49,7 +49,7 @@ export class InserimentoDomandaService {
         };
     }
 
-    async validazione(dto: InserisciDomandaDto){
+    async validazione(dto: InserisciDomandaDto) {
         // Crea istanza della classe e copia proprietà
         const dtoInstance = Object.assign(new InserisciDomandaDto(), dto);
 
@@ -68,6 +68,16 @@ export class InserimentoDomandaService {
             throw new BadRequestException('La categoria è obbligatoria');
         } else if (dtoInstance.categoria.length > 128) {
             throw new BadRequestException('La categoria non può superare 128 caratteri');
+        }
+
+        // Categorie ammesse
+        const allowedCategories = ['Vita di Coppia', 'Stress', 'Ansia', 'Rabbia'];
+        // Normalizza la categoria input (es. rimuove spazi extra, ma mantiene case-sensitive o no? 
+        // User requirements use specific casing. Let's match strictly or allow slight variation if needed.
+        // Given Oracle uses "Vita di Coppia", let's be strict or use simple comparison.
+
+        if (!allowedCategories.includes(dtoInstance.categoria.trim())) {
+            throw new BadRequestException('Categoria non valida');
         }
     }
 }

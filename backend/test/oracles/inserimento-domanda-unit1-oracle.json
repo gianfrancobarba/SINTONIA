@@ -1,0 +1,92 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "description": "Unit 1: Validazione Domanda (UC_PZT_23)",
+        "createdAt": "2025-12-09"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF23_1",
+            "description": "LTI 1 - Errato: Il Titolo è vuoto",
+            "category": "error",
+            "input": {
+                "titolo": "",
+                "testo": "Testo valido",
+                "categoria": "Vita di Coppia"
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "Il titolo è obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF23_2",
+            "description": "LTI 2 - Errato: il Titolo è > 64 caratteri",
+            "category": "error",
+            "input": {
+                "titolo": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "testo": "Testo valido",
+                "categoria": "Vita di Coppia"
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "Il titolo non può superare 64 caratteri"
+            }
+        },
+        {
+            "id": "TC_RF23_3",
+            "description": "LTI3, LTE1 - Errato: Il Testo del messaggio è vuoto",
+            "category": "error",
+            "input": {
+                "titolo": "Titolo valido",
+                "testo": "",
+                "categoria": "Vita di Coppia"
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "Il testo è obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF23_4",
+            "description": "LTI3, LTE2, SC1 - Errato: Nessuna Categoria Tematica selezionata",
+            "category": "error",
+            "input": {
+                "titolo": "Titolo valido",
+                "testo": "Testo valido",
+                "categoria": ""
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "La categoria è obbligatoria"
+            }
+        },
+        {
+            "id": "TC_RF23_5",
+            "description": "LTI3, LTE2, SC2, VAL1 - Errato: Categoria non valida",
+            "category": "error",
+            "input": {
+                "titolo": "Titolo valido",
+                "testo": "Testo valido",
+                "categoria": "Generale"
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "Categoria non valida"
+            }
+        },
+        {
+            "id": "TC_RF23_6",
+            "description": "LTI3, LTE2, SC2, VAL2 - Corretto: Tutti i dati rispettano i vincoli formali",
+            "category": "success",
+            "input": {
+                "titolo": "Titolo valido",
+                "testo": "Testo valido",
+                "categoria": "Vita di Coppia"
+            },
+            "expectedBehavior": {
+                "success": true
+            }
+        }
+    ]
+}
