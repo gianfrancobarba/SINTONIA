@@ -296,3 +296,178 @@
         justify-content: center;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .management-grid {
+        grid-template-columns: 340px 1fr;
+        gap: 28px;
+        max-width: 1500px;
+    }
+
+    .filter-btn,
+    .clear-filter-btn,
+    .upload-btn,
+    .retry-btn {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+
+    .filter-controls {
+        gap: 18px;
+        padding: 18px 0;
+    }
+
+    .active-filter {
+        padding: 10px 18px;
+        gap: 14px;
+    }
+
+    .active-filter span {
+        font-size: 15px;
+    }
+
+    .reset-filter-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .filter-info {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .management-grid {
+        grid-template-columns: 360px 1fr;
+        gap: 32px;
+        max-width: 1700px;
+    }
+
+    .management-header {
+        margin-bottom: 24px;
+    }
+
+    .header-actions {
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .filter-btn,
+    .clear-filter-btn,
+    .upload-btn,
+    .retry-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+        border-radius: 10px;
+    }
+
+    .active-filter {
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+
+    .filter-info {
+        padding: 16px 22px;
+        border-radius: 10px;
+    }
+
+    .loading-state {
+        padding: 80px 24px;
+        font-size: 20px;
+    }
+
+    .error-state {
+        padding: 50px 24px;
+        border-radius: 16px;
+    }
+
+    .error-state p {
+        font-size: 18px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .questionnaire-management-container {
+        padding: 28px;
+    }
+
+    .management-grid {
+        grid-template-columns: 400px 1fr;
+        gap: 40px;
+        max-width: 2100px;
+    }
+
+    .management-header {
+        margin-bottom: 28px;
+    }
+
+    .header-actions {
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .filter-btn,
+    .clear-filter-btn,
+    .upload-btn,
+    .retry-btn {
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .filter-controls {
+        gap: 24px;
+        padding: 24px 0;
+        margin-bottom: 24px;
+    }
+
+    .active-filter {
+        padding: 12px 24px;
+        gap: 16px;
+        border-radius: 12px;
+    }
+
+    .active-filter span {
+        font-size: 16px;
+    }
+
+    .reset-filter-btn {
+        padding: 10px 20px;
+        font-size: 15px;
+        border-radius: 8px;
+    }
+
+    .filter-info {
+        padding: 18px 26px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .loading-state {
+        padding: 100px 32px;
+        font-size: 22px;
+    }
+
+    .error-state {
+        padding: 60px 32px;
+        border-radius: 20px;
+    }
+
+    .error-state p {
+        font-size: 20px;
+        margin-bottom: 28px;
+    }
+
+    .error-message {
+        padding: 120px 32px;
+        font-size: 22px;
+    }
+}

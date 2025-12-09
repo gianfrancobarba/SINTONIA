@@ -223,3 +223,106 @@
         font-size: 12px;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .data-table-container {
+        border-radius: 14px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 18px 24px;
+        font-size: 15px;
+    }
+
+    .status-badge {
+        padding: 7px 18px;
+        font-size: 14px;
+        border-radius: 18px;
+    }
+
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+        border-radius: 8px;
+    }
+
+    .actions-cell {
+        gap: 10px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .data-table-container {
+        border-radius: 16px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 20px 28px;
+        font-size: 16px;
+    }
+
+    .data-table th {
+        font-size: 15px;
+    }
+
+    .status-badge {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .action-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .actions-cell {
+        gap: 12px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .data-table-container {
+        border-radius: 20px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 24px 32px;
+        font-size: 17px;
+    }
+
+    .data-table th {
+        font-size: 16px;
+        border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .status-badge {
+        padding: 9px 24px;
+        font-size: 15px;
+        border-radius: 20px;
+    }
+
+    .action-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        border-radius: 10px;
+    }
+
+    .actions-cell {
+        gap: 14px;
+    }
+}

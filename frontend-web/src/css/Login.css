@@ -559,3 +559,182 @@ input:checked+.slider:before {
         padding: 6px 10px;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .login-card {
+        max-width: 420px;
+        padding: 36px 48px;
+    }
+
+    .logo-image {
+        width: 200px;
+    }
+
+    .input-wrapper {
+        padding: 14px 18px;
+    }
+
+    .input-wrapper input {
+        font-size: 1rem;
+    }
+
+    .login-button,
+    .spid-button {
+        padding: 16px;
+        font-size: 1.05rem;
+    }
+
+    .login-tabs {
+        margin-bottom: 32px;
+    }
+
+    .tab-btn {
+        padding: 12px;
+        font-size: 15px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .login-card {
+        max-width: 460px;
+        padding: 40px 56px;
+        border-radius: 28px;
+    }
+
+    .logo-image {
+        width: 220px;
+    }
+
+    .input-group label {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .input-wrapper {
+        padding: 15px 20px;
+        border-radius: 10px;
+    }
+
+    .remember-me {
+        padding: 14px 18px;
+        border-radius: 10px;
+    }
+
+    .login-button,
+    .spid-button {
+        padding: 16px;
+        font-size: 1.1rem;
+        border-radius: 28px;
+    }
+
+    .spid-info-text {
+        font-size: 15px;
+        margin-bottom: 36px;
+    }
+
+    .spid-logo-footer img {
+        max-width: 16rem;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .login-card {
+        max-width: 520px;
+        padding: 48px 64px;
+        border-radius: 32px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo-image {
+        width: 240px;
+    }
+
+    .input-group {
+        margin-bottom: 24px;
+    }
+
+    .input-group label {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .input-wrapper {
+        padding: 16px 22px;
+        border-radius: 12px;
+    }
+
+    .input-wrapper input {
+        font-size: 1.1rem;
+    }
+
+    .login-tabs {
+        margin-bottom: 36px;
+        border-radius: 14px;
+        padding: 5px;
+    }
+
+    .tab-btn {
+        padding: 14px 12px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .remember-me {
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-bottom: 36px;
+    }
+
+    .toggle-wrapper {
+        font-size: 1rem;
+    }
+
+    .login-button,
+    .spid-button {
+        padding: 18px;
+        font-size: 1.15rem;
+        border-radius: 32px;
+    }
+
+    .spid-info-text {
+        font-size: 16px;
+        margin-bottom: 40px;
+        line-height: 1.7;
+    }
+
+    .spid-dropdown-container {
+        margin-bottom: 48px;
+    }
+
+    .spid-providers-list {
+        max-height: 300px;
+        border-radius: 0 0 32px 32px;
+    }
+
+    .provider-item {
+        padding: 16px 20px;
+    }
+
+    .provider-logo-img {
+        height: 40px;
+        max-width: 140px;
+    }
+
+    .spid-logo-footer img {
+        max-width: 18rem;
+    }
+
+    .error-message {
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        border-radius: 8px;
+    }
+}

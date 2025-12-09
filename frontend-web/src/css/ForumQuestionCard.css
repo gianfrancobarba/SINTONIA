@@ -185,3 +185,147 @@
         justify-content: center;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .forum-question-card {
+        padding: 24px;
+        border-radius: 18px;
+    }
+
+    .question-title {
+        font-size: 17px;
+    }
+
+    .question-text {
+        font-size: 15px;
+    }
+
+    .answer-button {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+
+    .category-label {
+        font-size: 12px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .forum-question-card {
+        padding: 28px;
+        border-radius: 20px;
+    }
+
+    .card-header {
+        margin-bottom: 16px;
+    }
+
+    .question-title {
+        font-size: 18px;
+    }
+
+    .question-text {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .patient-name {
+        font-size: 13px;
+    }
+
+    .time-ago {
+        font-size: 12px;
+    }
+
+    .answer-button {
+        padding: 12px 26px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .button-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .toggle-answers-button,
+    .expand-text-button {
+        font-size: 14px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .forum-question-card {
+        padding: 32px;
+        border-radius: 24px;
+        /* 4K Performance: simpler shadow */
+    }
+
+    .forum-question-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header {
+        margin-bottom: 18px;
+        gap: 16px;
+    }
+
+    .category-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .category-label {
+        font-size: 12px;
+    }
+
+    .question-title {
+        font-size: 20px;
+        line-height: 1.5;
+    }
+
+    .card-body {
+        margin-bottom: 20px;
+    }
+
+    .question-text {
+        font-size: 17px;
+    }
+
+    .patient-name {
+        font-size: 14px;
+    }
+
+    .time-ago {
+        font-size: 13px;
+    }
+
+    .answers-list {
+        gap: 16px;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+
+    .card-footer {
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+
+    .answer-button {
+        padding: 14px 30px;
+        font-size: 15px;
+        border-radius: 14px;
+    }
+
+    .button-icon {
+        width: 20px;
+        height: 20px;
+    }
+}

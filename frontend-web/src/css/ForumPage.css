@@ -352,3 +352,186 @@
         justify-content: center;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .forum-fixed-header {
+        margin-bottom: 24px;
+    }
+
+    .forum-filters {
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .filter-pill {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .forum-questions-list {
+        gap: 20px;
+    }
+
+    .empty-icon-container {
+        width: 90px;
+        height: 90px;
+    }
+
+    .empty-state h3 {
+        font-size: 18px;
+    }
+
+    .empty-state p {
+        font-size: 14px;
+    }
+
+    .delete-confirm-dialog {
+        max-width: 420px;
+        padding: 28px;
+    }
+
+    .delete-confirm-dialog h3 {
+        font-size: 19px;
+    }
+
+    .delete-confirm-dialog p {
+        font-size: 15px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .forum-filters {
+        gap: 12px;
+    }
+
+    .filter-pill {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+
+    .forum-questions-list {
+        gap: 24px;
+    }
+
+    .empty-icon-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .empty-state {
+        padding: 80px 24px;
+        min-height: 360px;
+    }
+
+    .empty-state h3 {
+        font-size: 20px;
+    }
+
+    .delete-confirm-dialog {
+        max-width: 460px;
+        padding: 32px;
+        border-radius: 20px;
+    }
+
+    .cancel-button,
+    .confirm-delete-button {
+        padding: 12px 22px;
+        font-size: 15px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .forum-fixed-header {
+        margin-bottom: 28px;
+    }
+
+    .forum-filters {
+        gap: 14px;
+        margin-top: 24px;
+    }
+
+    .filter-pill {
+        padding: 12px 26px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .forum-questions-list {
+        gap: 28px;
+    }
+
+    .loading-state {
+        padding: 80px 28px;
+    }
+
+    .spinner {
+        width: 44px;
+        height: 44px;
+    }
+
+    .empty-icon-container {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 20px;
+    }
+
+    .empty-state {
+        padding: 100px 32px;
+        min-height: 400px;
+    }
+
+    .empty-state h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        font-size: 16px;
+    }
+
+    .retry-button {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+
+    .delete-confirm-overlay {
+        backdrop-filter: blur(2px);
+    }
+
+    .delete-confirm-dialog {
+        max-width: 520px;
+        padding: 36px;
+        border-radius: 24px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .delete-confirm-dialog h3 {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    .delete-confirm-dialog p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .delete-confirm-actions {
+        gap: 14px;
+    }
+
+    .cancel-button,
+    .confirm-delete-button {
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+}

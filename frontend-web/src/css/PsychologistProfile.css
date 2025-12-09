@@ -628,3 +628,232 @@
         justify-content: center;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .psychologist-profile {
+        max-width: 340px;
+    }
+
+    .header-background {
+        height: 190px;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+        border: 6px solid #ffffff;
+    }
+
+    .profile-section {
+        top: 85px;
+    }
+
+    .profile-header {
+        padding-bottom: 65px;
+    }
+
+    .profile-name {
+        font-size: 26px;
+    }
+
+    .profile-role {
+        font-size: 15px;
+    }
+
+    .navigation-grid {
+        padding: 18px 22px 22px 22px;
+        gap: 14px;
+    }
+
+    .nav-card {
+        padding: 18px 10px;
+        min-height: 95px;
+    }
+
+    .nav-icon svg {
+        width: 34px;
+        height: 34px;
+    }
+
+    .nav-label {
+        font-size: 12px;
+    }
+
+    .side-btn {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+    }
+
+    .notification-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .support-link-btn,
+    .modern-logout-btn {
+        padding: 11px 18px;
+        font-size: 14px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .psychologist-profile {
+        max-width: 360px;
+    }
+
+    .header-background {
+        height: 200px;
+    }
+
+    .profile-photo {
+        width: 160px;
+        height: 160px;
+    }
+
+    .profile-section {
+        top: 90px;
+        gap: 18px;
+    }
+
+    .profile-header {
+        padding-bottom: 70px;
+    }
+
+    .profile-name {
+        font-size: 28px;
+    }
+
+    .navigation-grid {
+        padding: 20px 24px 24px 24px;
+        gap: 16px;
+    }
+
+    .nav-card {
+        padding: 20px 12px;
+        min-height: 105px;
+        border-radius: 16px;
+    }
+
+    .nav-icon svg {
+        width: 38px;
+        height: 38px;
+    }
+
+    .nav-label {
+        font-size: 13px;
+    }
+
+    .side-btn {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+    }
+
+    .notification-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .psychologist-profile {
+        max-width: 400px;
+        border-radius: 28px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-background {
+        height: 220px;
+        border-radius: 28px 28px 0 0;
+    }
+
+    .profile-photo {
+        width: 180px;
+        height: 180px;
+        border: 7px solid #ffffff;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    .profile-section {
+        top: 100px;
+        gap: 20px;
+    }
+
+    .profile-header {
+        padding-bottom: 80px;
+    }
+
+    .profile-name {
+        font-size: 30px;
+    }
+
+    .profile-role {
+        font-size: 16px;
+    }
+
+    .profile-info {
+        padding: 10px 24px 24px;
+    }
+
+    .navigation-grid {
+        padding: 24px 28px 28px 28px;
+        gap: 18px;
+        border-radius: 0 0 28px 28px;
+    }
+
+    .nav-card {
+        padding: 24px 14px;
+        min-height: 115px;
+        border-radius: 18px;
+        /* 4K Performance: simpler shadow on hover defined in base */
+    }
+
+    .nav-icon svg {
+        width: 44px;
+        height: 44px;
+    }
+
+    .nav-label {
+        font-size: 14px;
+    }
+
+    .side-btn {
+        width: 54px;
+        height: 54px;
+        min-width: 54px;
+        min-height: 54px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 3px 10px rgba(131, 185, 193, 0.3);
+    }
+
+    .notification-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .support-link-btn,
+    .modern-logout-btn {
+        padding: 12px 20px;
+        font-size: 15px;
+        border-radius: 14px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-action-buttons {
+        gap: 14px;
+        margin-top: 20px;
+    }
+}

@@ -423,3 +423,165 @@
 .form-row-centered .form-field {
     width: calc(50% - 8px);
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .personal-area-header {
+        padding: 20px 28px;
+    }
+
+    .personal-area-title {
+        font-size: 22px;
+    }
+
+    .personal-area-content {
+        padding: 20px 28px;
+    }
+
+    .profile-image-wrapper {
+        width: 110px;
+        height: 110px;
+    }
+
+    .profile-fields-section {
+        max-width: 650px;
+    }
+
+    .field-input {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .personal-area-header {
+        padding: 24px 32px;
+    }
+
+    .personal-area-title {
+        font-size: 24px;
+    }
+
+    .personal-area-content {
+        padding: 24px 32px;
+    }
+
+    .profile-image-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-fields-section {
+        max-width: 700px;
+    }
+
+    .field-label {
+        font-size: 14px;
+    }
+
+    .field-input {
+        padding: 12px 16px;
+        font-size: 15px;
+        border-radius: 10px;
+    }
+
+    .form-row-double {
+        gap: 16px;
+    }
+
+    .info-banner {
+        padding: 16px 20px;
+        border-radius: 10px;
+    }
+
+    .info-banner p {
+        font-size: 14px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .personal-area-container {
+        border-radius: 20px;
+    }
+
+    .personal-area-header {
+        padding: 28px 40px;
+        border-bottom: 3px solid #F5F5F5;
+    }
+
+    .personal-area-title {
+        font-size: 26px;
+    }
+
+    .personal-area-content {
+        padding: 32px 40px;
+    }
+
+    .personal-area-layout-vertical {
+        gap: 28px;
+    }
+
+    .profile-image-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .profile-image-preview {
+        border: 5px solid #A5C9C9;
+    }
+
+    .profile-fields-section {
+        max-width: 800px;
+        gap: 16px;
+    }
+
+    .field-label {
+        font-size: 15px;
+    }
+
+    .field-input {
+        padding: 14px 18px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .form-row-double {
+        gap: 20px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .info-banner {
+        padding: 18px 24px;
+        border-radius: 12px;
+        margin-top: 16px;
+    }
+
+    .info-banner svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .info-banner p {
+        font-size: 15px;
+    }
+}

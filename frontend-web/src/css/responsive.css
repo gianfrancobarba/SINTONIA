@@ -292,3 +292,101 @@
         justify-content: center;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    :root {
+        --spacing-xl: 40px;
+        --spacing-2xl: 56px;
+    }
+
+    .container-responsive {
+        max-width: 1500px;
+    }
+
+    /* Slightly larger grid gaps */
+    .grid-2-col,
+    .grid-3-col,
+    .grid-4-col {
+        gap: 28px;
+    }
+
+    .gap-responsive {
+        gap: 28px;
+    }
+
+    .p-responsive {
+        padding: 40px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    :root {
+        --spacing-xl: 44px;
+        --spacing-2xl: 64px;
+    }
+
+    .container-responsive {
+        max-width: 1700px;
+    }
+
+    .grid-2-col,
+    .grid-3-col,
+    .grid-4-col {
+        gap: 32px;
+    }
+
+    .gap-responsive {
+        gap: 32px;
+    }
+
+    .p-responsive {
+        padding: 44px;
+    }
+
+    /* Tables can show more columns comfortably */
+    .table-responsive-wrapper .data-table {
+        min-width: 900px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    :root {
+        --spacing-xl: 48px;
+        --spacing-2xl: 72px;
+
+        /* Performance optimization: reduce shadow complexity on 4K */
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .container-responsive {
+        max-width: 2100px;
+    }
+
+    .grid-2-col,
+    .grid-3-col,
+    .grid-4-col {
+        gap: 36px;
+    }
+
+    .gap-responsive {
+        gap: 36px;
+    }
+
+    .p-responsive {
+        padding: 48px;
+    }
+
+    /* Tables fully expanded */
+    .table-responsive-wrapper .data-table {
+        min-width: 1000px;
+    }
+}

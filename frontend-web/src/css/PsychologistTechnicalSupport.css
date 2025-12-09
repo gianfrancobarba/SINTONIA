@@ -175,3 +175,172 @@
         margin-right: auto;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .support-layout {
+        gap: 70px;
+    }
+
+    .support-title {
+        font-size: 24px;
+    }
+
+    .support-subtitle {
+        font-size: 17px;
+    }
+
+    .support-form-card {
+        padding: 44px;
+        border-radius: 26px;
+    }
+
+    .form-label {
+        font-size: 16px;
+    }
+
+    .form-input,
+    .form-textarea {
+        padding: 18px 22px;
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        padding: 18px 44px;
+        font-size: 17px;
+    }
+
+    .illustration-circle {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .support-layout {
+        gap: 80px;
+        padding: 24px 0;
+    }
+
+    .support-title {
+        font-size: 26px;
+        padding-bottom: 24px;
+    }
+
+    .support-subtitle {
+        font-size: 18px;
+        margin-bottom: 48px;
+    }
+
+    .support-form-card {
+        padding: 48px;
+        border-radius: 28px;
+    }
+
+    .form-group {
+        margin-bottom: 28px;
+    }
+
+    .form-input,
+    .form-textarea {
+        padding: 18px 24px;
+        font-size: 16px;
+        border-radius: 18px;
+    }
+
+    .form-textarea {
+        min-height: 220px;
+        max-height: 280px;
+    }
+
+    .form-actions {
+        margin-top: 36px;
+    }
+
+    .submit-btn {
+        padding: 18px 48px;
+        font-size: 17px;
+        border-radius: 18px;
+    }
+
+    .illustration-circle {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .support-layout {
+        gap: 100px;
+        padding: 32px 0;
+    }
+
+    .support-header-side {
+        padding-top: 28px;
+    }
+
+    .support-title {
+        font-size: 28px;
+        padding-bottom: 28px;
+    }
+
+    .support-subtitle {
+        font-size: 19px;
+        margin-bottom: 56px;
+        line-height: 1.7;
+    }
+
+    .support-form-card {
+        padding: 56px;
+        border-radius: 32px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-group {
+        margin-bottom: 32px;
+    }
+
+    .form-label {
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
+    .form-input,
+    .form-textarea {
+        padding: 20px 26px;
+        font-size: 17px;
+        border-radius: 20px;
+    }
+
+    .form-textarea {
+        min-height: 240px;
+        max-height: 320px;
+    }
+
+    .form-actions {
+        margin-top: 40px;
+        gap: 20px;
+    }
+
+    .submit-btn {
+        padding: 20px 56px;
+        font-size: 18px;
+        border-radius: 20px;
+    }
+
+    .support-illustration {
+        margin-top: 56px;
+    }
+
+    .illustration-circle {
+        width: 160px;
+        height: 160px;
+    }
+}

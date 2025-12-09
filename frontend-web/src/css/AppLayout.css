@@ -296,3 +296,88 @@ body {
         width: 20px;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .app-layout-grid {
+        max-width: 1500px;
+        grid-template-columns: 340px 1fr;
+        gap: 36px;
+        padding: 36px 28px 12px 28px;
+    }
+
+    .content-panel {
+        padding: 36px;
+        border-radius: 20px;
+    }
+
+    .panel-title {
+        font-size: 24px;
+        padding-bottom: 22px;
+    }
+
+    .app-footer {
+        padding: 22px 24px 16px 24px;
+        font-size: 12px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .app-layout-grid {
+        max-width: 1700px;
+        grid-template-columns: 360px 1fr;
+        gap: 40px;
+        padding: 40px 32px 14px 32px;
+    }
+
+    .content-panel {
+        padding: 40px;
+    }
+
+    .panel-title {
+        font-size: 26px;
+        padding-bottom: 24px;
+    }
+
+    .app-footer {
+        padding: 24px 28px 18px 28px;
+        font-size: 12px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .app-layout-grid {
+        max-width: 2100px;
+        grid-template-columns: 400px 1fr;
+        gap: 48px;
+        padding: 48px 40px 16px 40px;
+    }
+
+    .content-panel {
+        padding: 48px;
+        border-radius: 24px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .panel-title {
+        font-size: 28px;
+        padding-bottom: 28px;
+    }
+
+    .app-footer {
+        padding: 28px 36px 20px 36px;
+        font-size: 13px;
+    }
+
+    /* Custom scrollbar slightly larger for 4K */
+    .app-layout-content::-webkit-scrollbar {
+        width: 10px;
+    }
+}

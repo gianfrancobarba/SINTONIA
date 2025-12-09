@@ -139,3 +139,106 @@
         font-size: 13px;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .psychologist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 24px;
+    }
+
+    .psychologist-card {
+        padding: 24px 20px;
+        border-radius: 18px;
+    }
+
+    .psychologist-avatar {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 18px;
+    }
+
+    .psychologist-name {
+        font-size: 17px;
+    }
+
+    .psychologist-specialization {
+        font-size: 13px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .psychologist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 28px;
+    }
+
+    .psychologist-card {
+        padding: 28px 24px;
+        border-radius: 20px;
+    }
+
+    .psychologist-avatar {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+    }
+
+    .psychologist-info {
+        margin-bottom: 24px;
+    }
+
+    .psychologist-name {
+        font-size: 18px;
+        margin-bottom: 6px;
+    }
+
+    .psychologist-specialization {
+        font-size: 14px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .psychologist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 32px;
+        padding: 16px 0;
+    }
+
+    .psychologist-card {
+        padding: 32px 28px;
+        border-radius: 24px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .psychologist-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .psychologist-avatar {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 24px;
+    }
+
+    .psychologist-info {
+        margin-bottom: 28px;
+    }
+
+    .psychologist-name {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .psychologist-specialization {
+        font-size: 15px;
+    }
+}

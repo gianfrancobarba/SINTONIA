@@ -515,3 +515,184 @@
         gap: 8px;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .notification-header h1 {
+        font-size: 24px;
+    }
+
+    .mark-all-read-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+
+    .notification-stats {
+        gap: 20px;
+    }
+
+    .stat-card {
+        padding: 20px 24px;
+        border-radius: 14px;
+    }
+
+    .stat-icon {
+        width: 54px;
+        height: 54px;
+    }
+
+    .stat-content h3 {
+        font-size: 26px;
+    }
+
+    .notification-card {
+        padding: 24px 28px;
+        border-radius: 18px;
+    }
+
+    .notification-title {
+        font-size: 19px;
+    }
+
+    .notification-description {
+        font-size: 16px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .notification-header h1 {
+        font-size: 26px;
+    }
+
+    .notification-list {
+        gap: 20px;
+    }
+
+    .notification-card {
+        padding: 26px 32px;
+        border-radius: 20px;
+        border-left-width: 5px;
+    }
+
+    .notification-title {
+        font-size: 20px;
+    }
+
+    .notification-description {
+        font-size: 17px;
+    }
+
+    .stat-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+    }
+
+    .stat-content h3 {
+        font-size: 28px;
+    }
+
+    .stat-content p {
+        font-size: 14px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .notification-header {
+        padding-bottom: 28px;
+    }
+
+    .notification-header h1 {
+        font-size: 28px;
+        gap: 16px;
+    }
+
+    .mark-all-read-btn {
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 14px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 3px 12px rgba(13, 71, 93, 0.25);
+    }
+
+    .notification-stats {
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .stat-card {
+        padding: 24px 28px;
+        border-radius: 16px;
+        gap: 18px;
+    }
+
+    .stat-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+    }
+
+    .stat-content h3 {
+        font-size: 32px;
+    }
+
+    .stat-content p {
+        font-size: 15px;
+    }
+
+    .notification-list {
+        gap: 24px;
+        padding: 28px 0;
+    }
+
+    .notification-card {
+        padding: 32px 40px;
+        border-radius: 24px;
+        border-left-width: 6px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 3px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .notification-title {
+        font-size: 22px;
+    }
+
+    .notification-badge {
+        padding: 5px 12px;
+        font-size: 11px;
+    }
+
+    .notification-date {
+        font-size: 15px;
+    }
+
+    .notification-description {
+        font-size: 18px;
+    }
+
+    .unread-indicator {
+        width: 12px;
+        height: 12px;
+    }
+
+    .pagination {
+        gap: 20px;
+        margin-top: 40px;
+        padding-top: 32px;
+    }
+
+    .pagination-button {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+
+    .pagination-info {
+        font-size: 16px;
+    }
+}

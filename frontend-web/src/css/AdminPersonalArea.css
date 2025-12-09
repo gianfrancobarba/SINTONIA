@@ -274,3 +274,179 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .personal-area-header {
+        padding: 28px 32px;
+    }
+
+    .personal-area-title {
+        font-size: 24px;
+    }
+
+    .personal-area-content {
+        padding: 36px 32px;
+    }
+
+    .profile-image-wrapper {
+        width: 170px;
+        height: 170px;
+    }
+
+    .form-section {
+        max-width: 650px;
+    }
+
+    .field-input {
+        padding: 14px 18px;
+        font-size: 16px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .personal-area-header {
+        padding: 32px 40px;
+    }
+
+    .personal-area-title {
+        font-size: 26px;
+    }
+
+    .personal-area-content {
+        padding: 40px 40px;
+    }
+
+    .profile-image-wrapper {
+        width: 180px;
+        height: 180px;
+    }
+
+    .profile-image-preview {
+        border: 7px solid #A5C9C9;
+    }
+
+    .form-section {
+        max-width: 700px;
+    }
+
+    .form-row {
+        margin-bottom: 28px;
+    }
+
+    .field-label {
+        font-size: 15px;
+    }
+
+    .field-input {
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .change-password-button {
+        padding: 14px 24px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .personal-area-container {
+        border-radius: 24px;
+    }
+
+    .personal-area-header {
+        padding: 36px 48px;
+        border-bottom: 3px solid #F5F5F5;
+    }
+
+    .personal-area-title {
+        font-size: 28px;
+    }
+
+    .personal-area-content {
+        padding: 48px;
+    }
+
+    .profile-image-section {
+        margin-bottom: 40px;
+    }
+
+    .profile-image-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+
+    .profile-image-preview {
+        border: 8px solid #A5C9C9;
+    }
+
+    .image-upload-overlay {
+        font-size: 15px;
+    }
+
+    .image-upload-overlay svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .form-section {
+        max-width: 800px;
+    }
+
+    .form-row {
+        margin-bottom: 32px;
+    }
+
+    .form-row-double {
+        gap: 24px;
+    }
+
+    .field-label {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .field-editable-badge {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+
+    .field-input {
+        padding: 16px 22px;
+        font-size: 17px;
+        border-radius: 14px;
+    }
+
+    .btn-group {
+        gap: 16px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 14px;
+    }
+
+    .change-password-button {
+        padding: 16px 28px;
+        font-size: 16px;
+        border-radius: 14px;
+    }
+}
