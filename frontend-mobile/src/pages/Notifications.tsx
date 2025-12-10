@@ -10,21 +10,19 @@ const Notifications: React.FC = () => {
     const [notifications, setNotifications] = useState<NotificationDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        loadNotifications(currentPage);
-    }, [currentPage]);
+        loadNotifications();
+    }, []);
 
-    const loadNotifications = async (page: number) => {
+    const loadNotifications = async () => {
         try {
             setLoading(true);
             setError(null);
-            const data: PaginatedNotificationsDto = await getNotifications(page);
+
+            // Fetch all notifications in one request (service uses limit=1000)
+            const data = await getNotifications(1);
             setNotifications(data.notifications);
-            setTotalPages(data.totalPages);
         } catch (err) {
             console.error('Error loading notifications:', err);
             setError('Errore nel caricamento delle notifiche');
@@ -125,7 +123,7 @@ const Notifications: React.FC = () => {
             {error && !loading && (
                 <div className="notifications-error">
                     <p>{error}</p>
-                    <button onClick={() => loadNotifications(currentPage)}>
+                    <button onClick={() => loadNotifications()}>
                         Riprova
                     </button>
                 </div>
@@ -178,28 +176,7 @@ const Notifications: React.FC = () => {
                         ))}
                     </div>
 
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="notifications-pagination">
-                            <button
-                                className="pagination-btn"
-                                disabled={currentPage === 1}
-                                onClick={() => setCurrentPage(p => p - 1)}
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-                            <span className="pagination-info">
-                                {currentPage} / {totalPages}
-                            </span>
-                            <button
-                                className="pagination-btn"
-                                disabled={currentPage === totalPages}
-                                onClick={() => setCurrentPage(p => p + 1)}
-                            >
-                                <ChevronRight size={20} />
-                            </button>
-                        </div>
-                    )}
+
                 </>
             )}
         </div>

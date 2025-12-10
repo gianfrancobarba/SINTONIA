@@ -29,6 +29,7 @@ const BottomNavigation: React.FC = () => {
         { path: '/profile', icon: userIcon, label: 'Profilo' }
     ];
 
+    // Initial fetch and interval
     useEffect(() => {
         const fetchUnreadCount = async () => {
             try {
@@ -38,11 +39,16 @@ const BottomNavigation: React.FC = () => {
                 console.error('Error fetching unread count:', err);
             }
         };
-        fetchUnreadCount();
 
-        // Refresh count when navigating back from notifications
+        fetchUnreadCount();
         const interval = setInterval(fetchUnreadCount, 30000);
+
         return () => clearInterval(interval);
+    }, []);
+
+    // Refresh on location change (only if needed, ensuring no full reload)
+    useEffect(() => {
+        getUnreadCount().then(data => setUnreadCount(data.count)).catch(console.error);
     }, [location.pathname]);
 
     const isActive = (path: string) => location.pathname === path;
