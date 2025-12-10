@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-import './CompactPagination.css';
+import '../css/CompactPagination.css';
 
 interface CompactPaginationProps {
     currentPage: number;
