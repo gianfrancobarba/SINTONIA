@@ -9,6 +9,15 @@ export const categoryInfo: CategoryInfo[] = [
     { id: 'vita_di_coppia', label: 'Vita di coppia', color: '#EC4899' },
 ];
 
+// Mappa le categorie dal formato frontend-mobile al formato backend/web
+// 'ansia' -> 'Ansia', 'vita_di_coppia' -> 'Vita di Coppia'
+const categoryToBackendFormat: Record<ForumCategory, string> = {
+    'ansia': 'Ansia',
+    'stress': 'Stress',
+    'tristezza': 'Tristezza',
+    'vita_di_coppia': 'Vita di Coppia',
+};
+
 // Helper per gestire autenticazione
 const getAuthHeaders = (): HeadersInit => {
     const token = localStorage.getItem('patient_token');
@@ -87,7 +96,7 @@ export const createPost = async (data: CreatePostDto): Promise<ForumPost> => {
         const payload = {
             titolo: data.title,
             testo: data.content,
-            categoria: data.category,
+            categoria: categoryToBackendFormat[data.category],
         };
 
         const response = await fetch(`${API_BASE_URL}/paziente/forum/domanda`, {
@@ -130,7 +139,7 @@ export const updatePost = async (id: string, data: UpdatePostDto): Promise<void>
         const payload: any = {};
         if (data.title !== undefined) payload.titolo = data.title;
         if (data.content !== undefined) payload.testo = data.content;
-        if (data.category !== undefined) payload.categoria = data.category;
+        if (data.category !== undefined) payload.categoria = categoryToBackendFormat[data.category];
 
         const response = await fetch(`${API_BASE_URL}/paziente/forum/domanda/${id}`, {
             method: 'PATCH',
