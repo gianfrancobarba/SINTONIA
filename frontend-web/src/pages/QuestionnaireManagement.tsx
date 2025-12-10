@@ -7,7 +7,7 @@ import { getCurrentUser, getUserRole } from '../services/auth.service';
 import { fetchQuestionnaires, fetchQuestionnairesByPatient, requestInvalidation, reviewQuestionnaire, viewQuestionnaire } from '../services/questionnaire.service';
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
-import '../css/ForumPage.css';
+import CompactPagination from '../components/CompactPagination';
 
 import Toast from '../components/Toast';
 
@@ -191,7 +191,7 @@ const QuestionnaireManagement: React.FC = () => {
             )}
 
             {questionnairesState.data && !questionnairesState.loading && (
-                <>
+                <div style={{ flex: 1, overflowY: 'auto', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                     <div className="questionnaire-count">
                         Totale questionari: <strong>{questionnairesState.data.length}</strong>
                     </div>
@@ -222,28 +222,15 @@ const QuestionnaireManagement: React.FC = () => {
                         onView={handleView}
                         onReview={handleReview}
                     />
-
-                    {getTotalPages() > 1 && (
-                        <div className="pagination">
-                            <button
-                                className="pagination-btn"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                ‹
-                            </button>
-                            <span className="pagination-current">{currentPage} / {getTotalPages()}</span>
-                            <button
-                                className="pagination-btn"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === getTotalPages()}
-                            >
-                                ›
-                            </button>
-                        </div>
-                    )}
-                </>
+                </div>
             )}
+
+            {/* Fixed Pagination Footer */}
+            <CompactPagination
+                currentPage={currentPage}
+                totalPages={getTotalPages()}
+                onPageChange={handlePageChange}
+            />
 
             {/* Modal for viewing questionnaire details */}
             {viewingQuestionnaire && (

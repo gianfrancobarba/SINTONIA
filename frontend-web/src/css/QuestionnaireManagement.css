@@ -232,11 +232,7 @@
     color: var(--color-rejected);
 }
 
-/* Fixed Pagination - Override ForumPage styles for Questionnaire context */
-.content-panel .pagination {
-    margin: auto -32px -32px -32px;
-    margin-top: auto;
-}
+/* Old pagination styles removed - now using CompactPagination component */
 
 /* Responsive */
 

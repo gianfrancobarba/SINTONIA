@@ -7,6 +7,7 @@ import { User, UserCog, Eye, LayoutGrid, List, UserPlus, Search, RotateCcw } fro
 import '../css/QuestionnaireManagement.css'; // Reuse existing layout styles
 import '../css/AdminPsychologistList.css';
 import '../css/EmptyState.css';
+import CompactPagination from '../components/CompactPagination';
 import { fetchAllPsychologists, createPsychologist, type PsychologistOption } from '../services/psychologist.service';
 
 interface PsychologistData {
@@ -71,6 +72,7 @@ const AdminPsychologistList: React.FC = () => {
         };
 
         calculateItemsPerPage();
+        setCurrentPage(1); // Reset pagination when view mode changes
         window.addEventListener('resize', calculateItemsPerPage);
 
         return () => window.removeEventListener('resize', calculateItemsPerPage);
@@ -177,57 +179,6 @@ const AdminPsychologistList: React.FC = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentPsychologists = filteredPsychologists.slice(startIndex, endIndex);
-
-    const handlePreviousPage = () => {
-        setCurrentPage(prev => Math.max(1, prev - 1));
-    };
-
-    const handleNextPage = () => {
-        setCurrentPage(prev => Math.min(totalPages, prev + 1));
-    };
-
-    const handlePageClick = (page: number) => {
-        setCurrentPage(page);
-    };
-
-    // Generate page numbers to display
-    const getPageNumbers = () => {
-        const pages: (number | string)[] = [];
-        const maxPagesToShow = 5;
-
-        if (totalPages <= maxPagesToShow) {
-            // Show all pages if total is small
-            for (let i = 1; i <= totalPages; i++) {
-                pages.push(i);
-            }
-        } else {
-            // Show first page
-            pages.push(1);
-
-            if (currentPage > 3) {
-                pages.push('...');
-            }
-
-            // Show pages around current page
-            const start = Math.max(2, currentPage - 1);
-            const end = Math.min(totalPages - 1, currentPage + 1);
-
-            for (let i = start; i <= end; i++) {
-                pages.push(i);
-            }
-
-            if (currentPage < totalPages - 2) {
-                pages.push('...');
-            }
-
-            // Show last page
-            if (totalPages > 1) {
-                pages.push(totalPages);
-            }
-        }
-
-        return pages;
-    };
 
     return (
         <div className="content-panel">
@@ -430,70 +381,12 @@ const AdminPsychologistList: React.FC = () => {
                                 </div>
                             )}
 
-                            {/* Pagination Controls */}
-                            {totalPages > 1 && (
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    marginTop: '0',
-                                    padding: '16px'
-                                }}>
-                                    <button
-                                        onClick={handlePreviousPage}
-                                        disabled={currentPage === 1}
-                                        style={{
-                                            padding: '8px 16px',
-                                            border: '1px solid #ddd',
-                                            borderRadius: '4px',
-                                            background: currentPage === 1 ? '#f5f5f5' : '#fff',
-                                            cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-                                            fontSize: '14px'
-                                        }}
-                                    >
-                                        ← Precedente
-                                    </button>
-
-                                    {getPageNumbers().map((page, index) => (
-                                        page === '...' ? (
-                                            <span key={`ellipsis-${index}`} style={{ padding: '0 8px' }}>...</span>
-                                        ) : (
-                                            <button
-                                                key={page}
-                                                onClick={() => handlePageClick(page as number)}
-                                                style={{
-                                                    padding: '8px 12px',
-                                                    border: '1px solid #ddd',
-                                                    borderRadius: '4px',
-                                                    background: currentPage === page ? '#0D475D' : '#fff',
-                                                    color: currentPage === page ? '#fff' : '#333',
-                                                    cursor: 'pointer',
-                                                    fontSize: '14px',
-                                                    fontWeight: currentPage === page ? 'bold' : 'normal'
-                                                }}
-                                            >
-                                                {page}
-                                            </button>
-                                        )
-                                    ))}
-
-                                    <button
-                                        onClick={handleNextPage}
-                                        disabled={currentPage === totalPages}
-                                        style={{
-                                            padding: '8px 16px',
-                                            border: '1px solid #ddd',
-                                            borderRadius: '4px',
-                                            background: currentPage === totalPages ? '#f5f5f5' : '#fff',
-                                            cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-                                            fontSize: '14px'
-                                        }}
-                                    >
-                                        Successiva →
-                                    </button>
-                                </div>
-                            )}
+                            {/* Compact Pagination */}
+                            <CompactPagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={setCurrentPage}
+                            />
                         </>
                     ) : (
                         <div className="unified-empty-state">

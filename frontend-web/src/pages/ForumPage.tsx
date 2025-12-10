@@ -10,6 +10,7 @@ import { fetchForumQuestions, answerQuestion, updateAnswer, deleteAnswer } from 
 import { getCurrentUser } from '../services/auth.service';
 import '../css/ForumPage.css';
 import '../css/EmptyState.css';
+import CompactPagination from '../components/CompactPagination';
 
 type FilterType = 'all' | 'unanswered' | 'answered';
 
@@ -300,25 +301,11 @@ const ForumPage: React.FC = () => {
             </div>
 
             {/* Fixed Pagination Footer */}
-            {getTotalPages() > 1 && (
-                <div className="pagination">
-                    <button
-                        className="pagination-btn"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        ‹
-                    </button>
-                    <span className="pagination-current">{currentPage} / {getTotalPages()}</span>
-                    <button
-                        className="pagination-btn"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === getTotalPages()}
-                    >
-                        ›
-                    </button>
-                </div>
-            )}
+            <CompactPagination
+                currentPage={currentPage}
+                totalPages={getTotalPages()}
+                onPageChange={handlePageChange}
+            />
 
             {modalState.isOpen && modalState.question && (
                 <ForumReplyModal

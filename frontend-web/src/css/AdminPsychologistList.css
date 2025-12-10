@@ -3,8 +3,8 @@
 .psychologist-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    padding: 10px 0;
+    gap: 12px;
+    padding: 8px 0;
     flex: 1;
     /* Occupy remaining space */
     overflow-y: auto;
@@ -15,13 +15,13 @@
 
 .psychologist-card {
     background-color: #0D475D;
-    border-radius: 14px;
-    padding: 20px 16px;
+    border-radius: 12px;
+    padding: 13px 11px;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     height: 100%;
     /* Uniform height */
@@ -29,39 +29,59 @@
 }
 
 .psychologist-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 .psychologist-avatar {
-    width: 60px;
-    height: 60px;
+    width: 44px;
+    height: 44px;
     background-color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 14px;
+    margin-bottom: 9px;
     color: #0D475D;
 }
 
 .psychologist-info {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 9px;
     width: 100%;
 }
 
 .psychologist-name {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
-    margin: 0 0 4px 0;
-    line-height: 1.4;
+    margin: 0 0 2px 0;
+    line-height: 1.3;
 }
 
 .psychologist-specialization {
-    font-size: 12px;
+    font-size: 11px;
     opacity: 0.8;
     margin: 0;
+}
+
+.profile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    background: white;
+    color: #0D475D;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-btn:hover {
+    background: #f0f0f0;
+    transform: scale(1.02);
 }
 
 /* ==========================================================================

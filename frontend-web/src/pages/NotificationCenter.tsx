@@ -13,6 +13,7 @@ import {
 } from '../services/notification.service';
 import type { Notification } from '../types/notification';
 import '../css/NotificationCenter.css';
+import CompactPagination from '../components/CompactPagination';
 
 const NotificationCenter: React.FC = () => {
     const location = useLocation();
@@ -247,27 +248,11 @@ const NotificationCenter: React.FC = () => {
                         ))}
                     </div>
 
-                    {totalPages > 1 && (
-                        <div className="pagination">
-                            <button
-                                className="pagination-button"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                Precedente
-                            </button>
-                            <span className="pagination-info">
-                                Pagina {currentPage} di {totalPages}
-                            </span>
-                            <button
-                                className="pagination-button"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                            >
-                                Successiva
-                            </button>
-                        </div>
-                    )}
+                    <CompactPagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
                 </>
             )}
         </div>

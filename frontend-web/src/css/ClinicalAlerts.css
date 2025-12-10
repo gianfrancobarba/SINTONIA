@@ -375,44 +375,7 @@
     }
 }
 
-/* Pagination */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid #e5e7eb;
-}
-
-.pagination-button {
-    padding: 10px 20px;
-    background: var(--color-teal-medium);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, opacity 0.2s ease;
-}
-
-.pagination-button:hover:not(:disabled) {
-    background: var(--color-teal-dark);
-}
-
-.pagination-button:disabled {
-    background: #e5e7eb;
-    color: #9ca3af;
-    cursor: not-allowed;
-}
-
-.pagination-info {
-    font-size: 14px;
-    color: #6b7280;
-    font-weight: 500;
-}
+/* Old pagination styles removed - now using CompactPagination component */
 
 /* ==========================================================================
    RESPONSIVE STYLES
@@ -440,11 +403,6 @@
     .confirmation-banner {
         padding: 18px;
     }
-
-    .pagination {
-        gap: 12px;
-        margin-top: 24px;
-    }
 }
 
 /* Tablet - 1024px */
@@ -469,11 +427,6 @@
 
     .overlay-title {
         font-size: 16px;
-    }
-
-    .pagination-button {
-        padding: 8px 16px;
-        font-size: 13px;
     }
 }
 
@@ -526,11 +479,6 @@
 
     .overlay-actions {
         flex-direction: column;
-    }
-
-    .pagination {
-        flex-wrap: wrap;
-        gap: 8px;
     }
 }
 
@@ -699,21 +647,6 @@
 
     .overlay-actions {
         gap: 16px;
-    }
-
-    .pagination {
-        gap: 20px;
-        margin-top: 40px;
-        padding-top: 32px;
-    }
-
-    .pagination-button {
-        padding: 12px 24px;
-        font-size: 15px;
-    }
-
-    .pagination-info {
-        font-size: 16px;
     }
 
     .empty-state,

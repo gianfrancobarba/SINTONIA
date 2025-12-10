@@ -6,8 +6,8 @@ import PageHeader from '../components/PageHeader';
 import { fetchClinicalAlerts, acceptClinicalAlert } from '../services/alert-clinici.service';
 import type { ClinicalAlert, LoadingState } from '../types/alert';
 import '../css/ClinicalAlerts.css';
-import '../css/ForumPage.css';
 import '../css/EmptyState.css';
+import CompactPagination from '../components/CompactPagination';
 
 import Toast from '../components/Toast';
 
@@ -131,48 +131,36 @@ const ClinicalAlerts: React.FC = () => {
                     </div>
 
                     {/* Table area with confirmation overlay */}
-                    <div className="table-overlay-wrapper">
-                        <ClinicalAlertsTable
-                            alerts={getPaginatedAlerts()}
-                            onAccept={handleAcceptClick}
-                        />
+                    <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+                        <div className="table-overlay-wrapper">
+                            <ClinicalAlertsTable
+                                alerts={getPaginatedAlerts()}
+                                onAccept={handleAcceptClick}
+                            />
 
-                        {confirmingAlertId && createPortal(
-                            <div className="alerts-overlay" role="dialog" aria-modal="true" aria-labelledby="alerts-overlay-title">
-                                <div className="alerts-overlay-backdrop" onClick={handleCancelAccept} />
-                                <div className="alerts-overlay-card" role="document">
-                                    <h3 id="alerts-overlay-title" className="overlay-title">Conferma accettazione</h3>
-                                    <p className="overlay-text">Sei sicuro di voler accettare questo alert clinico?</p>
-                                    <p className="overlay-id"><strong>ID Alert:</strong> {confirmingAlertId}</p>
-                                    <div className="overlay-actions">
-                                        <button className="cancel-btn" onClick={handleCancelAccept}>Annulla</button>
-                                        <button className="confirm-btn" onClick={handleConfirmAccept}>Conferma</button>
+                            {confirmingAlertId && createPortal(
+                                <div className="alerts-overlay" role="dialog" aria-modal="true" aria-labelledby="alerts-overlay-title">
+                                    <div className="alerts-overlay-backdrop" onClick={handleCancelAccept} />
+                                    <div className="alerts-overlay-card" role="document">
+                                        <h3 id="alerts-overlay-title" className="overlay-title">Conferma accettazione</h3>
+                                        <p className="overlay-text">Sei sicuro di voler accettare questo alert clinico?</p>
+                                        <p className="overlay-id"><strong>ID Alert:</strong> {confirmingAlertId}</p>
+                                        <div className="overlay-actions">
+                                            <button className="cancel-btn" onClick={handleCancelAccept}>Annulla</button>
+                                            <button className="confirm-btn" onClick={handleConfirmAccept}>Conferma</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>,
-                            document.body
-                        )}
+                                </div>,
+                                document.body
+                            )}
+                        </div>
                     </div>
 
-                    {getTotalPages() > 1 && (
-                        <div className="pagination">
-                            <button
-                                className="pagination-btn"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                ‹
-                            </button>
-                            <span className="pagination-current">{currentPage} / {getTotalPages()}</span>
-                            <button
-                                className="pagination-btn"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === getTotalPages()}
-                            >
-                                ›
-                            </button>
-                        </div>
-                    )}
+                    <CompactPagination
+                        currentPage={currentPage}
+                        totalPages={getTotalPages()}
+                        onPageChange={handlePageChange}
+                    />
                 </>
             )}
 

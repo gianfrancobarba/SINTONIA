@@ -7,7 +7,7 @@ import { fetchQuestionnaires, fetchQuestionnairesByPatient, cancelRevision, view
 import type { QuestionnaireData, LoadingState } from '../types/psychologist';
 import '../css/QuestionnaireManagement.css';
 import '../css/EmptyState.css';
-import '../css/ForumPage.css';
+import CompactPagination from '../components/CompactPagination';
 
 import Toast from '../components/Toast';
 
@@ -215,7 +215,7 @@ const AdminQuestionnaireList: React.FC = () => {
 
                     {/* Tabella questionari o messaggio vuoto */}
                     {filteredQuestionnaires.length > 0 ? (
-                        <>
+                        <div style={{ flex: 1, overflowY: 'auto', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                             <div className="filter-controls">
                                 <button
                                     className="filter-btn"
@@ -242,27 +242,7 @@ const AdminQuestionnaireList: React.FC = () => {
                                 onSelect={handleSelectQuestionnaire}
                                 onView={handleView}
                             />
-
-                            {getTotalPages() > 1 && (
-                                <div className="pagination">
-                                    <button
-                                        className="pagination-btn"
-                                        onClick={() => handlePageChange(currentPage - 1)}
-                                        disabled={currentPage === 1}
-                                    >
-                                        ‹
-                                    </button>
-                                    <span className="pagination-current">{currentPage} / {getTotalPages()}</span>
-                                    <button
-                                        className="pagination-btn"
-                                        onClick={() => handlePageChange(currentPage + 1)}
-                                        disabled={currentPage === getTotalPages()}
-                                    >
-                                        ›
-                                    </button>
-                                </div>
-                            )}
-                        </>
+                        </div>
                     ) : (
                         <div className="unified-empty-state">
                             <div className="unified-empty-icon">
@@ -281,6 +261,13 @@ const AdminQuestionnaireList: React.FC = () => {
                     )}
                 </>
             )}
+
+            {/* Fixed Pagination Footer */}
+            <CompactPagination
+                currentPage={currentPage}
+                totalPages={getTotalPages()}
+                onPageChange={handlePageChange}
+            />
 
             {/* Modal for viewing questionnaire details (Admin version) */}
             {viewingQuestionnaire && (

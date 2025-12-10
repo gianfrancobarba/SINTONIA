@@ -7,6 +7,7 @@ import type { InvalidationRequestData, InvalidationLoadingState } from '../types
 import { fetchInvalidationRequests, acceptInvalidationRequest, rejectInvalidationRequest } from '../services/invalidation.service';
 import '../css/QuestionnaireManagement.css';
 import '../css/EmptyState.css';
+import CompactPagination from '../components/CompactPagination';
 
 import Toast from '../components/Toast';
 
@@ -20,10 +21,17 @@ const AdminInvalidationList: React.FC = () => {
     const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
     const [viewingRequest, setViewingRequest] = useState<InvalidationRequestData | null>(null);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 4;
 
     useEffect(() => {
         loadRequests();
     }, []);
+
+    // Reset to page 1 when filter changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [statusFilter]);
 
     const loadRequests = async () => {
         setRequestsState({ data: null, loading: true, error: null });
@@ -98,6 +106,21 @@ const AdminInvalidationList: React.FC = () => {
         if (statusFilter === 'all') return true;
         return req.stato === statusFilter;
     }) || [];
+
+    // Pagination functions
+    const getPaginatedRequests = (): InvalidationRequestData[] => {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        return filteredRequests.slice(startIndex, endIndex);
+    };
+
+    const getTotalPages = (): number => {
+        return Math.ceil(filteredRequests.length / ITEMS_PER_PAGE);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
 
     return (
         <div className="content-panel" style={{ height: '100%', boxSizing: 'border-box' }}>
@@ -199,12 +222,14 @@ const AdminInvalidationList: React.FC = () => {
 
                     {/* Table or Empty State */}
                     {filteredRequests.length > 0 ? (
-                        <AdminInvalidationTable
-                            requests={filteredRequests}
-                            selectedId={selectedRequestId}
-                            onSelect={handleSelectRequest}
-                            onView={handleView}
-                        />
+                        <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+                            <AdminInvalidationTable
+                                requests={getPaginatedRequests()}
+                                selectedId={selectedRequestId}
+                                onSelect={handleSelectRequest}
+                                onView={handleView}
+                            />
+                        </div>
                     ) : (
                         <div className="unified-empty-state">
                             <div className="unified-empty-icon">
@@ -218,6 +243,13 @@ const AdminInvalidationList: React.FC = () => {
                     )}
                 </>
             )}
+
+            {/* Fixed Pagination Footer */}
+            <CompactPagination
+                currentPage={currentPage}
+                totalPages={getTotalPages()}
+                onPageChange={handlePageChange}
+            />
 
             {/* Modal for viewing request details */}
             {viewingRequest && (

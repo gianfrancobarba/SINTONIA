@@ -6,7 +6,7 @@ import type { TechnicalSupportTicket } from '../types/technicalSupport';
 import '../css/AdminTechnicalSupport.css';
 import '../css/QuestionnaireTable.css'; // Reuse table styles for consistency
 import '../css/EmptyState.css';
-import '../css/ForumPage.css';
+import CompactPagination from '../components/CompactPagination';
 
 // SVG Icon Component for View Button
 const ViewIcon = () => (
@@ -21,7 +21,7 @@ const AdminTechnicalSupport: React.FC = () => {
     const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
-    const TICKETS_PER_PAGE = 5;
+    const TICKETS_PER_PAGE = 4;
 
     useEffect(() => {
         fetchTickets();
@@ -110,7 +110,7 @@ const AdminTechnicalSupport: React.FC = () => {
                     <p>Caricamento ticket in corso...</p>
                 </div>
             ) : tickets.length > 0 ? (
-                <>
+                <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
                     <div className="support-table-container">
                         <table className="support-table">
                             <thead>
@@ -158,27 +158,7 @@ const AdminTechnicalSupport: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
-
-                    {getTotalPages() > 1 && (
-                        <div className="pagination">
-                            <button
-                                className="pagination-btn"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                ‹
-                            </button>
-                            <span className="pagination-current">{currentPage} / {getTotalPages()}</span>
-                            <button
-                                className="pagination-btn"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === getTotalPages()}
-                            >
-                                ›
-                            </button>
-                        </div>
-                    )}
-                </>
+                </div>
             ) : (
                 <div className="unified-empty-state">
                     <div className="unified-empty-icon">
@@ -190,6 +170,13 @@ const AdminTechnicalSupport: React.FC = () => {
                     </p>
                 </div>
             )}
+
+            {/* Fixed Pagination Footer */}
+            <CompactPagination
+                currentPage={currentPage}
+                totalPages={getTotalPages()}
+                onPageChange={handlePageChange}
+            />
 
             {selectedTicket && (
                 <TechnicalSupportDetailModal
