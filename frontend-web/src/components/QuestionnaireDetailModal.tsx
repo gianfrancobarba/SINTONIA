@@ -270,104 +270,156 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
 
                     {/* Invalidation Request Section (Psychologist only, not in readOnly mode) */}
                     {role === 'psychologist' && !readOnly && (
-                        <div style={{
-                            background: 'white',
-                            borderRadius: '16px',
-                            padding: '24px',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
-                        }}>
-                            <h3 style={{
-                                margin: '0 0 16px 0',
-                                fontSize: '18px',
-                                fontWeight: '700',
-                                color: '#1a1a1a'
-                            }}>Richiesta Invalidazione</h3>
-                            <div
-                                style={{
-                                    border: '2px solid #e0e0e0',
-                                    borderRadius: '12px',
-                                    overflow: 'hidden',
-                                    marginBottom: '4px',
-                                    transition: 'border-color 0.2s ease'
-                                }}
-                                onFocus={(e) => e.currentTarget.style.borderColor = '#83B9C1'}
-                                onBlur={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
-                            >
-                                <textarea
-                                    placeholder="Inserisci il motivo della richiesta di invalidazione..."
-                                    value={invalidationNotes}
-                                    onChange={(e) => setInvalidationNotes(e.target.value)}
-                                    rows={4}
-                                    maxLength={2000}
-                                    style={{
-                                        width: '100%',
-                                        padding: '12px',
-                                        border: 'none',
-                                        fontSize: '14px',
-                                        fontFamily: 'inherit',
-                                        resize: 'none',
-                                        minHeight: '150px',
-                                        maxHeight: '300px',
-                                        overflowY: 'auto',
-                                        outline: 'none',
-                                        boxSizing: 'border-box'
-                                    }}
-                                />
-                            </div>
-                            <div style={{
-                                textAlign: 'right',
-                                fontSize: '12px',
-                                color: invalidationNotes.length >= 2000 ? '#E57373' :
-                                    invalidationNotes.length < 50 && invalidationNotes.length > 0 ? '#FFB74D' : '#999',
-                                marginBottom: '12px'
-                            }}>
-                                {invalidationNotes.length}/2000 caratteri {invalidationNotes.length > 0 && invalidationNotes.length < 50 && `(minimo 50)`}
-                            </div>
-                            <button
-                                onClick={() => {
-                                    if (invalidationNotes.trim().length >= 50) {
-                                        onRequestInvalidation?.(questionnaire.idQuestionario, invalidationNotes);
-                                        setInvalidationNotes('');
-                                        onClose();
-                                    }
-                                }}
-                                disabled={invalidationNotes.trim().length < 50}
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 24px',
-                                    borderRadius: '12px',
-                                    border: 'none',
-                                    background: invalidationNotes.trim().length >= 50
-                                        ? 'linear-gradient(135deg, #E57373 0%, #d55353 100%)'
-                                        : '#e0e0e0',
-                                    color: 'white',
-                                    cursor: invalidationNotes.trim().length >= 50 ? 'pointer' : 'not-allowed',
-                                    fontSize: '15px',
-                                    fontWeight: '600',
-                                    transition: 'all 0.2s ease',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '8px',
-                                    boxShadow: invalidationNotes.trim().length >= 50 ? '0 4px 12px rgba(229, 115, 115, 0.3)' : 'none'
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (invalidationNotes.trim().length >= 50) {
-                                        e.currentTarget.style.transform = 'translateY(-2px)';
-                                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(229, 115, 115, 0.4)';
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                    if (invalidationNotes.trim().length >= 50) {
-                                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(229, 115, 115, 0.3)';
-                                    }
-                                }}
-                            >
-                                <Send size={18} />
-                                Richiedi Invalidazione
-                            </button>
-                        </div>
+                        (() => {
+                            const isInvalidationRejected = !questionnaire.invalidato &&
+                                questionnaire.dataInvalidazione &&
+                                questionnaire.idAmministratoreConferma;
+
+                            if (isInvalidationRejected) {
+                                return (
+                                    <div style={{
+                                        background: 'white',
+                                        borderRadius: '16px',
+                                        padding: '24px',
+                                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                                            <div style={{
+                                                width: '40px',
+                                                height: '40px',
+                                                borderRadius: '12px',
+                                                background: 'linear-gradient(135deg, #E57373 0%, #D32F2F 100%)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: 'white'
+                                            }}>
+                                                <MessageCircle size={20} />
+                                            </div>
+                                            <h3 style={{
+                                                margin: 0,
+                                                fontSize: '18px',
+                                                fontWeight: '700',
+                                                color: '#D32F2F'
+                                            }}>Richiesta Rifiutata</h3>
+                                        </div>
+                                        <div style={{
+                                            fontSize: '15px',
+                                            color: '#666',
+                                            lineHeight: '1.6',
+                                            background: '#fef2f2',
+                                            padding: '16px',
+                                            borderRadius: '12px',
+                                            borderLeft: '3px solid #E57373'
+                                        }}>
+                                            La tua richiesta di invalidazione per questo questionario è stata valutata e <strong>rifiutata</strong> da un amministratore.
+                                            Il punteggio e la validità del questionario rimangono confermati.
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            return (
+                                <div style={{
+                                    background: 'white',
+                                    borderRadius: '16px',
+                                    padding: '24px',
+                                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
+                                }}>
+                                    <h3 style={{
+                                        margin: '0 0 16px 0',
+                                        fontSize: '18px',
+                                        fontWeight: '700',
+                                        color: '#1a1a1a'
+                                    }}>Richiesta Invalidazione</h3>
+                                    <div
+                                        style={{
+                                            border: '2px solid #e0e0e0',
+                                            borderRadius: '12px',
+                                            overflow: 'hidden',
+                                            marginBottom: '4px',
+                                            transition: 'border-color 0.2s ease'
+                                        }}
+                                        onFocus={(e) => e.currentTarget.style.borderColor = '#83B9C1'}
+                                        onBlur={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
+                                    >
+                                        <textarea
+                                            placeholder="Inserisci il motivo della richiesta di invalidazione..."
+                                            value={invalidationNotes}
+                                            onChange={(e) => setInvalidationNotes(e.target.value)}
+                                            rows={4}
+                                            maxLength={2000}
+                                            style={{
+                                                width: '100%',
+                                                padding: '12px',
+                                                border: 'none',
+                                                fontSize: '14px',
+                                                fontFamily: 'inherit',
+                                                resize: 'none',
+                                                minHeight: '150px',
+                                                maxHeight: '300px',
+                                                overflowY: 'auto',
+                                                outline: 'none',
+                                                boxSizing: 'border-box'
+                                            }}
+                                        />
+                                    </div>
+                                    <div style={{
+                                        textAlign: 'right',
+                                        fontSize: '12px',
+                                        color: invalidationNotes.length >= 2000 ? '#E57373' :
+                                            invalidationNotes.length < 50 && invalidationNotes.length > 0 ? '#FFB74D' : '#999',
+                                        marginBottom: '12px'
+                                    }}>
+                                        {invalidationNotes.length}/2000 caratteri {invalidationNotes.length > 0 && invalidationNotes.length < 50 && `(minimo 50)`}
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            if (invalidationNotes.trim().length >= 50) {
+                                                onRequestInvalidation?.(questionnaire.idQuestionario, invalidationNotes);
+                                                setInvalidationNotes('');
+                                                onClose();
+                                            }
+                                        }}
+                                        disabled={invalidationNotes.trim().length < 50}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 24px',
+                                            borderRadius: '12px',
+                                            border: 'none',
+                                            background: invalidationNotes.trim().length >= 50
+                                                ? 'linear-gradient(135deg, #E57373 0%, #d55353 100%)'
+                                                : '#e0e0e0',
+                                            color: 'white',
+                                            cursor: invalidationNotes.trim().length >= 50 ? 'pointer' : 'not-allowed',
+                                            fontSize: '15px',
+                                            fontWeight: '600',
+                                            transition: 'all 0.2s ease',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '8px',
+                                            boxShadow: invalidationNotes.trim().length >= 50 ? '0 4px 12px rgba(229, 115, 115, 0.3)' : 'none'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (invalidationNotes.trim().length >= 50) {
+                                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(229, 115, 115, 0.4)';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            if (invalidationNotes.trim().length >= 50) {
+                                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(229, 115, 115, 0.3)';
+                                            }
+                                        }}
+                                    >
+                                        <Send size={18} />
+                                        Richiedi Invalidazione
+                                    </button>
+                                </div>
+                            );
+                        })()
                     )}
                 </div>
 
