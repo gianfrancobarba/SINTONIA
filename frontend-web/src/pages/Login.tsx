@@ -79,7 +79,7 @@ const Login = () => {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="admin@sintonia.it"
+                                    placeholder="Inserisci la tua email"
                                 />
                                 <Edit2 size={18} className="input-icon" />
                             </div>
@@ -90,9 +90,10 @@ const Login = () => {
                             <div className="input-wrapper">
                                 <input
                                     type={showPassword ? "text" : "password"}
+                                    className={!showPassword ? "password-hidden" : ""}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="*************"
+                                    placeholder="Inserisci la password"
                                 />
                                 <button type="button" className="icon-button" onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
