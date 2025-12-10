@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { AssegnazionePsicologoAmministratoreService } from './assegnazione_psicologo_amministratore.service.js';
 import { db } from '../../drizzle/db.js';
 import { paziente, psicologo } from '../../drizzle/schema.js';
 import { eq } from 'drizzle-orm';
@@ -13,6 +14,10 @@ export interface Comune {
 @Injectable()
 export class Modifica_paziente_amministratoreService {
     private readonly comuni: Comune[] = comuniCampania as unknown as Comune[];
+
+    constructor(
+        private readonly assegnazioneService: AssegnazionePsicologoAmministratoreService
+    ) { }
 
     /**
      * Cerca comuni per nome (case-insensitive, partial match)
@@ -84,8 +89,16 @@ export class Modifica_paziente_amministratoreService {
         if (updates.residenza !== undefined) updateData.residenza = updates.residenza; // Salviamo quello che arriva, assumendo sia corretto dopo validazione
 
         if (updates.idPsicologo !== undefined) {
-            // Se arriva una stringa vuota, significa "nessuno psicologo" -> NULL nel DB
-            updateData.idPsicologo = updates.idPsicologo === '' ? null : updates.idPsicologo;
+            if (!updates.idPsicologo) {
+                // Potremmo lanciare un errore o decidere una policy. 
+                // Dato che il nuovo service vieta null, se arriva stringa vuota dobbiamo lanciare errore o non chiamare.
+                // Ma la specifica UC dice che il service *vieta* null.
+                // Quindi se il frontend manda vuoto per "rimuovere", ora questa operazione non è più supportata o deve essere gestita diversamente.
+                // Per ora passiamo la stringa (anche se vuota) e lasciamo che il service lanci BadRequest come da test TC_ADM_1_5.
+                await this.assegnazioneService.assegnaPsicologo(idPaziente, updates.idPsicologo);
+            } else {
+                await this.assegnazioneService.assegnaPsicologo(idPaziente, updates.idPsicologo);
+            }
         }
 
         await db

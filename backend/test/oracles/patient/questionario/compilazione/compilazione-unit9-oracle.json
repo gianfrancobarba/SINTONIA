@@ -1,0 +1,62 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 9",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_24",
+            "description": "Controller Submit - Errore Service",
+            "input": {
+                "user": {
+                    "id": "paz1"
+                },
+                "body": {
+                    "nomeTipologia": "Valid",
+                    "risposte": []
+                }
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Errore validazione"
+            },
+            "mockData": {
+                "serviceThrow": true
+            }
+        },
+        {
+            "id": "TC_RF3_25",
+            "description": "Controller Submit - Successo",
+            "input": {
+                "user": {
+                    "id": "paz1"
+                },
+                "body": {
+                    "nomeTipologia": "Valid",
+                    "risposte": [
+                        {
+                            "idDomanda": "q1",
+                            "valore": 1
+                        }
+                    ]
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": {
+                    "idQuestionario": "new-id",
+                    "score": 100
+                }
+            },
+            "mockData": {
+                "serviceThrow": false,
+                "serviceResult": {
+                    "idQuestionario": "new-id",
+                    "score": 100
+                }
+            }
+        }
+    ]
+}

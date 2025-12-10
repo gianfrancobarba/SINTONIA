@@ -1,0 +1,66 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_9",
+            "description": "Service non chiamato correttamente (Parametri errati)",
+            "input": {
+                "params": {
+                    "id": "invalid-uuid"
+                },
+                "query": {
+                    "cf": "CF_VALIDO"
+                }
+            },
+            "mockData": {
+                "serviceShouldThrow": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "Validation failed"
+            }
+        },
+        {
+            "id": "TC_RF4_10",
+            "description": "Nessun risultato restituito (Simulated Failure)",
+            "input": {
+                "params": {
+                    "id": "valid-uuid"
+                },
+                "query": {
+                    "cf": "CF_VALIDO"
+                }
+            },
+            "mockData": {
+                "serviceShouldThrow": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 500,
+                "message": "Internal Server Error"
+            }
+        },
+        {
+            "id": "TC_RF4_11",
+            "description": "Corretto: Service chiamato correttamente, risultato restituito",
+            "input": {
+                "params": {
+                    "id": "valid-uuid"
+                },
+                "query": {
+                    "cf": "CF_VALIDO"
+                }
+            },
+            "mockData": {
+                "serviceResult": {
+                    "message": "Questionario revisionato con successo"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "status": 200,
+                "message": "Questionario revisionato con successo"
+            }
+        }
+    ]
+}

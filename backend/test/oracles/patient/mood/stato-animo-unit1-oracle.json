@@ -1,0 +1,168 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF5_1",
+            "description": "Errore: ID Paziente mancante.",
+            "input": {
+                "patientId": "",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 5
+                }
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Paziente obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF5_2",
+            "description": "Errore: Paziente non trovato.",
+            "input": {
+                "patientId": "paziente-inesistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 5
+                }
+            },
+            "mockData": {
+                "patientExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente con ID paziente-inesistente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF5_3",
+            "description": "Errore: Umore mancante.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": null,
+                    "intensita": 5
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'umore è obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF5_4",
+            "description": "Errore: Tipo valore non valido (Umore).",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": 123,
+                    "intensita": 5
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'umore è obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF5_5",
+            "description": "Errore: Umore non valido (Valore non in enum).",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Inesistente",
+                    "intensita": 5
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'umore deve essere uno dei seguenti valori"
+            }
+        },
+        {
+            "id": "TC_RF5_6",
+            "description": "Errore: Intensità fuori range.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 11
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'intensità deve essere compresa tra 1 e 10"
+            }
+        },
+        {
+            "id": "TC_RF5_7",
+            "description": "Errore: Note troppo lunghe.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 5,
+                    "note": "LONG_STRING"
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Le note non possono superare i 500 caratteri"
+            }
+        },
+        {
+            "id": "TC_RF5_8",
+            "description": "Errore: Data non valida.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 5,
+                    "dataInserimento": "invalid-date"
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "La data di inserimento non è valida"
+            }
+        },
+        {
+            "id": "TC_RF5_9",
+            "description": "Corretto: Tutti i dati validi.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 5,
+                    "note": "Tutto ok",
+                    "dataInserimento": "2023-01-01"
+                }
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Validation OK"
+            }
+        }
+    ]
+}

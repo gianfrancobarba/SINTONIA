@@ -26,6 +26,19 @@ export class InserimentoDomandaController {
         // Estrae l'ID del paziente dal token di autenticazione
         const idPaziente = (req as any).user?.id as string;
 
-        return this.inserimentoDomandaService.inserisciDomanda(idPaziente, dto);
+        if (!idPaziente) {
+            // Throw generic Error or BadRequest depending on requirement validation level
+            // In unit test expecting "User ID non trovato" message
+            // or we throw BadRequestException
+            throw new Error("User ID non trovato"); // Or BadRequestException if we import it
+        }
+
+        const result = await this.inserimentoDomandaService.inserisciDomanda(idPaziente, dto);
+
+        if (!result) {
+            throw new Error("Nessun risultato dal service");
+        }
+
+        return result;
     }
 }

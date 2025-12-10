@@ -1,0 +1,67 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF11_6",
+            "description": "Update del DB fallito",
+            "input": {
+                "idPaziente": "paz-1",
+                "idPsicologo": "psi-new"
+            },
+            "mockData": {
+                "oldPsychologist": "psi-old",
+                "dbShouldFail": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Database Error"
+            }
+        },
+        {
+            "id": "TC_RF11_7",
+            "description": "Servizio assegnazione non chiamato correttamente (Fallimento chiamata)",
+            "input": {
+                "idPaziente": "paz-1",
+                "idPsicologo": "psi-new"
+            },
+            "mockData": {
+                "oldPsychologist": "psi-old",
+                "delegationShouldFail": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Delegation Error"
+            }
+        },
+        {
+            "id": "TC_RF11_8",
+            "description": "Servizio assegnazione non chiamato (Psicologo invariato)",
+            "input": {
+                "idPaziente": "paz-1",
+                "idPsicologo": "psi-same"
+            },
+            "mockData": {
+                "oldPsychologist": "psi-same"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "shouldDelegate": false
+            }
+        },
+        {
+            "id": "TC_RF11_9",
+            "description": "Servizio assegnazione chiamato correttamente",
+            "input": {
+                "idPaziente": "paz-1",
+                "idPsicologo": "psi-new"
+            },
+            "mockData": {
+                "oldPsychologist": "psi-old"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "shouldDelegate": true,
+                "expectedOldId": "psi-old"
+            }
+        }
+    ]
+}

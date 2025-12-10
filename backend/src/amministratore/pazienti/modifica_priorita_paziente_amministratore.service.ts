@@ -9,9 +9,10 @@ type ValidPriority = 'Urgente' | 'Breve' | 'Differibile' | 'Programmabile';
 @Injectable()
 export class Modifica_priorita_paziente_amministratoreService {
     /**
-     * Modifica la priorità di un paziente
+     * Metodo di validazione della richiesta di modifica priorità.
+     * Verifica la validità della priorità e l'esistenza del paziente.
      */
-    async modificaPrioritaPaziente(idPaziente: string, nuovaPriorita: string) {
+    async validazione(idPaziente: string, nuovaPriorita: string): Promise<ValidPriority> {
         // Validate priority value
         const validPriorities: ValidPriority[] = ['Urgente', 'Breve', 'Differibile', 'Programmabile'];
         if (!validPriorities.includes(nuovaPriorita as ValidPriority)) {
@@ -34,16 +35,15 @@ export class Modifica_priorita_paziente_amministratoreService {
             throw new NotFoundException(`Paziente con ID ${idPaziente} non trovato`);
         }
 
-        // Verifica che la priorità esista nella tabella priorita
-        const prioritaEsistente = await db
-            .select()
-            .from(priorita)
-            .where(eq(priorita.nome, prioritaValidata))
-            .limit(1);
+        return prioritaValidata;
+    }
 
-        if (prioritaEsistente.length === 0) {
-            throw new NotFoundException(`Priorità "${nuovaPriorita}" non trovata`);
-        }
+    /**
+     * Modifica la priorità di un paziente
+     */
+    async modificaPrioritaPaziente(idPaziente: string, nuovaPriorita: string) {
+        // Esegui validazione
+        const prioritaValidata = await this.validazione(idPaziente, nuovaPriorita);
 
         // Aggiorna la priorità del paziente
         await db

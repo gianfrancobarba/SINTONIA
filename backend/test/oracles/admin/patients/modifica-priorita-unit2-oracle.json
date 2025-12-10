@@ -1,0 +1,36 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF10_6",
+            "description": "Errato: Update del DB fallito.",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "nuovaPriorita": "Urgente"
+            },
+            "mockData": {
+                "validationResult": "Urgente",
+                "updateSuccess": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Update failed"
+            }
+        },
+        {
+            "id": "TC_RF10_7",
+            "description": "Corretto: Update avvenuto correttamente.",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "nuovaPriorita": "Urgente"
+            },
+            "mockData": {
+                "validationResult": "Urgente",
+                "updateSuccess": true
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Priorità paziente aggiornata con successo"
+            }
+        }
+    ]
+}

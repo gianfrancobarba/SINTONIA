@@ -18,14 +18,8 @@ export class InserimentoDomandaService {
         idPaziente: string,
         dto: InserisciDomandaDto
     ): Promise<DomandaInseritaDto> {
-        // Crea istanza della classe e copia proprietà
-        const dtoInstance = Object.assign(new InserisciDomandaDto(), dto);
 
-        // Validazione DTO
-        const validationErrors = dtoInstance.validate();
-        if (validationErrors.length > 0) {
-            throw new BadRequestException(validationErrors.join(', '));
-        }
+        await this.validazione(dto);
 
         // Inserimento nella tabella domanda_forum
         const inserted = await db
@@ -53,5 +47,37 @@ export class InserimentoDomandaService {
             idDomanda,
             message: 'Domanda pubblicata con successo nel forum',
         };
+    }
+
+    async validazione(dto: InserisciDomandaDto) {
+        // Crea istanza della classe e copia proprietà
+        const dtoInstance = Object.assign(new InserisciDomandaDto(), dto);
+
+        // Validazione
+        if (!dtoInstance.titolo || dtoInstance.titolo.trim().length === 0) {
+            throw new BadRequestException('Il titolo è obbligatorio');
+        } else if (dtoInstance.titolo.length > 64) {
+            throw new BadRequestException('Il titolo non può superare 64 caratteri');
+        }
+
+        if (!dtoInstance.testo || dtoInstance.testo.trim().length === 0) {
+            throw new BadRequestException('Il testo è obbligatorio');
+        }
+
+        if (!dtoInstance.categoria || dtoInstance.categoria.trim().length === 0) {
+            throw new BadRequestException('La categoria è obbligatoria');
+        } else if (dtoInstance.categoria.length > 128) {
+            throw new BadRequestException('La categoria non può superare 128 caratteri');
+        }
+
+        // Categorie ammesse
+        const allowedCategories = ['Vita di Coppia', 'Stress', 'Ansia', 'Rabbia'];
+        // Normalizza la categoria input (es. rimuove spazi extra, ma mantiene case-sensitive o no? 
+        // User requirements use specific casing. Let's match strictly or allow slight variation if needed.
+        // Given Oracle uses "Vita di Coppia", let's be strict or use simple comparison.
+
+        if (!allowedCategories.includes(dtoInstance.categoria.trim())) {
+            throw new BadRequestException('Categoria non valida');
+        }
     }
 }

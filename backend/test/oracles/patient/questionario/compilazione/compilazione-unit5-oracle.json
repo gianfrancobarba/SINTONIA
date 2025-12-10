@@ -1,0 +1,80 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 5",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_14",
+            "description": "Validazione Invio - ID Paziente mancante",
+            "input": {
+                "idPaziente": "",
+                "nomeTipologia": "Tipo",
+                "risposte": []
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "ID Paziente obbligatorio"
+            },
+            "mockData": {}
+        },
+        {
+            "id": "TC_RF3_15",
+            "description": "Validazione Invio - Paziente non trovato",
+            "input": {
+                "idPaziente": "missing-patient",
+                "nomeTipologia": "Tipo",
+                "risposte": []
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 404,
+                "message": "Paziente non trovato"
+            },
+            "mockData": {
+                "pazienteExists": false
+            }
+        },
+        {
+            "id": "TC_RF3_16",
+            "description": "Validazione Invio - Risposte vuote",
+            "input": {
+                "idPaziente": "existing-patient",
+                "nomeTipologia": "Tipo",
+                "risposte": []
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "È necessario fornire almeno una risposta"
+            },
+            "mockData": {
+                "pazienteExists": true
+            }
+        },
+        {
+            "id": "TC_RF3_17",
+            "description": "Validazione Invio - Successo",
+            "input": {
+                "idPaziente": "existing-patient",
+                "nomeTipologia": "Tipo",
+                "risposte": [
+                    {
+                        "idDomanda": "q1",
+                        "valore": 1
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": true
+            },
+            "mockData": {
+                "pazienteExists": true
+            }
+        }
+    ]
+}

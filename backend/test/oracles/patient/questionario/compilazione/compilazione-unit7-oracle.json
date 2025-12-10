@@ -1,0 +1,49 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 7",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_20",
+            "description": "Controller Get - Errore Service",
+            "input": {
+                "params": {
+                    "id": "invalid"
+                }
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Questionario non trovato"
+            },
+            "mockData": {
+                "serviceThrow": true
+            }
+        },
+        {
+            "id": "TC_RF3_21",
+            "description": "Controller Get - Successo",
+            "input": {
+                "params": {
+                    "id": "valid"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": {
+                    "idQuestionario": "valid",
+                    "domande": []
+                }
+            },
+            "mockData": {
+                "serviceThrow": false,
+                "serviceResult": {
+                    "idQuestionario": "valid",
+                    "domande": []
+                }
+            }
+        }
+    ]
+}

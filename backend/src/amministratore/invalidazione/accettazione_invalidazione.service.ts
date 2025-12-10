@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { eq, and, gt, desc, lt, gte } from 'drizzle-orm';
 import { db } from '../../drizzle/db.js';
-import { questionario, paziente } from '../../drizzle/schema.js';
+import { questionario, paziente, amministratore } from '../../drizzle/schema.js';
 import { ScoreService } from '../../patient/score/score.service.js';
 import { PrioritaService } from '../../patient/priorita/priorita.service.js';
 import { NotificationHelperService } from '../../notifications/notification-helper.service.js';
@@ -21,6 +21,16 @@ export class Accettazione_invalidazioneService {
         idPaziente: string,
         dataQuestionarioInvalidato: Date
     ): Promise<{ id: string; data: Date } | null> {
+        if (!idPaziente) throw new Error("ID Paziente obbligatorio");
+        if (!dataQuestionarioInvalidato) throw new Error("Data Invalidazione obbligatoria");
+        if (dataQuestionarioInvalidato > new Date()) throw new Error("Data futura non consentita");
+
+        // Verifica esistenza paziente
+        const checkPaziente = await db.query.paziente.findFirst({
+            where: eq(paziente.idPaziente, idPaziente)
+        });
+        if (!checkPaziente) throw new Error(`Paziente con ID ${idPaziente} non trovato`);
+
         const precedente = await db
             .select({
                 id: questionario.idQuestionario,
@@ -49,6 +59,10 @@ export class Accettazione_invalidazioneService {
         idPaziente: string,
         dataInizio: Date
     ): Promise<boolean> {
+        if (!idPaziente) throw new Error("ID Paziente obbligatorio");
+        if (!dataInizio) throw new Error("Data Inizio obbligatoria");
+        if (dataInizio > new Date()) throw new Error("Data futura non consentita");
+
         // 1. Ottieni priorità attuale
         const pazienteData = await db.query.paziente.findFirst({
             where: eq(paziente.idPaziente, idPaziente)
@@ -118,6 +132,8 @@ export class Accettazione_invalidazioneService {
      * Forza il downgrade della priorità di una fascia
      */
     private async downgradePriorita(idPaziente: string): Promise<void> {
+        if (!idPaziente) throw new Error("ID Paziente obbligatorio");
+
         const pazienteData = await db.query.paziente.findFirst({
             where: eq(paziente.idPaziente, idPaziente),
         });
@@ -146,18 +162,40 @@ export class Accettazione_invalidazioneService {
     }
 
     /**
+     * Valida la richiesta di accettazione invalidazione.
+     */
+    async validazione(idQuestionario: string, emailAmministratore: string) {
+        if (!idQuestionario) throw new Error("ID Questionario obbligatorio");
+        if (!emailAmministratore) throw new Error("Email Amministratore obbligatoria");
+
+        const quest = await db.query.questionario.findFirst({
+            where: eq(questionario.idQuestionario, idQuestionario)
+        });
+
+        if (!quest) throw new Error('Questionario non trovato');
+
+        const admin = await db.query.amministratore.findFirst({
+            where: eq(amministratore.email, emailAmministratore)
+        });
+
+        if (!admin) throw new Error('Amministratore non trovato');
+
+        if (quest.invalidato) {
+            throw new Error('Il questionario è già stato invalidato');
+        }
+
+        return quest;
+    }
+
+    /**
      * Accetta richiesta di invalidazione con ricalcolo incrementale
      */
     async accettaRichiestaInvalidazione(
         idQuestionario: string,
         emailAmministratore: string,
     ): Promise<void> {
-        // 1. Ottieni questionario da invalidare
-        const quest = await db.query.questionario.findFirst({
-            where: eq(questionario.idQuestionario, idQuestionario)
-        });
-
-        if (!quest) throw new Error('Questionario non trovato');
+        // 1. Validazione
+        const quest = await this.validazione(idQuestionario, emailAmministratore);
 
         const idPaziente = quest.idPaziente;
         const dataQuestionario = new Date(quest.dataCompilazione);

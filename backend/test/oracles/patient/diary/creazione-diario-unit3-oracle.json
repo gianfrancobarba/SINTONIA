@@ -1,0 +1,96 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "description": "Unit 3: Creazione Pagina Diario Controller (UC_PZT_19)",
+        "createdAt": "2025-12-09"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF19_8",
+            "description": "VALID1 - Errato: User ID non trovato",
+            "category": "error",
+            "input": {
+                "req": {
+                    "user": {}
+                },
+                "dto": {
+                    "title": "Titolo",
+                    "content": "Testo"
+                }
+            },
+            "expectedBehavior": {
+                "exception": "Error",
+                "message": "User ID non trovato"
+            }
+        },
+        {
+            "id": "TC_RF19_9",
+            "description": "VALID2, DLG1 - Errato: Service non chiamato correttamente",
+            "category": "error",
+            "input": {
+                "req": {
+                    "user": {
+                        "id": "paziente-123"
+                    }
+                },
+                "dto": null
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "DTO non valido"
+            }
+        },
+        {
+            "id": "TC_RF19_10",
+            "description": "VALID2, DLG2, RSP1 - Errato: Nessun risultato restituito",
+            "category": "error",
+            "input": {
+                "req": {
+                    "user": {
+                        "id": "paziente-123"
+                    }
+                },
+                "dto": {
+                    "title": "Ok"
+                }
+            },
+            "mockData": {
+                "serviceReturn": null
+            },
+            "expectedBehavior": {
+                "exception": "Error",
+                "message": "Nessun risultato dal service"
+            }
+        },
+        {
+            "id": "TC_RF19_11",
+            "description": "VALID2, DLG2, RSP2 - Corretto: User ID presente, service chiamato correttamente, risultato restituito",
+            "category": "success",
+            "input": {
+                "req": {
+                    "user": {
+                        "id": "paziente-123"
+                    }
+                },
+                "dto": {
+                    "title": "Titolo",
+                    "content": "Testo"
+                }
+            },
+            "mockData": {
+                "serviceReturn": {
+                    "id": "pagina-uuid",
+                    "title": "Titolo",
+                    "content": "Testo",
+                    "createdAt": "2025-12-09T10:00:00.000Z"
+                }
+            },
+            "expectedOutput": {
+                "id": "pagina-uuid",
+                "title": "Titolo",
+                "content": "Testo",
+                "createdAt": "2025-12-09T10:00:00.000Z"
+            }
+        }
+    ]
+}

@@ -25,6 +25,17 @@ export class CreateDiaryPageController {
     ): Promise<DiaryPageDto> {
         // Extract patient ID from authenticated user
         const patientId = (req as any).user?.id;
-        return this.createDiaryPageService.createDiaryPage(patientId, dto);
+
+        if (!patientId) {
+            throw new Error("User ID non trovato");
+        }
+
+        const result = await this.createDiaryPageService.createDiaryPage(patientId, dto);
+
+        if (!result) {
+            throw new Error("Nessun risultato dal service");
+        }
+
+        return result;
     }
 }

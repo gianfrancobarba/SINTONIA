@@ -1,0 +1,52 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 1",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_1",
+            "description": "Validazione Recupero - ID vuoto",
+            "input": {
+                "idQuestionario": ""
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "ID Questionario o Nome Tipologia obbligatorio"
+            },
+            "mockData": {}
+        },
+        {
+            "id": "TC_RF3_2",
+            "description": "Validazione Recupero - Tipologia non trovata",
+            "input": {
+                "idQuestionario": "NonEsistente"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 404,
+                "message": "Tipologia questionario non trovata"
+            },
+            "mockData": {
+                "tipologiaExists": false
+            }
+        },
+        {
+            "id": "TC_RF3_3",
+            "description": "Validazione Recupero - Successo",
+            "input": {
+                "idQuestionario": "TipologiaEsistente"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": true
+            },
+            "mockData": {
+                "tipologiaExists": true
+            }
+        }
+    ]
+}

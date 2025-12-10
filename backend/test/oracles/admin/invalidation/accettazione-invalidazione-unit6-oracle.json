@@ -1,0 +1,64 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF21_28",
+            "description": "Service non chiamato correttamente (Parametri errati)",
+            "input": {
+                "params": {
+                    "id": "invalid-uuid"
+                },
+                "user": {
+                    "email": "admin@test.com"
+                }
+            },
+            "mockData": {
+                "serviceShouldThrow": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "Validation failed"
+            }
+        },
+        {
+            "id": "TC_RF21_29",
+            "description": "Nessun risultato restituito (Simulazione Errore Interno)",
+            "input": {
+                "params": {
+                    "id": "valid-uuid"
+                },
+                "user": {
+                    "email": "admin@test.com"
+                }
+            },
+            "mockData": {
+                "serviceShouldThrow": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 500,
+                "message": "Internal Server Error"
+            }
+        },
+        {
+            "id": "TC_RF21_30",
+            "description": "Successo",
+            "input": {
+                "params": {
+                    "id": "valid-uuid"
+                },
+                "user": {
+                    "email": "admin@test.com"
+                }
+            },
+            "mockData": {
+                "serviceResult": "VOID"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "status": 200,
+                "message": "Richiesta di invalidazione accettata con successo"
+            }
+        }
+    ]
+}

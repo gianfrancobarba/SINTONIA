@@ -1,0 +1,96 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "description": "Unit 3: Inserimento Domanda Controller (UC_PZT_23)",
+        "createdAt": "2025-12-09"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF23_10",
+            "description": "VALID1 - Errato: User ID non trovato",
+            "category": "error",
+            "input": {
+                "req": {
+                    "user": {}
+                },
+                "dto": {
+                    "titolo": "Titolo",
+                    "testo": "Testo",
+                    "categoria": "Vita di Coppia"
+                }
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "User ID non trovato"
+            }
+        },
+        {
+            "id": "TC_RF23_11",
+            "description": "VALID2,DLG1 - Errato: Service chiamato con parametri errati (Simulated)",
+            "category": "error",
+            "input": {
+                "req": {
+                    "user": {
+                        "id": "paziente-123"
+                    }
+                },
+                "dto": null
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "DTO non valido"
+            }
+        },
+        {
+            "id": "TC_RF23_12",
+            "description": "VALID2, DLG2, RSP1 - Errato: Nessun risultato restituito",
+            "category": "error",
+            "input": {
+                "req": {
+                    "user": {
+                        "id": "paziente-123"
+                    }
+                },
+                "dto": {
+                    "titolo": "Ok"
+                }
+            },
+            "mockData": {
+                "serviceReturn": null
+            },
+            "expectedBehavior": {
+                "exception": "InternalServerErrorException",
+                "message": "Nessun risultato dal service"
+            }
+        },
+        {
+            "id": "TC_RF23_13",
+            "description": "VALID2, DLG2, RSP2 - Corretto: User ID presente, service chiamato correttamente, risultato restituito",
+            "category": "success",
+            "input": {
+                "req": {
+                    "user": {
+                        "id": "paziente-123"
+                    }
+                },
+                "dto": {
+                    "titolo": "Titolo",
+                    "testo": "Testo",
+                    "categoria": "Vita di Coppia"
+                }
+            },
+            "mockData": {
+                "serviceReturn": {
+                    "success": true,
+                    "idDomanda": "domanda-uuid",
+                    "message": "OK"
+                }
+            },
+            "expectedOutput": {
+                "success": true,
+                "idDomanda": "domanda-uuid",
+                "message": "OK"
+            }
+        }
+    ]
+}

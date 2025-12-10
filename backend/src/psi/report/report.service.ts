@@ -13,7 +13,16 @@ import { eq, desc } from 'drizzle-orm';
 @Injectable()
 export class ReportService {
 
-    async generateReport(patientId: string, psychologistId: string) {
+    async validazione(patientId: string, psychologistId: string) {
+        if (!patientId) {
+            throw new NotFoundException('Paziente non trovato'); // Using NotFound to match original behavior or BadRequest? Original logic threw NotFound if patientData not found. 
+            // But if ID is empty string? The previous examples used BadRequest for empty fields. 
+            // Let's stick to the db check first as per original code, but maybe add basic string check.
+            // Original code:
+            // const [patientData] = await db... if (!patientData) throw NotFound.
+            // Let's add explicit check for empty strings if we want to follow the "Termina Cura" pattern strictly.
+        }
+
         // 1. Fetch Patient Data
         const [patientData] = await db
             .select()
@@ -24,6 +33,13 @@ export class ReportService {
         if (!patientData) {
             throw new NotFoundException('Paziente non trovato');
         }
+
+        return patientData;
+    }
+
+    async generateReport(patientId: string, psychologistId: string) {
+        // Esegui validazione
+        const patientData = await this.validazione(patientId, psychologistId);
 
         // 2. Fetch Mood Data (Last 30 entries)
         const moodData = await db
@@ -60,6 +76,16 @@ export class ReportService {
             .where(eq(domandaForum.idPaziente, patientId))
             .orderBy(desc(domandaForum.dataInserimento))
             .limit(10);
+
+        // Check if all data sources are empty
+        if (
+            moodData.length === 0 &&
+            questionnaireData.length === 0 &&
+            diaryData.length === 0 &&
+            forumData.length === 0
+        ) {
+            throw new NotFoundException('Nessun dato presente per generare il report');
+        }
 
         // 6. Construct Report Content
         let content = `REPORT CLINICO GENERATO IL ${new Date().toLocaleDateString('it-IT')}\n`;

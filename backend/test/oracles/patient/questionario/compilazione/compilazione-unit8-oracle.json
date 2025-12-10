@@ -1,0 +1,55 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 8",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_22",
+            "description": "Controller Start - Errore Service",
+            "input": {
+                "user": {
+                    "id": "paz1"
+                },
+                "body": {
+                    "nomeTipologia": "Invalid"
+                }
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Tipologia non trovata"
+            },
+            "mockData": {
+                "serviceThrow": true
+            }
+        },
+        {
+            "id": "TC_RF3_23",
+            "description": "Controller Start - Successo",
+            "input": {
+                "user": {
+                    "id": "paz1"
+                },
+                "body": {
+                    "nomeTipologia": "Valid"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": {
+                    "idQuestionario": "Valid",
+                    "domande": []
+                }
+            },
+            "mockData": {
+                "serviceThrow": false,
+                "serviceResult": {
+                    "idQuestionario": "Valid",
+                    "domande": []
+                }
+            }
+        }
+    ]
+}

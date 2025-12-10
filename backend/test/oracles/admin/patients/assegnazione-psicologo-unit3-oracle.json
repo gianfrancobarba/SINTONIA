@@ -1,0 +1,67 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF19_10",
+            "description": "Service non chiamato correttamente (Parametri errati)",
+            "input": {
+                "params": {
+                    "id": "invalid-uuid"
+                },
+                "body": {
+                    "idPsicologo": "valid-id"
+                }
+            },
+            "mockData": {
+                "serviceShouldThrow": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "Validation failed"
+            }
+        },
+        {
+            "id": "TC_RF19_11",
+            "description": "Nessun risultato restituito (Service returns null/void unexpectedly)",
+            "input": {
+                "params": {
+                    "id": "valid-uuid"
+                },
+                "body": {
+                    "idPsicologo": "valid-id"
+                }
+            },
+            "mockData": {
+                "serviceResult": null
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 500,
+                "message": "Internal Server Error"
+            }
+        },
+        {
+            "id": "TC_RF19_12",
+            "description": "Corretto: User ID presente, service chiamato correttamente, risultato restituito",
+            "input": {
+                "params": {
+                    "id": "valid-uuid"
+                },
+                "body": {
+                    "idPsicologo": "valid-id"
+                }
+            },
+            "mockData": {
+                "serviceResult": {
+                    "success": true,
+                    "message": "Psicologo assegnato correttamente al paziente"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "status": 200,
+                "message": "Psicologo assegnato correttamente al paziente"
+            }
+        }
+    ]
+}

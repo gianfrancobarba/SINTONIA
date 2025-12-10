@@ -1,0 +1,76 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 3",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_8",
+            "description": "Validazione Score - Tipologia vuota",
+            "input": {
+                "nomeTipologia": "",
+                "risposte": []
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "Nome tipologia obbligatorio"
+            },
+            "mockData": {}
+        },
+        {
+            "id": "TC_RF3_9",
+            "description": "Validazione Score - Tipologia non trovata",
+            "input": {
+                "nomeTipologia": "NonEsistente",
+                "risposte": []
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 404,
+                "message": "Tipologia questionario non trovata"
+            },
+            "mockData": {
+                "tipologiaExists": false
+            }
+        },
+        {
+            "id": "TC_RF3_10",
+            "description": "Validazione Score - Risposte non valide",
+            "input": {
+                "nomeTipologia": "Esistente",
+                "risposte": null
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "Le risposte devono essere un array valido"
+            },
+            "mockData": {
+                "tipologiaExists": true
+            }
+        },
+        {
+            "id": "TC_RF3_11",
+            "description": "Validazione Score - Successo",
+            "input": {
+                "nomeTipologia": "Esistente",
+                "risposte": [
+                    {
+                        "idDomanda": "q1",
+                        "valore": 1
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": true
+            },
+            "mockData": {
+                "tipologiaExists": true
+            }
+        }
+    ]
+}

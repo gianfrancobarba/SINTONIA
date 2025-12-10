@@ -1,0 +1,86 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { TerminaCuraService } from '../../../../src/psi/pazienti/termina-cura.service.js';
+import { db } from '../../../../src/drizzle/db.js';
+import { AssegnazioneService } from '../../../../src/psi/assegnazione/assegnazione.service.js';
+import { loadOracle, getTestCase } from '../../../helpers/oracle-loader.js';
+
+jest.mock('../../../../src/drizzle/db.js');
+
+describe('TerminaCuraService - Unit 2: Esecuzione', () => {
+    let service: TerminaCuraService;
+    let assegnazioneServiceMock: any;
+    const oracle = loadOracle('psi/patients/termina-cura-unit2');
+
+    beforeEach(async () => {
+        assegnazioneServiceMock = {
+            assignNextPatientToPsychologist: jest.fn()
+        };
+
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [
+                TerminaCuraService,
+                { provide: AssegnazioneService, useValue: assegnazioneServiceMock }
+            ],
+        }).compile();
+
+        service = module.get<TerminaCuraService>(TerminaCuraService);
+
+        // Mock validazione to succeed by default (Unit 2 tests execution logic)
+        jest.spyOn(service, 'validazione').mockResolvedValue({ nome: 'Mario', cognome: 'Rossi' });
+    });
+
+    describe('terminaCura', () => {
+        const testCases = ['TC_RF4_7', 'TC_RF4_8', 'TC_RF4_9'];
+
+        testCases.forEach(id => {
+            const testCase = getTestCase(oracle, id);
+            if (!testCase) return;
+
+            it(`${testCase.id}: ${testCase.description}`, async () => {
+                const { input, mockData, expectedBehavior } = testCase;
+                console.log(`\n🔹 [${testCase.id}] TEST START`);
+                console.log(`📥 INPUT:`, JSON.stringify(input, null, 2));
+                console.log(`🎯 EXPECTED: ${expectedBehavior.type === 'exception' ? `Exception "${expectedBehavior.message}"` : `Success (Delegate Result: ${expectedBehavior.delegationResult})`}`);
+
+                // Mock Update
+                if (mockData.dbShouldFail) {
+                    (db.update as jest.Mock).mockReturnValue({ set: jest.fn().mockReturnValue({ where: jest.fn().mockRejectedValue(new Error('Database Error')) }) });
+                } else {
+                    (db.update as jest.Mock).mockReturnValue({ set: jest.fn().mockReturnValue({ where: jest.fn().mockResolvedValue({}) }) });
+                }
+
+                // Mock Delegation
+                if (mockData.delegationShouldFail) {
+                    assegnazioneServiceMock.assignNextPatientToPsychologist.mockRejectedValue(new Error('Delegation Error'));
+                } else {
+                    assegnazioneServiceMock.assignNextPatientToPsychologist.mockResolvedValue(expectedBehavior.delegationResult || 'new-patient-id');
+                }
+
+                try {
+                    const result = await service.terminaCura(input.idPaziente, input.codiceFiscalePsicologo);
+
+                    if (expectedBehavior.type === 'exception') {
+                        throw new Error(`Expected error "${expectedBehavior.message}" but got SUCCESS`);
+                    }
+
+                    console.log(`📤 ACTUAL: Success (Result: ${JSON.stringify(result)})`);
+                    expect(result.message).toBe('Cura terminata con successo');
+
+                    if (expectedBehavior.shouldDelegate) {
+                        expect(assegnazioneServiceMock.assignNextPatientToPsychologist).toHaveBeenCalledWith(input.codiceFiscalePsicologo);
+                    }
+
+                } catch (e) {
+                    console.log(`📤 ACTUAL: Exception "${e.message}"`);
+                    if (e.message.startsWith('Expected error')) throw e;
+
+                    if (expectedBehavior.type === 'exception') {
+                        expect(e.message).toContain(expectedBehavior.message);
+                    } else {
+                        throw e;
+                    }
+                }
+            });
+        });
+    });
+});

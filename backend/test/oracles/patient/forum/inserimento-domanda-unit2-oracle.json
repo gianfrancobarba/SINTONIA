@@ -1,0 +1,75 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "description": "Unit 2: Inserimento Domanda Service (UC_PZT_23)",
+        "createdAt": "2025-12-09"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF23_7",
+            "description": "DB1 - Errato: Inserimento nel DB fallito",
+            "category": "error",
+            "input": {
+                "dto": {
+                    "titolo": "Titolo valido",
+                    "testo": "Testo valido",
+                    "categoria": "Vita di Coppia"
+                },
+                "idPaziente": "paziente-123"
+            },
+            "mockData": {
+                "dbReturn": []
+            },
+            "expectedBehavior": {
+                "exception": "Error",
+                "message": "Impossibile inserire la domanda nel forum"
+            }
+        },
+        {
+            "id": "TC_RF23_8",
+            "description": "DB2,BDG1 - Errato: Servizio badge non chiamato (Simulated Failure)",
+            "category": "error",
+            "input": {
+                "dto": {
+                    "titolo": "Titolo valido",
+                    "testo": "Testo valido",
+                    "categoria": "Vita di Coppia"
+                },
+                "idPaziente": "paziente-123"
+            },
+            "mockData": {
+                "newIdDomanda": "domanda-uuid",
+                "badgeServiceCalled": false
+            },
+            "expectedBehavior": {
+                "exception": "Error",
+                "message": "Servizio badge non chiamato"
+            }
+        },
+        {
+            "id": "TC_RF23_9",
+            "description": "DB2, BDG2 - Corretto: Domanda inserita correttamente, servizio badge chiamato",
+            "category": "success",
+            "input": {
+                "dto": {
+                    "titolo": "Titolo valido",
+                    "testo": "Testo valido",
+                    "categoria": "Vita di Coppia"
+                },
+                "idPaziente": "paziente-123"
+            },
+            "mockData": {
+                "newIdDomanda": "domanda-uuid",
+                "awardedBadges": [
+                    "Badge1"
+                ],
+                "badgeServiceCalled": true
+            },
+            "expectedOutput": {
+                "success": true,
+                "idDomanda": "domanda-uuid",
+                "message": "Domanda pubblicata con successo nel forum"
+            }
+        }
+    ]
+}

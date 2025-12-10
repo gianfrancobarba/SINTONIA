@@ -16,16 +16,7 @@ export class CreateDiaryPageService {
      * @returns The created diary page
      */
     async createDiaryPage(patientId: string, dto: CreateDiaryPageDto): Promise<DiaryPageDto> {
-        // Create DTO instance and validate
-        const dtoInstance = Object.assign(new CreateDiaryPageDto(), dto);
-        const validationErrors = dtoInstance.validate();
-
-        if (validationErrors.length > 0) {
-            throw new BadRequestException({
-                message: 'Errore di validazione',
-                errors: validationErrors,
-            });
-        }
+        this.validazione(dto);
 
         // Insert the new diary page
         const [insertedPage] = await db
@@ -55,5 +46,20 @@ export class CreateDiaryPageService {
             content: insertedPage.content,
             createdAt: insertedPage.createdAt || new Date(),
         };
+    }
+    validazione(dto: CreateDiaryPageDto): void {
+        const dtoInstance = Object.assign(new CreateDiaryPageDto(), dto);
+
+        if (!dtoInstance.title || dtoInstance.title.trim().length === 0) {
+            throw new BadRequestException('Il titolo è obbligatorio');
+        } else if (dtoInstance.title.length > 64) {
+            throw new BadRequestException('Il titolo non può superare i 64 caratteri');
+        }
+
+        if (!dtoInstance.content || dtoInstance.content.trim().length === 0) {
+            throw new BadRequestException('Il contenuto è obbligatorio');
+        } else if (dtoInstance.content.length > 2000) {
+            throw new BadRequestException('Il contenuto non può superare i 2000 caratteri');
+        }
     }
 }

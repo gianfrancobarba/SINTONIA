@@ -1,0 +1,33 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF1_7",
+            "description": "Errore durante l’aggiornamento della revisione",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "dbShouldFail": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Database Error"
+            }
+        },
+        {
+            "id": "TC_RF1_8",
+            "description": "Corretto: Revisione aggiornata correttamente",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "dbShouldFail": false
+            },
+            "expectedBehavior": {
+                "type": "success"
+            }
+        }
+    ]
+}

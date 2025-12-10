@@ -1,0 +1,69 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_10",
+            "description": "Service non chiamato correttamente (Parametri errati)",
+            "input": {
+                "params": {
+                    "idPaziente": "invalid-uuid"
+                },
+                "query": {
+                    "cf": "psi-1"
+                }
+            },
+            "mockData": {
+                "serviceShouldThrow": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400,
+                "message": "Validation failed"
+            }
+        },
+        {
+            "id": "TC_RF4_11",
+            "description": "Nessun risultato restituito",
+            "input": {
+                "params": {
+                    "idPaziente": "valid-uuid"
+                },
+                "query": {
+                    "cf": "psi-1"
+                }
+            },
+            "mockData": {
+                "serviceResult": null
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 500,
+                "message": "Internal Server Error"
+            }
+        },
+        {
+            "id": "TC_RF4_12",
+            "description": "Corretto: User ID presente, service chiamato correttamente, risultato restituito",
+            "input": {
+                "params": {
+                    "idPaziente": "valid-uuid"
+                },
+                "query": {
+                    "cf": "psi-1"
+                }
+            },
+            "mockData": {
+                "serviceResult": {
+                    "message": "Cura terminata con successo",
+                    "idPaziente": "valid-uuid",
+                    "nomePaziente": "Mario Rossi",
+                    "nuovoPazienteAssegnato": "new-paz"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "status": 200,
+                "message": "Cura terminata con successo"
+            }
+        }
+    ]
+}

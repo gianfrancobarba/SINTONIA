@@ -9,12 +9,17 @@ export class TerminaCuraService {
     constructor(private readonly assegnazioneService: AssegnazioneService) { }
 
     /**
-     * Termina la cura di un paziente impostando stato = false
-     * e assegna il prossimo paziente in coda allo psicologo
-     * @param idPaziente - UUID del paziente
-     * @param codiceFiscalePsicologo - Codice fiscale dello psicologo che termina la cura
+     * Metodo di validazione della richiesta di terminazione cura.
+     * Verifica esistenza, autorizzazione e stato del paziente.
      */
-    async terminaCura(idPaziente: string, codiceFiscalePsicologo: string) {
+    async validazione(idPaziente: string, codiceFiscalePsicologo: string): Promise<{ nome: string; cognome: string }> {
+        if (!idPaziente) {
+            throw new BadRequestException('ID Paziente obbligatorio');
+        }
+        if (!codiceFiscalePsicologo) {
+            throw new BadRequestException('Codice Fiscale Psicologo obbligatorio');
+        }
+
         // Verifica che il paziente esista
         const pazienteRows = await db
             .select({
@@ -48,6 +53,17 @@ export class TerminaCuraService {
             );
         }
 
+        return { nome: pazienteData.nome, cognome: pazienteData.cognome };
+    }
+
+    /**
+     * Termina la cura di un paziente impostando stato = false
+     * e assegna il prossimo paziente in coda allo psicologo.
+     */
+    async terminaCura(idPaziente: string, codiceFiscalePsicologo: string) {
+        // Esegui validazione
+        const pazienteInfo = await this.validazione(idPaziente, codiceFiscalePsicologo);
+
         // Imposta il paziente come non attivo (soft delete)
         await db
             .update(paziente)
@@ -62,7 +78,7 @@ export class TerminaCuraService {
         return {
             message: 'Cura terminata con successo',
             idPaziente: idPaziente,
-            nomePaziente: `${pazienteData.nome} ${pazienteData.cognome}`,
+            nomePaziente: `${pazienteInfo.nome} ${pazienteInfo.cognome}`,
             nuovoPazienteAssegnato: nuovoPazienteId,
         };
     }

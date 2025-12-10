@@ -16,31 +16,6 @@ export class InserisciDomandaDto {
      * Categoria tematica della domanda (max 128 caratteri)
      */
     categoria: string;
-
-    /**
-     * Valida che i campi rispettino i limiti del database
-     */
-    validate(): string[] {
-        const errors: string[] = [];
-
-        if (!this.titolo || this.titolo.trim().length === 0) {
-            errors.push('Il titolo è obbligatorio');
-        } else if (this.titolo.length > 64) {
-            errors.push('Il titolo non può superare 64 caratteri');
-        }
-
-        if (!this.testo || this.testo.trim().length === 0) {
-            errors.push('Il testo è obbligatorio');
-        }
-
-        if (!this.categoria || this.categoria.trim().length === 0) {
-            errors.push('La categoria è obbligatoria');
-        } else if (this.categoria.length > 128) {
-            errors.push('La categoria non può superare 128 caratteri');
-        }
-
-        return errors;
-    }
 }
 
 /**
