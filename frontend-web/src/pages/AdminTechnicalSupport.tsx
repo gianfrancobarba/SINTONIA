@@ -206,7 +206,7 @@ const AdminTechnicalSupport: React.FC = () => {
                         <Mail size={48} />
                     </div>
                     <h3 className="unified-empty-title">
-                        {statusFilter === 'all' ? 'Nessun Ticket di Supporto' :
+                        {statusFilter === 'all' ? 'Nessun Ticket' :
                             statusFilter === 'open' ? 'Nessun Ticket Aperto' :
                                 'Nessun Ticket Chiuso'}
                     </h3>

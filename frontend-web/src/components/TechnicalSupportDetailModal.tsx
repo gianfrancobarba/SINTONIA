@@ -370,44 +370,46 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                     </div>
                 </div>
 
-                {/* Footer with Actions */}
-                <div style={{
-                    padding: '24px 32px',
-                    background: 'white',
-                    borderTop: '1px solid #e8e8e8',
-                    display: 'flex',
-                    justifyContent: 'flex-end'
-                }}>
-                    <button
-                        onClick={() => setShowCloseConfirm(true)}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '12px',
-                            border: 'none',
-                            background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
-                            color: 'white',
-                            cursor: 'pointer',
-                            fontSize: '15px',
-                            fontWeight: '600',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            transition: 'all 0.2s ease',
-                            boxShadow: '0 4px 12px rgba(131, 185, 193, 0.3)'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
-                        }}
-                    >
-                        <Check size={18} />
-                        Chiudi Ticket
-                    </button>
-                </div>
+                {/* Footer with Actions - Only show if not closed/resolved */}
+                {!['chiuso', 'risolto'].includes(ticket.stato) && (
+                    <div style={{
+                        padding: '24px 32px',
+                        background: 'white',
+                        borderTop: '1px solid #e8e8e8',
+                        display: 'flex',
+                        justifyContent: 'flex-end'
+                    }}>
+                        <button
+                            onClick={() => setShowCloseConfirm(true)}
+                            style={{
+                                padding: '12px 24px',
+                                borderRadius: '12px',
+                                border: 'none',
+                                background: 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)',
+                                color: 'white',
+                                cursor: 'pointer',
+                                fontSize: '15px',
+                                fontWeight: '600',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                transition: 'all 0.2s ease',
+                                boxShadow: '0 4px 12px rgba(131, 185, 193, 0.3)'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
+                            }}
+                        >
+                            <Check size={18} />
+                            Chiudi Ticket
+                        </button>
+                    </div>
+                )}
 
                 {/* Close Confirmation Dialog */}
                 {showCloseConfirm && (
