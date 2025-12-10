@@ -157,7 +157,6 @@ const PsychologistPatientList: React.FC = () => {
                                 ) : (
                                     <>Totale pazienti: <strong style={{ color: '#0D475D' }}>{totalPatients}</strong></>
                                 )}
-                                {totalPages > 1 && <> | Pagina {currentPage} di {totalPages}</>}
                             </p>
                         </div>
 

@@ -94,10 +94,13 @@ const ForumPage: React.FC = () => {
             !q.risposte || q.risposte.length === 0
         ).length;
 
-        // Count questions where *I* have answered
-        const answeredQuestions = baseQuestions.filter(q =>
-            q.risposte && q.risposte.some(r => r.idPsicologo === myFiscalCode)
-        ).length;
+        // For admin: count all questions with at least one answer
+        // For psychologist: count questions where *I* have answered
+        const answeredQuestions = isReadOnly
+            ? baseQuestions.filter(q => q.risposte && q.risposte.length > 0).length
+            : baseQuestions.filter(q =>
+                q.risposte && q.risposte.some(r => r.idPsicologo === myFiscalCode)
+            ).length;
 
         return {
             totalQuestions,
@@ -191,7 +194,11 @@ const ForumPage: React.FC = () => {
             case 'unanswered':
                 return filtered.filter(q => !q.risposte || q.risposte.length === 0);
             case 'answered':
-                // Show only questions where *I* have answered
+                // Admin: show all questions with at least one answer
+                // Psychologist: show questions where *I* have answered
+                if (isReadOnly) {
+                    return filtered.filter(q => q.risposte && q.risposte.length > 0);
+                }
                 return filtered.filter(q =>
                     q.risposte && q.risposte.some(r => r.idPsicologo === myFiscalCode)
                 );
@@ -245,7 +252,7 @@ const ForumPage: React.FC = () => {
                         className={`filter-pill ${filterType === 'answered' ? 'active' : ''}`}
                         onClick={() => setFilterType('answered')}
                     >
-                        Le mie risposte ({getStats()?.answeredQuestions || 0})
+                        {isReadOnly ? 'Domande risposte' : 'Le mie risposte'} ({getStats()?.answeredQuestions || 0})
                     </button>
                 </div>
 
