@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { fetchDashboardData } from '../services/psychologist.service';
+import { fetchPsychologistNotificationCount } from '../services/notification.service';
 import { getCurrentUser, logout } from '../services/auth.service';
 import type { PsychologistDashboardData, LoadingState } from '../types/psychologist';
 import profilePhoto from '../images/psychologist-photo.png';
@@ -74,9 +75,11 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
         error: null,
     });
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(0);
 
     useEffect(() => {
         loadDashboardData();
+        loadNotificationCount();
     }, [refreshKey]);
 
     const loadDashboardData = async () => {
@@ -97,6 +100,19 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                 loading: false,
                 error: error instanceof Error ? error.message : 'Failed to load dashboard data',
             });
+        }
+    };
+
+    const loadNotificationCount = async () => {
+        try {
+            const user = getCurrentUser();
+            const cf = user?.fiscalCode || user?.email;
+            if (cf) {
+                const result = await fetchPsychologistNotificationCount(cf);
+                setUnreadCount(result.count);
+            }
+        } catch (error) {
+            console.error('Error loading notification count:', error);
         }
     };
 
@@ -207,6 +223,9 @@ const PsychologistProfile: React.FC<PsychologistProfileProps> = ({ onSelectSecti
                         title="Notifiche"
                     >
                         <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
+                        {unreadCount > 0 && (
+                            <span className="notification-badge">{unreadCount > 99 ? '99+' : unreadCount}</span>
+                        )}
                     </button>
                 </div>
             </div>

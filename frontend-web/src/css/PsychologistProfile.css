@@ -342,10 +342,25 @@
     min-width: 20px;
     text-align: center;
     box-shadow: 0 2px 6px rgba(255, 107, 107, 0.4);
-    animation: pulse 2s ease-in-out infinite;
+    animation: badgePulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
+/* Badge inside side-btn (notification icon) */
+.side-btn {
+    position: relative;
+}
+
+.side-btn .notification-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 10px;
+    padding: 2px 5px;
+    min-width: 16px;
+    border: 2px solid white;
+}
+
+@keyframes badgePulse {
 
     0%,
     100% {

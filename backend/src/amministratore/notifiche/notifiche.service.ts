@@ -6,7 +6,7 @@ import { AdminNotificationResponseDto, AdminNotificationCountDto, AdminPaginated
 
 @Injectable()
 export class AdminNotificheService {
-    private readonly PAGE_SIZE = 3;
+    private readonly PAGE_SIZE = 100;
 
     /**
      * Recupera le notifiche paginate per un amministratore

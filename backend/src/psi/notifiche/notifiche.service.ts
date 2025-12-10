@@ -6,7 +6,7 @@ import { NotificationResponseDto, NotificationCountDto, PaginatedNotificationsDt
 
 @Injectable()
 export class NotificheService {
-    private readonly PAGE_SIZE = 3;
+    private readonly PAGE_SIZE = 100;
 
     /**
      * Recupera le notifiche paginate per uno psicologo

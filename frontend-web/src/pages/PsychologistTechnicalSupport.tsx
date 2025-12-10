@@ -78,16 +78,16 @@ const PsychologistTechnicalSupport: React.FC = () => {
                                         placeholder="Es. Errore nel caricamento pazienti..."
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
-                                        maxLength={100}
+                                        maxLength={60}
                                         required
                                     />
                                     <div style={{
                                         textAlign: 'right',
                                         fontSize: '12px',
-                                        color: subject.length >= 100 ? '#E57373' : '#999',
+                                        color: subject.length >= 60 ? '#E57373' : '#999',
                                         marginTop: '4px'
                                     }}>
-                                        {subject.length}/100 caratteri
+                                        {subject.length}/60 caratteri
                                     </div>
                                 </div>
 

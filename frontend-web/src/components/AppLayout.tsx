@@ -199,6 +199,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ role }) => {
                         <AdminProfile
                             onSelectSection={handleSectionSelect}
                             activeSection={activeSection}
+                            refreshKey={profileRefreshKey}
                         />
                     ) : (
                         <PsychologistProfile

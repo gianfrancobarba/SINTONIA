@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser, logout } from '../services/auth.service';
+import { fetchAdminNotificationCount } from '../services/notification.service';
 import profilePhoto from '../images/psychologist-photo.png';
 import notificationIcon from '../images/psi-notification.png';
 import '../css/PsychologistProfile.css';
@@ -65,13 +66,15 @@ const LogoutIcon = () => (
 interface AdminProfileProps {
     onSelectSection?: (section: string) => void;
     activeSection?: string | null;
+    refreshKey?: number;
 }
 
-const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSection }) => {
+const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSection, refreshKey }) => {
     const navigate = useNavigate();
     // Internal state removed - controlled by parent
     const [adminInfo, setAdminInfo] = useState<{ name: string; email: string } | null>(null);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(0);
 
     useEffect(() => {
         const fetchAdminData = async () => {
@@ -113,7 +116,20 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSect
         };
 
         fetchAdminData();
-    }, []);
+        loadNotificationCount();
+    }, [refreshKey]);
+
+    const loadNotificationCount = async () => {
+        try {
+            const user = getCurrentUser();
+            if (user?.email) {
+                const result = await fetchAdminNotificationCount(user.email);
+                setUnreadCount(result.count);
+            }
+        } catch (error) {
+            console.error('Error loading notification count:', error);
+        }
+    };
 
     const handleLogout = () => {
         setShowLogoutConfirm(true);
@@ -178,6 +194,9 @@ const AdminProfile: React.FC<AdminProfileProps> = ({ onSelectSection, activeSect
                         onClick={(e) => handleNavigation('notifiche', e)}
                     >
                         <img src={notificationIcon} alt="Notifications" className="side-btn-icon notification-icon" />
+                        {unreadCount > 0 && (
+                            <span className="notification-badge">{unreadCount > 99 ? '99+' : unreadCount}</span>
+                        )}
                     </button>
                 </div>
             </div>
