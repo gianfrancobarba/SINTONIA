@@ -21,7 +21,7 @@
 }
 
 .calendar-header h2 {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 800;
     line-height: 1;
 }
@@ -163,13 +163,13 @@
 }
 
 .day-name {
-    font-size: 0.75rem;
+    font-size: 12px;
     color: var(--text-gray);
     margin-bottom: 0;
 }
 
 .day-number {
-    font-size: 0.95rem;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text-dark);
 }
@@ -191,7 +191,7 @@
     }
 
     .calendar-header h2 {
-        font-size: 1.75rem;
+        font-size: 28px;
     }
 
     .nav-arrow img {
@@ -207,11 +207,11 @@
     }
 
     .day-name {
-        font-size: 0.7rem;
+        font-size: 11px;
     }
 
     .day-number {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .add-mood-indicator {
@@ -238,7 +238,7 @@
     }
 
     .calendar-header h2 {
-        font-size: 1.5rem;
+        font-size: 24px;
     }
 
     .nav-arrow img {
@@ -254,11 +254,11 @@
     }
 
     .day-name {
-        font-size: 0.65rem;
+        font-size: 11px;
     }
 
     .day-number {
-        font-size: 0.85rem;
+        font-size: 14px;
     }
 
     .dot {

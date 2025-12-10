@@ -23,7 +23,7 @@
 }
 
 .instruction-title {
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: 600;
     color: #666;
     margin-bottom: 0.5rem;
@@ -38,7 +38,7 @@
 }
 
 .selected-mood-text {
-    font-size: 1.75rem;
+    font-size: 28px;
     font-weight: 700;
     color: #000000;
     text-align: center;
@@ -75,7 +75,7 @@
 }
 
 .emoji-large-clickable {
-    font-size: 7rem;
+    font-size: 112px;
     line-height: 1;
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
     margin-top: 1.5rem;
@@ -83,7 +83,7 @@
 }
 
 .tap-hint {
-    font-size: 1rem;
+    font-size: 16px;
     color: #666;
     opacity: 0.8;
     margin-top: 0.5rem;
@@ -189,7 +189,7 @@
     }
 
     .emoji-large-clickable {
-        font-size: 6rem;
+        font-size: 96px;
     }
 }
 
@@ -204,7 +204,7 @@
     }
 
     .emoji-large-clickable {
-        font-size: 5.5rem;
+        font-size: 88px;
     }
 
     .wheel-guidance {
@@ -224,7 +224,7 @@
     }
 
     .emoji-large-clickable {
-        font-size: 5rem;
+        font-size: 80px;
     }
 
     .wheel-guidance {

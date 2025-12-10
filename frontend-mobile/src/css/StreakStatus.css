@@ -34,7 +34,7 @@
 }
 
 .streak-content h3 {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 700;
     margin-bottom: 8px;
 }
@@ -57,7 +57,7 @@
 }
 
 .level-text {
-    font-size: 0.8rem;
+    font-size: 13px;
     color: var(--text-gray);
 }
 
@@ -85,7 +85,7 @@
     }
 
     .streak-content h3 {
-        font-size: 0.95rem;
+        font-size: 15px;
         margin-bottom: 6px;
     }
 
@@ -99,7 +99,7 @@
     }
 
     .level-text {
-        font-size: 0.75rem;
+        font-size: 12px;
     }
 }
 
@@ -123,7 +123,7 @@
     }
 
     .streak-content h3 {
-        font-size: 0.9rem;
+        font-size: 14px;
         margin-bottom: 5px;
     }
 
@@ -138,6 +138,6 @@
     }
 
     .level-text {
-        font-size: 0.7rem;
+        font-size: 11px;
     }
 }

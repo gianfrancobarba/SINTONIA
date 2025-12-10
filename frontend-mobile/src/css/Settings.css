@@ -17,7 +17,7 @@
 .settings-header .header-content {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .settings-back-btn {

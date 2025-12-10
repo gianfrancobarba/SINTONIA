@@ -66,8 +66,13 @@
     }
 
     .questionari-page .back-button {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .questionari-page .back-button img {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -85,6 +90,11 @@
     .questionari-page .back-button {
         width: 34px;
         height: 34px;
+    }
+
+    .questionari-page .back-button img {
+        width: 16px;
+        height: 16px;
     }
 }
 
@@ -114,7 +124,7 @@
 
 .questionari-divider .divider-text {
     padding: 0 15px;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 700;
     color: var(--text-dark);
     text-transform: uppercase;
@@ -143,7 +153,7 @@
 }
 
 .card-header h3 {
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: 700;
     color: var(--text-dark);
     margin: 0;
@@ -152,7 +162,7 @@
 
 .descrizione {
     color: var(--text-gray);
-    font-size: 0.9rem;
+    font-size: 14px;
     line-height: 1.4;
     margin: 10px 0;
     font-weight: 500;
@@ -170,7 +180,7 @@
     width: 100%;
     border-radius: 25px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: none;
@@ -189,7 +199,7 @@
 }
 
 .data-completamento {
-    font-size: 0.85rem;
+    font-size: 14px;
     color: var(--text-gray);
     font-weight: 500;
 }
@@ -227,7 +237,7 @@
 .category-badge {
     background-color: var(--primary-light);
     color: white;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 12px;
@@ -241,7 +251,7 @@
 
 .category-last-date {
     color: var(--text-gray);
-    font-size: 0.85rem;
+    font-size: 14px;
     font-weight: 500;
     margin: 8px 0 0;
 }
@@ -281,7 +291,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    font-size: 0.85rem;
+    font-size: 14px;
     color: var(--text-gray);
 }
 
@@ -298,11 +308,11 @@
 /* 480px breakpoint - card content only */
 @media (max-width: 480px) {
     .card-header h3 {
-        font-size: 1.1rem;
+        font-size: 18px;
     }
 
     .history-item {
-        font-size: 0.8rem;
+        font-size: 13px;
         padding: 6px 10px;
     }
 }
@@ -319,7 +329,7 @@
     }
 
     .card-header h3 {
-        font-size: 1rem;
+        font-size: 16px;
     }
 
     .card-icon {
@@ -328,11 +338,11 @@
     }
 
     .progress-indicator {
-        font-size: 0.75rem;
+        font-size: 12px;
     }
 
     .question-counter {
-        font-size: 0.75rem;
+        font-size: 12px;
     }
 }
 
@@ -353,7 +363,7 @@
     }
 
     .card-header h3 {
-        font-size: 0.95rem;
+        font-size: 15px;
     }
 
     .card-icon {
@@ -368,11 +378,11 @@
     }
 
     .card-description {
-        font-size: 0.8rem;
+        font-size: 13px;
     }
 
     .history-item {
-        font-size: 0.75rem;
+        font-size: 12px;
         padding: 5px 8px;
         border-radius: 8px;
     }

@@ -75,13 +75,13 @@ const CreatePost: React.FC = () => {
             {/* Form */}
             <form className="create-post-form" onSubmit={handleSubmit}>
                 {/* Campo Titolo */}
-                <div className="form-group">
-                    <label htmlFor="title" className="form-label-bold">Titolo</label>
-                    <div className="input-with-icon">
+                <div className="form-section">
+                    <label htmlFor="title" className="form-label">Titolo</label>
+                    <div className="title-input-container">
                         <input
                             id="title"
                             type="text"
-                            className="form-input-new"
+                            className="title-input"
                             placeholder="Inserisci un titolo"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -92,12 +92,12 @@ const CreatePost: React.FC = () => {
                 </div>
 
                 {/* Campo Contenuto con contatore */}
-                <div className="form-group">
-                    <label htmlFor="content" className="form-label-bold">Contenuto</label>
-                    <div className="textarea-container card">
+                <div className="form-section">
+                    <label htmlFor="content" className="form-label">Contenuto</label>
+                    <div className="textarea-container">
                         <textarea
                             id="content"
-                            className="form-textarea-new"
+                            className="content-textarea"
                             placeholder="Descrivi la tua domanda in dettaglio..."
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
@@ -110,7 +110,7 @@ const CreatePost: React.FC = () => {
                 </div>
 
                 {/* Selezione categoria (campo cliccabile) */}
-                <div className="form-group">
+                <div className="form-section">
                     <div
                         className="category-selector"
                         onClick={() => !isSubmitting && setShowCategoryModal(true)}

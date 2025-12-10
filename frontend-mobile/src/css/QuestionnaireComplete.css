@@ -18,14 +18,14 @@
 }
 
 .complete-title {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 700;
     color: #0D475D;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 }
 
 .complete-message {
-    font-size: 1.125rem;
+    font-size: 18px;
     color: #666;
     line-height: 1.6;
     max-width: 300px;
@@ -35,18 +35,18 @@
 .btn-home {
     width: 100%;
     max-width: 300px;
-    padding: 1rem;
+    padding: 16px;
     background-color: #0D475D;
     color: #ffffff;
     border: none;
-    border-radius: 2rem;
-    font-size: 1rem;
+    border-radius: 32px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
     text-decoration: none;
     display: inline-block;
-    margin-top: 3rem;
+    margin-top: 48px;
 }
 
 .btn-home:active {
@@ -56,10 +56,10 @@
 /* Responsive adjustments */
 @media (max-width: 480px) {
     .complete-title {
-        font-size: 1.75rem;
+        font-size: 28px;
     }
 
     .complete-message {
-        font-size: 0.9375rem;
+        font-size: 15px;
     }
 }

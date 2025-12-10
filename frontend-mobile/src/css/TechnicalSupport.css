@@ -17,7 +17,7 @@
 .technical-support-header .header-content {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .technical-support-header .back-button {
@@ -32,6 +32,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .technical-support-header .back-button img {

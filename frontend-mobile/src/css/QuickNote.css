@@ -34,7 +34,7 @@
     border: none;
     outline: none;
     font-family: var(--font-family);
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--text-gray);
 }
 
@@ -88,7 +88,7 @@
     }
 
     .note-input {
-        font-size: 0.95rem;
+        font-size: 15px;
     }
 
     .edit-button img {
@@ -116,11 +116,11 @@
     }
 
     .note-input {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .note-input::placeholder {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .edit-button img {

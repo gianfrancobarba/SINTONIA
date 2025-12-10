@@ -6,14 +6,14 @@
 }
 
 .section-header h3 {
-    font-size: 1.3rem;
+    font-size: 21px;
     font-weight: 800;
 }
 
 .more-options {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 19px;
     color: var(--primary-light);
     cursor: pointer;
     letter-spacing: 2px;
@@ -60,7 +60,7 @@
 .post-category-tag {
     align-self: flex-start;
     color: white;
-    font-size: 0.7rem;
+    font-size: 11px;
     font-weight: 700;
     padding: 5px 10px;
     border-radius: 8px;
@@ -68,13 +68,13 @@
 }
 
 .post-title {
-    font-size: 0.95rem;
+    font-size: 15px;
     font-weight: 700;
     line-height: 1.4;
 }
 
 .post-snippet {
-    font-size: 0.85rem;
+    font-size: 14px;
     color: var(--text-gray);
     line-height: 1.4;
 }
@@ -112,7 +112,7 @@
     }
 
     .section-header h3 {
-        font-size: 1.15rem;
+        font-size: 18px;
     }
 
     .posts-container {
@@ -127,16 +127,16 @@
     }
 
     .post-category-tag {
-        font-size: 0.65rem;
+        font-size: 11px;
         padding: 4px 8px;
     }
 
     .post-title {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .post-snippet {
-        font-size: 0.8rem;
+        font-size: 13px;
     }
 
     .pagination-dots {
@@ -159,7 +159,7 @@
     }
 
     .section-header h3 {
-        font-size: 1.05rem;
+        font-size: 17px;
     }
 
     .posts-container {
@@ -175,17 +175,17 @@
     }
 
     .post-category-tag {
-        font-size: 0.6rem;
+        font-size: 11px;
         padding: 3px 7px;
         border-radius: 6px;
     }
 
     .post-title {
-        font-size: 0.85rem;
+        font-size: 14px;
     }
 
     .post-snippet {
-        font-size: 0.75rem;
+        font-size: 12px;
     }
 
     .pagination-dots {

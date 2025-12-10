@@ -243,12 +243,22 @@
         border-bottom-right-radius: 40px;
     }
 
+    .edit-diary-page .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .edit-diary-page .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
     .edit-diary-page .header-title {
         font-size: 20px;
     }
 
     .form-label {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .title-input-container {
@@ -286,13 +296,18 @@
         height: 34px;
     }
 
+    .edit-diary-page .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
     .edit-diary-content {
         padding: 16px 12px;
         gap: 14px;
     }
 
     .form-label {
-        font-size: 14px;
+        font-size: 16px;
         margin-bottom: 6px;
     }
 

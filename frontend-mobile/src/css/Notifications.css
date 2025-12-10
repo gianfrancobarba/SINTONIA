@@ -17,7 +17,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    gap: 16px;
+    gap: 12px;
 }
 
 .notifications-title-section {
@@ -374,7 +374,7 @@
     }
 
     .notification-date {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .pagination-controls {

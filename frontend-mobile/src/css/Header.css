@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    font-size: 0.9rem;
+    font-size: 14px;
     opacity: 0.9;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .greeting-text h1 {
-    font-size: 1.5rem;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -70,7 +70,7 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 0.9rem;
+    font-size: 14px;
     opacity: 0.9;
 }
 
@@ -160,7 +160,7 @@
     right: -5px;
     background: linear-gradient(135deg, var(--white), #f0f0f0);
     color: var(--primary-dark);
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: bold;
     width: 24px;
     height: 24px;
@@ -197,7 +197,7 @@
 
     .header-top {
         margin-bottom: 16px;
-        font-size: 0.85rem;
+        font-size: 13px;
     }
 
     .avatar {
@@ -211,7 +211,7 @@
     }
 
     .greeting-text h1 {
-        font-size: 1.3rem;
+        font-size: 24px;
     }
 
     .user-info {
@@ -232,7 +232,7 @@
     .badge {
         width: 20px;
         height: 20px;
-        font-size: 0.65rem;
+        font-size: 11px;
     }
 }
 
@@ -246,7 +246,7 @@
 
     .header-top {
         margin-bottom: 12px;
-        font-size: 0.8rem;
+        font-size: 12px;
     }
 
     .avatar {
@@ -260,11 +260,11 @@
     }
 
     .greeting-text h1 {
-        font-size: 1.15rem;
+        font-size: 22px;
     }
 
     .mood-badge {
-        font-size: 0.8rem;
+        font-size: 12px;
     }
 
     .user-info {
@@ -285,7 +285,7 @@
     .badge {
         width: 18px;
         height: 18px;
-        font-size: 0.6rem;
+        font-size: 11px;
         top: -4px;
         right: -4px;
     }

@@ -13,7 +13,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .back-arrow-btn-circle {
@@ -31,18 +31,13 @@
     padding: 0;
 }
 
-.back-arrow-btn-circle:active:not(:disabled) {
+.back-arrow-btn-circle:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
 
 .back-arrow-btn-circle:active {
     transform: scale(0.95);
-}
-
-.back-arrow-btn-circle:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
 }
 
 .back-arrow-btn-circle img {
@@ -67,11 +62,12 @@
     flex-direction: column;
 }
 
-.form-group {
+/* Form Section */
+.form-section {
     margin-bottom: 32px;
 }
 
-.form-label-bold {
+.form-label {
     display: block;
     font-size: 18px;
     font-weight: 700;
@@ -79,31 +75,22 @@
     margin-bottom: 16px;
 }
 
-/* Input wrapper */
-.input-with-icon {
-    position: relative;
-}
-
-/* Input titolo */
-.form-input-new {
-    width: 100%;
-    padding: 14px 20px;
+/* Title Input */
+.title-input-container {
+    display: flex;
+    align-items: center;
+    background: white;
     border: 2px solid #E5E5E5;
     border-radius: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    font-family: var(--font-family);
-    color: #1F1F1F;
+    padding: 14px 20px;
     transition: all 0.2s ease;
-    background: white;
     box-shadow:
         0 8px 20px rgba(0, 0, 0, 0.12),
         0 3px 6px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.form-input-new:focus {
-    outline: none;
+.title-input-container:focus-within {
     border-color: #2C5F6F;
     box-shadow:
         0 0 0 3px rgba(44, 95, 111, 0.1),
@@ -112,7 +99,17 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.form-input-new::placeholder {
+.title-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #1F1F1F;
+    background: transparent;
+    font-weight: 600;
+}
+
+.title-input::placeholder {
     color: #9CA3AF;
     font-weight: 400;
     font-family: var(--font-family);
@@ -126,7 +123,7 @@
     border-radius: 24px;
     padding: 24px 24px 60px 24px;
     transition: all 0.2s ease;
-    min-height: 200px;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     box-shadow:
@@ -159,25 +156,24 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.form-textarea-new {
+.content-textarea {
     flex: 1;
     border: none;
     outline: none;
-    font-family: var(--font-family);
     font-size: 18px;
     font-weight: 600;
     color: #1F1F1F;
     line-height: 1.6;
     resize: none;
     background: transparent;
+    font-family: inherit;
     margin: 0;
     padding: 0;
     position: relative;
     z-index: 1;
-    min-height: 150px;
 }
 
-.form-textarea-new::placeholder {
+.content-textarea::placeholder {
     color: #9CA3AF;
     font-weight: 400;
 }
@@ -292,7 +288,7 @@
     }
 
     .form-label {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .title-input-container {
@@ -304,13 +300,23 @@
     }
 
     .textarea-container {
-        padding: 18px 18px 50px;
-        min-height: 240px;
+        padding: 20px 20px 55px 20px;
+        min-height: 260px;
     }
 
     .publish-button-fixed {
         padding: 16px;
         font-size: 16px;
+    }
+
+    .back-arrow-btn-circle {
+        width: 36px;
+        height: 36px;
+    }
+
+    .back-arrow-btn-circle img {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -331,8 +337,8 @@
     }
 
     .back-arrow-btn-circle img {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
     }
 
     .create-post-content {
@@ -341,12 +347,13 @@
     }
 
     .form-label {
-        font-size: 14px;
+        font-size: 16px;
+        margin-bottom: 6px;
     }
 
     .title-input-container {
         padding: 10px 14px;
-        border-radius: 14px;
+        border-radius: 12px;
     }
 
     .title-input {
@@ -363,9 +370,9 @@
     }
 
     .textarea-container {
-        padding: 16px 16px 45px;
-        min-height: 200px;
-        border-radius: 20px;
+        padding: 16px 16px 50px 16px;
+        min-height: 220px;
+        border-radius: 18px;
     }
 
     .content-textarea {

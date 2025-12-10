@@ -17,10 +17,9 @@
 }
 
 .header-content {
-    display: grid;
-    grid-template-columns: 40px 1fr 100px;
+    display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     max-width: 600px;
     margin: 0 auto;
 }
@@ -56,10 +55,11 @@
 }
 
 .header-title {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
     margin: 0;
-    text-align: center;
+    text-align: left;
+    flex: 1;
 }
 
 .edit-button,
@@ -70,7 +70,7 @@
     border-radius: 20px;
     color: white;
     padding: 8px 16px;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -105,7 +105,7 @@
 }
 
 .form-label {
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text-dark);
     margin-left: 10px;
@@ -151,7 +151,7 @@
 .title-input {
     border: none;
     outline: none;
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--text-dark);
     width: 100%;
     background: transparent;
@@ -172,7 +172,7 @@
     border: 1px solid #FECACA;
     border-radius: 12px;
     color: #991B1B;
-    font-size: 0.85rem;
+    font-size: 14px;
     font-weight: 500;
     animation: slideDown 0.2s ease-out forwards;
 }
@@ -193,7 +193,7 @@
     border: none;
     padding: 16px;
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     margin-top: 20px;
@@ -250,7 +250,6 @@
     }
 
     .header-content {
-        grid-template-columns: 36px 1fr 90px;
         gap: 12px;
     }
 
@@ -265,13 +264,13 @@
     }
 
     .header-title {
-        font-size: 1.3rem;
+        font-size: 20px;
     }
 
     .edit-button,
     .cancel-button {
         padding: 7px 14px;
-        font-size: 0.85rem;
+        font-size: 13px;
     }
 
     .personal-info-content {
@@ -280,7 +279,7 @@
     }
 
     .form-label {
-        font-size: 0.85rem;
+        font-size: 14px;
     }
 
     .title-input-container {
@@ -289,12 +288,12 @@
     }
 
     .title-input {
-        font-size: 0.95rem;
+        font-size: 15px;
     }
 
     .submit-button {
         padding: 14px;
-        font-size: 0.95rem;
+        font-size: 15px;
         border-radius: 26px;
     }
 }
@@ -307,7 +306,6 @@
     }
 
     .header-content {
-        grid-template-columns: 34px 1fr 80px;
         gap: 10px;
     }
 
@@ -322,13 +320,13 @@
     }
 
     .header-title {
-        font-size: 1.2rem;
+        font-size: 18px;
     }
 
     .edit-button,
     .cancel-button {
         padding: 6px 12px;
-        font-size: 0.8rem;
+        font-size: 12px;
     }
 
     .personal-info-content {
@@ -337,7 +335,7 @@
     }
 
     .form-label {
-        font-size: 0.8rem;
+        font-size: 13px;
         margin-left: 8px;
     }
 
@@ -347,18 +345,18 @@
     }
 
     .title-input {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .error-message {
         padding: 8px 12px;
-        font-size: 0.8rem;
+        font-size: 12px;
         border-radius: 10px;
     }
 
     .submit-button {
         padding: 13px;
-        font-size: 0.9rem;
+        font-size: 14px;
         border-radius: 24px;
         margin-top: 16px;
     }

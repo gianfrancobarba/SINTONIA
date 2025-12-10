@@ -11,7 +11,7 @@
 }
 
 .month-selector-header .month-label {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 800;
     color: var(--text-dark);
     min-width: 180px;
@@ -21,7 +21,7 @@
 .month-nav-arrow {
     background: none;
     border: none;
-    font-size: 2rem;
+    font-size: 32px;
     color: var(--text-dark);
     cursor: pointer;
     padding: 0 10px;
@@ -54,12 +54,12 @@
     }
 
     .month-selector-header .month-label {
-        font-size: 1.75rem;
+        font-size: 28px;
         min-width: 160px;
     }
 
     .month-nav-arrow {
-        font-size: 1.75rem;
+        font-size: 28px;
         padding: 0 8px;
     }
 
@@ -76,12 +76,12 @@
     }
 
     .month-selector-header .month-label {
-        font-size: 1.5rem;
+        font-size: 24px;
         min-width: 140px;
     }
 
     .month-nav-arrow {
-        font-size: 1.5rem;
+        font-size: 24px;
         padding: 0 6px;
     }
 

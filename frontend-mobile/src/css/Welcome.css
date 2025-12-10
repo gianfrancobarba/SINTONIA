@@ -28,7 +28,7 @@
 }
 
 .quote {
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: bold;
     margin: 5px 0;
 }
@@ -39,7 +39,7 @@
     border: none;
     padding: 15px 60px;
     border-radius: 25px;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s;
@@ -63,12 +63,12 @@
     }
 
     .quote {
-        font-size: 1.1rem;
+        font-size: 18px;
     }
 
     .welcome-btn {
         padding: 14px 50px;
-        font-size: 0.95rem;
+        font-size: 15px;
     }
 }
 
@@ -86,13 +86,13 @@
     }
 
     .quote {
-        font-size: 1rem;
+        font-size: 16px;
         margin: 4px 0;
     }
 
     .welcome-btn {
         padding: 13px 40px;
-        font-size: 0.9rem;
+        font-size: 14px;
         border-radius: 22px;
     }
 }

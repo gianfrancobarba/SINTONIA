@@ -239,15 +239,22 @@
 
 @media (max-width: 375px) {
     .diary-card {
-        width: 90%;
+        width: 80%;
         max-width: none;
         height: 400px;
         min-height: auto;
     }
 
+    .diary-card-left {
+        transform: translate(-68%, -50%) scale(0.80) rotate(-5deg);
+    }
+
+    .diary-card-right {
+        transform: translate(-32%, -50%) scale(0.80) rotate(5deg);
+    }
+
     .diary-card-expanded {
-        width: 95%;
-        height: 85vh;
+        width: 92%;
     }
 
     .diary-card-content {
@@ -292,12 +299,20 @@
 
 @media (max-width: 320px) {
     .diary-card {
+        width: 80%;
         height: 360px;
     }
 
+    .diary-card-left {
+        transform: translate(-66%, -50%) scale(0.78) rotate(-5deg);
+    }
+
+    .diary-card-right {
+        transform: translate(-34%, -50%) scale(0.78) rotate(5deg);
+    }
+
     .diary-card-expanded {
-        width: 98%;
-        height: 88vh;
+        width: 92%;
     }
 
     .diary-card-content {

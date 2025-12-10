@@ -210,7 +210,7 @@
 
 /* Badge Date */
 .badge-date {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--primary-dark);
     background: rgba(30, 74, 95, 0.1);
@@ -220,7 +220,7 @@
 
 /* Locked Label */
 .badge-locked-label {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     color: #9CA3AF;
     letter-spacing: 1px;

@@ -111,13 +111,13 @@ const Forum: React.FC = () => {
                         className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
                         onClick={() => setFilter('all')}
                     >
-                        Pubbliche
+                        I post degli altri
                     </button>
                     <button
                         className={`filter-btn ${filter === 'mine' ? 'active' : ''}`}
                         onClick={() => setFilter('mine')}
                     >
-                        Le mie
+                        I tuoi post
                     </button>
                 </div>
             </div>
@@ -127,7 +127,7 @@ const Forum: React.FC = () => {
                 {displayQuestions.length > 0 ? (
                     <div className="forum-section">
                         <h2 className="section-title">
-                            {filter === 'mine' ? 'Le Mie Domande' : 'Domande Pubbliche'}
+                            {filter === 'mine' ? 'I Tuoi Post' : 'Post degli Altri'}
                         </h2>
                         <div className="posts-list">
                             {displayQuestions.map(post => (

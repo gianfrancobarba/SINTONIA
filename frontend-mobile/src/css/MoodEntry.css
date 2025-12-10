@@ -70,10 +70,10 @@
 }
 
 .page-title {
-    font-size: 1.125rem;
+    font-size: 18px;
     font-weight: 600;
     color: #1a1a1a;
-    margin-left: 1rem;
+    margin-left: 16px;
     flex: 1;
 }
 
@@ -107,7 +107,7 @@
 }
 
 .step-title {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 700;
     color: #1a1a1a;
     /* Dark brown from image */
@@ -119,12 +119,12 @@
 .btn-continue {
     width: 100%;
     max-width: 400px;
-    padding: 1rem;
+    padding: 16px;
     background-color: #0D475D;
     color: #ffffff;
     border: none;
-    border-radius: 2rem;
-    font-size: 1.125rem;
+    border-radius: 32px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s, opacity 0.2s;
@@ -158,10 +158,10 @@
 
 .notes-textarea {
     width: 100%;
-    padding: 1.5rem;
+    padding: 24px;
     border: 2px solid #1a1a1a;
-    border-radius: 1.5rem;
-    font-size: 1.25rem;
+    border-radius: 24px;
+    font-size: 20px;
     font-weight: 500;
     font-family: inherit;
     resize: none;
@@ -177,9 +177,9 @@
 
 .character-count {
     text-align: center;
-    font-size: 0.875rem;
+    font-size: 14px;
     color: #666;
-    margin-top: 0.5rem;
+    margin-top: 8px;
 }
 
 .error-message {
@@ -196,7 +196,7 @@
 /* Responsive adjustments */
 @media (max-width: 480px) {
     .step-title {
-        font-size: 1.75rem;
+        font-size: 28px;
     }
 
     .mood-entry-content {
@@ -220,7 +220,7 @@
     }
 
     .step-title {
-        font-size: 1.6rem;
+        font-size: 26px;
     }
 
     .mood-entry-content {
@@ -255,7 +255,7 @@
     }
 
     .step-title {
-        font-size: 1.4rem;
+        font-size: 22px;
         margin-bottom: 12px;
     }
 

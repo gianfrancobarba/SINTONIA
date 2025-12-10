@@ -243,12 +243,17 @@
         border-bottom-right-radius: 40px;
     }
 
+    .new-diary-page .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
     .new-diary-page .header-title {
         font-size: 20px;
     }
 
     .form-label {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .title-input-container {
@@ -268,6 +273,17 @@
         padding: 16px;
         font-size: 16px;
     }
+
+    .new-diary-header .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .new-diary-header .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
 }
 
 @media (max-width: 320px) {
@@ -286,13 +302,18 @@
         height: 34px;
     }
 
+    .new-diary-page .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
     .new-diary-content {
         padding: 16px 12px;
         gap: 14px;
     }
 
     .form-label {
-        font-size: 14px;
+        font-size: 16px;
         margin-bottom: 6px;
     }
 
