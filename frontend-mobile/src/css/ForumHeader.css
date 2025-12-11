@@ -22,7 +22,8 @@
     color: white;
     font-size: 28px;
     font-weight: 700;
-    margin: 0 0 4px 0;
+    margin: 0;
+    line-height: 1.2;
 }
 
 .forum-subtitle {
@@ -53,7 +54,7 @@
     padding: 0;
 }
 
-.add-post-button:hover {
+.add-post-button:active {
     background: rgba(255, 255, 255, 0.35);
 }
 
@@ -87,7 +88,85 @@
     color: var(--primary-dark);
 }
 
-.filter-btn:hover:not(.active) {
+.filter-btn:active:not(.active) {
     background: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.9);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .forum-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .forum-header-content {
+        gap: 14px;
+    }
+
+    .forum-title {
+        font-size: 24px;
+    }
+
+    .forum-subtitle {
+        font-size: 13px;
+    }
+
+    .add-post-button {
+        width: 44px;
+        height: 44px;
+        font-size: 28px;
+    }
+
+    .forum-filter-toggle {
+        gap: 6px;
+        padding: 3px;
+    }
+
+    .filter-btn {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .forum-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .forum-header-content {
+        gap: 12px;
+    }
+
+    .forum-title {
+        font-size: 22px;
+    }
+
+    .forum-subtitle {
+        font-size: 12px;
+    }
+
+    .add-post-button {
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
+    }
+
+    .forum-filter-toggle {
+        gap: 4px;
+        padding: 3px;
+        border-radius: 18px;
+    }
+
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
 }

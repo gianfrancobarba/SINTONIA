@@ -54,7 +54,12 @@ const MoodEntry: React.FC = () => {
                 await deleteMood(existingMoodId);
             }
             setToast({ message: 'Stato d\'animo eliminato', type: 'success' });
-            setTimeout(() => navigate('/home'), 1500);
+            navigate('/home', {
+                state: {
+                    toastMessage: 'Stato d\'animo eliminato',
+                    toastType: 'success'
+                }
+            });
         } catch (error) {
             setToast({ message: 'Errore durante l\'eliminazione', type: 'error' });
         }
@@ -102,7 +107,6 @@ const MoodEntry: React.FC = () => {
                         selectedIntensity ?? undefined,
                         notes.trim() || undefined
                     );
-                    setToast({ message: 'Stato d\'animo aggiornato con successo!', type: 'success' });
                 } else {
                     // Calcola timestamp locale (per evitare problemi di timezone col server)
                     const now = new Date();
@@ -115,11 +119,14 @@ const MoodEntry: React.FC = () => {
                         notes.trim() || undefined,
                         localISOString
                     );
-                    setToast({ message: 'Stato d\'animo registrato con successo!', type: 'success' });
                 }
-                setTimeout(() => {
-                    navigate('/home');
-                }, 2000);
+
+                navigate('/home', {
+                    state: {
+                        toastMessage: existingMoodId ? 'Stato d\'animo aggiornato con successo!' : 'Stato d\'animo registrato con successo!',
+                        toastType: 'success'
+                    }
+                });
             } catch (err) {
                 console.error('Error submitting mood:', err);
                 const errorMessage = err instanceof Error ? err.message : 'Errore durante l\'invio';

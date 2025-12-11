@@ -993,9 +993,7 @@ export class SpidAuthController {
                 </div>
               </form>
               
-              <div class="privacy-notice">
-                Per consultare l'informativa sul trattamento dei dati personali ai sensi del Regolamento 2016/679/UE <a href="https://www.spid.gov.it/cos-e-spid/informativa-sul-trattamento-dei-dati-personali/" target="_blank" rel="noopener noreferrer">clicca qui</a>
-              </div>
+
             </div>
           </div>
         </body>

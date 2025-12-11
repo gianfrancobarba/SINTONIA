@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DiaryCard from '../components/DiaryCard';
 import DateFilter from '../components/DateFilter';
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
@@ -8,24 +8,33 @@ import type { DiaryPage } from '../types/diary';
 import Toast from '../components/Toast';
 import '../css/Diary.css';
 import NewForumQuestionIcon from '../assets/icons/NewForumQuestion.svg';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { useCache } from '../contexts/CacheContext';
 
 const Diary: React.FC = () => {
     const navigate = useNavigate();
-    const [pages, setPages] = useState<DiaryPage[]>([]);
-    const [filteredPages, setFilteredPages] = useState<DiaryPage[]>([]);
+    const location = useLocation();
+
+    const { diaryPages, setDiaryPages, diaryDateOptions, setDiaryDateOptions } = useCache();
+    // Helper accessor (memoized pages or just ref), if null use empty array for safety in rendering
+    const pages = diaryPages || [];
+
+    // Initialize filteredPages with pages directly to avoid flash
+    const [filteredPages, setFilteredPages] = useState<DiaryPage[]>(pages);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [loading, setLoading] = useState(true);
+    // Loading is true only if we don't have cached data yet
+    const [loading, setLoading] = useState(!diaryPages);
     const [error, setError] = useState<string | null>(null);
 
     // Date filter
-    const [dateOptions, setDateOptions] = useState<MonthYearOption[]>([]);
+    const dateOptions = diaryDateOptions || [];
     const [selectedMonth, setSelectedMonth] = useState<number | undefined>(undefined);
     const [selectedYear, setSelectedYear] = useState<number | undefined>(undefined);
 
     // Delete modal
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [pageToDelete, setPageToDelete] = useState<string | null>(null);
-    const [showToast, setShowToast] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
     // Touch gesture state
     const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -36,16 +45,16 @@ const Diary: React.FC = () => {
     useEffect(() => {
         const fetchAllData = async () => {
             try {
-                setLoading(true);
+                if (!diaryPages) setLoading(true);
                 setError(null);
 
-                const [diaryPages, options] = await Promise.all([
+                const [fetchedPages, options] = await Promise.all([
                     getDiaryPages(),
                     getAvailableMonthsYears()
                 ]);
 
-                setPages(diaryPages);
-                setDateOptions(options);
+                setDiaryPages(fetchedPages);
+                setDiaryDateOptions(options);
             } catch (err) {
                 console.error('Error loading diary data:', err);
                 setError('Errore nel caricamento delle pagine');
@@ -62,12 +71,25 @@ const Diary: React.FC = () => {
         filterPagesByDate();
     }, [pages, selectedMonth, selectedYear]);
 
+    // Handle Toast from navigation state
+    useEffect(() => {
+        const state = location.state as { toastMessage?: string; toastType?: 'success' | 'error' } | null;
+        if (state?.toastMessage) {
+            setToast({
+                message: state.toastMessage,
+                type: state.toastType || 'success'
+            });
+            // Clear state
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
+
     const loadDiaryPages = async () => {
         try {
-            setLoading(true);
+            if (!diaryPages) setLoading(true);
             setError(null);
-            const diaryPages = await getDiaryPages();
-            setPages(diaryPages);
+            const fetchedPages = await getDiaryPages();
+            setDiaryPages(fetchedPages);
         } catch (err) {
             console.error('Error loading diary pages:', err);
             setError('Errore nel caricamento delle pagine');
@@ -158,7 +180,7 @@ const Diary: React.FC = () => {
         try {
             await deleteDiaryPage(pageToDelete);
             const updatedPages = await getDiaryPages();
-            setPages(updatedPages);
+            setDiaryPages(updatedPages);
 
             // Aggiusta l'indice se necessario
             if (currentIndex >= updatedPages.length && currentIndex > 0) {
@@ -167,7 +189,7 @@ const Diary: React.FC = () => {
 
             setShowDeleteModal(false);
             setPageToDelete(null);
-            setShowToast(true);
+            setToast({ message: 'Pagina eliminata con successo!', type: 'success' });
         } catch (err) {
             console.error('Error deleting page:', err);
         }
@@ -190,10 +212,10 @@ const Diary: React.FC = () => {
         return 100 - distance;
     };
 
-    if (loading) {
+    if (loading && !diaryPages) {
         return (
-            <div className="diary-page">
-                <div className="loading-screen">Caricamento diario...</div>
+            <div className="loading-screen">
+                <LoadingSpinner />
             </div>
         );
     }
@@ -322,10 +344,11 @@ const Diary: React.FC = () => {
                 />
             )}
 
-            {showToast && (
+            {toast && (
                 <Toast
-                    message="Pagina eliminata con successo!"
-                    onClose={() => setShowToast(false)}
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>

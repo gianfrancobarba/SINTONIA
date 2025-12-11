@@ -25,10 +25,13 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
-    // Handler per il click sul giorno "oggi"
+    // Handler per il click sul giorno
     const handleDayClick = (day: CalendarDay) => {
         if (day.isToday) {
             navigate('/mood-entry');
+        } else if (day.hasEvent) {
+            // Se è un giorno passato con un umore registrato, naviga allo storico aprendo il dettaglio
+            navigate('/mood-history', { state: { openDate: day.fullDate } });
         }
     };
 
@@ -161,12 +164,14 @@ const Calendar: React.FC<CalendarProps> = ({ days: initialDays }) => {
         <div className="week-view">
             {days.map((day, index) => {
                 const moodColor = getMoodColor(day.mood);
+                const isClickable = day.isToday || day.hasEvent;
+
                 return (
                     <div
                         key={index}
-                        className={`day-item ${day.isToday ? 'active' : ''}`}
+                        className={`day-item ${day.isToday ? 'active' : ''} ${day.hasEvent ? 'has-event' : ''}`}
                         onClick={() => handleDayClick(day)}
-                        style={{ cursor: day.isToday ? 'pointer' : 'default' }}
+                        style={{ cursor: isClickable ? 'pointer' : 'default' }}
                     >
                         <div className="mood-indicator-container">
                             {day.isToday && !day.hasEvent ? (

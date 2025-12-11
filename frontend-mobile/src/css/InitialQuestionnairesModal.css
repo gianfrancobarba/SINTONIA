@@ -288,7 +288,7 @@
     gap: 8px;
     letter-spacing: 0.2px;
     transition: transform 0.1s ease, opacity 0.1s ease;
-    font-family: urbanist, open sans,sans-serif;
+    font-family: urbanist, open sans, sans-serif;
 }
 
 .btn-primary {
@@ -316,4 +316,205 @@
 .btn-secondary:active {
     transform: scale(0.97);
     background: #e8f4f5;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .modal-overlay {
+        padding: 12px;
+    }
+
+    .modal-content {
+        max-width: 340px;
+        border-radius: 22px;
+    }
+
+    .modal-header {
+        padding: 14px 18px 10px;
+    }
+
+    .header-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    .header-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+    }
+
+    .modal-body {
+        padding: 10px 18px;
+    }
+
+    .intro-text {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .questionnaire-grid {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .grid-item {
+        padding: 12px 8px;
+        border-radius: 14px;
+        gap: 6px;
+    }
+
+    .grid-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .grid-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .grid-item strong {
+        font-size: 14px;
+    }
+
+    .grid-item-label {
+        font-size: 11px;
+    }
+
+    .info-box {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .info-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .info-box p {
+        font-size: 11px;
+    }
+
+    .modal-actions {
+        padding: 12px 18px 18px;
+        gap: 8px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 12px 18px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .modal-overlay {
+        padding: 10px;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        border-radius: 20px;
+    }
+
+    .modal-header {
+        padding: 12px 16px 8px;
+    }
+
+    .header-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+    }
+
+    .header-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .modal-header h2 {
+        font-size: 17px;
+    }
+
+    .modal-body {
+        padding: 8px 16px;
+    }
+
+    .intro-text {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .questionnaire-grid {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .grid-item {
+        padding: 10px 6px;
+        border-radius: 12px;
+        gap: 5px;
+    }
+
+    .grid-icon-wrapper {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    .grid-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .grid-item strong {
+        font-size: 13px;
+    }
+
+    .grid-item-label {
+        font-size: 11px;
+    }
+
+    .info-box {
+        padding: 7px 10px;
+        gap: 7px;
+        border-radius: 12px;
+    }
+
+    .info-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .info-box p {
+        font-size: 11px;
+    }
+
+    .modal-actions {
+        padding: 10px 16px 16px;
+        gap: 6px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 11px 16px;
+        font-size: 13px;
+        border-radius: 11px;
+    }
+
+    .btn-icon {
+        width: 16px;
+        height: 16px;
+    }
 }

@@ -35,7 +35,7 @@
     color: white;
 }
 
-.filter-btn:hover:not(.active) {
+.filter-btn:active:not(.active) {
     background: rgba(0, 0, 0, 0.05);
 }
 
@@ -95,14 +95,14 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: rgba(127, 185, 156, 0.15);
-    border: 2px solid #7FB99C;
+    background: var(--primary-dark);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 150;
-    box-shadow: 0 4px 12px rgba(127, 185, 156, 0.2);
+    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.4);
     transition: all 0.2s ease;
     padding: 0;
 }
@@ -110,13 +110,96 @@
 .forum-fab img {
     width: 30px;
     height: 30px;
-}
-
-.forum-fab:hover {
-    transform: scale(1.05);
-    background: rgba(127, 185, 156, 0.25);
+    filter: brightness(0) invert(1);
 }
 
 .forum-fab:active {
     transform: scale(0.95);
+    background: #163A4A;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .forum-filter-section {
+        padding: 10px 16px;
+    }
+
+    .forum-filter-toggle {
+        gap: 6px;
+        padding: 3px;
+    }
+
+    .filter-btn {
+        padding: 7px 18px;
+        font-size: 13px;
+    }
+
+    .forum-content {
+        padding: 14px 16px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+
+    .forum-fab {
+        width: 54px;
+        height: 54px;
+        bottom: 85px;
+        right: 16px;
+    }
+
+    .forum-fab img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 320px) {
+    .forum-filter-section {
+        padding: 8px 12px;
+    }
+
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+
+    .forum-content {
+        padding: 12px 12px;
+    }
+
+    .section-title {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .no-posts {
+        padding: 40px 16px;
+    }
+
+    .no-posts p {
+        font-size: 14px;
+    }
+
+    .no-posts-hint {
+        font-size: 12px;
+    }
+
+    .forum-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 80px;
+        right: 12px;
+    }
+
+    .forum-fab img {
+        width: 24px;
+        height: 24px;
+    }
 }

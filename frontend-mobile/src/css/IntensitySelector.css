@@ -59,3 +59,57 @@
 }
 
 /* No hover effects to keep it clean on mobile */
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .intensity-selector {
+        gap: 16px;
+        padding: 8px 0;
+    }
+
+    .intensity-display {
+        font-size: 70px;
+        min-height: 90px;
+    }
+
+    .intensity-buttons {
+        gap: 10px;
+        max-width: 360px;
+        padding: 0 8px;
+    }
+
+    .intensity-button {
+        height: 46px;
+        max-width: 54px;
+        border-radius: 14px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 320px) {
+    .intensity-selector {
+        gap: 14px;
+        padding: 6px 0;
+    }
+
+    .intensity-display {
+        font-size: 60px;
+        min-height: 80px;
+    }
+
+    .intensity-buttons {
+        gap: 8px;
+        max-width: 300px;
+        padding: 0 6px;
+    }
+
+    .intensity-button {
+        height: 40px;
+        max-width: 48px;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+}

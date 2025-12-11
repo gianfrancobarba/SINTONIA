@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftArrow from '../assets/icons/LeftArrow.svg';
 import '../css/Badges.css';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { BadgeIcon } from '../components/BadgeIcons';
 
 interface Badge {
@@ -97,8 +98,8 @@ const Badges: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="badges-page">
-                <div className="loading">Caricamento...</div>
+            <div className="loading-screen">
+                <LoadingSpinner />
             </div>
         );
     }

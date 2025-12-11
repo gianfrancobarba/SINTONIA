@@ -34,7 +34,7 @@
     height: 16px;
 }
 
-.questionnaire-compilation .back-button:hover {
+.questionnaire-compilation .back-button:active {
     background-color: rgba(0, 0, 0, 0.1);
     transform: scale(1.05);
 }
@@ -60,12 +60,12 @@
 .btn-continue {
     width: 100%;
     max-width: 400px;
-    padding: 1rem;
+    padding: 16px;
     background-color: #0D475D;
     color: #ffffff;
     border: none;
-    border-radius: 2rem;
-    font-size: 1.125rem;
+    border-radius: 32px;
+    font-size: 18px;
     font-weight: 600;
     font-family: var(--font-family);
     cursor: pointer;
@@ -77,7 +77,7 @@
     /* Don't shrink when content is large */
 }
 
-.btn-continue:hover:not(:disabled) {
+.btn-continue:active:not(:disabled) {
     background-color: #0a3647;
 }
 
@@ -103,18 +103,18 @@
 }
 
 .btn-primary {
-    padding: 0.75rem 2rem;
+    padding: 12px 32px;
     background-color: #0D475D;
     color: #ffffff;
     border: none;
-    border-radius: 2rem;
-    font-size: 1rem;
+    border-radius: 32px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
-.btn-primary:hover {
+.btn-primary:active {
     background-color: #0a3647;
 }
 
@@ -126,7 +126,7 @@
     }
 
     .btn-continue {
-        font-size: 1rem;
-        padding: 0.875rem;
+        font-size: 16px;
+        padding: 14px;
     }
 }

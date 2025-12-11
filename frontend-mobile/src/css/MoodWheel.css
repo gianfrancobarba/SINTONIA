@@ -23,7 +23,7 @@
 }
 
 .instruction-title {
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: 600;
     color: #666;
     margin-bottom: 0.5rem;
@@ -38,7 +38,7 @@
 }
 
 .selected-mood-text {
-    font-size: 1.75rem;
+    font-size: 28px;
     font-weight: 700;
     color: #000000;
     text-align: center;
@@ -69,13 +69,13 @@
     /* Red color */
 }
 
-.text-side-delete-button:hover {
+.text-side-delete-button:active {
     background-color: #ffe5e5;
     transform: scale(1.05);
 }
 
 .emoji-large-clickable {
-    font-size: 7rem;
+    font-size: 112px;
     line-height: 1;
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
     margin-top: 1.5rem;
@@ -83,7 +83,7 @@
 }
 
 .tap-hint {
-    font-size: 1rem;
+    font-size: 16px;
     color: #666;
     opacity: 0.8;
     margin-top: 0.5rem;
@@ -189,6 +189,47 @@
     }
 
     .emoji-large-clickable {
-        font-size: 6rem;
+        font-size: 96px;
+    }
+}
+
+@media (max-width: 375px) {
+    .wheel-overflow-wrapper {
+        height: 38vh;
+    }
+
+    .wheel-positioner {
+        width: 155vw;
+        height: 155vw;
+    }
+
+    .emoji-large-clickable {
+        font-size: 88px;
+    }
+
+    .wheel-guidance {
+        font-size: 14px;
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 320px) {
+    .wheel-overflow-wrapper {
+        height: 35vh;
+    }
+
+    .wheel-positioner {
+        width: 150vw;
+        height: 150vw;
+    }
+
+    .emoji-large-clickable {
+        font-size: 80px;
+    }
+
+    .wheel-guidance {
+        font-size: 13px;
+        padding: 0 12px;
+        margin-bottom: 8px;
     }
 }

@@ -9,7 +9,7 @@
     padding: 48px 20px 30px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     position: sticky;
     top: 0;
@@ -39,19 +39,63 @@
     filter: brightness(0) invert(1);
 }
 
-.questionari-page .back-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-}
-
 .questionari-page .back-button:active {
+    background: rgba(255, 255, 255, 0.3);
     transform: scale(0.95);
 }
 
 .questionari-header h1 {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
     margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .questionari-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .questionari-header h1 {
+        font-size: 20px;
+    }
+
+    .questionari-page .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .questionari-page .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 320px) {
+    .questionari-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .questionari-header h1 {
+        font-size: 18px;
+    }
+
+    .questionari-page .back-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .questionari-page .back-button img {
+        width: 16px;
+        height: 16px;
+    }
 }
 
 .questionari-content {
@@ -80,7 +124,7 @@
 
 .questionari-divider .divider-text {
     padding: 0 15px;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 700;
     color: var(--text-dark);
     text-transform: uppercase;
@@ -109,7 +153,7 @@
 }
 
 .card-header h3 {
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: 700;
     color: var(--text-dark);
     margin: 0;
@@ -118,7 +162,7 @@
 
 .descrizione {
     color: var(--text-gray);
-    font-size: 0.9rem;
+    font-size: 14px;
     line-height: 1.4;
     margin: 10px 0;
     font-weight: 500;
@@ -136,7 +180,7 @@
     width: 100%;
     border-radius: 25px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: none;
@@ -144,7 +188,7 @@
     box-shadow: 0 4px 10px rgba(74, 157, 111, 0.3);
 }
 
-.compila-button:hover {
+.compila-button:active {
     opacity: 0.95;
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(74, 157, 111, 0.4);
@@ -155,7 +199,7 @@
 }
 
 .data-completamento {
-    font-size: 0.85rem;
+    font-size: 14px;
     color: var(--text-gray);
     font-weight: 500;
 }
@@ -174,7 +218,7 @@
     position: relative;
 }
 
-.category-card:hover {
+.category-card:active {
     transform: translateY(-2px);
     box-shadow: 0 12px 15px -5px rgba(0, 0, 0, 0.4);
 }
@@ -193,7 +237,7 @@
 .category-badge {
     background-color: var(--primary-light);
     color: white;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 12px;
@@ -207,7 +251,7 @@
 
 .category-last-date {
     color: var(--text-gray);
-    font-size: 0.85rem;
+    font-size: 14px;
     font-weight: 500;
     margin: 8px 0 0;
 }
@@ -247,7 +291,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    font-size: 0.85rem;
+    font-size: 14px;
     color: var(--text-gray);
 }
 
@@ -261,18 +305,85 @@
     color: var(--text-dark);
 }
 
-/* Responsive design */
+/* 480px breakpoint - card content only */
 @media (max-width: 480px) {
-    .questionari-header h1 {
-        font-size: 1.25rem;
-    }
-
     .card-header h3 {
-        font-size: 1.1rem;
+        font-size: 18px;
     }
 
     .history-item {
-        font-size: 0.8rem;
+        font-size: 13px;
         padding: 6px 10px;
+    }
+}
+
+/* 375px breakpoint - content only (header already defined above) */
+@media (max-width: 375px) {
+    .questionari-content {
+        padding: 16px;
+    }
+
+    .questionnaire-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .card-header h3 {
+        font-size: 16px;
+    }
+
+    .card-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .progress-indicator {
+        font-size: 12px;
+    }
+
+    .question-counter {
+        font-size: 12px;
+    }
+}
+
+/* 320px breakpoint - content only (header already defined above) */
+@media (max-width: 320px) {
+    .questionari-content {
+        padding: 14px 12px;
+    }
+
+    .questionnaire-card {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 10px;
+    }
+
+    .card-header {
+        gap: 10px;
+    }
+
+    .card-header h3 {
+        font-size: 15px;
+    }
+
+    .card-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .card-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .card-description {
+        font-size: 13px;
+    }
+
+    .history-item {
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 8px;
     }
 }

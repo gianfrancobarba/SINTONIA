@@ -24,7 +24,7 @@ const Welcome = () => {
             <div className="welcome-content">
                 <div className="quote-section">
                     <p className="quote">"Dove la mente trova la pace,</p>
-                    <p className="quote">un passo alla volta"</p>
+                    <p className="quote">un passo alla volta."</p>
                 </div>
                 <button className="welcome-btn" onClick={handleAccediClick}>
                     Accedi

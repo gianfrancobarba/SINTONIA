@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    font-size: 0.9rem;
+    font-size: 14px;
     opacity: 0.9;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .greeting-text h1 {
-    font-size: 1.5rem;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -70,7 +70,7 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 0.9rem;
+    font-size: 14px;
     opacity: 0.9;
 }
 
@@ -86,7 +86,7 @@
     transition: all 0.3s ease;
 }
 
-.notification-icon:hover {
+.notification-icon:active {
     transform: translateY(-3px);
 }
 
@@ -110,7 +110,7 @@
     position: relative;
 }
 
-.notification-icon:hover .icon-box {
+.notification-icon:active .icon-box {
     box-shadow:
         0 12px 30px rgba(0, 0, 0, 0.2),
         0 5px 10px rgba(0, 0, 0, 0.15),
@@ -150,7 +150,7 @@
     filter: brightness(0) invert(1);
 }
 
-.notification-icon:hover .icon-box img {
+.notification-icon:active .icon-box img {
     transform: scale(1.1);
 }
 
@@ -160,7 +160,7 @@
     right: -5px;
     background: linear-gradient(135deg, var(--white), #f0f0f0);
     color: var(--primary-dark);
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: bold;
     width: 24px;
     height: 24px;
@@ -176,9 +176,117 @@
     z-index: 2;
 }
 
-.notification-icon:hover .badge {
+.notification-icon:active .badge {
     transform: scale(1.1);
     box-shadow:
         0 6px 12px rgba(0, 0, 0, 0.2),
         0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Medium-Small Devices (375px and below) */
+@media (max-width: 375px) {
+    .header {
+        padding: 32px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .header-top {
+        margin-bottom: 16px;
+        font-size: 13px;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .avatar img {
+        min-width: 50px;
+        min-height: 50px;
+    }
+
+    .greeting-text h1 {
+        font-size: 24px;
+    }
+
+    .user-info {
+        gap: 12px;
+    }
+
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+    }
+
+    .icon-box img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .badge {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+}
+
+/* Small Devices (320px and below) */
+@media (max-width: 320px) {
+    .header {
+        padding: 28px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .header-top {
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
+
+    .avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .avatar img {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .greeting-text h1 {
+        font-size: 22px;
+    }
+
+    .mood-badge {
+        font-size: 12px;
+    }
+
+    .user-info {
+        gap: 10px;
+    }
+
+    .icon-box {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+    }
+
+    .icon-box img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .badge {
+        width: 18px;
+        height: 18px;
+        font-size: 11px;
+        top: -4px;
+        right: -4px;
+    }
 }

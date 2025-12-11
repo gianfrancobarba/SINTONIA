@@ -40,7 +40,7 @@
     transition: all 0.2s ease;
 }
 
-.category-chip:hover {
+.category-chip:active {
     opacity: 0.8;
 }
 

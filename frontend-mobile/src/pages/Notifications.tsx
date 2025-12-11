@@ -1,39 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, MessageSquare, Bell, ChevronRight, ChevronLeft, Loader2, Smile, Check } from 'lucide-react';
+import { FileText, MessageSquare, Bell, ChevronRight, ChevronLeft, Smile, Check } from 'lucide-react';
 import { getNotifications, markAsRead, type NotificationDto, type PaginatedNotificationsDto } from '../services/notification.service';
+import LoadingSpinner from '../components/LoadingSpinner';
 import '../css/Notifications.css';
+import { useNotification } from '../contexts/NotificationContext';
+import { useCache } from '../contexts/CacheContext';
 
 const Notifications: React.FC = () => {
     const navigate = useNavigate();
-    const [notifications, setNotifications] = useState<NotificationDto[]>([]);
-    const [loading, setLoading] = useState(true);
+
+    // Use CacheContext
+    const { notifications: cachedNotifications, setNotifications: setCachedNotifications } = useCache();
+    const notifications = cachedNotifications || [];
+
+    // Loading is true only if we don't have cached data yet
+    const [loading, setLoading] = useState(!cachedNotifications);
+
     const [error, setError] = useState<string | null>(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [total, setTotal] = useState(0);
+    const { decrementUnreadCount, refreshUnreadCount } = useNotification();
 
     useEffect(() => {
-        loadNotifications(currentPage);
-    }, [currentPage]);
+        loadNotifications();
+    }, []);
 
-    const loadNotifications = async (page: number) => {
+    const loadNotifications = async () => {
         try {
-            setLoading(true);
+            if (!cachedNotifications) setLoading(true);
             setError(null);
-            const data: PaginatedNotificationsDto = await getNotifications(page);
-            setNotifications(data.notifications);
-            setTotalPages(data.totalPages);
-            setTotal(data.total);
+
+            // Fetch first page to get metadata
+            const firstPageData = await getNotifications(1);
+            let allNotifications = [...firstPageData.notifications];
+
+            // If there are more pages, fetch them all in parallel
+            if (firstPageData.totalPages > 1) {
+                const pagePromises = [];
+                for (let i = 2; i <= firstPageData.totalPages; i++) {
+                    pagePromises.push(getNotifications(i));
+                }
+
+                const otherPagesData = await Promise.all(pagePromises);
+                otherPagesData.forEach(data => {
+                    allNotifications = [...allNotifications, ...data.notifications];
+                });
+            }
+
+            setCachedNotifications(allNotifications);
         } catch (err) {
             console.error('Error loading notifications:', err);
             setError('Errore nel caricamento delle notifiche');
         } finally {
             setLoading(false);
+            // Refresh count deeply to ensure sync
+            refreshUnreadCount();
         }
     };
 
-    const handleNotificationClick = (notification: NotificationDto) => {
+    const handleNotificationClick = async (notification: NotificationDto) => {
+        // Mark as read immediately when clicked
+        if (!notification.letto) {
+            try {
+                // Optimistic update
+                decrementUnreadCount();
+                // We don't await this to ensure navigation speed, but we trigger it
+                markAsRead(notification.idNotifica).catch(err => console.error(err));
+
+                // Also update local state to remove it or mark it read
+                const currentList = cachedNotifications || [];
+                setCachedNotifications(currentList.filter(n => n.idNotifica !== notification.idNotifica));
+            } catch (err) {
+                console.error('Error handling notification click:', err);
+            }
+        }
+
         // Navigate based on tipologia
         switch (notification.tipologia) {
             case 'FORUM':
@@ -54,9 +94,12 @@ const Notifications: React.FC = () => {
         e.stopPropagation(); // Prevent card click
         try {
             await markAsRead(notification.idNotifica);
-            // Remove notification from local state
-            setNotifications(prev => prev.filter(n => n.idNotifica !== notification.idNotifica));
-            setTotal(prev => prev - 1);
+            // Remove notification from local state (cache)
+            const currentList = cachedNotifications || [];
+            setCachedNotifications(currentList.filter(n => n.idNotifica !== notification.idNotifica));
+
+            // Update global badge
+            decrementUnreadCount();
         } catch (err) {
             console.error('Error marking notification as read:', err);
         }
@@ -117,9 +160,8 @@ const Notifications: React.FC = () => {
 
             {/* Loading State */}
             {loading && (
-                <div className="notifications-loading">
-                    <Loader2 className="spinner" size={32} />
-                    <p>Caricamento...</p>
+                <div className="loading-screen">
+                    <LoadingSpinner />
                 </div>
             )}
 
@@ -127,7 +169,7 @@ const Notifications: React.FC = () => {
             {error && !loading && (
                 <div className="notifications-error">
                     <p>{error}</p>
-                    <button onClick={() => loadNotifications(currentPage)}>
+                    <button onClick={() => loadNotifications()}>
                         Riprova
                     </button>
                 </div>
@@ -180,28 +222,7 @@ const Notifications: React.FC = () => {
                         ))}
                     </div>
 
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="notifications-pagination">
-                            <button
-                                className="pagination-btn"
-                                disabled={currentPage === 1}
-                                onClick={() => setCurrentPage(p => p - 1)}
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-                            <span className="pagination-info">
-                                {currentPage} / {totalPages}
-                            </span>
-                            <button
-                                className="pagination-btn"
-                                disabled={currentPage === totalPages}
-                                onClick={() => setCurrentPage(p => p + 1)}
-                            >
-                                <ChevronRight size={20} />
-                            </button>
-                        </div>
-                    )}
+
                 </>
             )}
         </div>

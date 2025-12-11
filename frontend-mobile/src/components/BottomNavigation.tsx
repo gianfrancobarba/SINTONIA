@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/BottomNavigation.css';
-import { getUnreadCount } from '../services/notification.service';
+import { useNotification } from '../contexts/NotificationContext';
 
 // Import SVG icons
 import forumIcon from '../assets/icons/forum.svg';
@@ -19,7 +19,7 @@ interface NavItem {
 const BottomNavigation: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [unreadCount, setUnreadCount] = useState(0);
+    const { unreadCount } = useNotification();
 
     const navItems: NavItem[] = [
         { path: '/forum', icon: forumIcon, label: 'Forum' },
@@ -28,22 +28,6 @@ const BottomNavigation: React.FC = () => {
         { path: '/notifications', icon: notificationIcon, label: 'Notifiche' },
         { path: '/profile', icon: userIcon, label: 'Profilo' }
     ];
-
-    useEffect(() => {
-        const fetchUnreadCount = async () => {
-            try {
-                const data = await getUnreadCount();
-                setUnreadCount(data.count);
-            } catch (err) {
-                console.error('Error fetching unread count:', err);
-            }
-        };
-        fetchUnreadCount();
-
-        // Refresh count when navigating back from notifications
-        const interval = setInterval(fetchUnreadCount, 30000);
-        return () => clearInterval(interval);
-    }, [location.pathname]);
 
     const isActive = (path: string) => location.pathname === path;
 

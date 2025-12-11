@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import { getStoricoQuestionari } from '../services/questionari.service';
 import { startQuestionario } from '../services/questionario.service';
 import type { QuestionarioItemDto, QuestionnaireCategory } from '../types/questionari';
 import '../css/Questionari.css';
+import LoadingSpinner from '../components/LoadingSpinner';
+import Toast from '../components/Toast';
 
 const Questionari: React.FC = () => {
     const navigate = useNavigate();
@@ -14,6 +16,21 @@ const Questionari: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [startingId, setStartingId] = useState<string | null>(null);
     const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const location = useLocation();
+
+    // Handle Toast from navigation state
+    useEffect(() => {
+        const state = location.state as { toastMessage?: string; toastType?: 'success' | 'error' } | null;
+        if (state?.toastMessage) {
+            setToast({
+                message: state.toastMessage,
+                type: state.toastType || 'success'
+            });
+            // Clear state
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
 
     useEffect(() => {
         const fetchQuestionari = async () => {
@@ -102,16 +119,8 @@ const Questionari: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="questionari-page">
-                <div className="questionari-header">
-                    <button className="back-button" onClick={() => navigate('/home')}>
-                        <img src={LeftArrowIcon} alt="Back" />
-                    </button>
-                    <h1>Questionari</h1>
-                </div>
-                <div className="questionari-content">
-                    <p style={{ textAlign: 'center', marginTop: '50px' }}>Caricamento...</p>
-                </div>
+            <div className="loading-screen">
+                <LoadingSpinner />
             </div>
         );
     }
@@ -225,6 +234,14 @@ const Questionari: React.FC = () => {
                     </p>
                 )}
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

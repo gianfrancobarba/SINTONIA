@@ -11,7 +11,7 @@
 }
 
 .month-selector-header .month-label {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 800;
     color: var(--text-dark);
     min-width: 180px;
@@ -21,14 +21,14 @@
 .month-nav-arrow {
     background: none;
     border: none;
-    font-size: 2rem;
+    font-size: 32px;
     color: var(--text-dark);
     cursor: pointer;
     padding: 0 10px;
     transition: all 0.2s ease;
 }
 
-.month-nav-arrow:hover:not(:disabled) {
+.month-nav-arrow:active:not(:disabled) {
     transform: scale(1.1);
 }
 
@@ -41,4 +41,52 @@
     width: 24px;
     height: 24px;
     display: block;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .month-selector-header {
+        gap: 16px;
+        margin-top: 28px;
+    }
+
+    .month-selector-header .month-label {
+        font-size: 28px;
+        min-width: 160px;
+    }
+
+    .month-nav-arrow {
+        font-size: 28px;
+        padding: 0 8px;
+    }
+
+    .month-nav-arrow img {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 320px) {
+    .month-selector-header {
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .month-selector-header .month-label {
+        font-size: 24px;
+        min-width: 140px;
+    }
+
+    .month-nav-arrow {
+        font-size: 24px;
+        padding: 0 6px;
+    }
+
+    .month-nav-arrow img {
+        width: 20px;
+        height: 20px;
+    }
 }

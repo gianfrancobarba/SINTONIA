@@ -44,10 +44,12 @@ const EditDiaryPage: React.FC = () => {
         setIsLoading(true);
         try {
             await updateDiaryPage(state.page.id, { title, content });
-            setShowToast(true);
-            setTimeout(() => {
-                navigate('/diary');
-            }, 2000);
+            navigate('/diary', {
+                state: {
+                    toastMessage: 'Pagina modificata con successo!',
+                    toastType: 'success'
+                }
+            });
         } catch (error) {
             console.error('Error updating diary page:', error);
             alert('Errore durante la modifica. Riprova.');

@@ -4,6 +4,7 @@ import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import QuestionCard from '../components/QuestionCard.tsx';
 import QuestionScale from '../components/QuestionScale.tsx';
 import ProgressIndicator from '../components/ProgressIndicator.tsx';
+import LoadingSpinner from '../components/LoadingSpinner';
 import type { GetQuestionarioDto, Risposta } from '../types/questionario';
 import Toast from '../components/Toast';
 import '../css/QuestionnaireCompilation.css';
@@ -84,10 +85,12 @@ const QuestionnaireCompilation: React.FC = () => {
 
                 await response.json();
 
-                setShowToast(true);
-                setTimeout(() => {
-                    navigate('/questionari');
-                }, 2000);
+                navigate('/questionari', {
+                    state: {
+                        toastMessage: 'Questionario inviato con successo!',
+                        toastType: 'success'
+                    }
+                });
             } catch (err) {
                 console.error('Error submitting questionario:', err);
                 setError('Errore nell\'invio del questionario');
@@ -108,7 +111,11 @@ const QuestionnaireCompilation: React.FC = () => {
     };
 
     if (loading) {
-        return <div className="loading-screen">Caricamento...</div>;
+        return (
+            <div className="loading-screen">
+                <LoadingSpinner />
+            </div>
+        );
     }
 
     if (error || !questionario) {

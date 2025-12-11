@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import QuickNote from '../components/QuickNote';
 import StreakStatus from '../components/StreakStatus';
@@ -9,18 +10,41 @@ import { getHomeDashboard } from '../services/home.service';
 import { checkInitialQuestionnaires } from '../services/questionari.service';
 import type { HomeDashboardDto } from '../types/home';
 import '../css/Home.css';
+import LoadingSpinner from '../components/LoadingSpinner';
+import Toast from '../components/Toast';
+import { useCache } from '../contexts/CacheContext';
 
 const Home: React.FC = () => {
-    const [data, setData] = useState<HomeDashboardDto | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { homeData, setHomeData } = useCache();
+    // Loading is true only if we don't have cached data yet
+    const [loading, setLoading] = useState(!homeData);
     const [showInitialModal, setShowInitialModal] = useState(false);
     const [pendingQuestionnaires, setPendingQuestionnaires] = useState<string[]>([]);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+    const location = useLocation();
+
+    // Handle Toast from navigation state
+    useEffect(() => {
+        const state = location.state as { toastMessage?: string; toastType?: 'success' | 'error' } | null;
+        if (state?.toastMessage) {
+            setToast({
+                message: state.toastMessage,
+                type: state.toastType || 'success'
+            });
+            // Clear state
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                // If we don't have data, show loading. If we do, we just refresh in background.
+                if (!homeData) setLoading(true);
+
                 const dashboardData = await getHomeDashboard();
-                setData(dashboardData);
+                setHomeData(dashboardData);
 
                 // Check if initial questionnaires are completed
                 // Only show modal once per session (after login)
@@ -46,25 +70,38 @@ const Home: React.FC = () => {
     }, []);
 
     if (loading) {
-        return <div className="loading-screen">Caricamento...</div>;
+        return (
+            <div className="loading-screen">
+                <LoadingSpinner />
+            </div>
+        );
     }
 
-    if (!data) {
+    if (!homeData && !loading) {
         return <div className="error-screen">Errore nel caricamento dei dati.</div>;
     }
 
+    if (!homeData) return null; // Should be covered by loading spinner, but for safety
+
     return (
         <div className="home-page">
-            <Header data={data} />
+            <Header data={homeData} />
             <QuickNote />
-            <StreakStatus data={data} />
-            <Calendar days={data.calendarDays} />
-            <SuggestedPosts posts={data.suggestedPosts} />
+            <StreakStatus data={homeData} />
+            <Calendar days={homeData.calendarDays} />
+            <SuggestedPosts posts={homeData.suggestedPosts} />
             <InitialQuestionnairesModal
                 isOpen={showInitialModal}
                 onClose={() => setShowInitialModal(false)}
                 pendingQuestionnaires={pendingQuestionnaires}
             />
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

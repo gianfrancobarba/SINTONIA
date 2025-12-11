@@ -23,10 +23,12 @@ const NewDiaryPage: React.FC = () => {
         setIsLoading(true);
         try {
             await createDiaryPage({ title, content });
-            setShowToast(true);
-            setTimeout(() => {
-                navigate('/diary');
-            }, 2000);
+            navigate('/diary', {
+                state: {
+                    toastMessage: 'Pagina salvata con successo!',
+                    toastType: 'success'
+                }
+            });
         } catch (error) {
             console.error('Error saving diary page:', error);
             alert('Errore durante il salvataggio. Riprova.');

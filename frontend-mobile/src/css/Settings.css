@@ -17,7 +17,7 @@
 .settings-header .header-content {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .settings-back-btn {
@@ -41,7 +41,7 @@
     filter: brightness(0) invert(1);
 }
 
-.settings-back-btn:hover {
+.settings-back-btn:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -98,7 +98,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.settings-item:hover {
+.settings-item:active {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
@@ -134,66 +134,102 @@
 }
 
 /* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(4px);
+/* Modal styles removed - using ConfirmDeleteModal */
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .settings-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .settings-title {
+        font-size: 22px;
+    }
+
+    .settings-back-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .settings-back-btn img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .settings-content {
+        padding: 16px 16px 32px;
+    }
+
+    .settings-section-title {
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+
+    .settings-item {
+        padding: 16px 18px;
+        border-radius: 18px;
+        margin-bottom: 10px;
+    }
+
+    .settings-item-text {
+        font-size: 15px;
+    }
+
+
 }
 
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 24px;
-    width: 90%;
-    max-width: 340px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
+@media (max-width: 320px) {
+    .settings-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
 
-.modal-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1F1F1F;
-    margin: 0 0 12px 0;
-}
+    .settings-title {
+        font-size: 20px;
+    }
 
-.modal-message {
-    font-size: 16px;
-    color: #6B7280;
-    margin: 0 0 24px 0;
-    line-height: 1.5;
-}
+    .settings-back-btn {
+        width: 34px;
+        height: 34px;
+    }
 
-.modal-buttons {
-    display: flex;
-    gap: 12px;
-}
+    .settings-back-btn img {
+        width: 16px;
+        height: 16px;
+    }
 
-.modal-button {
-    flex: 1;
-    padding: 14px;
-    border-radius: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-}
+    .settings-content {
+        padding: 14px 12px 28px;
+    }
 
-.modal-button-cancel {
-    background: #F3F4F6;
-    color: #4B5563;
-}
+    .settings-section {
+        margin-bottom: 24px;
+    }
 
-.modal-button-confirm {
-    background: #DC2626;
-    color: white;
+    .settings-section-title {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .settings-item {
+        padding: 14px 16px;
+        border-radius: 16px;
+        margin-bottom: 8px;
+    }
+
+    .settings-item-left {
+        gap: 12px;
+    }
+
+    .settings-item-text {
+        font-size: 14px;
+    }
+
+
 }

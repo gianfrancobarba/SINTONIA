@@ -7,6 +7,7 @@ import type { ForumCategory, UpdatePostDto } from '../types/forum';
 import '../css/EditPost.css';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import Toast from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const EditPost: React.FC = () => {
     const navigate = useNavigate();
@@ -72,10 +73,12 @@ const EditPost: React.FC = () => {
                 category,
             };
             await updatePost(id, updateData);
-            setShowToast(true);
-            setTimeout(() => {
-                navigate('/forum');
-            }, 2000);
+            navigate('/forum', {
+                state: {
+                    toastMessage: 'Domanda modificata con successo!',
+                    toastType: 'success'
+                }
+            });
         } catch (error) {
             console.error('Error updating post:', error);
             alert('Errore nella modifica del post');
@@ -92,7 +95,11 @@ const EditPost: React.FC = () => {
     };
 
     if (isLoading) {
-        return <div className="loading-screen">Caricamento...</div>;
+        return (
+            <div className="loading-screen">
+                <LoadingSpinner />
+            </div>
+        );
     }
 
     return (
@@ -113,13 +120,13 @@ const EditPost: React.FC = () => {
             {/* Form */}
             <form className="edit-post-form" onSubmit={handleSubmit}>
                 {/* Campo Titolo */}
-                <div className="form-group">
-                    <label htmlFor="title" className="form-label-bold">Titolo</label>
-                    <div className="input-with-icon">
+                <div className="form-section">
+                    <label htmlFor="title" className="form-label">Titolo</label>
+                    <div className="title-input-container">
                         <input
                             id="title"
                             type="text"
-                            className="form-input-new"
+                            className="title-input"
                             placeholder="Inserisci un titolo"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -130,12 +137,12 @@ const EditPost: React.FC = () => {
                 </div>
 
                 {/* Campo Contenuto con contatore */}
-                <div className="form-group">
-                    <label htmlFor="content" className="form-label-bold">Contenuto</label>
-                    <div className="textarea-container card">
+                <div className="form-section">
+                    <label htmlFor="content" className="form-label">Contenuto</label>
+                    <div className="textarea-container">
                         <textarea
                             id="content"
-                            className="form-textarea-new"
+                            className="content-textarea"
                             placeholder="Descrivi la tua domanda in dettaglio..."
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
@@ -148,7 +155,7 @@ const EditPost: React.FC = () => {
                 </div>
 
                 {/* Selezione categoria (campo cliccabile) */}
-                <div className="form-group">
+                <div className="form-section">
                     <div
                         className="category-selector"
                         onClick={() => !isSubmitting && setShowCategoryModal(true)}

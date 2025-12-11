@@ -5,6 +5,7 @@ import { User, Cake, MapPin, Mail, AlertCircle } from 'lucide-react';
 import { getPersonalInfo, updatePersonalInfo } from '../services/settings.service.ts';
 import type { PersonalInfoDto } from '../types/settings.ts';
 import Toast from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
 import '../css/PersonalInfo.css';
 
 const PersonalInfo: React.FC = () => {
@@ -127,8 +128,8 @@ const PersonalInfo: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="personal-info-page">
-                <div className="loading">Caricamento...</div>
+            <div className="loading-screen">
+                <LoadingSpinner />
             </div>
         );
     }

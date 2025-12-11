@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Plus, X } from 'lucide-react';
 import { getMoodHistory, type MoodHistoryEntry } from '../services/mood.service';
 import { MOOD_CONFIGS } from '../types/mood';
@@ -7,9 +7,11 @@ import MoodIcon from '../components/MoodIcons';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import RightArrowIcon from '../assets/icons/RightArrow.svg';
 import '../css/MoodHistory.css';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const MoodHistory: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [entries, setEntries] = useState<MoodHistoryEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -39,6 +41,26 @@ const MoodHistory: React.FC = () => {
         };
         fetchHistory();
     }, []);
+
+    // Check for openDate in navigation state
+    useEffect(() => {
+        if (entries.length > 0 && location.state && (location.state as any).openDate) {
+            const targetDate = (location.state as any).openDate;
+            const entryToOpen = entries.find(e => e.date === targetDate);
+
+            if (entryToOpen) {
+                // Ensure we are viewing the correct month/year
+                const entryDate = new Date(entryToOpen.date);
+                setCurrentMonth(entryDate.getMonth());
+                setCurrentYear(entryDate.getFullYear());
+
+                setSelectedEntry(entryToOpen);
+
+                // Clear state to prevent reopening on reload (optional, but cleaner)
+                window.history.replaceState({}, document.title);
+            }
+        }
+    }, [entries, location.state]);
 
     // Filter entries by current month/year
     const filteredEntries = useMemo(() => {
@@ -120,8 +142,8 @@ const MoodHistory: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="mood-history-page">
-                <div className="loading-screen">Caricamento storico...</div>
+            <div className="loading-screen">
+                <LoadingSpinner />
             </div>
         );
     }

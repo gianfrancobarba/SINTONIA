@@ -8,16 +8,23 @@ import type { ForumPost, ForumCategory } from '../types/forum';
 import '../css/Forum.css';
 import Toast from '../components/Toast';
 import NewDiaryPageIcon from '../assets/icons/NewDiaryPage.svg';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { useCache } from '../contexts/CacheContext';
 
 const Forum: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [myQuestions, setMyQuestions] = useState<ForumPost[]>([]);
-    const [publicQuestions, setPublicQuestions] = useState<ForumPost[]>([]);
-    const [loading, setLoading] = useState(true);
+
+    const { forumData, setForumData } = useCache();
+    // Helper accessors
+    const myQuestions = forumData?.myQuestions || [];
+    const publicQuestions = forumData?.publicQuestions || [];
+
+    // Loading is true only if we don't have cached data yet
+    const [loading, setLoading] = useState(!forumData);
     const [selectedCategories, setSelectedCategories] = useState<ForumCategory[]>([]);
-    const [showToast, setShowToast] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [filter, setFilter] = useState<'all' | 'mine'>('all'); // New filter state
 
     useEffect(() => {
@@ -43,12 +50,23 @@ const Forum: React.FC = () => {
         }
     }, [loading, searchParams, setSearchParams]);
 
+    // Handle Toast from navigation state
+    useEffect(() => {
+        if (location.state?.toastMessage) {
+            setToast({
+                message: location.state.toastMessage,
+                type: location.state.toastType || 'success'
+            });
+            // Clear state
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
+
     const fetchPosts = async () => {
         try {
-            setLoading(true);
+            if (!forumData) setLoading(true);
             const data = await getForumPosts();
-            setMyQuestions(data.myQuestions);
-            setPublicQuestions(data.publicQuestions);
+            setForumData(data);
         } catch (error) {
             console.error('Error fetching forum posts:', error);
         } finally {
@@ -67,7 +85,7 @@ const Forum: React.FC = () => {
     const handleDeletePost = async (id: string) => {
         try {
             await deletePost(id);
-            setShowToast(true);
+            setToast({ message: 'Domanda eliminata con successo!', type: 'success' });
             fetchPosts();
         } catch (error) {
             console.error('Error deleting post:', error);
@@ -92,8 +110,16 @@ const Forum: React.FC = () => {
     // 'mine' = only my questions
     const displayQuestions = filter === 'mine' ? filteredMyQuestions : filteredPublicQuestions;
 
-    if (loading) {
-        return <div className="loading-screen">Caricamento...</div>;
+    if (!forumData && !loading) {
+        // Show empty state or error if absolutely no data and no loading
+    }
+
+    if (loading && !forumData) {
+        return (
+            <div className="loading-screen">
+                <LoadingSpinner />
+            </div>
+        );
     }
 
     return (
@@ -111,13 +137,13 @@ const Forum: React.FC = () => {
                         className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
                         onClick={() => setFilter('all')}
                     >
-                        Pubbliche
+                        I post degli altri
                     </button>
                     <button
                         className={`filter-btn ${filter === 'mine' ? 'active' : ''}`}
                         onClick={() => setFilter('mine')}
                     >
-                        Le mie
+                        I tuoi post
                     </button>
                 </div>
             </div>
@@ -127,7 +153,7 @@ const Forum: React.FC = () => {
                 {displayQuestions.length > 0 ? (
                     <div className="forum-section">
                         <h2 className="section-title">
-                            {filter === 'mine' ? 'Le Mie Domande' : 'Domande Pubbliche'}
+                            {filter === 'mine' ? 'I Tuoi Post' : 'Post degli Altri'}
                         </h2>
                         <div className="posts-list">
                             {displayQuestions.map(post => (
@@ -164,10 +190,11 @@ const Forum: React.FC = () => {
                 <img src={NewDiaryPageIcon} alt="" />
             </button>
 
-            {showToast && (
+            {toast && (
                 <Toast
-                    message="Domanda eliminata con successo!"
-                    onClose={() => setShowToast(false)}
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
                 />
             )}
         </div>

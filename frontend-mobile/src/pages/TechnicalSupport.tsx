@@ -37,10 +37,12 @@ const TechnicalSupport: React.FC = () => {
                 descrizione: descrizione.trim(),
             });
             if (response.success) {
-                setSuccess(true);
-                setTimeout(() => {
-                    navigate('/settings');
-                }, 2000);
+                navigate('/settings', {
+                    state: {
+                        toastMessage: 'Richiesta inviata con successo!',
+                        toastType: 'success'
+                    }
+                });
             } else {
                 setError('Errore durante l\'invio: ' + (response.message || 'Riprova più tardi.'));
             }

@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-color: var(--secondary-bg);
     padding: 20px;
     opacity: 0;
     transition: opacity 0.5s ease-in;
@@ -28,7 +28,7 @@
 }
 
 .spid-title {
-    font-size: 2rem;
+    font-size: 32px;
     text-align: center;
     color: #333;
     margin-bottom: 20px;
@@ -37,7 +37,7 @@
 
 .spid-description {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 14px;
     color: #666;
     line-height: 1.6;
     margin-bottom: 30px;
@@ -50,7 +50,7 @@
     border: none;
     padding: 15px 40px;
     border-radius: 25px;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     display: flex;
@@ -61,12 +61,12 @@
     transition: background 0.3s;
 }
 
-.spid-login-btn:hover {
+.spid-login-btn:active {
     background-color: #0052a3;
 }
 
 .spid-icon {
-    font-size: 1.2rem;
+    font-size: 19px;
 }
 
 .spid-links {
@@ -79,10 +79,10 @@
 .spid-links a {
     color: #0066cc;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 14px;
 }
 
-.spid-links a:hover {
+.spid-links a:active {
     text-decoration: underline;
 }
 
@@ -176,7 +176,7 @@
     border-bottom: none;
 }
 
-.provider-item:hover {
+.provider-item:active {
     background: #f5f9ff;
 }
 
@@ -185,4 +185,121 @@
     width: auto;
     max-width: 140px;
     object-fit: contain;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .spid-info-container {
+        padding: 16px;
+    }
+
+    .spid-info-card {
+        padding: 32px 24px;
+        border-radius: 12px;
+    }
+
+    .spid-title {
+        font-size: 27px;
+        margin-bottom: 16px;
+    }
+
+    .spid-description {
+        font-size: 13px;
+        margin-bottom: 24px;
+    }
+
+    .spid-login-btn {
+        padding: 14px 32px;
+        font-size: 15px;
+    }
+
+    .spid-links {
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .spid-links a {
+        font-size: 13px;
+    }
+
+    .spid-providers-list {
+        max-height: 220px;
+    }
+
+    .provider-item {
+        padding: 10px 14px;
+    }
+
+    .provider-logo-img {
+        height: 28px;
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 320px) {
+    .spid-info-container {
+        padding: 12px;
+    }
+
+    .spid-info-card {
+        padding: 24px 16px;
+        border-radius: 10px;
+    }
+
+    .spid-title {
+        font-size: 24px;
+        margin-bottom: 14px;
+    }
+
+    .spid-description {
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .spid-login-btn {
+        padding: 12px 24px;
+        font-size: 14px;
+        border-radius: 22px;
+    }
+
+    .spid-links {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .spid-links a {
+        font-size: 12px;
+    }
+
+    .spid-logos {
+        gap: 16px;
+        padding-top: 16px;
+    }
+
+    .spid-logos img {
+        height: 24px;
+    }
+
+    .spid-dropdown-container {
+        margin-bottom: 40px;
+    }
+
+    .spid-providers-list {
+        max-height: 200px;
+        border-bottom-left-radius: 22px;
+        border-bottom-right-radius: 22px;
+    }
+
+    .provider-item {
+        padding: 10px 12px;
+    }
+
+    .provider-logo-img {
+        height: 26px;
+        max-width: 110px;
+    }
 }

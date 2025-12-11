@@ -28,6 +28,8 @@ import EditDiaryPage from './pages/EditDiaryPage';
 import MainLayout from './components/MainLayout';
 import MoodEntry from './pages/MoodEntry';
 import MoodHistory from './pages/MoodHistory';
+import { NotificationProvider } from './contexts/NotificationContext';
+import { CacheProvider } from './contexts/CacheContext';
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -46,161 +48,165 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Splash />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/spid-info" element={<SPIDInfo />} />
-        <Route path="/spid-callback" element={<SPIDCallback />} />
+      <CacheProvider>
+        <NotificationProvider>
+          <Routes>
+            <Route path="/" element={<Splash />} />
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/spid-info" element={<SPIDInfo />} />
+            <Route path="/spid-callback" element={<SPIDCallback />} />
 
-        {/* Terms page should be protected but accessible without terms accepted */}
-        <Route path="/terms" element={
-          isAuthenticated() ? <Terms /> : <Navigate to="/spid-info" replace />
-        } />
+            {/* Terms page should be protected but accessible without terms accepted */}
+            <Route path="/terms" element={
+              isAuthenticated() ? <Terms /> : <Navigate to="/spid-info" replace />
+            } />
 
-        <Route element={<MainLayout />}>
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/forum"
-            element={
-              <PrivateRoute>
-                <Forum />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/notifications"
-            element={
-              <PrivateRoute>
-                <Notifications />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/diary"
-            element={
-              <PrivateRoute>
-                <Diary />
-              </PrivateRoute>
-            }
-          />
-        </Route>
+            <Route element={<MainLayout />}>
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/forum"
+                element={
+                  <PrivateRoute>
+                    <Forum />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
+                  <PrivateRoute>
+                    <Notifications />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/diary"
+                element={
+                  <PrivateRoute>
+                    <Diary />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
 
-        {/* Routes without BottomNavigation */}
-        <Route
-          path="/questionari"
-          element={
-            <PrivateRoute>
-              <Questionari />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <PrivateRoute>
-              <Settings />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/badges"
-          element={
-            <PrivateRoute>
-              <Badges />
-            </PrivateRoute>
-          }
-        />
+            {/* Routes without BottomNavigation */}
+            <Route
+              path="/questionari"
+              element={
+                <PrivateRoute>
+                  <Questionari />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/badges"
+              element={
+                <PrivateRoute>
+                  <Badges />
+                </PrivateRoute>
+              }
+            />
 
-        {/* Sub-pages without BottomNavigation */}
-        <Route
-          path="/settings/personal-info"
-          element={
-            <PrivateRoute>
-              <PersonalInfo />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/settings/support"
-          element={
-            <PrivateRoute>
-              <TechnicalSupport />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/compilation"
-          element={
-            <PrivateRoute>
-              <QuestionnaireCompilation />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/forum/create"
-          element={
-            <PrivateRoute>
-              <CreatePost />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/forum/edit/:id"
-          element={
-            <PrivateRoute>
-              <EditPost />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/new-diary-page"
-          element={
-            <PrivateRoute>
-              <NewDiaryPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/edit-diary-page"
-          element={
-            <PrivateRoute>
-              <EditDiaryPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/mood-entry"
-          element={
-            <PrivateRoute>
-              <MoodEntry />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/mood-history"
-          element={
-            <PrivateRoute>
-              <MoodHistory />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/spid-error" element={<SPIDError />} />
-      </Routes>
+            {/* Sub-pages without BottomNavigation */}
+            <Route
+              path="/settings/personal-info"
+              element={
+                <PrivateRoute>
+                  <PersonalInfo />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings/support"
+              element={
+                <PrivateRoute>
+                  <TechnicalSupport />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/compilation"
+              element={
+                <PrivateRoute>
+                  <QuestionnaireCompilation />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/forum/create"
+              element={
+                <PrivateRoute>
+                  <CreatePost />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/forum/edit/:id"
+              element={
+                <PrivateRoute>
+                  <EditPost />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/new-diary-page"
+              element={
+                <PrivateRoute>
+                  <NewDiaryPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-diary-page"
+              element={
+                <PrivateRoute>
+                  <EditDiaryPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/mood-entry"
+              element={
+                <PrivateRoute>
+                  <MoodEntry />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/mood-history"
+              element={
+                <PrivateRoute>
+                  <MoodHistory />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/spid-error" element={<SPIDError />} />
+          </Routes>
+        </NotificationProvider>
+      </CacheProvider>
     </Router>
   );
 }

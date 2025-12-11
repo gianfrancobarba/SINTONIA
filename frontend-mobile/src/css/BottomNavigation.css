@@ -40,7 +40,7 @@
     cursor: pointer;
     padding: 12px;
     border-radius: 24px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.1s cubic-bezier(0.2, 0, 0, 1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,15 +58,14 @@
     transform: scale(1.05);
 }
 
-/* Hover Effects */
-.nav-item:hover:not(.active) {
+/* Touch Press Effects */
+.nav-item:active:not(.active) {
     background: rgba(0, 0, 0, 0.05);
-    transform: translateY(-2px);
 }
 
-/* Active Press Effect */
+/* Active Press Effect - Removed to prevent jitter/lag perception */
 .nav-item:active {
-    transform: scale(0.95);
+    /* transform: scale(0.95); */
 }
 
 /* Icon Styling - Base size 28px */
@@ -74,7 +73,7 @@
     width: 28px;
     height: 28px;
     display: block;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease-out;
     /* Azzurro color filter for #88b7b5 */
     filter: invert(72%) sepia(13%) saturate(808%) hue-rotate(130deg) brightness(92%) contrast(86%);
 }

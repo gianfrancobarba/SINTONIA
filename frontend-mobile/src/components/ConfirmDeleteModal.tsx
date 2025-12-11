@@ -8,6 +8,8 @@ interface ConfirmDeleteModalProps {
     onCancel: () => void;
     title?: string;
     message?: string;
+    confirmText?: string;
+    cancelText?: string;
 }
 
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
@@ -15,7 +17,9 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     onConfirm,
     onCancel,
     title = "Conferma eliminazione",
-    message = "Sei sicuro di voler procedere?"
+    message = "Sei sicuro di voler procedere?",
+    confirmText = "Elimina",
+    cancelText = "Annulla"
 }) => {
     // Blocca lo scroll quando il modal è aperto
     useEffect(() => {
@@ -57,13 +61,13 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
                         className="confirm-modal-btn cancel-btn"
                         onClick={handleCancel}
                     >
-                        Annulla
+                        {cancelText}
                     </button>
                     <button
                         className="confirm-modal-btn delete-btn"
                         onClick={handleConfirm}
                     >
-                        Elimina
+                        {confirmText}
                     </button>
                 </div>
             </div>

@@ -63,7 +63,7 @@
     padding: 0;
 }
 
-.add-diary-button:hover {
+.add-diary-button:active {
     background: rgba(255, 255, 255, 0.35);
 }
 
@@ -168,30 +168,32 @@
     transition: all 0.2s ease;
 }
 
-.retry-btn:hover {
+.retry-btn:active {
     background: #1F4554;
     transform: translateY(-2px);
 }
 
-/* Add Button - Bottom Right (not floating) */
+/* Add Button - Fixed Floating (matching Forum FAB) */
 .diary-fab-container {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0px 20px 0px;
+    /* Container is kept for JSX structure, but child uses fixed positioning */
 }
 
 .diary-fab {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #2C5F6F;
+    background: var(--primary-dark);
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(44, 95, 111, 0.4);
-    transition: all 0.3s ease;
+    z-index: 150;
+    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.4);
+    transition: all 0.2s ease;
     padding: 0;
 }
 
@@ -201,14 +203,9 @@
     filter: brightness(0) invert(1);
 }
 
-.diary-fab:hover {
-    transform: scale(1.1);
-    background: #1F4554;
-    box-shadow: 0 10px 25px rgba(44, 95, 111, 0.5);
-}
-
 .diary-fab:active {
     transform: scale(0.95);
+    background: #163A4A;
 }
 
 /* Responsive */
@@ -244,6 +241,91 @@
     .diary-page-counter {
         font-size: 13px;
         padding: 6px 16px;
+    }
+
+    .diary-main-card {
+        border-radius: 45px;
+        margin: 16px 0 80px;
+    }
+
+    .diary-content {
+        padding: 16px;
+    }
+
+    .diary-fab {
+        width: 52px;
+        height: 52px;
+        bottom: 85px;
+        right: 16px;
+    }
+
+    .diary-fab img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 320px) {
+    .diary-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .diary-title {
+        font-size: 22px;
+    }
+
+    .diary-subtitle {
+        font-size: 12px;
+    }
+
+    .add-diary-button {
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
+    }
+
+    .diary-main-card {
+        border-radius: 40px;
+        margin: 16px 0 80px;
+    }
+
+    .diary-content {
+        padding: 16px;
+    }
+
+    .diary-cards-container {
+        height: 400px;
+    }
+
+    .diary-empty {
+        padding: 60px 24px;
+    }
+
+    .diary-empty p {
+        font-size: 16px;
+    }
+
+    .diary-empty-hint {
+        font-size: 13px;
+    }
+
+    .retry-btn {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .diary-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 80px;
+        right: 12px;
+    }
+
+    .diary-fab img {
+        width: 24px;
+        height: 24px;
     }
 }
 

@@ -33,15 +33,17 @@
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .mood-history-header .back-button img {
     width: 20px;
     height: 20px;
     filter: brightness(0) invert(1);
+    display: block;
 }
 
-.mood-history-header .back-button:hover {
+.mood-history-header .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -89,7 +91,7 @@
     transition: opacity 0.2s ease;
 }
 
-.month-navigator .nav-arrow:hover:not(.disabled) {
+.month-navigator .nav-arrow:active:not(.disabled) {
     opacity: 1;
 }
 
@@ -167,6 +169,7 @@
     min-width: 0;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
 }
 
 .card-date {
@@ -181,12 +184,19 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .mood-icon-wrapper {
     flex-shrink: 0;
     width: 48px;
     height: 48px;
+}
+
+.mood-icon-wrapper svg {
+    width: 100%;
+    height: 100%;
 }
 
 .mood-info {
@@ -245,8 +255,8 @@
     line-height: 1.5;
     margin: 0;
     display: -webkit-box;
-    line-clamp: 3;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
@@ -271,7 +281,7 @@
     transition: all 0.3s ease;
 }
 
-.mood-fab:hover {
+.mood-fab:active {
     transform: scale(1.1);
     background: #1F4554;
 }
@@ -298,17 +308,30 @@
         border-bottom-right-radius: 40px;
     }
 
-    .mood-history-header .page-title {
+    .mood-history-header .header-title {
         font-size: 20px;
     }
 
     .mood-history-header .back-button {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
     }
 
-    .mood-history-header .header-spacer {
-        width: 40px;
+    .mood-history-header .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mood-history-header .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mood-fab {
+        width: 50px;
+        height: 50px;
+        bottom: 16px;
+        right: 16px;
     }
 
     .mood-history-main-card {
@@ -318,21 +341,38 @@
     }
 
     .mood-entries-grid {
-        gap: 8px;
+        gap: 10px;
     }
 
     .mood-entry-card {
-        padding: 10px;
-        border-radius: 12px;
+        padding: 12px;
+        border-radius: 16px;
+        gap: 8px;
+    }
+
+    .card-mood-row {
+        gap: 8px;
     }
 
     .mood-icon-wrapper {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
     }
 
     .mood-name {
+        font-size: 13px;
+    }
+
+    .card-date {
         font-size: 12px;
+    }
+
+    .intensity-row {
+        gap: 5px;
+    }
+
+    .intensity-value {
+        font-size: 11px;
     }
 }
 
@@ -405,7 +445,7 @@
     transition: all 0.2s ease;
 }
 
-.modal-close-btn:hover {
+.modal-close-btn:active {
     background: #E0E0E0;
     color: #333;
 }
@@ -504,4 +544,105 @@
 
 .mood-entry-card:active {
     transform: scale(0.98);
+}
+
+/* 320px breakpoint */
+@media (max-width: 320px) {
+    .mood-history-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .mood-history-header .header-title {
+        font-size: 18px;
+    }
+
+    .mood-history-header .back-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .mood-history-header .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .mood-fab {
+        width: 44px;
+        height: 44px;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .mood-fab svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mood-history-main-card {
+        margin: 12px 10px 85px;
+        padding: 14px 10px;
+        border-radius: 35px;
+    }
+
+    .mood-entries-grid {
+        gap: 6px;
+    }
+
+    .mood-entry-card {
+        padding: 8px 6px;
+        border-radius: 12px;
+        gap: 4px;
+    }
+
+    .card-mood-row {
+        gap: 4px;
+    }
+
+    .card-date {
+        font-size: 11px;
+    }
+
+    .mood-icon-wrapper {
+        width: 28px;
+        height: 28px;
+    }
+
+    .mood-name {
+        font-size: 11px;
+    }
+
+    .intensity-row {
+        gap: 4px;
+        margin-top: 2px;
+    }
+
+    .intensity-bar {
+        height: 4px;
+    }
+
+    .intensity-value {
+        font-size: 11px;
+    }
+
+    .mood-detail-modal {
+        padding: 20px;
+        border-radius: 20px;
+        max-width: 92%;
+    }
+
+    .modal-mood-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .modal-mood-name {
+        font-size: 20px;
+    }
+
+    .modal-close-btn {
+        width: 32px;
+        height: 32px;
+    }
 }

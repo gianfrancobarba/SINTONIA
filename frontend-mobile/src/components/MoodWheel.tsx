@@ -162,7 +162,7 @@ const MoodWheel: React.FC<MoodWheelProps> = ({ value, onChange, onConfirm, onDel
                     {selectedConfig ? (
                         <MoodIcon mood={selectedConfig.umore} size={140} />
                     ) : (
-                        <div style={{ fontSize: '7rem' }}>😐</div>
+                        <div style={{ fontSize: '7rem' }}></div>
                     )}
                 </div>
                 <div className="tap-hint">Tocca per continuare</div>

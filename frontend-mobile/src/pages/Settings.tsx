@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User, MessageCircle, LogOut, ChevronRight } from 'lucide-react';
 import { logout } from '../services/spid-auth.service';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
+import Toast from '../components/Toast';
 import '../css/Settings.css';
 
 const Settings: React.FC = () => {
     const navigate = useNavigate();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const location = useLocation();
+
+    // Handle Toast from navigation state
+    useEffect(() => {
+        const state = location.state as { toastMessage?: string; toastType?: 'success' | 'error' } | null;
+        if (state?.toastMessage) {
+            setToast({
+                message: state.toastMessage,
+                type: state.toastType || 'success'
+            });
+            // Clear state
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
 
     const handleBack = () => {
         navigate('/profile');
@@ -84,20 +101,21 @@ const Settings: React.FC = () => {
 
             {/* Logout Confirmation Modal */}
             {showLogoutModal && (
-                <div className="modal-overlay" onClick={handleLogoutCancel}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className="modal-title">Conferma Uscita</h2>
-                        <p className="modal-message">Sei sicuro di voler uscire?</p>
-                        <div className="modal-buttons">
-                            <button className="modal-button modal-button-cancel" onClick={handleLogoutCancel}>
-                                Annulla
-                            </button>
-                            <button className="modal-button modal-button-confirm" onClick={handleLogoutConfirm}>
-                                Esci
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <ConfirmDeleteModal
+                    title="Conferma Uscita"
+                    message="Sei sicuro di voler uscire?"
+                    confirmText="Esci"
+                    onConfirm={handleLogoutConfirm}
+                    onCancel={handleLogoutCancel}
+                />
+            )}
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
             )}
         </div>
     );

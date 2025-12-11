@@ -17,7 +17,7 @@
 .technical-support-header .header-content {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .technical-support-header .back-button {
@@ -32,6 +32,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .technical-support-header .back-button img {
@@ -40,7 +41,7 @@
     filter: brightness(0) invert(1);
 }
 
-.technical-support-header .back-button:hover {
+.technical-support-header .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -183,7 +184,7 @@
     box-shadow: 0 8px 24px rgba(44, 95, 111, 0.25);
 }
 
-.submit-button:hover:not(:disabled) {
+.submit-button:active:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(44, 95, 111, 0.35);
 }
@@ -250,4 +251,177 @@
     color: #6B7280;
     margin-top: 8px;
     padding-right: 4px;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .technical-support-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .header-title {
+        font-size: 22px;
+    }
+
+    .technical-support-header .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .technical-support-header .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .technical-support-content {
+        padding: 16px 16px 32px;
+    }
+
+    .form-subtitle {
+        font-size: 15px;
+    }
+
+    .form-label {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .title-input-container {
+        padding: 12px 18px;
+        border-radius: 14px;
+    }
+
+    .title-input {
+        font-size: 15px;
+    }
+
+    .textarea-container {
+        padding: 20px;
+        border-radius: 20px;
+        min-height: 180px;
+    }
+
+    .content-textarea {
+        font-size: 15px;
+    }
+
+    .submit-button {
+        padding: 16px;
+        font-size: 16px;
+        border-radius: 18px;
+    }
+
+    .success-message {
+        padding: 40px 20px;
+    }
+
+    .success-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 40px;
+    }
+
+    .success-message h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 320px) {
+    .technical-support-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .header-title {
+        font-size: 20px;
+    }
+
+    .technical-support-header .back-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .technical-support-header .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .technical-support-content {
+        padding: 14px 12px 28px;
+    }
+
+    .form-header {
+        margin-bottom: 20px;
+    }
+
+    .form-subtitle {
+        font-size: 14px;
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .title-input-container {
+        padding: 11px 16px;
+        border-radius: 12px;
+    }
+
+    .title-input {
+        font-size: 14px;
+    }
+
+    .textarea-container {
+        padding: 16px;
+        border-radius: 18px;
+        min-height: 160px;
+    }
+
+    .content-textarea {
+        font-size: 14px;
+    }
+
+    .submit-button {
+        padding: 14px;
+        font-size: 15px;
+        border-radius: 16px;
+    }
+
+    .error-message {
+        padding: 12px 16px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    .success-message {
+        padding: 32px 16px;
+        border-radius: 20px;
+        margin-top: 30px;
+    }
+
+    .success-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .success-message h2 {
+        font-size: 18px;
+    }
+
+    .char-counter {
+        font-size: 11px;
+    }
 }

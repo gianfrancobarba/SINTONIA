@@ -21,7 +21,7 @@
 }
 
 .calendar-header h2 {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: 800;
     line-height: 1;
 }
@@ -111,8 +111,19 @@
 
 .day-item.active {
     background-color: #e0f2f1;
-    /* Sharp, dark shadow for active day */
     box-shadow: 0 8px 8px -4px rgba(0, 0, 0, 0.3);
+}
+
+.day-item.has-event:not(.active) {
+    background-color: #FAFAFA;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.day-item.has-event:active {
+    transform: scale(0.95);
+    background-color: #F0F0F0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .dot {
@@ -163,13 +174,112 @@
 }
 
 .day-name {
-    font-size: 0.75rem;
+    font-size: 12px;
     color: var(--text-gray);
     margin-bottom: 0;
 }
 
 .day-number {
-    font-size: 0.95rem;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text-dark);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .calendar-card {
+        padding: 12px;
+        margin: 0 16px 16px;
+        border-radius: 26px;
+    }
+
+    .calendar-header {
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .calendar-header h2 {
+        font-size: 28px;
+    }
+
+    .nav-arrow img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .day-item {
+        height: 78px;
+        border-radius: 18px;
+        padding: 6px 3px;
+        gap: 5px;
+    }
+
+    .day-name {
+        font-size: 11px;
+    }
+
+    .day-number {
+        font-size: 14px;
+    }
+
+    .add-mood-indicator {
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 320px) {
+    .calendar-section {
+        margin-top: 28px;
+    }
+
+    .calendar-card {
+        padding: 10px;
+        margin: 0 12px 14px;
+        border-radius: 22px;
+    }
+
+    .calendar-header {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .calendar-header h2 {
+        font-size: 24px;
+    }
+
+    .nav-arrow img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .day-item {
+        height: 70px;
+        border-radius: 16px;
+        padding: 5px 2px;
+        gap: 4px;
+    }
+
+    .day-name {
+        font-size: 11px;
+    }
+
+    .day-number {
+        font-size: 14px;
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .add-mood-indicator {
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+    }
 }

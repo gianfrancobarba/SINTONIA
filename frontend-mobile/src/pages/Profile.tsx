@@ -8,17 +8,20 @@ import profileAvatarWoman from '../assets/images/profile-avatar-woman.png';
 import profileAvatarMan from '../assets/images/profile-avatar-man.png';
 import diaryIcon from '../assets/icons/diary.svg';
 import questionnaireIcon from '../assets/icons/questionnaire.svg';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { useCache } from '../contexts/CacheContext';
 
 const Profile: React.FC = () => {
     const navigate = useNavigate();
-    const [profileData, setProfileData] = useState<ProfileDto | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { profileData, setProfileData } = useCache();
+    const [loading, setLoading] = useState(!profileData);
     const [error, setError] = useState<string | null>(null);
 
     // Fetch profile data on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if (!profileData) setLoading(true);
                 const data = await getProfileData();
                 setProfileData(data);
             } catch (err) {
@@ -36,8 +39,8 @@ const Profile: React.FC = () => {
     // Loading state
     if (loading) {
         return (
-            <div className="profile-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <div>Caricamento...</div>
+            <div className="loading-screen">
+                <LoadingSpinner />
             </div>
         );
     }

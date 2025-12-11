@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import type { ForumPost } from '../types/forum';
 import { formatRelativeTime, categoryInfo } from '../services/forum.service';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -23,8 +23,8 @@ const ForumPostCard: React.FC<ForumPostCardProps> = ({ post, isOwnPost = false, 
     const category = categoryInfo.find(c => c.id === post.category);
     const categoryColor = category?.color || '#888';
 
-    // Check if content is truncated
-    useEffect(() => {
+    // Check if content is truncated - useLayoutEffect to prevent flicker
+    useLayoutEffect(() => {
         if (contentRef.current) {
             setIsContentTruncated(contentRef.current.scrollHeight > contentRef.current.clientHeight);
         }

@@ -17,10 +17,9 @@
 }
 
 .header-content {
-    display: grid;
-    grid-template-columns: 40px 1fr 100px;
+    display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     max-width: 600px;
     margin: 0 auto;
 }
@@ -46,7 +45,7 @@
     filter: brightness(0) invert(1);
 }
 
-.personal-info-page .back-button:hover {
+.personal-info-page .back-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -56,10 +55,11 @@
 }
 
 .header-title {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
     margin: 0;
-    text-align: center;
+    text-align: left;
+    flex: 1;
 }
 
 .edit-button,
@@ -70,15 +70,15 @@
     border-radius: 20px;
     color: white;
     padding: 8px 16px;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
 }
 
-.edit-button:hover,
-.cancel-button:hover {
+.edit-button:active,
+.cancel-button:active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -105,7 +105,7 @@
 }
 
 .form-label {
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text-dark);
     margin-left: 10px;
@@ -151,7 +151,7 @@
 .title-input {
     border: none;
     outline: none;
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--text-dark);
     width: 100%;
     background: transparent;
@@ -172,7 +172,7 @@
     border: 1px solid #FECACA;
     border-radius: 12px;
     color: #991B1B;
-    font-size: 0.85rem;
+    font-size: 14px;
     font-weight: 500;
     animation: slideDown 0.2s ease-out forwards;
 }
@@ -193,7 +193,7 @@
     border: none;
     padding: 16px;
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     margin-top: 20px;
@@ -209,7 +209,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.submit-button.active:hover {
+.submit-button.active:active {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     background-color: #3a8d5f;
@@ -236,4 +236,128 @@
 
 .error {
     color: #ef4444;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .personal-info-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .header-content {
+        gap: 12px;
+    }
+
+    .personal-info-page .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .personal-info-page .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .header-title {
+        font-size: 20px;
+    }
+
+    .edit-button,
+    .cancel-button {
+        padding: 7px 14px;
+        font-size: 13px;
+    }
+
+    .personal-info-content {
+        padding: 24px 16px;
+        gap: 16px;
+    }
+
+    .form-label {
+        font-size: 14px;
+    }
+
+    .title-input-container {
+        padding: 13px 18px;
+        border-radius: 18px;
+    }
+
+    .title-input {
+        font-size: 15px;
+    }
+
+    .submit-button {
+        padding: 14px;
+        font-size: 15px;
+        border-radius: 26px;
+    }
+}
+
+@media (max-width: 320px) {
+    .personal-info-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .header-content {
+        gap: 10px;
+    }
+
+    .personal-info-page .back-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .personal-info-page .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .header-title {
+        font-size: 18px;
+    }
+
+    .edit-button,
+    .cancel-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .personal-info-content {
+        padding: 20px 12px;
+        gap: 14px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        margin-left: 8px;
+    }
+
+    .title-input-container {
+        padding: 12px 16px;
+        border-radius: 16px;
+    }
+
+    .title-input {
+        font-size: 14px;
+    }
+
+    .error-message {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    .submit-button {
+        padding: 13px;
+        font-size: 14px;
+        border-radius: 24px;
+        margin-top: 16px;
+    }
 }

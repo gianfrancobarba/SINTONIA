@@ -44,3 +44,34 @@
         transform: translate(-50%, 0);
     }
 }
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .toast-container {
+        padding: 10px 20px;
+        border-radius: 22px;
+        gap: 6px;
+        bottom: 85px;
+    }
+
+    .toast-message {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .toast-container {
+        padding: 9px 18px;
+        border-radius: 20px;
+        gap: 5px;
+        bottom: 80px;
+        max-width: 92%;
+    }
+
+    .toast-message {
+        font-size: 12px;
+    }
+}
