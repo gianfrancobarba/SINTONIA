@@ -187,7 +187,9 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                             fontWeight: '600',
                                             color: '#1a1a1a',
                                             marginBottom: '12px',
-                                            lineHeight: '1.5'
+                                            lineHeight: '1.5',
+                                            wordBreak: 'break-word',
+                                            overflowWrap: 'anywhere'
                                         }}>
                                             {question}
                                         </div>
@@ -210,7 +212,9 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                             <div style={{
                                                 fontSize: '14px',
                                                 color: '#1a1a1a',
-                                                fontWeight: '500'
+                                                fontWeight: '500',
+                                                wordBreak: 'break-word',
+                                                overflowWrap: 'anywhere'
                                             }}>
                                                 {getAnswerText(index)}
                                             </div>
@@ -261,7 +265,9 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                 background: '#f8f9fa',
                                 padding: '16px',
                                 borderRadius: '12px',
-                                borderLeft: '3px solid #E57373'
+                                borderLeft: '3px solid #E57373',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'anywhere'
                             }}>
                                 {questionnaire.noteInvalidazione}
                             </div>

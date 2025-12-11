@@ -166,7 +166,9 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                                 background: '#f8f9fa',
                                 padding: '16px',
                                 borderRadius: '12px',
-                                borderLeft: '3px solid #83B9C1'
+                                borderLeft: '3px solid #83B9C1',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'anywhere'
                             }}>
                                 {request.note}
                             </div>

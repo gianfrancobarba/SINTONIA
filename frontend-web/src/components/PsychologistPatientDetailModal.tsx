@@ -621,7 +621,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                                             if (line.trim() === '') {
                                                 return <br key={index} />;
                                             }
-                                            return <p key={index} style={{ margin: '0 0 8px 0' }}>{line}</p>;
+                                            return <p key={index} style={{ margin: '0 0 8px 0', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{line}</p>;
                                         })}
                                     </div>
                                 </div>

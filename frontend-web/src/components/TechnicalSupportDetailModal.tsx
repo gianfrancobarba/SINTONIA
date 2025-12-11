@@ -231,7 +231,9 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             fontSize: '16px',
                             fontWeight: '600',
                             color: '#1a1a1a',
-                            lineHeight: '1.6'
+                            lineHeight: '1.6',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'anywhere'
                         }}>
                             {ticket.oggetto}
                         </p>
@@ -269,7 +271,9 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             fontSize: '15px',
                             color: '#666',
                             lineHeight: '1.8',
-                            whiteSpace: 'pre-wrap'
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'anywhere'
                         }}>
                             {ticket.descrizione}
                         </p>
