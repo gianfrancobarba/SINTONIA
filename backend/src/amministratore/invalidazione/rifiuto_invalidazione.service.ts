@@ -29,6 +29,7 @@ export class Rifiuto_invalidazioneService {
             .set({
                 dataInvalidazione: new Date(),
                 idAmministratoreConferma: emailAmministratore,
+                idPsicologoRichiedente: null, // Reset to allow future review
                 // invalidato rimane false per indicare il rifiuto
             })
             .where(eq(questionario.idQuestionario, idQuestionario));

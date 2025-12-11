@@ -24,6 +24,8 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
 
     const [isAccepting, setIsAccepting] = useState(false);
     const [isRejecting, setIsRejecting] = useState(false);
+    const [showAcceptConfirm, setShowAcceptConfirm] = useState(false);
+    const [showRejectConfirm, setShowRejectConfirm] = useState(false);
 
     const isPending = request.stato === 'pending';
 
@@ -189,7 +191,7 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                             </p>
                             <div className="modal-footer-actions">
                                 <button
-                                    onClick={handleAccept}
+                                    onClick={() => setShowAcceptConfirm(true)}
                                     disabled={isAccepting || isRejecting}
                                     className="btn-modal-success"
                                     style={{
@@ -202,7 +204,7 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                                     {isAccepting ? 'Accettazione...' : 'Accetta'}
                                 </button>
                                 <button
-                                    onClick={handleReject}
+                                    onClick={() => setShowRejectConfirm(true)}
                                     disabled={isAccepting || isRejecting}
                                     className="btn-modal-danger"
                                     style={{
@@ -245,6 +247,214 @@ const AdminInvalidationDetailModal: React.FC<AdminInvalidationDetailModalProps> 
                     {/* Footer vuoto - chiusura solo tramite X in alto */}
                 </div>
             </div>
+            {/* Accept Confirmation Dialog */}
+            {showAcceptConfirm && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10001
+                    }}
+                    onClick={() => setShowAcceptConfirm(false)}
+                >
+                    <div
+                        style={{
+                            background: 'white',
+                            borderRadius: '12px',
+                            padding: '24px',
+                            maxWidth: '400px',
+                            width: '90%',
+                            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 style={{
+                            margin: '0 0 12px 0',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            color: '#333'
+                        }}>
+                            Conferma Accettazione
+                        </h3>
+                        <p style={{
+                            margin: '0 0 20px 0',
+                            fontSize: '14px',
+                            lineHeight: '1.5',
+                            color: '#666'
+                        }}>
+                            Sei sicuro di voler accettare questa richiesta di invalidazione? Il questionario verrà invalidato.
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            justifyContent: 'flex-end'
+                        }}>
+                            <button
+                                onClick={() => setShowAcceptConfirm(false)}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: '#f3f4f6',
+                                    border: '1px solid #e5e7eb',
+                                    color: '#374151'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#e5e7eb';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = '#f3f4f6';
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowAcceptConfirm(false);
+                                    handleAccept();
+                                }}
+                                disabled={isAccepting}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: isAccepting ? 'not-allowed' : 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: 'linear-gradient(135deg, #7FB77E 0%, #5fa05d 100%)',
+                                    border: 'none',
+                                    color: 'white'
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!isAccepting) {
+                                        e.currentTarget.style.background = 'linear-gradient(135deg, #5fa05d 0%, #4a8a4a 100%)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'linear-gradient(135deg, #7FB77E 0%, #5fa05d 100%)';
+                                }}
+                            >
+                                {isAccepting ? 'Attendi...' : 'Conferma'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Reject Confirmation Dialog */}
+            {showRejectConfirm && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10001
+                    }}
+                    onClick={() => setShowRejectConfirm(false)}
+                >
+                    <div
+                        style={{
+                            background: 'white',
+                            borderRadius: '12px',
+                            padding: '24px',
+                            maxWidth: '400px',
+                            width: '90%',
+                            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 style={{
+                            margin: '0 0 12px 0',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            color: '#333'
+                        }}>
+                            Conferma Rifiuto
+                        </h3>
+                        <p style={{
+                            margin: '0 0 20px 0',
+                            fontSize: '14px',
+                            lineHeight: '1.5',
+                            color: '#666'
+                        }}>
+                            Sei sicuro di voler rifiutare questa richiesta di invalidazione? Il questionario rimarrà valido.
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            justifyContent: 'flex-end'
+                        }}>
+                            <button
+                                onClick={() => setShowRejectConfirm(false)}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: '#f3f4f6',
+                                    border: '1px solid #e5e7eb',
+                                    color: '#374151'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#e5e7eb';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = '#f3f4f6';
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowRejectConfirm(false);
+                                    handleReject();
+                                }}
+                                disabled={isRejecting}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: isRejecting ? 'not-allowed' : 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
+                                    border: 'none',
+                                    color: 'white'
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!isRejecting) {
+                                        e.currentTarget.style.background = 'linear-gradient(135deg, #B71C1C 0%, #8B0000 100%)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)';
+                                }}
+                            >
+                                {isRejecting ? 'Attendi...' : 'Conferma'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {toast && (
                 <Toast
                     message={toast.message}

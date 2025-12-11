@@ -29,6 +29,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
     const [invalidationNotes, setInvalidationNotes] = useState<string>('');
     const [isReviewing, setIsReviewing] = useState(false);
     const [showReviewConfirm, setShowReviewConfirm] = useState(false);
+    const [showInvalidationConfirm, setShowInvalidationConfirm] = useState(false);
 
     // Get questions from questionnaire data (from backend)
     const questions = questionnaire.domande || [];
@@ -382,9 +383,7 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                     <button
                                         onClick={() => {
                                             if (invalidationNotes.trim().length >= 50) {
-                                                onRequestInvalidation?.(questionnaire.idQuestionario, invalidationNotes);
-                                                setInvalidationNotes('');
-                                                onClose();
+                                                setShowInvalidationConfirm(true);
                                             }
                                         }}
                                         disabled={invalidationNotes.trim().length < 50}
@@ -543,6 +542,12 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                     border: '1px solid #e5e7eb',
                                     color: '#374151'
                                 }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#e5e7eb';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = '#f3f4f6';
+                                }}
                             >
                                 Annulla
                             </button>
@@ -563,8 +568,119 @@ const QuestionnaireDetailModal: React.FC<QuestionnaireDetailModalProps> = ({
                                     border: 'none',
                                     color: 'white'
                                 }}
+                                onMouseEnter={(e) => {
+                                    if (!isReviewing) {
+                                        e.currentTarget.style.background = 'linear-gradient(135deg, #5a9aa5 0%, #4a8a95 100%)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)';
+                                }}
                             >
                                 {isReviewing ? 'Attendi...' : 'Conferma'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Invalidation Confirmation Dialog */}
+            {showInvalidationConfirm && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10001
+                    }}
+                    onClick={() => setShowInvalidationConfirm(false)}
+                >
+                    <div
+                        style={{
+                            background: 'white',
+                            borderRadius: '12px',
+                            padding: '24px',
+                            maxWidth: '400px',
+                            width: '90%',
+                            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 style={{
+                            margin: '0 0 12px 0',
+                            fontSize: '18px',
+                            fontWeight: '600',
+                            color: '#333'
+                        }}>
+                            Conferma Richiesta Invalidazione
+                        </h3>
+                        <p style={{
+                            margin: '0 0 20px 0',
+                            fontSize: '14px',
+                            lineHeight: '1.5',
+                            color: '#666'
+                        }}>
+                            Sei sicuro di voler richiedere l'invalidazione di questo questionario? La richiesta verrà inviata all'amministratore per la valutazione.
+                        </p>
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            justifyContent: 'flex-end'
+                        }}>
+                            <button
+                                onClick={() => setShowInvalidationConfirm(false)}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: '#f3f4f6',
+                                    border: '1px solid #e5e7eb',
+                                    color: '#374151'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#e5e7eb';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = '#f3f4f6';
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowInvalidationConfirm(false);
+                                    onRequestInvalidation?.(questionnaire.idQuestionario, invalidationNotes);
+                                    setInvalidationNotes('');
+                                    onClose();
+                                }}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    background: 'linear-gradient(135deg, #E57373 0%, #d55353 100%)',
+                                    border: 'none',
+                                    color: 'white'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = 'linear-gradient(135deg, #d55353 0%, #c43e3e 100%)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'linear-gradient(135deg, #E57373 0%, #d55353 100%)';
+                                }}
+                            >
+                                Conferma
                             </button>
                         </div>
                     </div>

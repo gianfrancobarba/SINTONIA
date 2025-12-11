@@ -258,7 +258,10 @@ const AdminQuestionnaireDetailModal: React.FC<AdminQuestionnaireDetailModalProps
                             <div style={{
                                 fontSize: '14px',
                                 color: '#666',
-                                lineHeight: '1.6'
+                                lineHeight: '1.6',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'anywhere',
+                                whiteSpace: 'pre-wrap'
                             }}>{questionnaire.noteInvalidazione}</div>
                         </div>
                     )}

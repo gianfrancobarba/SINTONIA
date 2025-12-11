@@ -279,99 +279,101 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                         </p>
                     </div>
 
-                    {/* Response Section */}
-                    <div style={{
-                        background: 'white',
-                        borderRadius: '16px',
-                        padding: '24px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-                        marginTop: '24px'
-                    }}>
-                        <h3 style={{
-                            margin: '0 0 16px 0',
-                            fontSize: '18px',
-                            fontWeight: '700',
-                            color: '#1a1a1a'
-                        }}>Rispondi al Ticket</h3>
-                        <div
-                            style={{
-                                border: '2px solid #e0e0e0',
-                                borderRadius: '12px',
-                                overflow: 'hidden',
-                                marginBottom: '4px',
-                                transition: 'border-color 0.2s ease'
-                            }}
-                            onFocus={(e) => e.currentTarget.style.borderColor = '#83B9C1'}
-                            onBlur={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
-                        >
-                            <textarea
-                                placeholder="Scrivi una risposta..."
-                                value={responseText}
-                                onChange={(e) => setResponseText(e.target.value)}
-                                rows={4}
-                                maxLength={2000}
+                    {/* Response Section - Only show if not closed/resolved */}
+                    {!['chiuso', 'risolto'].includes(ticket.stato) && (
+                        <div style={{
+                            background: 'white',
+                            borderRadius: '16px',
+                            padding: '24px',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+                            marginTop: '24px'
+                        }}>
+                            <h3 style={{
+                                margin: '0 0 16px 0',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#1a1a1a'
+                            }}>Rispondi al Ticket</h3>
+                            <div
+                                style={{
+                                    border: '2px solid #e0e0e0',
+                                    borderRadius: '12px',
+                                    overflow: 'hidden',
+                                    marginBottom: '4px',
+                                    transition: 'border-color 0.2s ease'
+                                }}
+                                onFocus={(e) => e.currentTarget.style.borderColor = '#83B9C1'}
+                                onBlur={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
+                            >
+                                <textarea
+                                    placeholder="Scrivi una risposta..."
+                                    value={responseText}
+                                    onChange={(e) => setResponseText(e.target.value)}
+                                    rows={4}
+                                    maxLength={2000}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        border: 'none',
+                                        fontSize: '14px',
+                                        fontFamily: 'inherit',
+                                        resize: 'none',
+                                        minHeight: '180px',
+                                        maxHeight: '290px',
+                                        overflowY: 'auto',
+                                        outline: 'none',
+                                        boxSizing: 'border-box'
+                                    }}
+                                />
+                            </div>
+                            <div style={{
+                                textAlign: 'right',
+                                fontSize: '12px',
+                                color: responseText.length >= 2000 ? '#E57373' : '#999',
+                                marginBottom: '12px'
+                            }}>
+                                {responseText.length}/2000 caratteri
+                            </div>
+                            <button
+                                onClick={() => setShowReplyConfirm(true)}
+                                disabled={!responseText.trim()}
                                 style={{
                                     width: '100%',
-                                    padding: '12px',
+                                    padding: '12px 24px',
+                                    borderRadius: '12px',
                                     border: 'none',
-                                    fontSize: '14px',
-                                    fontFamily: 'inherit',
-                                    resize: 'none',
-                                    minHeight: '180px',
-                                    maxHeight: '290px',
-                                    overflowY: 'auto',
-                                    outline: 'none',
-                                    boxSizing: 'border-box'
+                                    background: responseText.trim()
+                                        ? 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)'
+                                        : '#e0e0e0',
+                                    color: 'white',
+                                    cursor: responseText.trim() ? 'pointer' : 'not-allowed',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    transition: 'all 0.2s ease',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px',
+                                    boxShadow: responseText.trim() ? '0 4px 12px rgba(131, 185, 193, 0.3)' : 'none'
                                 }}
-                            />
+                                onMouseEnter={(e) => {
+                                    if (responseText.trim()) {
+                                        e.currentTarget.style.transform = 'translateY(-2px)';
+                                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    if (responseText.trim()) {
+                                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
+                                    }
+                                }}
+                            >
+                                <Send size={18} />
+                                Invia Risposta
+                            </button>
                         </div>
-                        <div style={{
-                            textAlign: 'right',
-                            fontSize: '12px',
-                            color: responseText.length >= 2000 ? '#E57373' : '#999',
-                            marginBottom: '12px'
-                        }}>
-                            {responseText.length}/2000 caratteri
-                        </div>
-                        <button
-                            onClick={() => setShowReplyConfirm(true)}
-                            disabled={!responseText.trim()}
-                            style={{
-                                width: '100%',
-                                padding: '12px 24px',
-                                borderRadius: '12px',
-                                border: 'none',
-                                background: responseText.trim()
-                                    ? 'linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%)'
-                                    : '#e0e0e0',
-                                color: 'white',
-                                cursor: responseText.trim() ? 'pointer' : 'not-allowed',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                                transition: 'all 0.2s ease',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                boxShadow: responseText.trim() ? '0 4px 12px rgba(131, 185, 193, 0.3)' : 'none'
-                            }}
-                            onMouseEnter={(e) => {
-                                if (responseText.trim()) {
-                                    e.currentTarget.style.transform = 'translateY(-2px)';
-                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(131, 185, 193, 0.4)';
-                                }
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'translateY(0)';
-                                if (responseText.trim()) {
-                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(131, 185, 193, 0.3)';
-                                }
-                            }}
-                        >
-                            <Send size={18} />
-                            Invia Risposta
-                        </button>
-                    </div>
+                    )}
                 </div>
 
                 {/* Footer with Actions - Only show if not closed/resolved */}
