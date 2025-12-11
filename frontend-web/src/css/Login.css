@@ -79,6 +79,15 @@
     outline: none;
     font-size: 0.95rem;
     color: #333;
+    height: 24px;
+    /* Fixed height to prevent jump when switching fonts */
+}
+
+.input-wrapper input[type="password"] {
+    font-family: Verdana, sans-serif !important;
+    letter-spacing: 0.125em;
+    font-size: 1.1rem;
+    /* Slightly larger purely for the dots */
 }
 
 .input-wrapper input::placeholder {

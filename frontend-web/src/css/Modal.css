@@ -369,6 +369,13 @@
     outline: none;
     transition: all 0.2s ease;
     box-sizing: border-box;
+    height: 48px;
+    /* Fixed height to prevent jump when switching fonts */
+}
+
+.modal-form-input[type="password"] {
+    font-family: Verdana, sans-serif !important;
+    letter-spacing: 0.125em;
 }
 
 .modal-form-input:focus {
