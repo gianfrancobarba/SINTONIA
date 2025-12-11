@@ -373,10 +373,19 @@
     /* Fixed height to prevent jump when switching fonts */
 }
 
-.modal-form-input[type="password"] {
+.modal-form-input[type="password"]:not(:placeholder-shown) {
     font-family: Verdana, sans-serif !important;
     letter-spacing: 0.125em;
+    line-height: normal;
+    /* Let the padding control the centering more naturally */
+    padding-top: 10px;
+    /* Slight adjustment for Verdana baseline */
+    padding-bottom: 14px;
 }
+
+/* Reset placeholder for password inputs to match normal inputs */
+/* Reset placeholder override - now handled by :not(:placeholder-shown) logic */
+
 
 .modal-form-input:focus {
     border-color: #0D475D;

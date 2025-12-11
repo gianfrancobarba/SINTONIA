@@ -83,12 +83,18 @@
     /* Fixed height to prevent jump when switching fonts */
 }
 
-.input-wrapper input[type="password"] {
+.input-wrapper input[type="password"]:not(:placeholder-shown) {
     font-family: Verdana, sans-serif !important;
     letter-spacing: 0.125em;
     font-size: 1.1rem;
+    line-height: 24px;
+    /* Ensure content is vertically centered */
+
     /* Slightly larger purely for the dots */
 }
+
+/* Reset placeholder for password inputs to match normal inputs */
+/* Reset placeholder override - now handled by :not(:placeholder-shown) logic */
 
 .input-wrapper input::placeholder {
     color: #999;
