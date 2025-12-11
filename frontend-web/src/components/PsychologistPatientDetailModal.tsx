@@ -414,27 +414,29 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                                 {!viewingReport ? (
                                     <>
-                                        <button
-                                            onClick={handleGenerateReport}
-                                            disabled={isGeneratingReport}
-                                            className="btn-modal-header"
-                                            style={{
-                                                background: 'rgba(255, 255, 255, 0.2)',
-                                                border: '1px solid rgba(255, 255, 255, 0.3)',
-                                                color: 'white',
-                                                padding: '8px 16px',
-                                                borderRadius: '8px',
-                                                cursor: isGeneratingReport ? 'not-allowed' : 'pointer',
-                                                fontSize: '13px',
-                                                fontWeight: '600',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '8px'
-                                            }}
-                                        >
-                                            <FileText size={16} />
-                                            {isGeneratingReport ? 'Generazione...' : 'Genera Report'}
-                                        </button>
+                                        {!patientDetails?.hasReport && (
+                                            <button
+                                                onClick={handleGenerateReport}
+                                                disabled={isGeneratingReport}
+                                                className="btn-modal-header"
+                                                style={{
+                                                    background: 'rgba(255, 255, 255, 0.2)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                    color: 'white',
+                                                    padding: '8px 16px',
+                                                    borderRadius: '8px',
+                                                    cursor: isGeneratingReport ? 'not-allowed' : 'pointer',
+                                                    fontSize: '13px',
+                                                    fontWeight: '600',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px'
+                                                }}
+                                            >
+                                                <FileText size={16} />
+                                                {isGeneratingReport ? 'Generazione...' : 'Genera Report'}
+                                            </button>
+                                        )}
                                         {patientDetails?.hasReport && (
                                             <button
                                                 onClick={handleViewReport}
@@ -621,7 +623,7 @@ const PsychologistPatientDetailModal: React.FC<PsychologistPatientDetailModalPro
                                             if (line.trim() === '') {
                                                 return <br key={index} />;
                                             }
-                                            return <p key={index} style={{ margin: '0 0 8px 0' }}>{line}</p>;
+                                            return <p key={index} style={{ margin: '0 0 8px 0', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{line}</p>;
                                         })}
                                     </div>
                                 </div>

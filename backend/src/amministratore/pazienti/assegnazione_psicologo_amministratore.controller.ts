@@ -17,7 +17,7 @@ export class AssegnazionePsicologoAmministratoreController {
     @Roles('admin')
     async assegnaPsicologo(
         @Param('id') id: string,
-        @Body() body: { idPsicologo: string | null }
+        @Body() body: { idPsicologo: string }
     ) {
         return this.service.assegnaPsicologo(id, body.idPsicologo);
     }

@@ -24,7 +24,7 @@ export class TicketService {
 
             // Notifica tutti gli admin del nuovo ticket
             await this.notificationHelper.notifyAllAdmins(
-                'Nuovo ticket di supporto',
+                'Nuovo ticket',
                 `È stato aperto un nuovo ticket: "${data.oggetto}"`,
                 'SUPPORTO',
             );

@@ -73,7 +73,6 @@
     background-color: #F4FAFB;
     transition: background-color 0.2s ease;
     cursor: pointer;
-    border-bottom: 1px solid #ddd;
 }
 
 .support-table tbody tr:hover {

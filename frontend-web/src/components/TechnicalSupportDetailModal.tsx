@@ -133,7 +133,7 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                     <div className="modal-header-content">
                         <div className="modal-header-text">
                             <h2 className="modal-header-title">
-                                Dettagli Ticket di Supporto
+                                Dettagli Ticket
                             </h2>
                         </div>
                         <button
@@ -231,7 +231,9 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             fontSize: '16px',
                             fontWeight: '600',
                             color: '#1a1a1a',
-                            lineHeight: '1.6'
+                            lineHeight: '1.6',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'anywhere'
                         }}>
                             {ticket.oggetto}
                         </p>
@@ -269,7 +271,9 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                             fontSize: '15px',
                             color: '#666',
                             lineHeight: '1.8',
-                            whiteSpace: 'pre-wrap'
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'anywhere'
                         }}>
                             {ticket.descrizione}
                         </p>
@@ -453,7 +457,7 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
                                 lineHeight: '1.5',
                                 color: '#6b7280'
                             }}>
-                                Sei sicuro di voler chiudere questo ticket di supporto? L'azione non può essere annullata.
+                                Sei sicuro di voler chiudere questo ticket? L'azione non può essere annullata.
                             </p>
                             <div style={{
                                 display: 'flex',
