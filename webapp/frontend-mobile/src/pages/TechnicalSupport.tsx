@@ -9,7 +9,7 @@ const TechnicalSupport: React.FC = () => {
     const [titolo, setTitolo] = useState('');
     const [descrizione, setDescrizione] = useState('');
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [success] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleBack = () => {

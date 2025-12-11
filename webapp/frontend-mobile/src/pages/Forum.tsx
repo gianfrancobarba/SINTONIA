@@ -4,7 +4,7 @@ import ForumHeader from '../components/ForumHeader';
 import CategoryFilters from '../components/CategoryFilters';
 import ForumPostCard from '../components/ForumPostCard';
 import { getForumPosts, deletePost } from '../services/forum.service';
-import type { ForumPost, ForumCategory } from '../types/forum';
+import type { ForumCategory } from '../types/forum';
 import '../css/Forum.css';
 import Toast from '../components/Toast';
 import NewDiaryPageIcon from '../assets/icons/NewDiaryPage.svg';

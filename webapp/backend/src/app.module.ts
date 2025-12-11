@@ -6,7 +6,6 @@ import { DashboardModule } from './dashboard/dashboard.module.js';
 import { PsiModule } from './psi/psi.module.js';
 import { SpidAuthModule } from './spid-auth/spid-auth.module.js';
 import { PatientModule } from './patient/patient.module.js';
-import { QuestionnairesModule } from './questionari/questionnaires.module.js';
 import { Questionari_amministratoreModule } from './amministratore/questionari/questionari_amministratore.module.js';
 import { Pazienti_amministratoreModule } from './amministratore/pazienti/pazienti_amministratore.module.js';
 import { InvalidazioneModule } from './amministratore/invalidazione/invalidazione.module.js';
@@ -16,7 +15,7 @@ import { AdminNotificheModule } from './amministratore/notifiche/notifiche.modul
 import { NotificationsModule } from './notifications/notifications.module.js';
 
 @Module({
-  imports: [NotificationsModule, AuthModule, DashboardModule, SpidAuthModule, PatientModule, PsiModule, QuestionnairesModule, Questionari_amministratoreModule, Pazienti_amministratoreModule, Psicologi_amministratoreModule, AdminSupportModule, InvalidazioneModule, AdminNotificheModule],
+  imports: [NotificationsModule, AuthModule, DashboardModule, SpidAuthModule, PatientModule, PsiModule, Questionari_amministratoreModule, Pazienti_amministratoreModule, Psicologi_amministratoreModule, AdminSupportModule, InvalidazioneModule, AdminNotificheModule],
   controllers: [AppController],
   providers: [AppService],
 })

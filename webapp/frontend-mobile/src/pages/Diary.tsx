@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import DiaryCard from '../components/DiaryCard';
 import DateFilter from '../components/DateFilter';
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
-import { getDiaryPages, deleteDiaryPage, getAvailableMonthsYears, type MonthYearOption } from '../services/diary.service';
+import { getDiaryPages, deleteDiaryPage, getAvailableMonthsYears } from '../services/diary.service';
 import type { DiaryPage } from '../types/diary';
 import Toast from '../components/Toast';
 import '../css/Diary.css';

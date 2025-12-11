@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import QuickNote from '../components/QuickNote';
 import StreakStatus from '../components/StreakStatus';
@@ -8,7 +8,6 @@ import SuggestedPosts from '../components/SuggestedPosts';
 import InitialQuestionnairesModal from '../components/InitialQuestionnairesModal';
 import { getHomeDashboard } from '../services/home.service';
 import { checkInitialQuestionnaires } from '../services/questionari.service';
-import type { HomeDashboardDto } from '../types/home';
 import '../css/Home.css';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Toast from '../components/Toast';

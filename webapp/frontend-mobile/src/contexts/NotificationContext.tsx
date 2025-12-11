@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getUnreadCount } from '../services/notification.service';
 import { useLocation } from 'react-router-dom';
+import { isAuthenticated } from '../services/spid-auth.service';
 
 interface NotificationContextType {
     unreadCount: number;
@@ -15,6 +16,10 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const location = useLocation();
 
     const refreshUnreadCount = useCallback(async () => {
+        if (!isAuthenticated()) {
+            return;
+        }
+
         try {
             const data = await getUnreadCount();
             setUnreadCount(data.count);

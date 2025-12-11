@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, MessageSquare, Bell, ChevronRight, ChevronLeft, Smile, Check } from 'lucide-react';
-import { getNotifications, markAsRead, type NotificationDto, type PaginatedNotificationsDto } from '../services/notification.service';
+import { FileText, MessageSquare, Bell, ChevronRight, Smile, Check } from 'lucide-react';
+import { getNotifications, markAsRead, type NotificationDto } from '../services/notification.service';
 import LoadingSpinner from '../components/LoadingSpinner';
 import '../css/Notifications.css';
 import { useNotification } from '../contexts/NotificationContext';

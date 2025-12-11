@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Settings, Award, Smile, Clock } from 'lucide-react';
 import { getProfileData } from '../services/profile.service';
-import type { ProfileDto } from '../types/profile';
 import '../css/Profile.css';
 import profileAvatarWoman from '../assets/images/profile-avatar-woman.png';
 import profileAvatarMan from '../assets/images/profile-avatar-man.png';
