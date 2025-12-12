@@ -25,6 +25,7 @@
     "dev:backend": "npm run start:dev --workspace=backend",
     "dev:mobile": "npm run dev --workspace=frontend-mobile",
     "dev:web": "npm run dev --workspace=frontend-web",
+    "dev:frontends": "concurrently \"npm run dev:web\" \"npm run dev:mobile\"",
     "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev:web\" \"npm run dev:mobile\""
   },
   "devDependencies": {
