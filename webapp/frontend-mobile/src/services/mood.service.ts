@@ -4,7 +4,7 @@
 
 import type { CreateMoodDto, MoodResponse } from '../types/mood';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 /**
  * Crea un nuovo stato d'animo per il paziente autenticato

@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { QuestionnaireData } from '../types/questionnaire';
 import { getCurrentUser } from './auth.service';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 /**
  * Fetch questionnaires based on user role

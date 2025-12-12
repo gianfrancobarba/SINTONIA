@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/spid-auth';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000') + '/spid-auth';
 
 export const startSPIDLogin = () => {
     // Redirect to backend SPID login endpoint

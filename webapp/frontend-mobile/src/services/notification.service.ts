@@ -21,7 +21,7 @@ export interface NotificationCountDto {
     count: number;
 }
 
-const API_URL = 'http://localhost:3000/paziente/notifiche';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000') + '/paziente/notifiche';
 
 const getAuthHeaders = () => {
     const token = localStorage.getItem('patient_token');

@@ -3,7 +3,7 @@ import type { DiaryPage, CreateDiaryPageDto, UpdateDiaryPageDto } from '../types
 
 // Toggle per passare da mock a API reale
 const USE_MOCK_DATA = false;
-const API_URL = 'http://localhost:3000/paziente/diario';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000') + '/paziente/diario';
 
 // Mock data - simulazione di pagine di diario
 const mockDiaryPages: DiaryPage[] = [

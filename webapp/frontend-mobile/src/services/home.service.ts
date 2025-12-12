@@ -9,7 +9,7 @@ export const getHomeDashboard = async (): Promise<HomeDashboardDto> => {
             throw new Error('Missing auth token. Redirecting to login...');
         }
 
-        const response = await fetch('http://localhost:3000/paziente/home', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/paziente/home`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

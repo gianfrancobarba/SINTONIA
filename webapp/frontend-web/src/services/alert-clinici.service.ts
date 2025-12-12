@@ -1,11 +1,11 @@
 import axios from 'axios';
 import type { ClinicalAlert } from '../types/alert';
 
-const API_URL = 'http://localhost:3000/psi/clinical-alerts';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000') + '/psi/clinical-alerts';
 
 // Axios instance with JWT token from localStorage
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
 });
 
 axiosInstance.interceptors.request.use(

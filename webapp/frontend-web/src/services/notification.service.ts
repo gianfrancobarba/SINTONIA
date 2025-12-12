@@ -1,7 +1,7 @@
 import { getCurrentUser } from './auth.service';
-import type { Notification, NotificationCount, PaginatedNotifications } from '../types/notification';
+import type { NotificationCount, PaginatedNotifications } from '../types/notification';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 /**
  * Recupera le notifiche paginate per lo psicologo

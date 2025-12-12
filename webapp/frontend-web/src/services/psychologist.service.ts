@@ -6,7 +6,7 @@
 import type { Psychologist, QuestionnaireData, PsychologistDashboardData } from '../types/psychologist';
 import { getCurrentUser } from './auth.service';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 /**
  * Fetch dashboard data from backend API

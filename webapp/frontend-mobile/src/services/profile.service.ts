@@ -20,7 +20,7 @@ export const getProfileData = async (): Promise<ProfileDto> => {
             throw new Error('Missing auth token. Redirecting to login...');
         }
 
-        const response = await fetch('http://localhost:3000/paziente/area-personale', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/paziente/area-personale`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

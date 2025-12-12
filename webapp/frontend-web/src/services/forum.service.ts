@@ -7,7 +7,7 @@ import axios from 'axios';
 import type { ForumQuestion, ForumAnswer, ForumStats, ForumCategory } from '../types/forum';
 import { getCurrentUser } from './auth.service';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 /**
  * Fetch forum questions

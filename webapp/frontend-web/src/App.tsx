@@ -47,7 +47,7 @@ function App() {
           <Route path="forum" element={<ForumPage />} />
           <Route path="clinical-alerts" element={<ClinicalAlerts />} />
           <Route path="technical-support" element={<PsychologistTechnicalSupport />} />
-          <Route path="personal-area" element={<PsychologistPersonalArea onProfileUpdate={() => { }} />} />
+          <Route path="personal-area" element={<PsychologistPersonalArea />} />
           <Route path="notifications" element={<NotificationCenter />} />
         </Route>
 
