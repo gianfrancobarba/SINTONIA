@@ -1,0 +1,2365 @@
+﻿Immagine che contiene gancio
+
+Il contenuto generato dall'IA potrebbe non essere corretto. 
+  
+
+        
+
+
+Requirements Analysis Document
+C-09 SINTONIA
+  
+
+
+
+
+
+Riferimento
+	2025_C09_RAD
+	Versione
+	2.0
+	Data
+	16/11/2025
+	Destinatario
+	Prof.ssa Filomena Ferrucci, Prof.re Fabio Palomba
+	Presentato da
+	C09 Team Sintonia
+	Approvato da
+	//
+	
+
+
+
+Revision History
+Data
+	Versione
+	Descrizione
+	Autori
+	30/10/2025
+	1.0
+	Aggiunto obiettivo del sistema
+	Angelo Fusco
+	30/10/2025
+	1.0
+	Aggiunto ambito del sistema
+	Antonio Walter De Fusco
+	30/10/2025
+	1.0
+	Aggiunti obiettivi e criteri di successo
+	Francesco Di Giovanni
+	30/10/2025
+	1.0
+	Aggiunti definizioni, acronimi e abbreviazioni
+	Elena Carlomagno
+	30/10/2025
+	1.0
+	Aggiunti Riferimenti
+	Francesco Coppola
+	30/10/2025
+	1.0
+	Aggiunto organizzazione del documento
+	Gianluca Ambrosio
+	31/10/2025
+	1.2
+	Aggiunti requisiti funzionali paziente
+	Antonio Walter De Fusco
+	31/10/2025
+	1.2
+	Aggiunti requisiti funzionali psicologo/psicoterapeuta
+	Rosaria Cervino
+	31/10/2025
+	1.2
+	Aggiunti requisiti funzionali amministratore
+	Gavino De Stefano
+	2/11/2025
+	1.1
+	Aggiunto panoramica sistema corrente
+	Gianni Policola
+	2/11/2025
+	1.1
+	Aggiunto activity diagram sistema corrente
+	Francesco Coppola
+	2/11/2025
+	1.3
+	Aggiunto requisiti non funzionali
+	Mattia Fanzini
+	3/11/2025
+	1.3
+	Aggiunto use case diagram lato paziente
+	Angelo Fusco
+	3/11/2025
+	1.3
+	Aggiunto use case diagram lato psicologo/psicoterapeuta
+	Gavino De Stefano
+	3/11/2025
+	1.3
+	Aggiunto use case diagram lato amministratore del sistema
+	Gianluca Ambrosio
+	5/11/2025
+	1.2
+	Aggiunto Panoramica sistema proposto
+	Francesco Di Giovanni
+	5/11/2025
+	1.2
+	Aggiunto activity diagram sistema proposto
+	Elena Carlomagno
+	7/11/2025
+	1.4
+	Aggiunto scenario “Inserimento stato d’animo”
+	Angelo Fusco
+	7/11/2025
+	1.4
+	Aggiunto scenario “Inserimento domanda forum”
+	Angelo Fusco
+	7/11/2025
+	1.4
+	Aggiunto scenario “Visualizzazione sezione psicologo”
+	Gianluca Ambrosio
+	7/11/2025
+	1.4
+	Aggiunto scenario “Modifica stato d’animo”
+	Gianluca Ambrosio
+	7/11/2025
+	1.4
+	Aggiunto scenario “Visualizza calendario”
+	Gavino De Stefano
+	7/11/2025
+	1.4
+	Aggiunto scenario “Modifica evento calendario”
+	Gavino De Stefano
+	7/11/2025
+	1.4
+	Aggiunto scenario “Modifica priorità paziente”
+	Francesco Di Giovanni
+	7/11/2025
+	1.4
+	Aggiunto scenario “Visualizzazione diario paziente”
+	Francesco Di Giovanni
+	7/11/2025
+	1.4
+	Aggiunto scenario “Aggiunta evento calendario”
+	Antonio Walter De Fusco
+	7/11/2025
+	1.4
+	Aggiunto scenario “Visualizzazione badge”
+	Antonio Walter De Fusco
+	7/11/2025
+	1.4
+	Aggiunto scenario “Richiesta invalidazione questionario”
+	Francesco Coppola
+	7/11/2025
+	1.4
+	Aggiunto scenario “Aggiunta risposta domanda nel forum”
+	Francesco Coppola
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Eliminazione paziente”
+	Rosaria Cervino
+	7/11/2025
+	1.4
+	Aggiunto scenario ”Aggiunta psicologo”
+	Rosaria Cervino
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Inserimento contenuto diario personale”
+	Elena Carlomagno
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Revisione questionario paziente”
+	Elena Carlomagno
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Generazione report”
+	Gianni Policola
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Compilazione questionario”
+	Gianni Policola
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Modifica assegnazione psicologo”
+	Alessio Del Sorbo
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Accettazione richiesta invalidazione”
+	Alessio Del Sorbo
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Visualizzazione obiettivi”
+	Mattia Fanzini
+	7/11/2025
+	1.4
+	Aggiunto scenario
+”Elimina evento calendario”
+	Mattia Fanzini
+	9/11/2025
+	1.5
+	Aggiunto use case “Compilazione questionario”
+	Francesco Coppola
+	9/11/2025
+	1.5
+	Aggiunto use case “Inserimento domanda forum”
+	Angelo Fusco
+	9/11/2025
+	1.5
+	Aggiunto use case “Inserimento stato d’animo”
+	Alessio Del Sorbo
+	9/11/2025
+	1.5
+	Aggiunto use case “Inserimento contenuto diario personale”
+	Gavino De Stefano
+	9/11/2025
+	1.5
+	Aggiunto use case “Generazione report”
+	Antonio Walter De Fusco
+	9/11/2025
+	1.5
+	Aggiunto use case “Revisione questionario paziente”
+	Gianluca Ambrosio
+	9/11/2025
+	1.5
+	Aggiunto use case “Termina percorso paziente”
+	Rosaria Cervino
+	9/11/2025
+	1.5
+	Aggiunto use case “Modifica assegnazione psicologo”
+	Elena Carlomagno
+	9/11/2025
+	1.5
+	Aggiunto use case “Ricezione alert clinici”
+	Mattia Fanzini
+	9/11/2025
+	1.5
+	Aggiunto use case “Accettazione richiesta invalidazione”
+	Gianni Policola
+	9/11/2025
+	1.5
+	Aggiunto use case “Modifica priorità paziente”
+	Francesco Di Giovanni
+	11/11/2025
+	1.6
+	Aggiunto oggetti entity
+	Gianni Policola
+	11/11/2025
+	1.6
+	Aggiunto oggetti control
+	Mattia Fanzini
+	11/11/2025
+	1.6
+	Aggiunto oggetti boundary
+	Francesco Di GIovanni
+	12/11/2025
+	1.7
+	Aggiunto sequence diagrams
+	Tutto Il Team
+	13/11/2025
+	1.8
+	Aggiunti statechart diagrams
+	Tutto il team
+	13/11/2025
+	1.8
+	Aggiunto navigational path lato paziente
+	Angelo Fusco
+	13/11/2025
+	1.8
+	Aggiunto navigational path lato psicologo/psicoterapeuta
+	Gavino De Stefano
+	13/11/2025
+	1.8
+	Aggiunto navigational path lato amministratore di sistema
+	Gianluca Ambrosio
+	15/11/2025
+	1.9
+	Aggiunto Glossario
+	Elena Carlomagno
+	16/11/2025
+	2.0
+	Revisione Finale
+	Tutto il team
+	Team Members
+Ruolo
+	Nome e Cognome
+	Acronimo
+	Contatto
+	PM
+	Gianfranco Barba
+	GB
+	g.barba14@studenti.unisa.it
+	PM
+	Francesco Corcione
+	FC
+	f.corcione5@studenti.unisa.it
+	TM
+	Gianluca Ambrosio
+	GA
+	g.ambrosio39@studenti.unisa.it
+	TM
+	Elena Carlomagno
+	EC
+	e.carlomagno1@studenti.unisa.it
+	TM
+	Rosaria Cervino
+	RC
+	r.cervino3@studenti.unisa.it
+	TM
+	Francesco Coppola
+	FCP
+	f.coppola99@studenti.unisa.it
+	TM
+	Antonio Walter De Fusco
+	ADF
+	a.defusco1@studenti.unisa.it
+	TM
+	Gavino De Stefano
+	GDS
+	g.destefano41@studenti.unisa.it
+	TM
+	Alessio Del Sorbo
+	ADS
+	a.delsorbo32@studenti.unisa.it
+	TM
+	Francesco Di Giovanni
+	FDG
+	f.digiovanni10@studenti.unisa.it
+	TM
+	Mattia Fanzini
+	MF
+	m.fanzini@studenti.unisa.it
+	TM
+	Angelo Fusco
+	AF
+	a.fusco58@studenti.unisa.it
+	TM
+	Gianni Policola
+	GP
+	g.policola@studenti.unisa.it
+	Sommario
+1        Introduzione        12
+1.1        Obiettivo del sistema        12
+1.2        Ambito del sistema        13
+1.3        Obiettivi e Criteri di successo del sistema        14
+1.4        Definizioni, acronimi e abbreviazioni        15
+1.5        Riferimenti        17
+1.6        Organizzazione del documento        18
+2        Sistema Corrente        19
+2.1        Panoramica        19
+2.2        Activity Diagram sistema corrente        20
+3        Sistema Proposto        21
+3.1        Panoramica        21
+3.2        Activity Diagram Sistema Proposto        24
+3.3        Requisiti Funzionali        25
+3.3.1        Lato Utente Generico 1 (PZT, PSI, AS)        25
+3.3.2        Lato Utente Generico 2 (AS, PSI)        26
+3.3.3        Lato Utente Generico 3 (PZT, PSI)        28
+3.3.4        Lato Paziente        29
+3.3.5        Lato Psicologo/Psicoterapeuta        34
+3.3.6        Lato Amministratore di Sistema        37
+3.4        Requisiti Non Funzionali        42
+3.4.1        Funzionalità        42
+3.4.2        Usabilità        42
+3.4.3        Affidabilità        42
+3.4.4        Prestazioni        43
+3.4.5        Sostenibilità        43
+3.4.6        Pseudo-funzionali        44
+3.4.7        Modello di Sistema        45
+3.4.8        Modello dei casi d’uso        68
+3.4.9        Modello ad Oggetti        95
+3.4.10        Modello Dinamico        111
+3.4.11        Interfaccia Utente - Navigational Paths e Mock-ups        121
+4        Glossario        133
+
+
+1. Introduzione
+   1. Obiettivo del sistema
+Il sistema che si vuole realizzare ha come scopo principale quello di creare una piattaforma integrata che consenta un monitoraggio dinamico e proattivo dei pazienti in attesa di accesso ai servizi di salute mentale della Regione Campania, all’interno del più ampio progetto di trasformazione digitale Sinfonia.
+
+
+Dunque, il sistema si articolerà in sezioni dedicate agli Amministratori di Sistema (AS), agli Psicologi/psicoterapeuti (PSI) e ai Pazienti (PZT).
+
+
+In modo particolare, il sistema si propone di:
+* Superare il modello attuale di gestione delle liste d’attesa, introducendo un sistema di triage dinamico che rivaluta costantemente le priorità in base alle condizioni cliniche dei pazienti rilevate attraverso questionari self-report periodici. Questo sistema ha l’obiettivo di valorizzare l’effettiva urgenza clinica del paziente;
+* Ridurre il rischio clinico nelle liste d’attesa, implementando un sistema di identificazione proattiva dei pazienti ad alto rischio;
+* Agevolare la gestione della piattaforma e il lavoro degli operatori sanitari, fornendo strumenti specifici per i diversi ruoli:
+   * Per l’amministratore (AS): Fornire gli strumenti per la gestione completa degli account Psicologo (registrazione, modifica e rimozione) nonché una sezione dedicata aggiornata in tempo reale che mostri i pazienti e le loro priorità in lista, permettendo un monitoraggio e una gestione centralizzata dei dati;
+   * Per lo Psicologo (PSI): Fornire un ruolo di supporto attivo che include la revisione dei questionari, la gestione degli alert clinici e l’interazione con gli utenti tramite il Forum dedicato. Parallelamente, fornire gli strumenti per la gestione del proprio carico di pazienti (visione stato attuale del paziente, monitoraggio e terminazione della cura).
+* Prevenire il deterioramento delle condizioni dei pazienti, fornendo strumenti di autovalutazione periodica (questionari e inserimento stati d’animo) che permettano di rilevare tempestivamente peggioramenti significativi dello stato di salute mentale e aggiornare automaticamente i livelli di priorità.
+   1. Ambito del sistema
+Il progetto nasce per ottimizzare la gestione delle liste d'attesa per il supporto psicologico. Attraverso la valutazione dello stato dei pazienti tramite questionari, la piattaforma crea una lista d'attesa dinamica per dare priorità ai casi più urgenti, fornendo loro supporto immediato e strumenti di sostegno durante l'attesa.
+
+
+Le principali funzionalità che il sistema deve includere sono:
+* Consentire ai pazienti di compilare questionari valutativi del proprio stato psicologico.
+* Consentire ai pazienti di inserire informazioni riguardanti il proprio stato d’animo, livello di stress e sensazioni.
+* Consentire agli psicologi di visualizzare questionari compilati da pazienti in forma anonima.
+* Consentire agli psicologi di ricevere alert per pazienti ad alto rischio.
+* Fornire un modulo intelligente agli psicologi per generare un report riassuntivo del periodo di attesa sostenuto dal paziente analizzando il suo trascorso e le sue interazioni sull’app.
+* Fornire un sistema di gamification che possa incentivare i pazienti a compilare i questionari ed inserire il proprio stato d’animo.
+* Consentire a pazienti e psicologi di organizzare sedute online nei casi che lo richiedono.
+   1. Obiettivi e Criteri di successo del sistema
+Gli obiettivi principali della piattaforma SINTONIA sono:
+* Ottimizzare l'accesso e la tempestività delle cure: Per garantire cure più tempestive e un accesso ottimizzato, è fondamentale abbandonare il modello attuale, dove la valutazione iniziale della priorità resta fissa. Il sistema introdurrà un processo di triage automatizzato che gestisce dinamicamente l'urgenza del paziente. Questo avverrà tramite la somministrazione periodica di questionari self-report validati (es. PHQ-9, GAD-7, WHO-5, PC-PTSD-5), utilizzando i dati psicometrici raccolti per orientare meglio gli interventi.
+* Ridurre il rischio clinico nelle liste d'attesa: L'obiettivo è mitigare il rischio clinico per i pazienti in lista d'attesa. Il sistema realizzerà questo compito tramite l'identificazione proattiva dei pazienti più vulnerabili, implementando protocolli di allerta automatici per il personale sanitario. Questi allarmi si attiveranno istantaneamente in presenza di indicatori critici (ad esempio, il rischio suicidario), consentendo un intervento immediato al fine di ridurre l'incidenza di crisi acute.
+* Migliorare il sostegno e l'engagement del paziente durante l'attesa: Per mitigare il senso di abbandono e solitudine che i pazienti possono provare durante l'attesa, è cruciale migliorare il loro sostegno e l'engagement. 
+* Potenziare la gestione delle risorse sanitarie: L'obiettivo è rafforzare la gestione delle risorse sanitarie del 70%. È essenziale fornire ad ASL, CSM e UOSM strumenti più performanti per il monitoraggio in tempo reale delle liste d'attesa. Questo permetterà una gestione del carico di lavoro più efficiente, fondata su dati clinici costantemente aggiornati, ottimizzando così la pianificazione e l'assegnazione del personale.
+
+
+I criteri di successo sono:
+* Rispetto delle scadenze: il progetto deve essere consegnato nei tempi definiti a priori.
+* Funzionalità: il progetto deve implementare il 100% di requisiti con priorità alta.
+* Soddisfazione del team: il progetto deve garantire la piena soddisfazione dei TM, operando in un ambiente di fiducia, responsabilità reciproca e trasparenza. 
+   1. Definizioni, acronimi e abbreviazioni
+Definizioni: Glossario
+
+
+Acronimi:
+* RAD: Requirement Analysis Document (Documento di Raccolta dei Requisiti)
+* PZT: Paziente
+* AS: Amministratore di Sistema
+* PSI: Psicologo/Psicoterapeuta 
+* UG1: Utente Generico 1
+* UG2: Utente Generico 2
+* UG3: Utente Generico 3
+* RF: Requisito Funzionale
+* RNF: Requisito Non Funzionale
+* UC: Caso d’Uso
+* UCD: Diagramma di caso d’Uso
+* CD: Class Diagram
+* SC: Scenario
+* GQP: Gestione Quiz Preliminare
+* GTR: Gestione Tracciamento Risultati
+* GC: Gestione Comunicazione
+* AD: Activity Diagram (Diagramma Delle Attività)
+* U: Usabilità 
+* A: Affidabilità
+* P: Prestazioni 
+* S: Sostenibilità
+* I: Implementazione 
+* IN: Interfaccia
+* O: Operazione
+* PA: Packaging
+* L: Legali 
+* MU: Mock-Up
+* NA: Nessuna
+* UI: User Interface
+* NP: Navigation Path
+* OD: Object Diagram
+* SCD: Statechart Diagram
+* SD: Sequence Diagram
+* FURPS+:
+   * Rappresenta:
+      * Funzionalità
+      * Usabilità
+      * Affidabilità
+      * Prestazioni
+      * Sostenibilità
+      * Il “+” sta per pseudo-requisiti o vincoli del sistema:
+* Implementazione
+* Interfaccia
+* Operazione
+* Packaging
+* Legali.
+   1. Riferimenti
+* Object-Oriented Software Engineering (Using UML, Patterns, and java) Third Edition – Bernd Bruegge & Alle H. Dutoit.
+* Statement of Work – Francesco Corcione & Gianfranco Barba.
+* Project Charter - Francesco Corcione & Gianfranco Barba.
+* Team Contract - Francesco Corcione & Gianfranco Barba.
+   1. Organizzazione del documento
+Il presente documento è strutturato nel modo seguente:
+* Introduzione: Questa sezione contiene l’obiettivo del sistema, l’ambito del sistema, obiettivi e i criteri di successo del sistema nonché le definizioni, gli acronimi e le abbreviazioni utilizzate all’interno del documento.
+* Sistema Corrente: Questa sezione fornisce una panoramica sul funzionamento del sistema attuale includendo una rappresentazione grafica del funzionamento.
+* Sistema Proposto: Questa sezione presenta una panoramica del nuovo sistema proposto, con la definizione degli attori che lo compongono: il Paziente, lo Psicologo/Psicoterapeuta e l’Amministratore di Sistema con la descrizione delle nuove funzionalità tramite una rappresentazione grafica.
+* Inoltre, comprende diverse sottosezioni:
+   * Sezione dedicata alla definizione dei requisiti funzionali del sistema, indicati secondo la forma RF_[ACRONIMORAGGRUPPAMENTO]_[NUMERO] dove viene indicato il nome del requisito, una descrizione della funzionalità e la priorità assegnata.
+   * Sezione dedicata alla definizione dei requisiti non funzionali del sistema, indicati secondo la forma RNF_[TIPOLOGIA]_[NUMERO].
+      * I Requisiti seguono il modello FURPS+, essi rappresentano: Funzionalità, Usabilità, Affidabilità, Prestazioni, Sostenibilità, Implementazione, Interfaccia, Operazioni, Packaging e Legali.
+   * Sezione dedicata alla definizione del modello del sistema in cui si presentano scenari di utilizzo del sistema e use case specifici derivati da quest’ultimi.
+   * Sezione dedicata alla definizione del modello a oggetti del sistema divisi per tipologia.
+   * Sezione dedicata alla definizione del modello dinamico composto da SCD e da SD.
+   * Sezione dedicata alla definizione dell’interfaccia utente divisa in definizione dei Navigational Paths e Mock-ups.
+* Glossario: Descrive i termini tecnici utilizzati all’interno di questo documento.
+2. Sistema Corrente
+   1. Panoramica
+Nel contesto attuale della sanità pubblica campana, l’accesso ai servizi di supporto psicologico risulta spesso complesso, caratterizzato da lunghe liste d’attesa che possono protrarsi per diversi mesi prima dell’effettiva presa in carico da parte di uno psicologo dell’ASL. Durante l’attesa, i cittadini non dispongono di strumenti o servizi che possano sostenerli. 
+Questa mancanza provoca un crescente senso di abbandono e una percezione di scarsa attenzione da parte del servizio sanitario pubblico. Negli ultimi anni la domanda di assistenza psicologica è aumentata in modo significativo, mentre la capacità di risposta delle strutture pubbliche è rimasta limitata.
+A livello nazionale e internazionale sono nate diverse piattaforme digitali orientate al benessere psicologico, tra cui:
+* Serenis;
+* Unobravo;
+* Therapyside;
+* BetterHelp.
+Queste permettono di entrare in contatto con professionisti qualificati per supporto psicologico online e presentano caratteristiche comuni con SINTONIA, come: 
+* La somministrazione di questionari iniziali (come in Serenis e Therapyside);
+* Un diario di riflessione e monitoraggio del benessere (come in Unobravo);
+* L’utilizzo di moduli di intelligenza artificiale a supporto del lavoro degli psicologi (come in BetterHelp).  
+Tuttavia, tali soluzioni operano nel settore privato e non risultano integrate con i sistemi sanitari pubblici regionali o nazionali.
+Questa situazione evidenzia l’assenza di strumenti che possano assistere i cittadini durante l’attesa e migliorare la gestione delle richieste da parte delle strutture pubbliche. 
+In risposta a queste criticità nasce SINTONIA, una piattaforma innovativa, concepita per ridurre l’impatto psicologico dell’attesa e migliorare l’efficienza dei processi di presa in carico del cittadino, promuovendo un approccio di cura preventiva e inclusiva.  
+SINTONIA rappresenta, così, un passo concreto verso un sistema di supporto psicologico pubblico più accessibile, moderno e tempestivo in Campania.
+   2. Activity Diagram sistema corrente
+ Immagine che contiene testo, diagramma, schermata, Parallelo
+
+Il contenuto generato dall'IA potrebbe non essere corretto. 
+________________
+
+3. Sistema Proposto
+   1. Panoramica
+Terminata l’analisi del sistema attuale dell’ASL, e compreso come gestisce le richieste di servizio psicologico, il sistema proposto si pone l’obiettivo di modernizzare completamente quello precedente.
+La piattaforma SINTONIA gestirà autonomamente l’assegnazione del paziente allo psicologo, garantendo principalmente un’attesa consona alla sua condizione, ma anche un sistema che gli permetta di essere monitorato tramite diario, questionari e l’inserimento di stati d’animo. 
+Alla luce di ciò, abbiamo individuato tre principali attori che utilizzeranno il sistema: paziente, psicologo/psicoterapeuta e amministratore di sistema.
+Seguendo questo ordine forniremo una panoramica delle funzionalità di ognuno.
+Il paziente può:
+* Autenticarsi alla piattaforma;
+* Disconnettersi dalla piattaforma;
+* Visualizzare la sua area personale;
+* Compilare questionari;
+* Inserire stati d’animo;
+* Visualizzare Badge;
+* Collezionare Badge;
+* Visualizzare gli obiettivi periodici;
+* Scrivere sul diario personale;
+* Inserire domande sul forum;
+* Visualizzare il centro notifiche;
+* Richiedere supporto tecnico.
+Lo psicologo/psicoterapeuta può:
+* Autenticarsi alla piattaforma;
+* Disconnettersi dalla piattaforma;
+* Visualizzare la sua area personale;
+* Visualizzare il centro notifiche;
+* Verso il paziente può:
+   * Visualizzare i dati di un paziente (a lui assegnato);
+   * Ricercare e filtrare pazienti (a lui assegnati);
+   * Terminare la presa in cura di un paziente;
+   * Visualizzare il diario di un paziente;
+   * Visualizzare gli stati d’animo di un paziente;
+   * Ricevere alert clinici;
+   * Generare report;
+   * Visualizzare un questionario compilato da un paziente;
+   * Visualizzare il punteggio dei questionari di un paziente;
+   * Revisionare il questionario di un paziente;
+   * Inviare una richiesta di invalidazione relativa al questionario di un paziente (con la possibilità di motivare la sua richiesta tramite note);
+   * Rispondere alle domande inserite dai pazienti nella sezione del forum.
+L’amministratore può:
+* Autenticarsi alla piattaforma;
+* Disconnettersi dalla piattaforma;
+* Visualizzare il centro notifiche;
+* Verso il paziente può:
+   * Ricercare e filtrare i pazienti;
+   * Accedere ai dati personali di un paziente;
+   * Modificare i dati personali di un paziente;
+   * Visualizzare il diario di un paziente;
+   * Visualizzare i questionari svolti da un paziente;
+   * Visualizzare il punteggio dei questionari di un paziente;
+   * Visualizzare gli stati d’animo di un paziente;
+   * Visualizzare la priorità in lista di un paziente;
+   * Modificare la priorità in lista di un paziente;
+   * Rimuovere un paziente dalla lista;
+   * Somministrare un questionario ad un paziente;
+   * Modificare l’assegnazione di un paziente ad uno psicologo;
+   * Visualizzare le domande nella sezione forum.
+* Verso lo psicologo può:
+   * Aggiungere uno psicologo;
+   * Rimuovere uno psicologo;
+   * Visualizzare i dati di uno psicologo;
+   * Modificare i dati di uno psicologo;
+   * Accettare o declinare la richiesta di invalidazione da parte di uno psicologo.
+* Inserire un nuovo questionario all’interno dell’elenco di quelli disponibili sulla piattaforma;
+* Modificare la revisione di un questionario;
+* Rispondere alle richieste di supporto tecnico.
+   1. Activity Diagram Sistema Proposto
+ Immagine che contiene testo, diagramma, Piano, schermata
+
+Il contenuto generato dall'IA potrebbe non essere corretto. 
+________________
+
+   2. Requisiti Funzionali
+      1. Lato Utente Generico 1 (PZT, PSI, AS)
+ID 
+	Nome 
+	Descrizione 
+	Priorità 
+	RF_UG1_1 
+	Autenticazione 
+	IEEE: 
+L’utente generico 1 deve poter autenticarsi alla piattaforma. 
+User Story:
+In quanto utente generico 1, voglio potermi autenticare alla piattaforma tramite SPID, così da accedere in modo sicuro alle funzionalità a me riservate.
+	Alta 
+	RF_UG1_2 
+	Disconnessione 
+	IEEE: 
+L’utente generico 1 deve poter disconnettersi dalla piattaforma. 
+User Story:
+In quanto utente generico 1, voglio potermi disconnettere dalla piattaforma, così da terminare correttamente il mio accesso quando ho finito di utilizzarla.
+	Alta 
+	RF_UG1_3 
+	Visualizzazione Centro Notifiche 
+	IEEE: 
+L’utente generico 1 deve poter accedere a un centro notifiche che raccoglie tutti gli aggiornamenti rilevanti provenienti dalla piattaforma. 
+User Story:
+In quanto utente generico 1, voglio poter accedere a un centro notifiche che raccolga tutti gli aggiornamenti provenienti dalla piattaforma, in modo da avere in un’unica sezione una panoramica chiara delle comunicazioni a me rilevanti.
+	Alta 
+	RF_UG1_4
+	Impostazione Lingua 
+	L’utente generico 1 potrebbe impostare la lingua da lui desiderata. 
+	Bassa 
+	RF_UG1_5 
+	Visualizzazione Area Personale 
+	IEEE: 
+L’utente generico 1 deve poter visualizzare la propria area personale. 
+User Story:
+In quanto utente generico 1, voglio poter visualizzare la mia area personale, in modo da avere sempre a disposizione le informazioni che mi riguardano.
+	Alta 
+	RF_UG1_6
+	Modifica Informazioni Personali
+	IEEE: 
+L’utente generico 1 dovrebbe poter modificare le proprie informazioni personali. 
+User Story:
+In quanto utente generico 1, vorrei poter modificare le mie informazioni personali nel caso in cui dovessero cambiare, mantenendo il mio profilo sempre aggiornato.
+	Media
+	RF_UG1_7 
+	Visualizzazione Sezione Forum  
+	IEEE: 
+L’utente generico 1 deve poter visualizzare la sezione forum dove sono presenti commenti e domande dei pazienti, in modo anonimo, e relative risposte degli psicologi. 
+User Story:
+In quanto utente generico 1, voglio poter visualizzare la sezione forum, così da poter consultare, da paziente, le domande e le risposte già pubblicate, da psicologo le richieste dei pazienti anonimi per eventualmente rispondere, e da amministratore l’insieme delle interazioni al fine di monitorare il corretto utilizzo.
+	Alta 
+	      2. Lato Utente Generico 2 (AS, PSI)
+ID 
+	Nome 
+	Descrizione 
+	Priorità 
+	RF_UG2_1
+	Visualizzazione Dashboard
+	IEEE: 
+L’utente generico 2 deve poter visualizzare la dashboard.
+User Story: 
+In quanto utente generico 2, voglio poter visualizzare la dashboard, in modo da accedere facilmente alle varie sezioni della piattaforma.
+	Alta
+	RF_UG2_2
+	Visualizzazione Sezione Pazienti
+	IEEE: 
+L’ utente generico 2 deve poter visualizzare una sezione contenente l’elenco completo dei pazienti a lui accessibili. 
+User Story: 
+In quanto utente generico 2, voglio poter visualizzare una sezione contenente l’elenco dei pazienti a me accessibili: tutti i pazienti nel caso dell’amministratore, oppure solo quelli a me assegnati nel caso dello psicologo, in modo da consultarli rapidamente.
+	Alta
+	RF_UG2_3
+	Ricerca Paziente 
+	IEEE: 
+L’utente generico 2 deve poter cercare e filtrare i pazienti a lui accessibili. 
+User Story: 
+In quanto utente generico 2, voglio poter ricercare i pazienti presenti nella piattaforma tramite nome e cognome nel caso dello psicologo e id per l’amministratore. 
+	Alta 
+	RF_UG2_4
+	Visualizzazione Profilo Paziente 
+	IEEE: 
+L’utente generico 2 deve poter visualizzare il profilo di un paziente a lui accessibile.
+User Story: 
+In quanto utente generico 2, voglio poter visualizzare il profilo di un paziente a me accessibile, così da poter esaminare rapidamente le informazioni che lo riguardano.
+	Alta 
+	RF_UG2_5
+	Visualizzazione Lista Questionari Paziente 
+	IEEE: 
+L’utente generico 2 deve poter accedere all’elenco di tutti i questionari compilati dal singolo paziente. 
+User Story: 
+In quanto utente generico 2, voglio poter accedere all’elenco di tutti i questionari compilati da un singolo paziente, in modo da disporre in maniera immediata e chiara tutte le compilazioni effettuate.
+	Alta 
+	RF_UG2_6
+	Visualizzazione 
+Questionario 
+Paziente 
+	IEEE:  
+L’utente generico 2 deve poter visualizzare il questionario di un paziente. 
+User Story: 
+In quanto utente generico 2, voglio poter visualizzare il questionario compilato da un paziente a me accessibile: i questionari di tutti i pazienti nel caso in cui sia amministratore di sistema, oppure solo quelli dei pazienti a me assegnati nel caso in cui sia psicologo, in modo da analizzare il contenuto e svolgere correttamente le attività previste dal mio ruolo. 
+	Alta 
+	RF_UG2_7
+	Visualizzazione Punteggio Questionario 
+	IEEE:  
+L’utente generico 2 deve poter visualizzare il punteggio di un singolo questionario.
+User Story: 
+In quanto utente generico 2, voglio poter visualizzare il punteggio di un singolo questionario, in modo da comprenderne rapidamente l’esito.
+	Alta 
+	RF_UG2_8
+	Visualizzazione Punteggio Totale Paziente 
+	IEEE:   
+L’utente generico 2 deve poter visualizzare il punteggio totale dei questionari di un paziente a lui accessibile. 
+User Story: 
+In quanto utente generico 2, voglio poter visualizzare il punteggio totale dei questionari di un paziente a me accessibile, in modo da avere subito una visione complessiva della sua situazione. 
+	Alta 
+	RF_UG2_9
+	Visualizzazione Sezione Questionari
+	IEEE:
+L’utente generico 2 deve poter visualizzare la lista dei questionari compilati dai pazienti in coda.
+User Story:
+In quanto utente generico 2, voglio poter consultare l'elenco dei questionari compilati dai pazienti per avere un quadro completo.
+	Alta
+	      3. Lato Utente Generico 3 (PZT, PSI)
+ID 
+	Nome 
+	Descrizione 
+	Priorità 
+	RF_UG3_1 
+	Richiesta Supporto Tecnico 
+	IEEE:
+L’utente generico 3 dovrebbe poter richiedere supporto tecnico alla piattaforma. 
+User Story:
+In quanto Utente Generico 3, vorrei poter inviare una richiesta di supporto tecnico alla piattaforma, per segnalare malfunzionamenti o problemi che mi impediscono di utilizzare correttamente il sistema.
+	Media 
+	      4. Lato Paziente
+ID 
+	Nome 
+	Descrizione 
+	Priorità 
+	RF_PZT_1 
+	Accettazione termini e condizioni 
+	IEEE:
+Il paziente, al primo accesso alla piattaforma, deve poter accettare i termini e le condizioni d’uso per poter proseguire con l’utilizzo del sistema. 
+User Story:
+ In quanto paziente, voglio poter leggere e accettare i termini e le condizioni d'uso al mio primo accesso, così da essere conforme alle policy della piattaforma e sbloccare l'ingresso all'area riservata.
+	Alta 
+	RF_PZT_2
+	Visualizzazione Sezione Home Page
+	IEEE:
+Il paziente deve poter visualizzare una sezione “Home Page” che aggrega funzionalità dedicate al monitoraggio del benessere e all’engagement nel percorso di cura.
+User Story: 
+In quanto paziente, voglio poter accedere ad una Home Page riassuntiva che aggreghi tutte le informazioni principali, per avere immediatamente sotto controllo il mio stato di benessere sentendomi coinvolto e guidato nelle attività giornaliere del mio percorso.
+	Alta
+	RF_PZT_3 
+	Visualizzazione Sezione Storico Questionari 
+	IEEE: 
+Il paziente deve poter visualizzare lo storico dei questionari somministrati.   
+User Story: 
+In quanto paziente, voglio poter visualizzare lo storico dei questionari somministrati con il relativo stato di completamento, il quale indica se un questionario è stato completato o è ancora da compilare.  
+	Alta 
+	RF_PZT_4 
+	Compilazione Questionario 
+	IEEE: 
+Il paziente deve poter compilare i questionari sottoposti dalla piattaforma.   
+User Story: 
+In quanto paziente, voglio compilare i questionari per permettere al sistema di valutare la mia priorità nella lista d’attesa. 
+	Alta 
+	RF_PZT_5 
+	Inserimento Stato d’Animo 
+	IEEE: 
+Il paziente dovrebbe poter inserire il proprio stato d'animo attraverso un'interfaccia dedicata, selezionando da opzioni predefinite. 
+User Story: 
+In quanto paziente, vorrei poter registrare rapidamente il mio stato d'animo attuale, per monitorare le mie emozioni nel tempo e sentirmi supportato nel mio percorso. 
+	Media 
+	RF_PZT_6 
+	Modifica Stato d’Animo 
+	IEEE:
+Il paziente dovrebbe poter modificare uno stato d’animo precedentemente inserito.
+User Story: 
+In quanto paziente, vorrei poter correggere o modificare un inserimento sul mio stato d'animo inserito precedentemente, così da rimediare ad un errore di digitazione o affinare la mia autovalutazione per mantenere il mio percorso preciso e veritiero.
+	Media 
+	RF_PZT_7 
+	Eliminazione Stato d’Animo 
+	IEEE:
+Il paziente dovrebbe poter eliminare uno stato d’animo precedentemente inserito. 
+User Story:
+In quanto paziente, vorrei poter cancellare un inserimento del mio stato d'animo, così da rimuovere dati duplicati o inseriti per errore e mantenere il mio percorso pulito e ordinato.
+	Media 
+	RF_PZT_8 
+	Visualizzazione Calendario 
+	Il paziente potrebbe visualizzare un calendario.
+	Bassa 
+	RF_PZT_9
+	Visualizzazione Eventi Calendario
+	Il paziente potrebbe accedere ad informazioni dettagliate per ciascun giorno del calendario.
+	Bassa
+	RF_PZT_10 
+	Inserimento Evento Calendario 
+	Il paziente potrebbe inserire nuovi eventi nel proprio calendario. 
+	Bassa 
+	RF_PZT_11 
+	Modifica Evento Calendario 
+	Il paziente potrebbe modificare eventi precedentemente inseriti nel proprio calendario. 
+	Bassa 
+	RF_PZT_12 
+	Eliminazione Evento Calendario 
+	Il paziente potrebbe cancellare eventi precedentemente inseriti nel proprio calendario. 
+	Bassa 
+	RF_PZT_13 
+	Visualizzazione Obiettivi Periodici 
+	IEEE: 
+Il paziente potrebbe visualizzare una sezione dedicata agli obiettivi periodici impostati nel proprio percorso terapeutico, con indicatori di completamento e una rappresentazione grafica del progresso. 
+User Story: 
+Come paziente vorrei poter visualizzare i miei obiettivi periodici all’interno dello Spazio Personale per tenere traccia dei miei progressi e favorire la continuità e l’efficacia del mio percorso terapeutico. 
+	Bassa 
+	RF_PZT_14
+	Conseguimento Obiettivo Periodico
+	Il paziente potrebbe conseguire un obiettivo periodico.
+	Bassa
+	RF_PZT_15 
+	Visualizzazione Collezione Badge 
+	Il paziente dovrebbe poter accedere ad una sezione dedicata in cui visualizzare la collezione di badge ottenuti nel tempo. Ogni badge rappresenta un traguardo raggiunto nel percorso di benessere psicologico valorizzando l’impegno del paziente ed incentivando la partecipazione. 
+	 Media
+	RF_PZT_16 
+	Visualizzazione Badge
+	Il paziente dovrebbe poter accedere ad una sezione dedicata in cui visualizzare un badge rappresentativo del livello di attività, impegno e progresso del paziente. 
+	Media 
+	RF_PZT_17
+	Ottenimento Badge
+	Il paziente dovrebbe poter ottenere un badge a seguito del raggiungimento di un traguardo.
+	Media
+	RF_PZT_18 
+	Visualizzazione Sezione Diario Personale 
+	IEEE: 
+Il paziente deve poter visualizzare un’area dedicata all’interno della piattaforma, pensata come strumento di auto-monitoraggio, nella quale consultare, inserire, modificare ed eliminare annotazioni relative al proprio stato emotivo, pensieri, esperienze o momenti significativi. 
+User Story: 
+Come paziente voglio poter visualizzare il mio diario personale così da poter inserire, modificare, leggere le annotazioni scritte nel tempo e riflettere sull’evoluzione del mio stato emotivo e delle esperienze vissute. 
+	Alta 
+	RF_PZT_19 
+	Inserimento Contenuto Diario Personale 
+	IEEE:
+Il paziente deve poter inserire un nuovo contenuto all’interno della sezione Diario Personale. 
+User Story:
+In quanto paziente, voglio poter scrivere liberamente i miei pensieri e le mie riflessioni nel diario, per avere uno spazio privato e sicuro dove elaborare le mie emozioni e tenere traccia degli eventi significativi della mia giornata.
+	Alta 
+	RF_PZT_20 
+	Modifica Contenuto Diario Personale 
+	IEEE:
+Il paziente deve poter modificare un contenuto precedentemente inserito all’interno della sezione Diario Personale. 
+User Story:
+In quanto paziente, voglio poter riaprire e modificare una pagina del mio diario per correggere errori o aggiungere dettagli che mi sono venuti in mente successivamente, affinché il mio racconto resti completo e fedele al mio vissuto.
+	Alta 
+	RF_PZT_21 
+	Eliminazione Contenuto Diario Personale 
+	IEEE:
+Il paziente deve poter eliminare un contenuto precedentemente inserito all’interno della sezione Diario Personale. 
+User Story:
+In quanto paziente, voglio poter cancellare una pagina o un pensiero dal mio diario se ritengo che non debba più essere conservato, per sentirmi libero di gestire la mia privacy e mantenere nell'app solo ciò che desidero.
+	Alta 
+	RF_PZT_22 
+	Visualizzazione Sezione Informativa 
+	Il paziente potrebbe accedere ad una sezione informativa con lo scopo di consultare contenuti utili riguardanti il benessere mentale, il funzionamento del sistema proposto e le modalità di accesso ai servizi di supporto psicologico. 
+	Bassa 
+	RF_PZT_23 
+	Inserimento Domanda Forum 
+	IEEE: 
+Il paziente deve poter inserire una nuova domanda all’interno della sezione Forum della piattaforma. Attraverso un’interfaccia dedicata il paziente può scrivere un messaggio in forma anonima, selezionare una categoria tematica e pubblicare il contenuto. 
+User Story: 
+In quanto paziente voglio poter scrivere e pubblicare una domanda in forma anonima nella sezione Forum, così da ricevere da poter ricevere risposta da uno psicologo. 
+	Alta 
+	RF_PZT_24 
+	Modifica Domanda Forum 
+	IEEE:
+Il paziente deve poter modificare una domanda precedentemente inserita nel forum, purché non sia ancora stata pubblicata una risposta da parte dello psicologo. 
+User Story:
+ In quanto paziente, voglio poter riformulare o correggere la mia domanda se mi accorgo di un errore o se voglio essere più chiaro, ma solo prima che lo psicologo mi risponda, per assicurarmi che la sua valutazione si basi sulla versione corretta della mia richiesta.
+	Alta 
+	RF_PZT_25 
+	Eliminazione Domanda Forum 
+	IEEE:
+Il paziente deve poter eliminare una domanda precedentemente inserita nel forum se non contiene ancora risposta. 
+User Story:
+In quanto paziente, voglio poter eliminare una domanda che ho posto e che non ha ancora ricevuto risposta, nel caso in cui non la ritenga più necessaria, per mantenere il controllo sui contenuti che condivido con la community.
+	Alta 
+	      5. Lato Psicologo/Psicoterapeuta
+ID 
+	Nome 
+	Descrizione 
+	Priorità 
+	RF_PSI_1 
+	Revisione 
+Questionario 
+Paziente 
+	IEEE: 
+Lo psicologo deve poter revisionare un questionario. 
+User Story:  
+In quanto psicologo, voglio poter revisionare i questionari svolti dai pazienti. 
+	Alta 
+	RF_PSI_2 
+	Richiesta Invalidazione Questionario Paziente 
+	IEEE:
+Lo psicologo deve poter richiedere l’invalidazione del questionario di un paziente all’amministratore di sistema. 
+User Story:
+ In quanto psicologo, voglio poter segnalare all'amministratore un questionario che ritengo inattendibile affinché venga escluso dalle statistiche cliniche del paziente.
+	Alta 
+	RF_PSI_3 
+	Visualizzazione 
+Sezione Alert Clinici 
+	IEEE:
+Lo psicologo deve poter visualizzare una sezione dedicata agli alert clinici, generati in caso di compilazione di questionari che superano la soglia di rischio.
+User Story:
+Come psicologo, voglio poter visualizzare una sezione dedicata agli alert clinici relativi a questionari oltre la soglia di rischio, in modo da poter intervenire tempestivamente per prevenire situazioni di pericolo.
+	Alta 
+	RF_PSI_4
+	Accettazione Alert Clinico 
+	IEEE: 
+Lo psicologo deve poter rendersi disponibile ad effettuare un colloquio immediato alla ricezione di un alert clinico. 
+User Story:  
+In quanto psicologo voglio che il sistema dia subito le mie informazioni di contatto in modo che io sia in grado di effettuare un colloquio immediato alla ricezione di un alert clinico. 
+	Alta 
+	RF_PSI_5
+	Generazione Report 
+	IEEE:
+Lo psicologo dovrebbe poter generare un report per avere una visione complessiva dello stato psicologico del paziente che ha in cura. 
+User Story:
+In quanto psicologo, vorrei poter generare un report completo che riassuma l'andamento del paziente, così da avere una visione d'insieme chiara della sua evoluzione clinica e poter pianificare interventi mirati durante le sedute.
+	Media 
+	RF_PSI_6
+	Visualizzazione Report
+	IEEE:
+Lo psicologo dovrebbe poter visualizzare il report generato di un suo paziente.
+User Story:
+In quanto psicologo, vorrei poter consultare direttamente a monitor il report del paziente, per analizzare i dati in modo immediato.
+	Media
+	RF_PSI_7 
+	Terminazione Cura Paziente 
+	IEEE:
+Lo psicologo deve poter terminare la sessione di cura di un suo paziente. 
+User Story:
+ In quanto psicologo, voglio poter chiudere formalmente il percorso di cura di un paziente quando la terapia è giunta al termine, per mantenere aggiornata la mia lista dei pazienti attivi e poter permettere l’assegnazione del prossimo paziente.
+	Alta 
+	RF_PSI_8 
+	Aggiunta Risposta Forum 
+	IEEE:
+Lo psicologo deve poter rispondere ad una domanda fatta da un paziente all’interno del forum. 
+User Story:
+In quanto psicologo, voglio poter rispondere alle domande o ai dubbi sollevati dai pazienti nel forum, per fornire supporto educativo, chiarimenti clinici e stimolare un confronto costruttivo all'interno della community.
+	Alta 
+	RF_PSI_9 
+	Modifica Risposta Forum 
+	IEEE:
+Lo psicologo deve poter modificare una risposta data ad un paziente all’interno del forum. 
+User Story:
+In quanto psicologo, voglio poter modificare una risposta che ho scritto nel forum, per correggere eventuali refusi o riformulare un concetto in modo più chiaro, assicurandomi che le informazioni fornite ai pazienti siano sempre precise e professionali.
+	Alta 
+	RF_PSI_10 
+	Eliminazione Risposta Forum 
+	IEEE:
+Lo psicologo deve poter eliminare una risposta data ad un paziente all’interno del forum. 
+User Story:
+ In quanto psicologo, voglio poter cancellare una risposta fornita ad un paziente se mi accorgo di un errore sostanziale o se la ritengo non più opportuna, per evitare che i pazienti leggano indicazioni sbagliate o fuorvianti.
+	Alta 
+	RF_PSI_11 
+	Visualizzazione Lista Stati D’animo 
+	IEEE: 
+Lo psicologo deve poter visualizzare la lista degli stati d’animo del paziente.  
+User Story: 
+In quanto psicologo, voglio poter visualizzare la lista degli stati d’animo del paziente, così da controllare il suo andamento nel tempo ed eventuali migliorie oppure peggioramenti. 
+	Media
+	RF_PSI_12 
+	Visualizzazione Diario Paziente 
+	IEEE: 
+Lo psicologo dovrebbe poter visualizzare il diario del paziente.  
+User Story: 
+In quanto psicologo vorrei visualizzare il diario del paziente, così da avere un monitoraggio più efficace. 
+	Media 
+	      6. Lato Amministratore di Sistema
+ID 
+	Nome 
+	Descrizione 
+	Priorità
+	RF_AS_1 
+	Visualizzazione Sezione Psicologi 
+	IEEE:
+L’amministratore di sistema deve poter accedere alla sezione dedicata agli psicologi. 
+User Story:
+In quanto amministratore di sistema, voglio poter accedere alla sezione dedicata agli psicologi, in modo da avere una visione chiara e immediata di tutti gli psicologi presenti sulla piattaforma.
+	Alta 
+	RF_AS_2 
+	Aggiunta Psicologo 
+	IEEE:
+L’amministratore di sistema deve poter aggiungere uno psicologo alla piattaforma. 
+User Story:
+In quanto amministratore di sistema, voglio poter aggiungere un nuovo psicologo alla piattaforma per consentirgli di accedere ai servizi offerti.
+	Alta 
+	RF_AS_3 
+	Visualizzazione Profilo Psicologo 
+	IEEE:
+L’amministratore di sistema deve poter visualizzare il profilo di uno psicologo. 
+User Story:
+In quanto amministratore di sistema, voglio poter visualizzare il profilo di uno psicologo, in modo da consultare rapidamente tutte le informazioni a lui associate.
+	Alta 
+	RF_AS_4 
+	Modifica Dati Psicologo 
+	IEEE:
+L’amministratore di sistema dovrebbe poter modificare i dati di uno psicologo.
+User Story:
+In quanto amministratore di sistema, vorrei poter modificare i dati di uno psicologo quando necessario, in modo da garantire che le informazioni rimangano sempre corrette e aggiornate.
+	Media 
+	RF_AS_5 
+	Rimozione Psicologo 
+	IEEE: 
+L’amministratore di sistema dovrebbe poter rimuovere uno psicologo dalla piattaforma. 
+User Story: 
+In quanto amministratore di sistema, vorrei poter rimuovere uno psicologo che non svolge più l’incarico, in modo da mantenere la piattaforma aggiornata. 
+	Media 
+	RF_AS_6
+	Visualizzazione Priorità Paziente 
+	IEEE: 
+L’amministratore di sistema dovrebbe poter visualizzare la priorità e la posizione di ciascun paziente nella lista d’attesa. 
+User Story: 
+In quanto amministratore di sistema, vorrei poter visualizzare la priorità di un paziente, così da monitorare l’andamento delle code e poter risolvere problemi associati. 
+	Media 
+	RF_AS_7
+	Ricerca Questionario
+	IEEE: 
+L’amministratore di sistema dovrebbe poter ricercare un questionario tramite id.
+ User Story: 
+In quanto amministratore di sistema, vorrei poter ricercare un questionario specifico tramite ID, in modo da trovarlo velocemente senza dover scorrere l’intero elenco.
+	Media
+	RF_AS_8
+	Modifica Revisione Questionario 
+	IEEE: 
+L’amministratore dovrebbe poter modificare la revisione del questionario. 
+ User Story: 
+In quanto amministratore di sistema, voglio poter modificare la revisione di un questionario fatta da uno psicologo qualora sia stata effettuata in modo errato. 
+	Media 
+	RF_AS_9 
+	Modifica Dati Paziente 
+	IEEE: 
+L’amministratore di sistema dovrebbe poter modificare i dati di un paziente. 
+User Story: 
+In quanto amministratore di sistema, vorrei poter modificare i dati personali di un paziente qualora dovessero cambiare. 
+	Media 
+	RF_AS_10 
+	Modifica Priorità Paziente 
+	IEEE: 
+L’amministratore di sistema dovrebbe poter modificare manualmente la priorità di un paziente nella lista d’attesa.
+User Story:  
+In quanto amministratore di sistema, vorrei poter modificare la priorità di un paziente (in aumento o in diminuzione) qualora emergano motivazioni cliniche o errori nel triage automatizzato. 
+	Media 
+	RF_AS_11 
+	Modifica Assegnazione Psicologo 
+	IEEE: 
+L’amministratore di sistema dovrebbe poter modificare l’assegnazione di uno psicologo a un paziente. 
+User Story:  
+In quanto amministratore di sistema, vorrei poter modificare l’assegnazione di uno psicologo qualora si verifichino problemi o cambiamenti di disponibilità. 
+	Media 
+	RF_AS_12 
+	Rimozione Paziente dalla Lista d’Attesa 
+	IEEE: 
+L’amministratore di sistema dovrebbe poter rimuovere un paziente dalla lista d’attesa. 
+User Story: 
+In quanto amministratore di sistema, vorrei poter rimuovere un paziente dalla piattaforma qualora non possa più usufruire del servizio psicologico, così da garantire un corretto scorrimento della coda. 
+	Media 
+	RF_AS_13
+	Aggiunta Tipologia Questionario
+	IEEE:
+L’amministratore di sistema potrebbe caricare un nuovo questionario sulla piattaforma.
+User Story:
+In quanto amministratore di sistema, potrei caricare un nuovo questionario certificato sulla piattaforma qualora l’ASL ne dovesse erogare di nuovi.
+	Bassa
+	RF_AS_14
+	Visualizzazione Sezione Tipologia Questionari
+	L’amministratore di sistema potrebbe accedere ad una sezione contenente l’elenco di tutti i questionari che vengono somministrati attualmente dalla piattaforma.
+	Bassa
+	RF_AS_15 
+	Visualizzazione Sezione Richieste Invalidazione 
+	IEEE: 
+L’amministratore di sistema deve poter accedere alla sezione dedicata alle richieste di invalidazione dei questionari. 
+User Story: 
+In quanto amministratore di sistema, voglio poter avere una sezione relativa ai questionari che devono essere invalidati qualora arrivasse la richiesta da parte dello psicologo. 
+	Alta 
+	RF_AS_16 
+	Visualizzazione Richiesta Invalidazione 
+	IEEE: 
+L’amministratore deve poter visualizzare la singola richiesta di invalidazione del questionario. 
+User Story: 
+In quanto amministratore di sistema, voglio poter visualizzare una singola richiesta di invalidazione di un questionario inviata da uno psicologo, in modo da valutare e comprendere se sia più opportuno accettarla o rifiutarla.
+	Alta 
+	RF_AS_17 
+	Accettazione Richiesta Invalidazione 
+	IEEE: 
+L’amministratore deve poter accettare la richiesta di invalidazione del questionario. 
+User Story: 
+In quanto amministratore di sistema, voglio poter accettare una richiesta di invalidazione di un questionario, ritenute valide le note lasciate dallo psicologo.
+	Alta 
+	RF_AS_18 
+	Declinazione Richiesta Invalidazione 
+	IEEE: 
+L’amministratore deve poter declinare la richiesta di invalidazione del questionario. 
+User Story:  
+In quanto amministratore di sistema, voglio poter declinare una richiesta di invalidazione di un questionario, ritenute non valide le note lasciate dallo psicologo. 
+	Alta 
+	RF_AS_19 
+	Visualizzazione Sezione Richieste Supporto Tecnico 
+	IEEE: 
+L’amministratore dovrebbe poter visualizzare la sezione per le richieste di supporto tecnico. 
+User Story:
+In quanto amministratore di sistema, vorrei poter visualizzare la sezione dedicata alle richieste di supporto tecnico, così da avere una visione chiara di tutte le segnalazioni ricevute.
+	Media 
+	RF_AS_20 
+	Risposta Richieste Supporto Tecnico 
+	IEEE:
+L’amministratore di sistema dovrebbe poter rispondere alle richieste di supporto tecnico.
+ User Story:
+In quanto amministratore di sistema, vorrei poter rispondere alle richieste di supporto tecnico, così da fornire assistenza e chiarire eventuali problemi segnalati da psicologi e pazienti.
+	Media 
+	   3. Requisiti Non Funzionali
+      1. Funzionalità
+ID
+	Descrizione
+	Priorità
+	RNF_F_1
+	Il sistema deve garantire l’implementazione del 100% dei requisiti funzionali con priorità alta.
+	Alta
+	      2. Usabilità
+ID
+	Descrizione
+	Priorità
+	RNF_U_1
+	Il 95% dell’utenza deve poter utilizzare la piattaforma in modo semplice ed efficace, senza ricorrere a nessun tipo di guida o documentazione.
+	Alta
+	RNF_U_2
+	L’interfaccia utente (UI) deve garantire coerenza cromatica e di navigazione in tutte le sezioni.
+	Alta
+	RNF_U_3
+	La piattaforma deve limitare l’invio di notifiche push per il paziente (PZT), a una frequenza massima di due volte al giorno.
+	Bassa
+	      3. Affidabilità
+ID
+	Descrizione
+	Priorità
+	RNF_A_1
+	Il sistema deve risultare sempre accessibile, a meno che non ci siano manutenzioni da effettuare alla piattaforma in fasce orarie prestabilite.
+	Alta
+	RNF_A_2
+	Il sistema deve garantire al 100% la correttezza sia del calcolo della priorità in base allo score, sia delle modifiche manuali da parte dell'amministratore (AS).
+	Alta
+	      4. Prestazioni
+ID
+	Nome
+	Priorità
+	RNF_P_1
+	Il sistema deve essere in grado di supportare un carico di utenti superiore di almeno il 50% rispetto all’utenza prevista.
+	Alta
+	RNF_P_2
+	Il sistema deve rispondere il più velocemente possibile alle esigenze dell’utente, e garantire una capacità elevata di memorizzazione dei dati.
+	Media
+	
+
+      5. Sostenibilità
+ID
+	Descrizione
+	Priorità
+	RNF_S_1
+	Il sistema deve consentire la possibilità di riutilizzo del 80% del codice, al fine di agevolare futuri aggiornamenti dell’applicazione.
+	Media
+	      6. Pseudo-funzionali
+         1. Implementazione
+ID 
+	Descrizione 
+	Priorità 
+	RNF_PF_1 
+	Il sistema deve consentire la possibilità di riutilizzo del 80% del codice, al fine di agevolare futuri aggiornamenti dell’applicazione. 
+	Media 
+	
+
+
+
+         2. Operazione
+ID 
+	Descrizione 
+	Priorità 
+	RNF_PF_2 
+	L'Amministratore di Sistema (AS) è l'unico attore autorizzato a svolgere le funzioni di creazione, modifica, visualizzazione e rimozione dei profili Psicologo/Psicoterapeuta (PSI) e la gestione completa dell'elenco dei Pazienti (PZT). 
+	Alta 
+	
+
+
+
+         3. Legali
+ID 
+	Descrizione 
+	Priorità 
+	RNF_PF_3 
+	Il sistema deve garantire che la raccolta, l'archiviazione e l'elaborazione dei dati personali e sensibili degli utenti siano gestiti nel rispetto della normativa nazionale vigente in materia di protezione dei dati personali.
+	Alta 
+	      7. Modello di Sistema
+         1. Scenari
+            1. Lato Paziente
+NOME SCENARIO 
+	SC_PZT_4: Compilazione Questionario
+	AUTORE 
+	Gianni Policola
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Pasquale: Paziente
+	FLUSSO DEGLI EVENTI 
+	1.         Pasquale è un paziente in lista d’attesa che, per monitorare il proprio stato psicologico, decide di utilizzare la piattaforma SINTONIA. 
+2.         Sa che, compilando i questionari che gli vengono proposti, può avere un duplice vantaggio: riflettere sul proprio stato emotivo e ridurre i tempi di attesa; pertanto, effettua l’accesso alla piattaforma. 
+3.         Si dirige nella sezione dedicata ai questionari. 
+4.         Scorrendo l’elenco, nota quelli ancora da compilare e seleziona uno di essi. 
+5.         Inizia a rispondere con attenzione a tutte le domande, riflettendo su ciascun punto. 
+6.         Terminata la compilazione, Pasquale conferma di aver completato il questionario, sentendosi più consapevole delle proprie emozioni. 
+7.         Pochi istanti dopo, riceve la conferma che il questionario è stato registrato correttamente. 
+	
+
+NOME SCENARIO
+	SC_PZT_5: Inserimento Stato d’Animo
+	AUTORE
+	Angelo Fusco
+	ISTANZE DI ATTORI PARTECIPANTI
+	Marco: paziente
+	FLUSSO DEGLI EVENTI
+	1.         Marco stamattina in Università ha ricevuto l’esito di un esame scritto a cui teneva molto. Marco non è soddisfatto della valutazione negativa conseguita e riceve continue pressioni anche a casa da parte dei suoi genitori che lo vorrebbero vedere laureato. Marco comincia ad avere ansia e palpitazioni, ma ricorda di avere l’opportunità di registrare questa sua forte emozione all’interno della piattaforma SINTONIA per monitorare questi umori che lo portano ad un malessere interno.
+2.         Marco accede alla piattaforma SINTONIA autenticandosi come paziente.
+3.         Dopo l’accesso, visualizza la Home Page, dove è presente la sezione “Calendario”.
+4.         Marco seleziona la sezione “Calendario” e clicca sulla data odierna.
+5.         Per la data selezionata, visualizza le opzioni disponibili e sceglie “Aggiungi stato d’animo” per aprire l’interfaccia di inserimento rapido.
+6.         Si apre il form “Nuovo stato d’animo”, che presenta i campi: Emozione, Intensità e Nota.
+7.         Marco seleziona l’emozione che meglio rappresenta come si sente, imposta un valore elevato di Intensità e scrive una breve nota riferita all’esito negativo dell’esame.
+8.         Marco conferma l’inserimento dello stato d’animo.
+10. Lo stato d’animo viene salvato, viene mostrato un messaggio di conferma “Stato d’animo inserito con successo” e la timeline viene aggiornata di conseguenza.
+	
+
+NOME SCENARIO 
+	SC_PZT_6: Modifica Stato d’Animo
+	AUTORE 
+	Gianluca Ambrosio 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Marco: Paziente
+	FLUSSO DEGLI EVENTI 
+	1.         Marco è un paziente in lista d’attesa che sta utilizzando SINTONIA per monitorare il proprio benessere psicologico. Questa mattina ha registrato uno stato d’animo di “ansia moderata” nel diario, ma ripensandoci si rende conto che la sua sensazione era più vicina a una “leggera preoccupazione”. Decide quindi di accedere alla piattaforma per correggere la registrazione precedente e mantenere uno storico più accurato del suo percorso, utile anche al futuro psicologo che lo prenderà in carico.
+2.         Dalla sua Home Page, accede alla sezione "Calendario Interazioni" dove visualizza gli stati d'animo registrati.
+3.         Individua l'inserimento di oggi ("ansia moderata", intensità 7) e clicca sulla data per modificarlo.
+5.         Marco visualizza l’interfaccia di modifica e cambia l’emozione da "ansia" a "preoccupazione", abbassa l'intensità da 7 a 4 e aggiorna la nota descrittiva (es. "Pensieri legati al colloquio di domani, ma gestibili").
+6.         Rilegge le modifiche proposte e, entusiasta del miglioramento del proprio stato d'animo, conferma la modifica.
+7.         Vede un messaggio di conferma ("Stato d'animo aggiornato con successo") e nota che la registrazione nel "Calendario Interazioni" riflette ora i nuovi valori (es. "preoccupazione", intensità 4).
+	
+
+NOME SCENARIO 
+	SC_PZT_10: Inserimento Evento Calendario
+	AUTORE
+	Antonio Walter De Fusco
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Marco: Paziente
+	FLUSSO DI EVENTI 
+	1.         Marco, un paziente in lista d’attesa che utilizza SINTONIA per monitorare il proprio benessere psicologico, partecipa a una riunione con il Project Manager e viene informato della necessità di effettuare un viaggio di lavoro a breve. 
+2.         Marco è consapevole che l’evento rappresenta una fonte di stress e decide di registrarlo nella piattaforma per valutarne l’impatto sul proprio stato d’animo. 
+3.         Marco accede alla piattaforma SINTONIA e il sistema lo autentica, abilitando la visualizzazione della sezione “Calendario” dalla Home Page. 
+4.         Marco seleziona nel calendario il giorno in cui è previsto il viaggio di lavoro. 
+5.         Marco visualizza un pop-up che riassume eventuali altri eventi già pianificati per quel giorno e mette a disposizione l’azione “Inserisci Evento”. 
+6.         Marco seleziona l’azione “Inserisci Evento”. 
+7.         Marco visualizza un modulo di inserimento in cui può specificare i dettagli dell’evento (titolo, descrizione, ora). 
+8.         Marco compila il modulo con le informazioni relative al viaggio di lavoro e conferma l’inserimento. 
+9.         Marco può ora visualizzare l’evento inserito e, in futuro, monitorare anche le sue variazioni di stato d’animo in associazione a quell’evento. 
+	
+
+NOME SCENARIO 
+	SC_PZT_11: Modifica Evento Calendario
+	AUTORE 
+	Gavino De Stefano 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Paolo: Paziente
+	FLUSSO DI EVENTI 
+ 
+	1.         Paolo, un paziente in lista d’attesa, decide di accedere a SINTONIA per tenere sotto controllo le proprie attività e appuntamenti.
+2.         Dopo aver raggiunto la sezione “Calendario”, scorre gli eventi inseriti in precedenza.
+3.         Nota che un incontro di gruppo è stato programmato nel giorno sbagliato e decide di correggere la data.
+4.         Clicca sull’evento specifico e seleziona l'opzione "Modifica" dal menu contestuale.
+5.         Il sistema mostra il form dell'evento con i campi già precompilati con i dati attuali (Titolo, Data).
+6.         Paolo interagisce con il campo data per impostare il giorno corretto.
+7.         Successivamente, aggiunge una nota descrittiva nel campo apposito per chiarire ulteriormente i dettagli.
+8.         Una volta completate le modifiche, conferma l’aggiornamento dell’evento.
+9.         Poco dopo, vede il calendario aggiornato con la nuova data corretta e riceve conferma che la modifica è stata registrata correttamente.
+	
+
+NOME SCENARIO
+	 SC_PZT_12: Eliminazione Evento Calendario
+	AUTORE
+	Mattia Fanzini
+	ISTANZE DI ATTORI PARTECIPANTI
+	Christian: Paziente
+	FLUSSO DI EVENTI
+	1.         Christian, un paziente che usa Sintonia, sta attraversando un periodo lavorativo intenso. La settimana scorsa, il suo capo ha messo in calendario una "Revisione trimestrale", un evento che Christian teme e che gli genera ansia, perciò l'aveva inserito nel calendario di SINTONIA.
+2.         Stamattina, però, l'evento è stato inaspettatamente annullato. Sentendo un immediato sollievo, Christian accede alla piattaforma per eliminare l'appuntamento (Ha precedentemente effettuato l'accesso).
+3.         Dalla “Home Page”, Christian visualizza la sezione “Calendario” e seleziona l’evento "Revisione trimestrale" da eliminare.
+4.         Si apre un pop-up con i dettagli dell'evento e i pulsanti "Modifica” ed "Elimina".
+5.         Christian, a seguito di un’attenta revisione, decide di eliminare l’evento e quindi seleziona il pulsante "Elimina".
+6.         Compare un pop-up di conferma con il messaggio: "Sei sicuro di voler eliminare questo evento?".
+7.         Christian decide di confermare la sua decisione selezionando "Conferma".
+8.         L'evento viene eliminato dal calendario e Christian visualizza il messaggio di successo: "Eliminazione Evento avvenuta con Successo". L'evento non è più visibile.
+	
+
+NOME SCENARIO
+	 SC_PZT_13: Visualizzazione Obiettivi Periodici
+	AUTORE
+	Mattia Fanzini
+	ISTANZE DI ATTORI PARTECIPANTI
+	Christian: Paziente
+	FLUSSO DI EVENTI
+	1.         Aurelio sta usando SINTONIA da diverse settimane. È stato diligente (ha inserito stati d'animo, compilato questionari, scritto nel diario), ma essendo ancora in lista d'attesa, la sua motivazione inizia a calare.
+2.         Proprio mentre sta pensando di "prendersi una pausa", nota una notifica per un badge sbloccato, che gli ricorda l'esistenza di una "Area Personale".
+3.         Curioso, Aurelio accede alla piattaforma e, navigando nella sua "Area Personale", trova una sezione che non aveva ancora considerato: "Obiettivi Periodici".
+4.         Aurelio seleziona la sezione “Obiettivi” e visualizza l'obiettivo in evidenza del giorno: "Completa un'attività di monitoraggio".
+5.         Incuriosito, apre l'obiettivo per vederne i dettagli. Legge: "Per completare l'obiettivo di oggi, puoi: 1. Scrivere nel tuo Diario Personale Oppure, 2. Inserire il tuo Stato d'Animo.". Nota anche la sua "Serie" (Streak) attuale di "3 giorni".
+6.         Aurelio decide di completare l'obiettivo e naviga verso la sezione "Stato d'Animo" per effettuare un inserimento.
+7.         Dopo l'inserimento, torna alla sezione "Obiettivi".
+8.         Lì visualizza l'obiettivo "Completa un'attività di monitoraggio" come "Completato" (con un indicatore grafico) e nota che la sua "Serie" (Streak) è stata aggiornata a "Serie di 4 giorni”.
+	
+
+NOME SCENARIO 
+	SC_PZT_15: Visualizzazione Collezione Badge
+	AUTORE
+	Antonio Walter De Fusco
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Marco: Paziente
+	FLUSSO DI EVENTI 
+	1.         Marco, un paziente in lista d’attesa, utilizza la piattaforma SINTONIA per monitorare il proprio benessere psicologico. 
+2.         Ogni giorno Marco inserisce il proprio stato d’animo all’interno della piattaforma. 
+3.         In occasione dell’inserimento odierno, Marco visualizza un avviso che segnala la conquista di un nuovo badge. 
+4.         Marco legge l’avviso e scopre di aver ottenuto il suo primo badge. 
+5.         Marco, incentivato dall’avviso, seleziona la sezione “Area Personale” dal menu per visualizzare la propria collezione di badge. 
+6.         Marco visualizza una finestra di dettaglio che descrive il nuovo badge e l’obiettivo raggiunto: “Inserisci il tuo stato d’animo per una settimana consecutiva”. 
+7.         Marco si sente soddisfatto per il traguardo ottenuto. Si sente motivato a conquistare altri badge, continuando ad inserire il suo stato d’animo o compiendo altre azioni. 
+	
+
+NOME SCENARIO 
+	SC_PZT_19: Inserimento Contenuto Diario Personale
+	AUTORE 
+	Elena Carlomagno
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Marco: Paziente
+	FLUSSO DEGLI EVENTI 
+	1.         Marco, un paziente in lista d'attesa, si sente sopraffatto, ansioso e frustrato dopo una giornata di lavoro pesante e una discussione con un collega. Sente l'esigenza di "buttare fuori" queste sensazioni e, non potendo parlare con nessuno, decide di utilizzare la piattaforma SINTONIA. 
+2.         Marco si autentica alla piattaforma e seleziona la sezione "Diario" personale.
+3.         Gli compare la pagina principale del diario, con tutte le pagine scritte in precedenza e l'opzione "Crea una nuova pagina".
+4.         Marco seleziona l'opzione "Crea una nuova pagina" e gli viene presentato un form dove può inserire: titolo e testo.
+5.         Inizia a scrivere le sue sensazioni a caldo all'interno dell'editor.
+6.         Dopo aver scritto ciò che sentiva Marco conferma l’inserimento e si sente molto più tranquillo.
+7.         Viene salvato tutto ciò che è stato appena scritto, l’editor si chiude e Marco torna all'elenco principale. 
+	
+
+NOME SCENARIO 
+	SC_PZT_23: Inserimento Domanda Forum
+	AUTORE
+	Angelo Fusco
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Marco: paziente
+	FLUSSO DEGLI EVENTI 
+	1.        Marco si sente sopraffatto dall'ansia per un esame imminente e dalla delusione che teme di arrecare ai suoi genitori. Non sapendo con chi parlarne, decide di cercare consiglio e sfogarsi in un ambiente protetto, ricordandosi della sezione "Forum" della piattaforma SINTONIA, dove è sicuro di poter scrivere in modo anonimo.
+2.         Marco si autentica come paziente sulla piattaforma SINTONIA.
+3.         Dopo l’accesso, visualizza la Home Page della piattaforma.
+4.         Marco seleziona la voce “Forum” dal menu principale per accedere all’area di discussione.
+5.         All’interno della sezione “Forum”, scorre le discussioni esistenti ma non trova un post che tratti la sua specifica esperienza.
+6.         Decide quindi di creare un nuovo post e seleziona l’opzione “Nuova domanda”.
+7.         Si apre il form “Nuova domanda”, che presenta i campi: Titolo, Testo del messaggio e Categoria.
+8.         Marco compila il titolo “Ansia da esame e delusione genitori”, scrive il testo del messaggio e seleziona la categoria “Ansia”.
+9.         Completata la compilazione, consapevole che il post sarà anonimo, conferma l'invio.
+10. La domanda viene registrata dal sistema e resta invisibile agli altri pazienti fino alla risposta dello psicologo.
+11. Marco visualizza il messaggio di conferma e la propria domanda appena pubblicata, rimanendo in attesa di una risposta da parte di uno psicologo.
+12. Solo dopo aver ricevuto la risposta dello psicologo, il post e la risposta stessa vengono pubblicati nel forum con l’etichetta “Utente Anonimo”.
+	3.4.7.1.3  Lato Psicologo/Psicoterapeuta
+NOME SCENARIO
+	SC_PSI_12: Visualizzazione Diario Paziente
+	AUTORE
+	Francesco Di Giovanni
+	ISTANZE DI ATTORI PARTECIPANTI
+	Rosaria: Psicologo/psicoterapeuta
+Pierluigi Gollini: paziente
+	FLUSSO DI EVENTI
+	1.         Rosaria è una psicoterapeuta dell’ASL con accesso alla piattaforma SINTONIA. Le è stato assegnato un paziente di nome “Pierluigi Gollini”, per il quale desidera consultare il diario personale redatto nel periodo di attesa.
+2.         Intende leggere le annotazioni del paziente per comprendere meglio il suo stato emotivo e il flusso di pensieri giornalieri precedenti nel periodo di attesa.
+3.         Accede alla sezione della piattaforma dedicata alla gestione dei pazienti a lei assegnati.
+4.         All’interno dell’elenco visualizzato, decide di cercare direttamente “Pierluigi Gollini” utilizzando la funzionalità di ricerca.
+5.         Dopo aver ottenuto i risultati, Rosaria individua il nominativo “Pierluigi Gollini” e apre la relativa scheda personale.
+6.         Una volta entrata nella scheda, esamina le informazioni anagrafiche associate al paziente per assicurarsi di aver selezionato la persona corretta.
+7.         Scorre quindi le opzioni disponibili e seleziona la voce “Genera Report” per accedere alla sezione dedicata.
+8.         Ottiene un messaggio di successo “Report generato con successo” e appare la voce “Visualizza Report” che porta ad una nuova pagina.
+9.         All’interno della pagina, Rosaria legge il diario quotidiano del paziente Pierluigi Gollini, prendendo visione delle annotazioni del paziente.
+10. Terminata la consultazione, Rosaria conclude la sessione avendo acquisito una visione più chiara del percorso psicologico del paziente, utile per prepararsi alla prossima seduta.
+	
+
+
+
+NOME SCENARIO 
+	SC_PSI_1: Revisione Questionario Paziente
+	AUTORE 
+	Elena Carlomagno 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Valeria: Psicologo
+	FLUSSO DEGLI EVENTI 
+	1.         Valeria, una psicologa impiegata verso l'ASL, si autentica alla piattaforma SINTONIA e decide di revisionare dei questionari fatti dagli utenti. Si reca perciò nella sezione "Questionari". 
+2.         Le compare un elenco di questionari compilati dai pazienti in lista d'attesa, presentati in forma anonima. 
+3.         Valeria seleziona un questionario presente nell'elenco.
+4.         Visualizza le domande e le relative risposte (sempre anonime) fornite dal paziente, insieme a una voce che recita “Revisiona”.
+5.         Valeria revisiona le risposte, controlla il punteggio, e seleziona la voce "Revisiona".
+6.         Il sistema, a seguito di quest'azione, aggiorna lo stato in "Revisionato" e rimuove il questionario dalla lista dei questionari da revisionare. 
+	
+
+NOME SCENARIO 
+	SC_PSI_5: Generazione Report 
+	AUTORE 
+	Gianni Policola 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Filippo: Psicologo
+Mario Verdi: Paziente
+	FLUSSO DEGLI EVENTI 
+	1.         Filippo, uno psicologo che utilizza la piattaforma SINTONIA, ha appena preso in carico un nuovo paziente, Mario Verdi, che durante l’attesa ha espresso le proprie emozioni sulla piattaforma.
+2.         In vista del primo incontro, Filippo vuole farsi un’idea generale della situazione emotiva di Mario per prepararsi al meglio, dunque accede alla piattaforma. 
+3.         Quindi, si reca nella sezione dedicata ai suoi pazienti. 
+4.         Consulta l’elenco dei pazienti in cura e trova il nome di Mario. 
+5.         Apre il profilo di Mario per esaminare le informazioni disponibili. 
+6.         Notando la possibilità di generare un report riepilogativo, decide di farlo per avere una visione d’insieme dei dati raccolti da Mario. 
+7.         Ottiene un riepilogo chiaro dei principali temi emersi, dell’andamento emotivo e di eventuali segnali rilevanti.
+	
+
+NOME SCENARIO 
+	SC_PSI_7: Terminazione Cura Paziente
+	AUTORE 
+	Rosaria Cervino
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Valeria: Psicologo/psicoterapeuta;
+Luca Rossi: Paziente.
+	FLUSSO DEGLI EVENTI 
+	1.         Valeria, una psicologa impiegata presso l’ASL, ha appena terminato l’ultima seduta prevista con il paziente Luca Rossi.
+Poiché il percorso terapeutico è ufficialmente concluso, deve procedere con la rimozione del paziente dal sistema.
+2.         Valeria si autentica perciò alla piattaforma SINTONIA, dove le compare la Dashboard Psicologo contenente le sezioni: lista questionari, pazienti assegnati e alert clinici.
+3.         Accede alla sezione "pazienti assegnati" e visualizza l'elenco completo dei casi attualmente in carico.
+4.         Dopo aver individuato il paziente da rimuovere, Valeria seleziona l'opzione "Termina cura paziente".
+5.         A seguito della richiesta, le compare un avviso con un messaggio di conferma, al fine di prevenire eliminazioni accidentali.
+6.         Valeria così conferma nuovamente la sua volontà di procedere con l’operazione.
+7.         Il sistema, a seguito della conferma, provvede ad archiviare le informazioni principali di Luca Rossi (questionari, diario, cronologia sedute) e lo elimina dall'elenco dei casi attivi di Valeria. Il suo slot si libera, consentendole di accogliere un nuovo paziente. 
+	
+
+NOME SCENARIO 
+	SC_PSI_2: Richiesta Invalidazione Questionario Paziente
+	AUTORE 
+	Francesco Coppola 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Giacomo: Psicologo;
+Gianfranco: Amministratore di sistema.
+	FLUSSO DEGLI EVENTI 
+	1.         Durante la sua revisione pomeridiana, Giacomo, uno Psicologo, accede alla sezione dei questionari da validare. 
+2.         Inizia ad analizzare il questionario di un paziente anonimo, ma scorrendo le risposte nota qualcosa che non torna. 
+3.         Una palese discrepanza tra due risposte lo convince che il questionario è inaffidabile. 
+4.         Decide quindi di segnalarlo, cliccando sul pulsante "Richiesta invalidazione". 
+5.         Gli compare un pop-up che gli chiede di motivare la sua richiesta. 
+6.         Giacomo scrive una breve nota ("Incoerenza fra le risposte Q3-Q5") e preme "Invia Richiesta". 
+7.         Il sistema conferma l'invio e inoltra la segnalazione a Gianfranco, l'Amministratore, che si occuperà dell’invalidazione. 
+	
+
+NOME SCENARIO 
+	SC_PSI_8: Aggiunta Risposta a Domanda nel Forum
+	AUTORE 
+	Francesco Coppola
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Giacomo: Psicologo
+	FLUSSO DEGLI EVENTI 
+	1.         Giacomo, uno Psicologo, accede alla piattaforma SINTONIA e decide di dedicare un po' di tempo al forum. 
+2.         Dalla sua dashboard, seleziona la sezione "Forum" per vedere gli ultimi post. 
+3.         Mentre scorre i post, la sua attenzione viene catturata dalla domanda di uno studente anonimo su l'ansia pre-esame. 
+4.         Apre la discussione e legge attentamente lo sfogo, sentendo il dovere di rispondere per aiutare lo studente. 
+5.         Clicca su "Rispondi" e si prende qualche minuto per scrivere una risposta professionale ma empatica. 
+6.         Rilegge velocemente ciò che ha scritto e, soddisfatto, clicca su "Invia Risposta". 
+7.         Vede la sua risposta apparire immediatamente sotto la domanda dello studente, la sua risposta è ora visibile a tutta la community. 
+	3.4.7.1.4 Lato Amministratore Del Sistema
+NOME SCENARIO 
+	SC_AS_1: Visualizzazione Sezione Psicologi
+	AUTORE 
+	Gianluca Ambrosio 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Gianfranco: Amministratore Del Sistema 
+Martina Rossi: Psicologo
+	FLUSSO DI EVENTI 
+	1.         Gianfranco è un Amministratore tecnico di un’ASL Campana. Questa mattina è stato contattato da Martina Psicologa della sua ASL la quale gli ha chiesto se il suo Recapito Telefonico fosse attuale e aggiornato.
+2.         Per verificare l'esattezza del recapito telefonico Gianfranco accede alla piattaforma SINTONIA.
+3.         Dalla sua Dashboard Amministratore, seleziona la sezione "Psicologi" per accedere all'elenco dei professionisti.
+4.         Gli appare la pagina "Lista Psicologi" con le funzionalità di gestione, inclusa una barra di ricerca.
+5.         Gianfranco utilizza la funzione di ricerca, inserendo il nome di Martina, per filtrare l'elenco.
+6.         Individua il professionista cercato nei risultati e clicca sul suo nome per aprire la scheda di dettaglio.
+7.         Si apre la scheda con le informazioni complete del profilo.
+8.         Gianfranco visualizza il "Recapito Telefonico" e conferma che il numero registrato nel sistema è quello corretto e aggiornato.
+	
+
+NOME SCENARIO 
+	SC_AS_2: Aggiunta Psicologo
+	AUTORE 
+	Rosaria Cervino 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Gianfranco: Amministratore di sistema;
+Valeria: Psicologo/psicoterapeuta.
+	FLUSSO DEGLI EVENTI 
+	1.          Una nuova psicologa, Valeria, è stata appena assunta presso l’ASL ed è necessario inserirla nella piattaforma SINTONIA per consentirle l’accesso al sistema.
+2.         Gianfranco, l'amministratore di sistema di SINTONIA, si autentica sulla piattaforma per Valeria al sistema e ampliare la rete di professionisti.
+3.         Gli compare la Dashboard Amministratore contenente le varie sezioni.
+4.         Gianfranco raggiunge la sezione “Psicologi” e seleziona l’opzione “Aggiungi Psicologo”.
+5.         Gli appare l’apposito modulo per l’aggiunta di uno psicologo, con i relativi campi da compilare.
+6.         All’interno del modulo dedicato, Gianfranco inserisce tutte le informazioni necessarie per la registrazione di Valeria alla piattaforma.
+7.         Dopo la conferma, il sistema assocerà automaticamente il profilo.
+8.         A quel punto, Valeria risulterà attiva nella piattaforma e potrà aggiornare i propri dati, accedere alle sezioni riservate e rendersi disponibile per la presa in carico dei pazienti. 
+	
+
+NOME SCENARIO 
+	SC_AS_11: Modifica Assegnazione Psicologo
+	AUTORE 
+	Alessio Del Sorbo 
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Alessio: Amministratore di sistema
+Martina Rossi: Psicologo
+Giorgio Trombetta: Paziente
+	FLUSSO DI EVENTI 
+	1.         Alessio, amministratore di sistema della piattaforma SINTONIA, riceve dal coordinatore del servizio di psicologia la richiesta di variazione del supporto psicologico per il paziente Giorgio Trombetta. 
+2.         Il coordinatore ha già valutato la fattibilità del trasferimento e individuato la psicologa Martina Rossi come nuova professionista disponibile per il caso. 
+3.         Alessio riceve tutte le informazioni necessarie per identificare sia il paziente sia la psicologa. 
+4.         Alessio accede alla piattaforma SINTONIA utilizzando le proprie credenziali di autenticazione. 
+5.         Dopo l’accesso, visualizza la dashboard amministratore e seleziona la sezione dedicata alla gestione dei pazienti registrati. 
+6.         Dalla lista completa dei pazienti, Alessio ricerca Giorgio Trombetta tramite i dati ricevuti. 
+7.         Una volta individuato il paziente, apre il profilo personale di Giorgio. 
+8.         Alessio avvia la modalità di modifica del profilo. 
+9.         Viene mostrato un form di aggiornamento che consente di modificare i dati del paziente, inclusa l’assegnazione dello psicologo. 
+10. Alessio ricerca Martina Rossi nella lista degli psicologi disponibili e la seleziona come nuova assegnataria. 
+11. Dopo aver completato la modifica, Alessio conferma e salva le variazioni. 
+12. Un messaggio di conferma indica l’avvenuto aggiornamento dell’assegnazione. 
+13. Giorgio Trombetta risulta ora assegnato alla psicologa Martina Rossi, che può visualizzare il nuovo paziente nella propria lista. 
+14. Vengono inviate automaticamente le notifiche a Giorgio e a Martina per informarli del cambiamento. 
+	
+
+NOME SCENARIO 
+	SC_AS_10: Modifica Priorità Paziente
+	AUTORE 
+	Francesco Di Giovanni
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Alessio: Amministratore di sistema
+Ciro Immobile: paziente
+	FLUSSO DI EVENTI 
+	1.         Alessio è un amministratore della piattaforma Sintonia. Oggi gli è stata segnalata un’anomalia riguardante il calcolo della priorità del paziente “Ciro Immobile”, una discrepanza che richiede un’azione immediata.
+Senza esitazione, Alessio si prepara a intervenire per verificare l’errore e ripristinare la corretta gestione della lista d’attesa.
+2.         Alessio accede alla sezione dedicata ai pazienti della piattaforma. Da qui può consultare l’elenco completo e avviare la verifica necessaria per individuare il caso segnalato.
+3.         Per velocizzare l’operazione, utilizza la barra di ricerca della piattaforma, inserendo il nome e il cognome del paziente “Ciro Immobile” per localizzarlo rapidamente all’interno della lista.
+4.         Dopo aver effettuato la ricerca, Alessio individua il nominativo “Ciro Immobile” tra i risultati e accede alla sua sezione personale.
+5.         All’interno della scheda, esamina con attenzione le informazioni del paziente, verificando che si tratti effettivamente del caso segnalato su cui deve intervenire.
+6.         Dopo aver confermato di aver individuato il paziente corretto, Alessio procede a modificare il valore della priorità assegnata.
+Con attenzione, aggiorna manualmente il dato inserendo la priorità corretta.
+7.         Una volta completata la modifica, Alessio verifica che la nuova priorità sia stata applicata correttamente.
+	
+
+NOME SCENARIO 
+	SC_AS_17: Accettazione Richiesta Invalidazione
+	AUTORE 
+	Alessio Del Sorbo
+	ISTANZE DI ATTORI PARTECIPANTI 
+	Alessio: Amministratore di sistema 
+	FLUSSO DI EVENTI 
+	1.        Alessio, amministratore di sistema della piattaforma SINTONIA, sta svolgendo le operazioni amministrative di routine, come la gestione delle richieste di supporto tecnico.
+2.         Ad un certo punto riceve una notifica che lo avverte che è presente una nuova richiesta di invalidazione questionario, all’interno della sezione dedicata.
+3.         Alessio quindi si reca all’interno della sezione di gestione delle richieste di invalidazione dei questionari, dove sono mostrate tutte quelle ancora in sospeso
+4.         Alessio clicca sulla richiesta appena arrivata per visualizzarne i dettagli. 
+5.         Si apre un pop-up riepilogativo che contiene le note di motivazione lasciate dallo psicologo e i pulsanti per accettare o rifiutare la richiesta. 
+6.         Alessio valuta le motivazioni e, non riscontrando alcun errore accidentale alla base della richiesta, decide di accettarla. 
+7.         Dopo aver confermato la decisione, la richiesta viene accettata e un messaggio di conferma notifica l’avvenuta operazione. 
+8.         Lo score del paziente autore del questionario viene aggiornato per riflettere l’invalidazione e la perdita del punteggio ottenuto. 
+	      8. Modello dei casi d’uso
+         1. Lato Paziente
+UCD_PZT
+  
+
+
+
+NOME CASO D’USO
+	UC_PZT_4_CompilazioneQuestionario
+	AUTORE
+	Francesco Coppola
+	ATTORI PARTECIPANTI
+	Iniziato da Paziente
+	ENTRY CONDITION
+	* Il paziente deve essere autenticato alla piattaforma. 
+* Deve essere presente un questionario associato al paziente con stato "Da Compilare".
+	EXIT CONDITION
+	* Successo: Il questionario è stato compilato per intero, salvato, e inviato al sistema. Lo stato del questionario è "Completato". Tale questionario non sarà più visualizzato nella sezione “Da compilare”.
+* Fallimento: Il questionario non viene inviato il suo stato resta “Da Compilare” ed è nuovamente disponibile nella sezione per una nuova compilazione.
+	FLUSSO DEGLI EVENTI
+	1. Il Paziente si autentica sulla piattaforma SINTONIA.
+2. Il sistema mostra la “Home Page” e una sezione "Questionari da compilare".
+3. Il Paziente seleziona il questionario per iniziare la compilazione.
+4. Il sistema mostra le domande del questionario con relativi tasti di risposta.
+5. Il Paziente compila tutte le domande.
+6. Giunto alla fine, il Paziente invia il questionario.
+7. Il sistema registra le risposte, calcola il punteggio.
+8. Il sistema aggiorna lo score pesato del paziente aggiungendo il nuovo punteggio.
+9. Il sistema mostra il messaggio "Questionario inviato con successo".
+10. Il Sistema reindirizza il paziente alla “Sezione Questionari”.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (ABBANDONO)
+	   1. Il Paziente esce dalla schermata di compilazione.
+   2. Il sistema interrompe la compilazione. Nessun dato viene salvato.
+   3. Il sistema reindirizza l'utente alla “Home Page”.
+	SPECIAL REQUIREMENTS
+	* Le elaborazioni di sistema definite ai passi 7 (calcolo del punteggio) e 8 (aggiornamento dello score) devono essere eseguite in background e rimanere invisibili all'utente.
+	
+
+NOME CASO D’USO
+	UC_PZT_23_InserimentoDomandaForum
+	AUTORE
+	Angelo Fusco
+	ATTORI PARTECIPANTI
+	Iniziato da Paziente
+	ENTRY CONDITION
+	* Il Paziente deve essere autenticato alla piattaforma.
+	EXIT CONDITION
+	* Successo: Il post è stato compilato per intero, inviato al sistema e pubblicato. Lo stato del post è 'Pubblicato'. Tale post è ora visualizzabile nell'elenco principale del forum.
+* Fallimento: Il post non viene inviato (es. annullamento), non viene pubblicato nel forum e il contenuto inserito viene scartato. L'opzione "Nuova domanda" resta disponibile per un nuovo inserimento.
+	FLUSSO DEGLI EVENTI
+	1. Il Paziente accede alla piattaforma SINTONIA.
+2. Il sistema autentica il Paziente e mostra la “Home Page”.
+3. Il Paziente seleziona la voce "Forum".
+4. Il sistema mostra la sezione "Forum". 
+5. Il Paziente scorre le interazioni esistenti ma non trova un post relativo alla sua specifica esperienza.
+6. Il Paziente seleziona l'opzione "Nuova domanda" per creare un post.
+7. Il sistema apre il form "Nuova domanda" con i campi: Titolo, Testo del messaggio e Categoria.
+8. Il Paziente compila il titolo, il testo del messaggio, e seleziona la categoria più adatta al suo contesto.
+9. Il Paziente seleziona il pulsante "Pubblica domanda" e conferma l'invio.
+10. Il sistema valida i campi, registra la domanda applicando la regola di anonimizzazione e la pubblica nel Forum nella sezione le mie domande, in attesa di una risposta da parte di uno psicologo per renderla pubblica.
+11. Il sistema mostra al Paziente il messaggio di conferma e la sua domanda appena Inserita. Marco rimane in attesa di una notifica di risposta da parte di uno Psicologo.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (ABBANDONO)
+	   1. In qualsiasi momento prima del passo 9 (Invio), il Paziente esce dalla schermata di compilazione.
+   2. Il sistema scarta tutte le modifiche interrompendo la compilazione e riporta il paziente nella sezione Forum senza pubblicazione, Nessun dato viene salvato.
+	FLUSSO DEGLI EVENTI DI ERRORE (Mancata compilazione campi)
+	   1. La validazione (Passo 10 del flusso principale) fallisce perché un campo obbligatorio risulta vuoto.
+   2. Il sistema disabilita il pulsante di conferma e non permette l’invio. 
+	SPECIAL REQUIREMENTS
+	NA
+	
+
+NOME CASO D’USO
+	UC_PZT_19_InserimentoContenutoDiarioPersonale
+	AUTORE
+	Gavino De Stefano
+	ATTORI PARTECIPANTI
+	Iniziato da Paziente
+	ENTRY CONDITION
+	* Il paziente deve essere autenticato alla piattaforma.
+	EXIT CONDITION
+	* Successo: Il nuovo contenuto è salvato correttamente ed è visibile nell’elenco delle annotazioni del Diario Personale del paziente.
+* Fallimento: Il contenuto non viene salvato; viene mostrato un messaggio di errore e la bozza, se presente, resta disponibile nel form fino a nuova sottomissione o annullamento.
+	FLUSSO DEGLI EVENTI
+	1. Il Paziente, dalla homepage, seleziona la voce “Diario Personale” per accedere alla sezione dedicata.
+2. Il sistema mostra la sezione Diario Personale con l’elenco delle annotazioni e il pulsante “Nuova annotazione”.
+3. Il Paziente seleziona “Nuova annotazione” per aprire il form di creazione contenuto.
+4. Il sistema visualizza un form con campi: Titolo e contenuto; mostra il pulsante “Salva”.
+5. Il Paziente inserisce i vari campi.
+6. Il Paziente seleziona “Salva” per confermare l’inserimento.
+7. Il sistema valida i campi obbligatori, salva il nuovo contenuto e aggiorna l’elenco del Diario mostrando conferma di avvenuto inserimento.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (ABBANDONO)
+	   1. Il Paziente abbandona la schermata di compilazione.
+   2. Il sistema interrompe la compilazione e scarta le modifiche, nessun dato viene aggiornato.
+	I FLUSSO DEGLI EVENTI DI ERRORE (Mancanza Contenuto Testo Obbligatorio)
+	   1. Il sistema rileva la mancanza di un campo obbligatorio.
+   2. Il sistema disabilita il tasto di conferma e non permette l’invio.
+	II FLUSSO DEGLI EVENTI DI ERRORE (Errore Di Salvataggio)
+	   1. Si verifica un errore durante il salvataggio.
+   2. Il sistema mostra una notifica di errore, consentendo successivamente di ricompilare il form.
+	SPECIAL REQUIREMENTS
+	NA
+	
+
+NOME CASO D’USO
+	UC_PZT_5_InserimentoStatoDAnimo
+	AUTORE
+	Alessio Del Sorbo
+	ATTORI PARTECIPANTI
+	Iniziato da Paziente
+	ENTRY CONDITION
+	* Il paziente è autenticato sulla piattaforma.
+	EXIT CONDITION
+	* Successo: Lo stato d’animo è stato registrato e può essere visualizzato nella timeline personale.
+* Fallimento: Il paziente ha ricevuto un messaggio che spiega l’impossibilità di completare l’operazione.
+	FLUSSO DEGLI EVENTI
+	1. Il paziente accede alla piattaforma autenticandosi con le proprie credenziali.
+2. Il sistema mostra la Home Page, che contiene la sezione “Calendario”.
+3. Il paziente seleziona la sezione “Calendario” e seleziona la data odierna per la quale desidera registrare il proprio stato d’animo.
+4. Il sistema mostra le opzioni relative alla data selezionata.
+5. Il paziente sceglie di aggiungere un nuovo stato d’animo.
+6. Il sistema presenta il form “Nuovo stato d’animo”, che contiene i campi Emozione, Intensità (0–10) e Nota.
+7. Il paziente compila i campi selezionando l’emozione percepita, impostando il valore di intensità e, se desiderato, aggiungendo una breve nota descrittiva.
+8. Il paziente conferma l’inserimento.
+9. Il sistema valida i dati inseriti, registra lo stato d’animo nel profilo del paziente, aggiorna la timeline e mostra un messaggio di conferma dell’avvenuto inserimento.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (CAMBIO DI DECISIONE)
+	   1. Il Paziente si accorge di aver inserito un dato errato prima di confermare.
+   2. Il paziente modifica l’emozione o l’intensità direttamente nel form.
+   3. Il sistema aggiorna i campi con i nuovi valori e mostra il form rivisto.
+   4. Il paziente conferma nuovamente l’inserimento.
+   5. Il sistema valida i dati aggiornati, registra lo stato d’animo corretto, aggiorna la timeline e mostra un messaggio di conferma dell’avvenuto inserimento.
+	FLUSSO DEGLI EVENTI DI ERRORE (PROBLEMA TECNICO)
+	   1. Il paziente conferma l’inserimento dei dati.
+Durante la registrazione si verifica un errore di comunicazione o un problema temporaneo di sistema.
+   2. Il sistema non riesce a completare l’operazione e mostra un messaggio che segnala l’impossibilità di salvare i dati.
+   3. Il sistema invita il paziente a ripetere l’inserimento una volta ristabilita la connessione o risolto il problema.
+	SPECIAL REQUIREMENTS
+	   * L’interfaccia per l’inserimento dello stato d’animo deve caricarsi entro tre secondi dalla selezione della funzione.
+   * La conferma di salvataggio o di errore deve essere visualizzata entro cinque secondi.
+   * I dati devono essere memorizzati in modo sicuro e immediatamente disponibili nella timeline del Paziente.
+	   2. Lato Psicologo/Psicoterapeuta
+UCD_PSI
+  
+________________
+
+NOME CASO D’USO
+	UC_PSI_5_GenerazioneReport
+	AUTORE
+	Antonio Walter De Fusco
+	ATTORI PARTECIPANTI
+	Iniziato da Psicologo
+	ENTRY CONDITION
+	   * Lo Psicologo deve essere autenticato alla piattaforma.
+   * Lo Psicologo deve avere il paziente di cui vuole generare il report nel proprio elenco di pazienti in carico.
+	EXIT CONDITION
+	   * Successo: Il report riepilogativo è stato generato e mostrato allo psicologo.
+   * Fallimento: Il report non viene generato.
+	FLUSSO DEGLI EVENTI
+	   1. Lo Psicologo si autentica sulla piattaforma SINTONIA.
+   2. Il sistema mostra la Dashboard Psicologo.
+   3. Lo Psicologo seleziona la sezione dedicata ai suoi pazienti.
+   4. Il sistema mostra l'elenco dei pazienti in carico.
+   5. Lo Psicologo individua e seleziona il nome del paziente per cui desidera un riepilogo.
+   6. Il sistema apre il profilo del paziente.
+   7. Lo Psicologo seleziona l'opzione "Genera Report".
+   8. Il sistema elabora i dati raccolti per quel paziente (es. pagine di diario, stati d'animo).
+   9. Il sistema genera il report sulla base dei dati elaborati.
+   10. Il sistema mostra il messaggio di conferma: “Report generato con successo”.
+   11. Il sistema mette a disposizione la voce “Visualizza Report”.
+   12. Lo psicologo seleziona la voce “Visualizza Report”.
+   13. Il sistema mostra allo psicologo il report del paziente selezionato.
+	FLUSSO DEGLI EVENTI DI ERRORE (Dati insufficienti o errore di generazione)
+	   1. L'elaborazione fallisce perché i dati del paziente sono insufficienti o si verifica un errore tecnico.
+   2. Il sistema non genera il report.
+   3. Il sistema mostra un messaggio di errore specifico (es. "Dati insufficienti per generare un riepilogo" o "Errore durante la generazione del report. Riprovare.").
+	SPECIAL REQUIREMENTS
+	   * Il sistema deve consentire solo allo psicologo assegnato di generare il report di uno specifico paziente per tutelare la sua privacy.
+	
+
+NOME CASO D’USO
+	UC_PSI_7_TerminazioneCuraPaziente
+	AUTORE
+	Rosaria Cervino
+	ATTORI PARTECIPANTI
+	Iniziato da psicologo
+	ENTRY CONDITION
+	   * Lo psicologo deve essere autenticato.
+   * Devono essere presenti pazienti assegnati nella sua dashboard.
+	EXIT CONDITION
+	   * Successo: Il paziente è stato rimosso correttamente dall’elenco dei casi attivi; le sue informazioni principali sono state archiviate; lo slot risulta libero per l’assegnazione di un nuovo paziente.
+   * Fallimento: La rimozione non viene completata (annullamento o errore di sistema); il paziente resta nell’elenco dei casi attivi.
+	FLUSSO DEGLI EVENTI
+	   1. Lo psicologo si autentica alla piattaforma SINTONIA.
+   2. Il sistema mostra la Dashboard Psicologo, contenente le varie sezioni.
+   3. Per lo psicologo si rende necessaria la rimozione di un paziente dal sistema, poiché il percorso terapeutico è giunto al termine.
+   4. Lo psicologo accede alla sezione “Pazienti assegnati” e visualizza l’elenco completo dei casi attualmente in carico.
+   5. Dopo aver individuato il paziente da rimuovere, seleziona l’opzione “Termina cura paziente”.
+   6. Il sistema mostra un avviso di conferma per prevenire rimozioni accidentali.
+   7. Lo psicologo conferma così la propria volontà di procedere con l’operazione.
+   8. Il sistema, a seguito della conferma, archivia automaticamente le informazioni principali del paziente (questionari, diario, cronologia delle sedute) e rimuove il paziente dall’elenco dei casi attivi dello psicologo.
+   9. Lo slot associato viene liberato.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (Annullamento eliminazione)
+	   1. Lo psicologo può selezionare “Annulla” anziché confermare l’operazione. 
+   2. Il sistema annulla la procedura di rimozione e il paziente rimane nell’elenco dei casi attivi.
+	FLUSSO DEGLI EVENTI DI ERRORE (Errore di sistema)
+	   1. Può verificarsi un errore nell’archiviazione o nella   rimozione del paziente.
+   2. Il sistema mostra un messaggio di errore: “Operazione non completata. Riprova più tardi o contatta l’Amministratore di Sistema”.
+   3.  Nessuna informazione viene rimossa fino al corretto completamento del processo.
+	SPECIAL REQUIREMENTS
+	   * L’archiviazione dei dati del paziente deve avvenire in modo sicuro e permanente.
+   * L’interfaccia di conferma deve impedire rimozioni accidentali.
+   * Il processo di rimozione deve concludersi entro 5 secondi.
+	
+
+NOME CASO D’USO
+	UC_PSI_1_RevisioneQuestionarioPaziente
+	AUTORE
+	Gianluca Ambrosio
+	ATTORI PARTECIPANTI
+	Iniziato da psicologo
+	ENTRY CONDITION
+	   * Lo psicologo è autenticato sulla piattaforma Sintonia con ruolo Psicologo e si trova nella sezione "Questionari Pazienti". 
+   * Il questionario che intende revisionare è presente nel sistema, è stato compilato da un paziente anonimo e non è già stato marcato come revisionato da un altro psicologo.
+	EXIT CONDITION
+	   * Successo: Il questionario è marcato come “revisionato” in modo permanente e irreversibile; le note cliniche dello psicologo sono salvate e associate al questionario; il timestamp della revisione è registrato nel sistema; la revisione è tracciata e associata allo psicologo.
+   * Fallimento: Il questionario rimane nello stato precedente (“Da revisionare”); viene registrato un log dell’errore nel sistema.
+	FLUSSO DEGLI EVENTI
+	   1. Lo psicologo accede alla sezione “Questionari Pazienti” dalla dashboard.
+   2. Il sistema visualizza l’elenco dei questionari compilati da pazienti anonimi con: data compilazione, tipologia di questionario e punteggio.
+   3. Lo psicologo seleziona un questionario dalla lista.
+   4. Il sistema mostra la schermata di dettaglio con: domande e risposte, punteggi.
+   5. Lo psicologo analizza le risposte del paziente.
+   6. Lo psicologo identifica se la valutazione automatica è corretta o se ci sono elementi clinici non rilevati.
+   7. Lo psicologo annota le sue osservazioni.
+   8. Lo psicologo clicca sul pulsante “Revisionato”.
+   9. Il sistema mostra un popup di conferma: “Attenzione: questa operazione è irreversibile. Confermi?”.
+   10. Lo psicologo conferma cliccando su “Conferma Revisione”.
+   11. Il sistema salva la revisione con timestamp e ID dello psicologo.
+   12. Il sistema aggiorna lo stato del questionario a “Revisionato”.
+   13. Il sistema mostra un messaggio: “Questionario revisionato con successo”.
+   14. Il sistema torna alla lista dei questionari aggiornata.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (Richiesta Invalidazione Questionario)
+	   1. Lo psicologo valuta che il punteggio non riflette il reale stato del paziente.
+   2. Lo psicologo valuta che il punteggio non riflette il reale stato del paziente.
+   3. Lo psicologo clicca su “Richiedi Invalidazione Questionario”
+   4. Lo psicologo compila la richiesta con una motivazione dettagliata del perché il questionario dovrebbe essere invalidato.
+   5. Lo psicologo conferma l’invio della richiesta.
+   6. Il sistema imposta lo stato del questionario a “In Sospeso - Validazione Richiesta”.
+   7. Il sistema invia una notifica all’Amministratore di Sistema.
+   8. Il flusso termina qui per lo psicologo; il questionario non è più disponibile per la revisione standard.
+   9. L’amministratore riceve la richiesta e valuta la motivazione dello psicologo.
+	SPECIAL REQUIREMENTS
+	   * L’operazione di revisione questionari è consentita esclusivamente agli utenti autenticati con ruolo Psicologo, previa autenticazione con credenziali valide
+   * Il sistema deve garantire che nessun altro tipo di utente (pazienti o amministratori) possa accedere alla funzionalità di revisione questionari
+   * Il sistema garantisce l’anonimato completo dei pazienti, non mostrando mai dati identificativi personali durante la revisione
+   * Ogni operazione di revisione deve essere tracciata con timestamp, ID psicologa e contenuto delle note per finalità di audit
+	
+
+NOME CASO D’USO
+	UC_PSI_3_VisualizzazioneSezioneAlertClinici
+	AUTORE
+	Mattia Fanzini
+	ATTORI PARTECIPANTI
+	Iniziato da Psicologo
+	ENTRY CONDITION
+	   * Lo Psicologo deve essere autenticato alla piattaforma.
+	EXIT CONDITION
+	   * Successo: Lo Psicologo ha visualizzato i dettagli di un alert clinico. Lo stato dell'alert rimane "Aperto" (poiché la presa in carico non fa parte di questo caso d'uso). 
+   * Fallimento: I dettagli dell'alert non vengono visualizzati a causa di un errore di sistema.
+	FLUSSO DEGLI EVENTI
+	   1. Lo Psicologo accede alla piattaforma SINTONIA.
+   2. Il sistema autentica lo Psicologo e mostra la "Dashboard Psicologo".
+   3. Il sistema mostra una notifica visiva prioritaria nella dashboard (es. un'icona lampeggiante o un badge numerico) per segnalare la presenza di un nuovo alert clinico non letto.
+   4. Lo Psicologo seleziona la sezione "Alert Clinici" o l'icona di notifica per accedere all'elenco.
+   5. Il sistema mostra l'elenco degli alert clinici "Aperti" (non ancora presi in carico), ordinati per urgenza o data.
+   6. Il sistema mostra delle informazioni anonime di riepilogo per ogni alert (es. tipo di questionario, punteggio ottenuto, soglia di rischio superata).
+   7. Lo Psicologo prende visione delle informazioni.
+	FLUSSO DEGLI EVENTI ALTERNATIVO (Nessun alert presente)
+	   1. Il sistema non mostra alcuna notifica di nuovi alert.
+   2. Lo Psicologo seleziona comunque la sezione "Alert Clinici".
+   3. Il sistema mostra la sezione "Alert Clinici" con un messaggio informativo (es. "Nessun alert clinico attivo al momento.").
+	FLUSSO DEGLI EVENTI DI ERRORE (Errore caricamento elenco alert)
+	   1.  La richiesta fallisce perché il sistema non riesce a recuperare l'elenco degli alert aperti (es. errore di connessione al database o timeout della richiesta).
+   2.  Il sistema non riesce a mostrare l'elenco degli alert.
+   3.  Il sistema mostra un messaggio di errore specifico all'interno della sezione "Alert Clinici" (es. "Errore: Impossibile caricare l'elenco degli alert. Riprovare più tardi.").
+   4.  Lo Psicologo rimane nella sezione "Alert Clinici", visualizzando solo il messaggio di errore.
+	SPECIAL REQUIREMENTS
+	   * La notifica dell'alert sulla dashboard deve essere presentata allo Psicologo in tempo reale (o quasi reale) rispetto al momento in cui il questionario supera la soglia di rischio. 
+   * Il sistema deve garantire il completo anonimato del paziente durante la visualizzazione dei dettagli dell'alert.
+	   3. Lato Amministratore di Sistema
+UCD_AS
+  
+________________
+
+
+
+NOME CASO D’USO
+	UC_AS_11_ModificaAssegnazionePsicologo 
+	AUTORE
+	Elena Carlomagno
+	 ATTORI PARTECIPANTI
+	Iniziato da Amministratore di sistema
+	ENTRY CONDITION
+	   * L'Amministratore deve essere autenticato alla piattaforma. 
+   * Il paziente deve esistere e avere un profilo nel sistema. 
+   * Il nuovo psicologo deve esistere, essere registrato e avere uno stato "Disponibile" nel sistema. 
+	EXIT CONDITION
+	   * Successo: L'assegnazione del paziente è stata modificata. Il paziente è ora associato allo psicologo. Le notifiche sono state inviate. 
+   * Fallimento: L'assegnazione del paziente resta invariata. 
+	FLUSSO DEGLI EVENTI
+	   1. L'Amministratore riceve una richiesta esterna (dal coordinatore del servizio) per variare l'assegnazione di un paziente ad uno psicologo. 
+   2. L'Amministratore accede alla piattaforma SINTONIA utilizzando le proprie credenziali. 
+   3. Il sistema mostra la dashboard amministratore. 
+   4. L'Amministratore seleziona la sezione "Gestione dei pazienti registrati". 
+   5. L'Amministratore ricerca il paziente tramite id e apre il suo profilo personale.
+   6. L'Amministratore accede alla sezione di modifica del profilo. 
+   7. Il sistema mostra un form di aggiornamento che consente di modificare l'assegnazione dello psicologo. 
+   8. L'Amministratore ricerca il nuovo psicologo nella lista degli psicologi disponibili e lo seleziona come nuovo assegnatario. 
+   9. L'Amministratore conferma e salva le variazioni. 
+   10. Il sistema salva la modifica e mostra un messaggio di conferma "Aggiornamento dell'assegnazione avvenuto con successo". 
+   11. Il sistema aggiorna il profilo del paziente che risulta ora assegnato ad un nuovo psicologo. 
+   12. Il sistema invia automaticamente le notifiche al paziente e allo psicologo per informarli del cambiamento. 
+	FLUSSO DEGLI EVENTI ALTERNATIVO (Psicologo non disponibile)
+	   1. L'Amministratore ricerca il nuovo psicologo, ma lui non risulta presente nell'elenco.
+   2. L'Amministratore non può selezionarlo. 
+   3. L'Amministratore annulla l'operazione di modifica. 
+   4. Il sistema chiude il form. Nessuna modifica viene salvata. L'assegnazione del paziente resta invariata. 
+	FLUSSO DEGLI EVENTI DI ERRORE (Salvataggio fallito)
+	   1. L'Amministratore conferma le variazioni, ma il sistema incontra un errore.
+   2. Il sistema non salva la modifica e mostra il messaggio "Errore: impossibile salvare la variazione. Riprovare.". 
+   3. L'Amministratore resta sul form di modifica. L'assegnazione non è cambiata. 
+	SPECIAL REQUIREMENTS
+	NA
+	
+
+NOME CASO D’USO
+	UC_AS_17_AccettazioneRichiestaInvalidazione
+	AUTORE
+	Gianni Policola
+	ATTORI PARTECIPANTI
+	Iniziato da Amministratore
+	ENTRY CONDITION
+	   * L'amministratore deve essere autenticato alla piattaforma SINTONIA.
+   * Deve essere presente almeno una richiesta di invalidazione questionario con stato "In Sospeso".
+	EXIT CONDITION
+	   * Successo: La richiesta di invalidazione è stata accettata. Lo stato del questionario è “Invalidato”. Lo score del paziente è stato aggiornato. 
+   * Fallimento (Rifiuto): La richiesta di invalidazione è stata rifiutata. Lo score del paziente resta invariato e lo stato del questionario è “Compilato”.
+   * Fallimento (Errore): Il sistema ha restituito un errore. Nessun dato è stato modificato.
+	FLUSSO DEGLI EVENTI
+	   1. Il sistema mostra la Dashboard Amministratore.
+   2. L'amministratore accede alla sezione "Gestione Richieste di Invalidazione".
+   3. Il sistema mostra l'elenco completo delle richieste di invalidazione ancora in sospeso.
+   4. L'amministratore clicca su una richiesta per visualizzarne i dettagli.
+   5. Il sistema mostra un pop-up riepilogativo che contiene le note di motivazione (lasciate dallo psicologo) e i pulsanti per accettare o rifiutare la richiesta.
+   6. L'amministratore valuta le motivazioni e seleziona "Accetta".
+   7. Il sistema registra l'accettazione e mostra un messaggio di conferma (es. "Richiesta accettata con successo").
+   8. Il sistema aggiorna lo score del paziente autore del questionario.
+   9. Il sistema aggiorna lo stato del questionario a “Invalidato”.
+   10. Il sistema non mostrerà più quello specifico questionario (non la tipologia) al paziente.
+   11. Il sistema reindirizza l’amministratore all'elenco delle richieste (la richiesta appena processata non è più visibile tra quelle "in sospeso").
+	FLUSSO DEGLI EVENTI ALTERNATIVO (RIFIUTO)
+	   1. L'Amministratore valuta le motivazioni e seleziona "Rifiuta".
+   2. Il sistema registra il rifiuto e chiude la richiesta con esito negativo.
+   3. Il sistema mostra un messaggio di conferma (es. "Richiesta rifiutata").
+   4. Lo score del paziente e lo stato del questionario restano invariati.
+   5. Il sistema reindirizza all'elenco delle richieste.
+	FLUSSO DEGLI EVENTI DI ERRORE (Fallimento registrazione dell’ accettazione)
+	   1. La validazione fallisce.
+   2. Il sistema interrompe l'operazione e non aggiorna lo stato della richiesta.
+   3. Il sistema mostra un messaggio di errore specifico (es. "Errore: Impossibile aggiornare lo stato della richiesta. L'operazione è stata annullata.").
+   4. L’amministratore conferma la visualizzazione del pop-up.
+   5. Il sistema reindirizza all’elenco delle richieste.
+	SPECIAL REQUIREMENTS
+	   * L’operazione di accettazione deve essere atomica.
+   * In caso di errore in uno qualsiasi dei passi, l’intera operazione deve effettuare rollback.
+	
+
+NOME CASO D’USO
+	UC_AS_10_ModificaPrioritàPaziente
+	AUTORE
+	Francesco Di Giovanni
+	ATTORI PARTECIPANTI
+	Iniziato da Amministratore
+	ENTRY CONDITION
+	L’amministratore di sistema è autenticato sulla piattaforma Sintonia e si trova nella sezione dedicata ai pazienti.
+Il paziente di cui si intende modificare la priorità è presente nel sistema.
+	EXIT CONDITION
+	   * Successo: la priorità del paziente viene aggiornata correttamente e la lista d’attesa è ricalcolata in base al nuovo valore.
+   * Fallimento: la priorità del paziente rimane invariata e nessuna modifica viene salvata nel sistema.
+	FLUSSO DEGLI EVENTI
+	   1. L’amministratore utilizza la barra di ricerca per individuare il paziente desiderato, inserendone l’id nel campo apposito.
+   2. Il sistema visualizza a schermo il risultato della ricerca effettuata.
+   3. L’amministratore individua il paziente tra i risultati e seleziona la relativa scheda per accedere alla sua sezione personale.
+   4. Il sistema visualizza la scheda del paziente.
+   5. L’amministratore modifica il valore di priorità associato al paziente.
+   6. Il sistema aggiorna la lista d’attesa, inserendo il paziente nella posizione corretta in base al nuovo valore di priorità.
+	FLUSSO DI EVENTI DI ERRORE (Problema tecnico durante la modifica)
+	   1. Durante la modifica del valore di priorità, si verifica un errore tecnico dovuto a un malfunzionamento del sistema o a un problema di connessione con il database.
+   2. Il sistema non riesce a completare l’operazione e mostra un messaggio di errore che informa l’amministratore dell’impossibilità di salvare la modifica in questo momento.
+   3. Il sistema interrompe l’aggiornamento e nessuna modifica viene applicata alla priorità del paziente.
+
+
+	SPECIAL REQUIREMENTS
+	L’operazione di modifica della priorità è consentita esclusivamente all’amministratore di sistema.
+Il sistema deve garantire che nessun altro tipo di utente possa accedere o modificare i valori di priorità dei pazienti.
+	   9. Modello ad Oggetti
+   1. Oggetti Entity
+ENTITY
+	DESCRIZIONE
+	Paziente
+	L’utente che accede alla piattaforma per ricevere supporto. È caratterizzato da un ID, dai dati anagrafici e da un punteggio di priorità clinica (score) calcolato dinamicamente.
+	Psicologo
+	Il professionista sanitario abilitato. È caratterizzato da dati professionali (es. numero albo) e anagrafici. Gestisce una lista di pazienti assegnati, revisiona i loro questionari e risponde alle domande sul forum.
+	Amministratore
+	L’utente responsabile della gestione della piattaforma. È caratterizzato da dati anagrafici e ha i privilegi per creare/rimuovere account professionali e intervenire su segnalazioni tecniche o richieste di invalidazione.
+	TipologiaQuestionario
+	Rappresenta il modello strutturale di un Questionario. Definisce il nome, l’insieme delle domande associate e i possibili punteggi per ciascuna domanda.
+	Questionario
+	Lo strumento psicometrico compilato dal Paziente. Include la TipologiaQuestionario, la data di compilazione, le risposte fornite alle domande, un punteggio calcolato automaticamente e uno stato (es.  "Invalidato", "Revisionato"). Può generare un AlertClinico se il punteggio supera una soglia critica.
+	AlertClinico
+	La segnalazione di rischio generata automaticamente dal sistema quando un Questionario supera una soglia critica. Include l’ID Paziente, il tipo e punteggio del questionario scatenante, la data di generazione e uno stato di gestione (es. "In attesa", "Accettato").
+	Priorità
+	La priorità in lista di un paziente con il suo punteggio di inizio, quello di fine e la finestra temporale relativa alla priorità (U = 72 Ore…).
+	AcquisizioneBadge
+	Rappresenta un riconoscimento digitale assegnato al Paziente per incentivare il coinvolgimento, la costanza o il raggiungimento di obiettivi specifici all’interno della piattaforma. È caratterizzato da un nome, una descrizione, un’icona rappresentativa, eventuali criteri di assegnazione (es. completamento di un certo numero di questionari, inserimento regolare di annotazioni nel diario, partecipazione attiva al forum) e una data di ottenimento.
+	PaginaDiario
+	Rappresenta il diario privato associato a un singolo Paziente, che raccoglie tutte le sue annotazioni.
+	StatoDAnimo
+	La registrazione del benessere soggettivo del Paziente. È composto dall'emozione prevalente selezionata, da un livello di intensità (es. 1-10), da una eventuale nota descrittiva e il timestamp dell’inserimento.
+	Report
+	Rappresenta una visione complessiva dello stato psicologico di un Paziente. È caratterizzato dal suo contenuto (es. “ContenutoDiario” e “StatoDAnimo” del paziente), dalla data di generazione, dai riferimenti allo Psicologo che lo ha generato e al Paziente soggetto del report.
+	Calendario
+	Rappresenta il calendario personale di ogni singolo Paziente. Funge da “archivio” per tutti gli EventoCalendario e StatoDAnimo da lui inseriti.
+	EventoCalendario
+	Voce inserita nel calendario del Paziente. Include il titolo, la descrizione, la data e la tipologia (es. "Appuntamento", "Promemoria").
+	DomandaForum
+	Il quesito inserito da un Paziente nella sezione community. Include il titolo, il testo, la data di pubblicazione e un riferimento anonimizzato all'autore.
+	RispostaForum
+	L’intervento professionale pubblico di uno Psicologo in risposta a una DomandaForum. Contiene il testo della risposta, la data e il riferimento allo Psicologo autore.
+	Ticket
+	Il Ticket aperto da un utente (Paziente o Psicologo) per problemi tecnici. Include la descrizione del problema, lo stato di avanzamento e i riferimenti all'utente segnalante.
+	Notifica
+	Rappresenta un messaggio informativo generato dal sistema e destinato a un utente (Paziente, Psicologo o Amministratore). È caratterizzata da un contenuto testuale, una data di creazione, una tipologia (es. "Badge Sbloccato", "Alert Clinico", "Risposta Forum", "Cambio Assegnazione") e uno stato di lettura (letto/non letto), permettendo all'utente di rimanere aggiornato sugli eventi rilevanti della piattaforma.
+	   2. Oggetti Boundary
+BOUNDARY 
+	DESCRIZIONE 
+	InterfacciaAutenticazioneSPID 
+ 
+	Comprende la visualizzazione delle opzioni di selezione del provider SPID e la gestione del processo di autenticazione sicura tramite identità digitale per l’accesso alla piattaforma. 
+	InterfacciaDisconnessione 
+ 
+	Comprende la visualizzazione dell’opzione per disconnettersi dalla piattaforma e la gestione della terminazione della sessione utente. 
+	InterfacciaCentroNotifiche 
+ 
+	Comprende la visualizzazione degli aggiornamenti rilevanti provenienti dalla piattaforma, inclusi alert clinici, badge sbloccati, risposte forum e notifiche di sistema. 
+	InterfacciaForum 
+ 
+	Comprende la visualizzazione della sezione forum con domande dei pazienti, relative risposte degli psicologi e funzionalità di navigazione tra i post. 
+	InterfacciaDashboard 
+	Comprende la visualizzazione della dashboard che consente di accedere a tutte le altre sezioni dell’applicazione. 
+	InterfacciaSezionePazienti 
+ 
+	Comprende la visualizzazione dell’elenco completo dei pazienti accessibili all’utente generico 2, con funzionalità di ricerca e filtraggio. 
+	InterfacciaProfiloPaziente 
+ 
+	Comprende la visualizzazione delle informazioni personali del paziente per lo psicologo, con funzionalità di modifica riservate all’amministratore di sistema. 
+	InterfacciaListaQuestionariPaziente 
+ 
+	Comprende la visualizzazione di tutti i questionari che sono stati compilati dal paziente. 
+	InterfacciaQuestionarioPaziente 
+ 
+	Comprende la visualizzazione delle domande, delle risposte fornite e dei punteggi calcolati. Permette allo psicologo di richiedere l’invalidazione e aggiungere note di revisione. All’amministratore consente la sola visualizzazione delle risposte e la gestione della revisione. 
+	InterfacciaSezioneQuestionari 
+ 
+	Comprende la visualizzazione della sezione dedicata ai questionari compilati dai pazienti. 
+	InterfacciaAreaPersonale 
+ 
+	Comprende la visualizzazione del profilo utente, le impostazioni dell’account e l’accesso alle funzionalità obiettivi e badge. 
+	InterfacciaRichiestaSupportoTecnico 
+ 
+	Comprende la visualizzazione del form per l’inserimento di richieste di assistenza tecnica con campi descrittivi e gestione dei ticket. 
+	InterfacciaTerminiCondizioni 
+ 
+	Comprende il form per la richiesta e registrazione del consenso obbligatorio ai Termini e Condizioni, presentato al Paziente al primo accesso. 
+	InterfacciaMenuNavigazione 
+	Consente la visualizzazione del menù che consente la navigazione tra le varie sezioni dell’applicazione. 
+	InterfacciaSezioneHomePage 
+	Consente la visualizzazione della home page del paziente. 
+	InterfacciaStoricoQuestionari 
+ 
+	Comprende la visualizzazione di tutti i questionari disponibili. 
+	InterfacciaCompilazioneQuestionario 
+ 
+	Comprende la visualizzazione delle domande del questionario, campi di risposta (scala Likert, scelta multipla, testo libero) e pulsante di conferma invio. 
+	InterfacciaStatoAnimo 
+ 
+	Comprende la visualizzazione del form per l’inserimento dello stato d’animo con campi per livello di stress, sensazioni e note personali. 
+	InterfacciaCalendario 
+ 
+	Comprende la visualizzazione del calendario con allegati eventi e stati d’animo. 
+	InterfacciaDettaglioGiornalieroCalendario 
+ 
+	Comprende la visualizzazione degli eventi di quel giorno con allegato inserimento, modifica e l’eliminazione di un nuovo evento dal calendario. 
+	InterfacciaBadge 
+ 
+	Comprende la visualizzazione dei badge ottenuti, rappresentazione grafica del progresso e Serie Streak dei giorni consecutivi di attività. 
+	InterfacciaDiario 
+ 
+	Comprende la visualizzazione dell’elenco delle pagine del diario personale e l’accesso alle funzioni di gestione (creazione, modifica, eliminazione) delle pagine del diario. 
+	InterfacciaNuovoContenutoDiario 
+	Consente di visualizzare il form per aggiungere un nuovo contenuto al diario. 
+	InterfacciaPostForum 
+ 
+	Comprende la visualizzazione del form per l’inserimento di nuove domande nel forum con campi per titolo, descrizione e categoria del post. 
+	InterfacciaQuestionarioPaziente 
+ 
+	Comprende la visualizzazione delle domande, risposte fornite dal paziente, punteggio calcolato, campo note per la revisione, un pulsante per marcare come revisionato e un pulsante per richiedere l’invalidazione. 
+	InterfacciaSezioneAlertClinici 
+ 
+	Include la visualizzazione di alert clinici per pazienti considerati ad alto rischio, completi di un pulsante di accettazione. 
+	InterfacciaReport 
+ 
+	Comprende la visualizzazione del report riepilogativo dello stato mentale del paziente. 
+	InterfacciaRispostaPostForum 
+ 
+	Comprende la visualizzazione del post del paziente e l’inserimento, la modifica e la cancellazione di una risposta. 
+	InterfacciaListaStatiAnimo 
+ 
+	Comprende la visualizzazione della lista di stati d’animo del paziente. 
+	InterfacciaConsultazioneDiario 
+ 
+	Comprende la visualizzazione dell’elenco delle annotazioni del Diario Personale del paziente a lui assegnato. 
+	InterfacciaSezionePsicologi 
+ 
+	Comprende la visualizzazione dell’elenco completo degli psicologi registrati sulla piattaforma con funzionalità di ricerca, filtro e accesso alle operazioni di gestione. 
+	InterfacciaProfiloPsicologo 
+ 
+	Comprende la visualizzazione delle informazioni dello psicologo inclusi dati anagrafici, pazienti assegnati, disponibilità e funzionalità di modifica ed eliminazione. 
+	InterfacciaInserimentoPsicologo 
+ 
+	Comprende i campi dei form che comprendono le informazioni di uno psicologo da aggiungere. 
+	InterfacciaModificaPrioritàPaziente 
+ 
+	Comprende la visualizzazione della priorità attuale del paziente e la funzionalità di modificare tale priorità. 
+	InterfacciaModificaAssegnazionePsicologo 
+	Comprende l’interfaccia che consente di modificare lo psicologo assegnato al paziente. 
+	InterfacciaSezioneQuestionariCertificati 
+ 
+	Comprende la visualizzazione della lista dei questionari certificati e l’aggiunta di un questionario certificato. 
+	InterfacciaInserimentoQuestionarioCertificato 
+	Comprende la visualizzazione dell’interfaccia per l’inserimento di un nuovo questionario certificato. 
+	InterfacciaSezioneRichiesteInvalidazione 
+ 
+	Comprende la visualizzazione delle richieste di invalidazione questionari inviate dagli psicologi. 
+	InterfacciaRichiestaInvalidazione 
+	Comprende la visualizzazione dell’interfaccia contenente le note della richiesta oltre che le opzioni di accettazione e rifiuto. 
+	InterfacciaSezioneRichiesteSupportoTecnico 
+ 
+	Comprende la visualizzazione dei ticket di supporto tecnico aperti dagli utenti con descrizione e stato. 
+	InterfacciaRispostaSupportoTecnico 
+	Comprende la visualizzazione dell’interfaccia che mostra tutti i dettagli e consente di rispondere alla richiesta di supporto tecnico o chiudere il ticket. 
+	   3. Oggetti Control
+NOME 
+	DESCRIZIONE 
+	SpidAuthControl
+	Gestisce il processo di autenticazione e identificazione per Paziente (PZT) e Psicologo/Psicoterapeuta (PSI). 
+	AuthControl
+	Gestisce il processo di autenticazione e identificazione per l’Amministratore (AS). 
+	AdminForumControl
+	Gestisce la visualizzazione di domande e risposte nella sezione Forum per l’Amministratore (AS). 
+	VisualizzazioneInvalidazioneControl
+	Gestisce la visualizzazione della lista delle richieste di invalidazione nella visualizzazione dell’Amministratore (AS).. 
+	AccettazioneInvalidazioneControl
+	Gestisce l’accettazione di una richiesta di invalidazione da parte dell’Amministratore (AS).
+	RifiutoInvalidazioneControl
+	Gestisce il rifiuto di una richiesta di invalidazione da parte dell’Amministratore (AS).
+	NotificheControl
+	Gestisce la visualizzazione delle notifiche con la gestione della spunta “segna come già letta”. 
+	ModificaPazienteAmministratoreControl
+	Gestisce la modifica dei dati personali di un paziente da parte dell’Amministratore (AS). 
+	ModificaPrioritàAmministratoreControl
+	Gestisce la modifica della priorità di un singolo paziente da parte dell’Amministratore (AS). 
+	RicercaPazientiAmministratoreControl
+	Gestisce la ricerca dei pazienti tramite ID da parte dell’Amministratore (AS). 
+	RimozionePazienteAmministratoreControl
+	Gestisce la rimozione di un paziente dal sistema da parte di un Amministratore (AS). 
+	VisualizzazionePazientiAmministratoreControl
+	Gestisce la visualizzazione della lista dei pazienti con relativo popup sul singolo paziente da parte di Amministratore (AS) e Psicologo/Psicoterapeuta (PSI). 
+	CreazionePsicologoAmministratoreControl
+	Gestisce l’aggiunta di un nuovo psicologo al sistema da parte dell’Amministratore (AS). 
+	EliminazionePsicologoAmministratoreControl
+	Gestisce la rimozione di uno psicologo dal sistema da parte dell’Amministratore (AS).
+	ModificaPsicologoAmministratoreControl
+	Gestisce la modifica dei dati personali di uno psicologo da parte dell’Amministratore (AS). 
+	RicercaPsicologiAmministratoreControl
+	Gestisce la ricerca di uno psicologo tramite nome da parte dell’Amministratore (AS). 
+	VisualizzazionePsicologiAmministratoreControl
+	Gestisce la visualizzazione degli psicologi presenti nel sistema da parte dell’Amministratore (AS). 
+	AnnullamentoRevisioneControl
+	Gestisce l’annullamento della revisione effettuata da uno psicologo da parte dell’Amministratore (AS). 
+	VisualizzazioneQuestionariAmministratoreControl
+	Gestisce la visualizzazione dei questionari da parte dell’Amministratore (AS). 
+	AdminSupportControl
+	Gestisce le richieste di supporto ricevute da parte dell’Amministratore (AS). 
+	AreaPersonaleControl
+	Gestisce la visualizzazione e le operazioni disponibili sull’area personale dei vari attori. 
+	CreateDiaryPageControl
+	Gestisce la creazione di una nuova pagina di diario da parte del Paziente (PZT). 
+	DeleteDiaryPageControl
+	Gestisce l’eliminazione di una pagina di diario da parte del Paziente (PZT). 
+	DiaryControl
+	Gestisce la visualizzazione del diario con i relativi dati lato Paziente (PZT). 
+	UpdateDiaryControl
+	Gestisce l’aggiornamento dei dati di un diario relativo al Paziente (PZT). 
+	ForumControl
+	Gestisce la visualizzazione del forum lato Paziente (PZT). 
+	EliminazioneDomandaControl
+	Gestisce l’eliminazione di una domanda lato Paziente (PZT). 
+	InserimentoDomandaControl
+	Gestisce l’inserimento di una nuova domanda da parte del Paziente (PZT). 
+	ModificaDomandaControl
+	Gestisce la modifica di una domanda da parte  del Paziente (PZT). 
+	HomeControl
+	Gestisce la visualizzazione della sezione home da parte del Paziente (PZT). 
+	CompilazioneQuestionarioControl
+	Gestisce la compilazione di un questionario lato Paziente (PZT). 
+	VisualizzazioneListaQuestionariControl
+	Gestisce la visualizzazione della lista questionari lato Paziente (PZT). 
+	SettingsControl
+	Gestisce la visualizzazione della sezione impostazioni da parte del Paziente (PZT). 
+	CreateStatoDanimoControl
+	Gestisce l’inserimento di un nuovo stato d’animo da parte del Paziente (PZT). 
+	DeleteStatoDanimoControl
+	Gestisce l’eliminazione di uno stato d’animo da parte del Paziente (PZT). 
+	StatoDanimoControl
+	Gestisce la visualizzazione dello stato d’animo di un Paziente (PZT). 
+	UpdateStatoDanimoControl
+	Gestisce la modifica di uno stato d’animo da parte del Paziente (PZT). 
+	TermsControl
+	Gestisce l’accettazione e la visualizzazione dei termini e condizioni da parte di un Paziente (PZT). 
+	AlertCliniciControl
+	Gestisce la visualizzazione di una lista di alert critici da parte di uno Psicologo/Psicoterapeuta (PSI). 
+	PsiForumControl
+	Gestisce la visualizzazione del forum da parte di uno Psicologo/Psicoterapeuta (PSI).
+	TerminaCuraControl
+	Gestisce la terminazione della cura di un paziente da parte di uno Psicologo/Psicoterapeuta (PSI).
+	VisualizzaPazientiControl
+	Gestisce la visualizzazione di una lista di pazienti assegnati allo Psicologo/Psicoterapeuta (PSI). 
+	RevisioneQuestionarioControl
+	Gestisce la revisione di un questionario da parte di uno Psicologo/Psicoterapeuta (PSI).
+	RichiestaInvalidazioneControl
+	Gestisce l’invio di una richiesta di invalidazione riferita a un questionario lato Psicologo/Psicoterapeuta (PSI).
+	VisualizzazioneQuestionariControl
+	Gestisce la visualizzazione di una lista di questionari da revisionare da parte di uno Psicologo/Psicoterapeuta (PSI).
+	QuestionnairesControl
+	Gestisce la visualizzazione di un singolo questionario accessibile da Amministratore (AS) e/o Psicologo/Psicoterapeuta (PSI).
+	ReportViewControl
+	Gestisce la visualizzazione di un report generato per un paziente mediante SintonIA da parte di uno Psicologo/Psicoterapeuta (PSI).
+	PsiSupportControl
+	Gestisce la creazione di un nuovo ticket da parte di uno Psicologo/Psicoterapeuta (PSI).
+	PZTSupportControl
+	Gestisce la creazione di un nuovo ticket da parte di un Paziente (PZT).
+	AlertControl
+	Gestisce la creazione automatica di alert clinici se un paziente supera la soglia di rischio.
+	PrioritàControl
+	Gestisce l’aggiornamento automatico della priorità di un paziente nel sistema.
+	ScoreControl
+	Gestisce l’aggiornamento automatico dello score di un paziente a seguito di compilazione e / o invalidazione di un questionario.
+	AssegnazioneControl
+	Gestisce l’assegnazione automatica di un paziente ad uno psicologo con slot disponibili quando tale paziente termina l’attesa.
+	ReportControl
+	Gestisce la generazione di un report riepilogativo riferito al percorso di un determinato paziente nel sistema da parte di uno Psicologo/Psicoterapeuta (PSI).
+	   10. Modello Dinamico
+   1. Statechart Diagrams
+SCD_1_ENTITY_Questionario
+
+
+  
+
+SCD_2_ENTITY_Paziente
+
+
+  
+
+SCD_3_ENTITY_DomandaForum  
+SCD_4_CONTROL_AdminSupportControl  
+
+   2. Sequence Diagrams
+SD_1_UC_PZT_4_CompilazioneQuestionari
+
+
+  
+
+________________
+
+
+SD_2_UC_PZT_19_InserimentoContenutoDiario
+
+
+  
+
+SD_3_UC_PZT_23_InserimentoDomandaForum
+
+
+  
+________________
+
+SD_4_UC_PZT_5_InserimentoStatoDAnimo
+  
+
+
+
+SD_5_UC_AS10_ModificaPrioritàPaziente  
+
+
+
+
+
+
+SD_6_UC_AS17_AccettazioneRichiestaInvalidazione
+
+
+  
+
+   11. Interfaccia Utente - Navigational Paths e Mock-ups
+   1. Lato Paziente  
+   2. Lato Psicologo  
+   3. Lato Amministratore di sistema  
+________________
+      4. Mock-ups
+      5. Paziente
+MU_PZT_Login
+  
+  
+  
+________________
+
+MU_PZT_HomePage
+________________
+MU_PZT_Questionari
+________________
+      MU_PZT_StatodAnimo
+________________
+    MU_PZT_Forum
+________________
+    MU_PZT_Calendario    
+________________
+
+
+
+
+      6. Psicologo/Psicoterapeuta
+MU_PSI_GestioneQuestionari  
+________________
+      7. Amministratore di sistema
+MU_AS_GestionePazienti
+
+
+  
+  
+
+
+
+________________
+  
+
+MU_AS_SupportoTecnico      
+      4. Glossario
+Termine
+	Definizione
+	Amministratore di Sistema
+	L’addetto alla gestione dell’applicazione.
+Ha il controllo su tutto il sistema.
+	Alert Clinici
+	Notifiche automatiche generate dal sistema per segnalare ad uno psicologo situazioni potenzialmente critiche basate su punteggi alti nello score totale del paziente.
+	ASL (Azienda Sanitaria Locale)
+	L'ente sanitario pubblico (come i "Servizi di Salute Mentale") a cui il sistema si rivolge .
+	Psicologo/Psicoterapeuta
+	Professionista sanitario inserito nei servizi di Salute Mentale dell'ASL. Opera in équipe multidisciplinare per la gestione, la diagnosi, la valutazione, il supporto e il trattamento psicologico e/o psicoterapeutico delle persone con disagio o disturbo psichico.
+	Paziente
+	Individuo che accede ai servizi di Salute Mentale dell'Azienda Sanitaria Locale (ASL) con una richiesta di intervento per un disagio, un disturbo o una patologia psichica.
+	Engagement
+	Descrive il ruolo attivo e consapevole che una persona assume nella gestione della propria salute e del proprio percorso di cura.
+	Sinfonia
+	Il progetto di trasformazione digitale della Regione Campania all'interno del quale si inserisce la piattaforma SINTONIA
+	CSM (Centro Salute Mentale)
+	Acronimo di Centro Salute Mentale, una delle strutture (come ASL e UOSM) a cui la piattaforma fornisce strumenti di gestione.
+	UOSM (Unità Operativa Salute Mentale)
+	Acronimo di Unità Operativa Salute Mentale, struttura sanitaria di riferimento per la gestione delle liste d'attesa.
+	SPID
+	Sistema Pubblico di Identità Digitale. Il sistema utilizzato dalla piattaforma per l'autenticazione sicura degli utenti.
+	Score Pesato
+	Un valore numerico calcolato dal sistema per determinare la priorità di un paziente.
+	Badge
+	Medagliette utilizzate per identificare graficamente un obiettivo raggiunto.
+	Forum
+	Sezione della piattaforma dove i pazienti (PZT) possono inserire domande in forma anonima e gli psicologi (PSI) possono fornire risposte pubbliche, favorendo il supporto e la condivisione.
+	Gamification
+	L'utilizzo di elementi tipici del gioco (come Badge e Obiettivi Periodici) per incentivare l'engagement del paziente e motivarlo a utilizzare con costanza gli strumenti di monitoraggio (questionari, diario).
+	Streak o serie
+	indica una sequenza consecutiva di giorni in cui il paziente completa un'attività (es. inserire lo stato d'animo), usato come meccanismo di gamification.
+	Triage
+	Il processo di valutazione e smistamento usato per definire l'urgenza di un paziente.
+	Ticket
+	Richiesta di supporto tecnico, l’utente la invia all’amministratore di sistema.
+	Questionari self-report
+	strumenti psicometrici in cui una persona fornisce informazioni su di sé rispondendo a una serie di domande o affermazioni. generalmente strutturati tramite scala di likert.
+	Scala di likert
+	Tecnica di misurazione mediante scala a 5 punti, Il suo scopo è misurare l'opinione, l'atteggiamento o la percezione di una persona riguardo a una specifica affermazione. 
+	Mock-up
+	Una bozza grafica, statica e non funzionante, dell'interfaccia utente. Serve a mostrare l'aspetto e la disposizione degli elementi (pulsanti, menu, testo) prima di scrivere il codice. 
+	UML
+	Il "linguaggio" grafico standard usato per creare tutti i diagrammi in questo RAD.
