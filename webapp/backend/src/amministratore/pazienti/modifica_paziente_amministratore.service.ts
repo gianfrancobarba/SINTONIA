@@ -89,15 +89,13 @@ export class Modifica_paziente_amministratoreService {
         if (updates.residenza !== undefined) updateData.residenza = updates.residenza; // Salviamo quello che arriva, assumendo sia corretto dopo validazione
 
         if (updates.idPsicologo !== undefined) {
-            if (!updates.idPsicologo) {
-                // Potremmo lanciare un errore o decidere una policy. 
-                // Dato che il nuovo service vieta null, se arriva stringa vuota dobbiamo lanciare errore o non chiamare.
-                // Ma la specifica UC dice che il service *vieta* null.
-                // Quindi se il frontend manda vuoto per "rimuovere", ora questa operazione non è più supportata o deve essere gestita diversamente.
-                // Per ora passiamo la stringa (anche se vuota) e lasciamo che il service lanci BadRequest come da test TC_ADM_1_5.
+            if (updates.idPsicologo && updates.idPsicologo.trim() !== '') {
+                // Se è fornito un ID psicologo valido, usa il servizio di assegnazione
                 await this.assegnazioneService.assegnaPsicologo(idPaziente, updates.idPsicologo);
             } else {
-                await this.assegnazioneService.assegnaPsicologo(idPaziente, updates.idPsicologo);
+                // Se idPsicologo è vuoto, null o stringa vuota, rimuovi l'assegnazione direttamente
+                // senza passare per il servizio di assegnazione (che richiede un ID valido)
+                updateData.idPsicologo = null;
             }
         }
 
