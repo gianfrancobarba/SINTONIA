@@ -71,7 +71,7 @@ export class InserimentoDomandaService {
         }
 
         // Categorie ammesse
-        const allowedCategories = ['Vita di Coppia', 'Stress', 'Ansia', 'Rabbia'];
+        const allowedCategories = ['Vita di Coppia', 'Stress', 'Ansia', 'Tristezza'];
         // Normalizza la categoria input (es. rimuove spazi extra, ma mantiene case-sensitive o no? 
         // User requirements use specific casing. Let's match strictly or allow slight variation if needed.
         // Given Oracle uses "Vita di Coppia", let's be strict or use simple comparison.

@@ -15,18 +15,26 @@ const CreatePost: React.FC = () => {
     const [category, setCategory] = useState<ForumCategory | null>(null);
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState<'success' | 'error'>('success');
     const [showToast, setShowToast] = useState(false);
+
+    const showErrorToast = (message: string) => {
+        setToastMessage(message);
+        setToastType('error');
+        setShowToast(true);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!title.trim() || !content.trim()) {
-            alert('Per favore compila tutti i campi');
+            showErrorToast('Per favore compila tutti i campi');
             return;
         }
 
         if (!category) {
-            alert('Per favore seleziona una categoria');
+            showErrorToast('Per favore seleziona una categoria');
             return;
         }
 
@@ -46,7 +54,7 @@ const CreatePost: React.FC = () => {
             });
         } catch (error) {
             console.error('Error creating post:', error);
-            alert('Errore nella creazione del post');
+            showErrorToast('Errore nella pubblicazione della domanda. Riprova.');
             setIsSubmitting(false);
         }
     };
@@ -148,7 +156,8 @@ const CreatePost: React.FC = () => {
 
             {showToast && (
                 <Toast
-                    message="Domanda pubblicata con successo!"
+                    message={toastMessage}
+                    type={toastType}
                     onClose={() => setShowToast(false)}
                 />
             )}

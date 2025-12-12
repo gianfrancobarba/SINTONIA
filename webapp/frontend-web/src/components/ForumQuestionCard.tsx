@@ -74,8 +74,8 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
         : question.testo;
 
     const handleSubmitReply = async () => {
-        if (replyContent.trim().length < 20) {
-            setError('La risposta deve contenere almeno 20 caratteri');
+        if (replyContent.trim().length < 50) {
+            setError('La risposta deve contenere almeno 50 caratteri');
             return;
         }
         if (replyContent.trim().length > 2000) {
@@ -163,6 +163,7 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                                                 onChange={(e) => onEditContentChange?.(e.target.value)}
                                                 placeholder="Modifica la tua risposta..."
                                                 rows={4}
+                                                maxLength={2000}
                                             />
                                             <div className="inline-reply-footer">
                                                 <span className="char-count">
@@ -179,7 +180,7 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                                                     <button
                                                         className="inline-submit-btn"
                                                         onClick={() => onEditSubmit?.(answer.idRisposta, editingContent)}
-                                                        disabled={editingContent.trim().length < 20}
+                                                        disabled={editingContent.trim().length < 50 || editingContent.length > 2000}
                                                     >
                                                         <Send size={16} />
                                                         Salva
@@ -231,9 +232,9 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                     {error && <div className="inline-reply-error">{error}</div>}
                     <div className="inline-reply-footer">
                         <span className="char-count" style={{
-                            color: replyContent.length < 20 || replyContent.length >= 2000 ? '#E57373' : '#666'
+                            color: replyContent.length < 50 || replyContent.length >= 2000 ? '#E57373' : '#666'
                         }}>
-                            {replyContent.length}/2000 {replyContent.length > 0 && replyContent.length < 20 && '(min 20)'}
+                            {replyContent.length}/2000 {replyContent.length > 0 && replyContent.length < 50 && '(min 50)'}
                         </span>
                         <div className="inline-reply-actions">
                             <button
@@ -247,7 +248,7 @@ const ForumQuestionCard: React.FC<ForumQuestionCardProps> = ({
                             <button
                                 className="inline-submit-btn"
                                 onClick={handleSubmitReply}
-                                disabled={isSubmitting || replyContent.trim().length < 20 || replyContent.length > 2000}
+                                disabled={isSubmitting || replyContent.trim().length < 50 || replyContent.length > 2000}
                             >
                                 <Send size={16} />
                                 {isSubmitting ? 'Invio...' : 'Invia'}

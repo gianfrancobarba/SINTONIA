@@ -53,6 +53,11 @@ const ForumPage: React.FC = () => {
 
     useEffect(() => {
         setCurrentPage(1); // Reset to page 1 when filter or category changes
+        // Scroll to top when filter or category changes
+        const scrollContainer = document.querySelector('.forum-scroll-container');
+        if (scrollContainer) {
+            scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }, [filterType, selectedCategory]);
 
     const loadData = async () => {

@@ -80,10 +80,19 @@
     display: flex;
     gap: 10px;
     padding: 0 20px 20px;
+    padding-right: 40px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     max-width: 800px;
     margin: 0 auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.filter-buttons::after {
+    content: '';
+    padding-right: 20px;
+    flex-shrink: 0;
 }
 
 .filter-buttons::-webkit-scrollbar {
