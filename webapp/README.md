@@ -25,7 +25,7 @@ Prima di iniziare, assicurati di avere installato:
 
 **Un solo comando** per configurare e avviare tutto il progetto!
 
-### 🪟 Windows (PowerShell)
+### 💻 Windows (PowerShell)
 
 ```powershell
 # 1. Clona il repository
@@ -121,7 +121,7 @@ Premi `Ctrl+C` nel terminale dove è in esecuzione lo script.
 
 Per fermare anche i container Docker:
 
-**🪟 Windows (PowerShell):**
+**💻 Windows (PowerShell):**
 ```powershell
 .\clean.ps1
 ```
@@ -133,7 +133,7 @@ Per fermare anche i container Docker:
 
 ### Reset Totale (cancella anche i dati del database)
 
-**🪟 Windows (PowerShell):**
+**💻 Windows (PowerShell):**
 ```powershell
 .\clean.ps1 -v
 ```
@@ -181,7 +181,7 @@ Se preferisci eseguire i comandi manualmente:
 
 ### Passo 1: Configura l'ambiente
 
-**🪟 Windows (PowerShell):**
+**💻 Windows (PowerShell):**
 ```powershell
 cd webapp
 Set-Content -Path "backend\.env" -Value "DATABASE_URL=postgresql://root:secret@localhost:5433/sintonia" -Encoding Ascii
@@ -239,7 +239,7 @@ npm run dev:frontends
 <details>
 <summary><b>❌ "Port 3000/5173/5174 already in use"</b></summary>
 
-**Windows:**
+**💻 Windows:**
 ```powershell
 netstat -ano | findstr :3000
 taskkill /PID <PID> /F
