@@ -342,7 +342,8 @@ Progetto sviluppato come parte del corso universitario.
 
 ## 📝 Licenza
 
-Questo progetto è sotto licenza [ISC](LICENSE).
+Questo progetto è rilasciato sotto licenza **GNU General Public License v3.0** (GPLv3).
+Per maggiori dettagli, consulta il file [LICENSE](LICENSE).
 
 ---
 
