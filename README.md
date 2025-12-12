@@ -59,24 +59,60 @@ SINTONIA è sviluppato con passione dal team **C09** dell'Università degli Stud
 
 ## 📖 Visione del Progetto
 
-**SINTONIA** è una piattaforma digitale innovativa progettata per **rivoluzionare il supporto alla salute mentale** nel Sistema Sanitario della Regione Campania. Il progetto nasce dalla consapevolezza che l'accesso ai servizi di salute mentale è spesso ostacolato da lunghe liste d'attesa e mancanza di strumenti di monitoraggio continuo.
+**SINTONIA** non è solo un gestionale, ma un **ecosistema proattivo** che trasforma il paradigma della salute mentale pubblica: da *reattiva* (aspetto che il paziente stia male) a *predittiva* (intervengo prima della crisi).
 
-La piattaforma crea un **ecosistema digitale integrato** che mette in comunicazione:
-- **Pazienti**: cittadini campani che necessitano di supporto psicologico.
-- **Psicologi**: professionisti del SSR che forniscono assistenza.
-- **Amministratori**: personale che gestisce il sistema e le risorse.
+Il sistema integra **algoritmi di triage dinamico** e strumenti di **monitoraggio continuo** per garantire che nessun paziente si senta abbandonato durante l'attesa. L'obiettivo è azzerare il "buco nero" assistenziale tra la richiesta di aiuto e la prima visita, fornendo supporto immediato tramite tecnologia accessibile.
 
 ---
 
+## 🆚 Il Problema vs La Soluzione
 
+Ecco come SINTONIA cambia le regole del gioco rispetto al sistema tradizionale (ASL).
 
-## 🎯 Il Problema vs La Soluzione
-
-| Problema Attuale (ASL) | Soluzione SINTONIA |
-|:---:|:---:|
-| ❌ **Liste d'Attesa Statiche** <br> Priorità fissa (U/B/D/P) assegnata all'inizio e mai rivalutata. | ✅ **Triage Dinamico Intelligente** <br> Un algoritmo di scoring valuta continuamente i risultati dei questionari clinici (PHQ-9, GAD-7), aggiornando la priorità in tempo reale. |
-| ❌ **Vuoto Assistenziale** <br> Mesi di silenzio totale tra la richiesta di visita e la prima seduta effettiva. | ✅ **Supporto Proattivo Continuo** <br> Strumenti di auto-aiuto (Diario, Monitoraggio dell'Umore) e Community (Forum Anonimo) supportano il paziente 24/7. |
-| ❌ **Rischio Clinico Invisibile** <br> Un peggioramento improvviso durante l'attesa passa inosservato. | ✅ **Sistema di Alert Clinici** <br> Notifiche immediate agli psicologi quando i dati del paziente rivelano pattern critici o parole chiave a rischio. |
+<table>
+  <thead>
+    <tr>
+      <th width="45%" align="center">🚫 Situazione Attuale (ASL)</th>
+      <th width="10%" align="center"></th>
+      <th width="45%" align="center">✅ Innovazione SINTONIA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Soggetta a Staticità</strong><br>
+        Il paziente riceve una "etichetta" di priorità all'inizio che rimane invariata per mesi, ignorando peggioramenti.
+      </td>
+      <td align="center">➡️</td>
+      <td>
+        <strong>Triage Dinamico e Vivo</strong><br>
+        La priorità si aggiorna <em>in tempo reale</em> ad ogni questionario. Se il paziente peggiora, scala la coda automaticamente.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Vuoto Assistenziale</strong><br>
+        Silenzio totale per mesi. Il paziente è solo con i suoi pensieri in attesa della chiamata.
+      </td>
+      <td align="center">➡️</td>
+      <td>
+        <strong>Supporto H24</strong><br>
+        Strumenti di <em>self-help</em> (Diario, Monitoraggio Umore) e una Community anonima offrono supporto immediato fin dal primo giorno.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Rischio Invisibile</strong><br>
+        Ideazioni suicidarie o crisi acute passano inosservate nel "mucchio" cartaceo.
+      </td>
+      <td align="center">➡️</td>
+      <td>
+        <strong>Alert Predittivi</strong><br>
+        Il sistema rileva *pattern semantici* a rischio (es. parole chiave nel diario) e notifica istantaneamente lo psicologo.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -141,22 +177,22 @@ SINTONIA è costruito su un'architettura **Three-Tier** robusta e scalabile.
 ## ✨ Funzionalità per Ruolo
 
 ### 👤 Per i Pazienti (App Mobile)
-*   **Questionari Clinici**: Compilazione test periodici (PHQ-9, GAD-7, WHO-5, PC-PTSD-5).
-*   **Diario Emotivo**: Scrittura e consultazione del diario personale e tracciamento umore.
-*   **Engagement**: Sistema di **streak** e **badge** per incentivare l'aderenza.
-*   **Community**: Forum anonimo per supporto tra pari.
-*   **Indipendenza**: Gestione autonoma del proprio profilo e supporto tecnico.
+*   **Questionari Clinici Standardizzati**: Compilazione test periodici (PHQ-9, GAD-7, WHO-5) per il monitoraggio continuo.
+*   **Diario Emotivo**: Spazio personale sicuro per registrare pensieri e stati d'animo giornalieri.
+*   **Gamification**: Sistema di badge e obiettivi (es. "3 giorni consecutivi") per incentivare la costanza nel percorso.
+*   **Forum Anonimo**: Community moderata dove confrontarsi con altri pazienti o porre domande in totale privacy.
+*   **Profilo Personale**: Gestione dei propri dati e visualizzazione del proprio andamento storico.
 
 ### 🧑‍⚕️ Per gli Psicologi (Web Dashboard)
-*   **Gestione Pazienti**: Monitoraggio carico assegnato e indicatori di rischio.
-*   **Alert Clinici**: Notifiche per cambiamenti significativi o risposte a rischio.
-*   **Revisione**: Analisi dettagliata dei questionari e invalidazione test inattendibili.
-*   **Termina Cura**: Strumenti per la chiusura formale del percorso terapeutico.
+*   **Triage Intelligente**: Visualizzazione immediata della lista d'attesa ordinata per priorità clinica reale.
+*   **Alert System**: Notifiche push in caso di peggioramento dei parametri vitali del paziente.
+*   **Revisione**: Strumenti per analizzare nel dettaglio le risposte ai questionari e prendere decisioni infomate.
+*   **Gestione Ciclo di Cura**: Funzionalità di presa in carico, monitoraggio e chiusura trattamento.
 
 ### 👨‍💼 Per gli Amministratori (Web Admin)
-*   **Gestione Risorse**: CRUD completo su Pazienti e Psicologi.
-*   **Supervisione**: Overview globale sulle liste d'attesa e approvazione invalidazioni.
-*   **Moderazione Forum**: Gestione dei contenuti segnalati dalla community.
+*   **Gestione Utenza**: Creazione e gestione anagrafiche per Psicologi e Staff.
+*   **Supervisione Code**: Panoramica globale sui tempi di attesa e carichi di lavoro.
+*   **Moderazione**: Controllo dei contenuti segnalati nel Forum per garantire un ambiente sicuro.
 
 ---
 
@@ -177,7 +213,7 @@ SINTONIA è costruito su un'architettura **Three-Tier** robusta e scalabile.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status" />
-  <img src="https://img.shields.io/badge/License-ISC-blue?style=for-the-badge" alt="License" />
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge" alt="License" /></a>
   <img src="https://img.shields.io/badge/Version-1.0.0-blueviolet?style=for-the-badge" alt="Version" />
 </p>
 
