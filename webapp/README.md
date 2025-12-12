@@ -22,6 +22,24 @@ cd webapp
 
 > **Nota:** Assicurati di avere Docker installato e attivo.
 
+
+
+### 2. Stop & Pulizia (Reset)
+Per fermare i container o resettare tutto, usate gli script forniti:
+
+**macOS / Linux:**
+```bash
+./clean.sh
+# Per cancellare anche i dati (Reset Totale): ./clean.sh -v
+```
+
+**Windows (PowerShell):**
+```powershell
+./clean.ps1
+# Per cancellare anche i dati (Reset Totale): ./clean.ps1 -v
+```
+
+
 ### 🛠 Utili
 - **Backend**: http://localhost:3000
 - **Frontend Web**: http://localhost:5173 (Admin/Psicologo)
