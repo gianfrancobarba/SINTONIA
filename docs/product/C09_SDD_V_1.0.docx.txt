@@ -1,0 +1,719 @@
+﻿Immagine che contiene gancio
+
+Il contenuto generato dall'IA potrebbe non essere corretto. 
+  
+
+        
+\
+  
+ Immagine che contiene cerchio, Elementi grafici, logo, Carattere
+
+Il contenuto generato dall'IA potrebbe non essere corretto. 
+
+
+
+
+
+System Design Document
+C-09 SINTONIA
+  
+
+
+
+
+
+Riferimento
+	2025_C09_SDD
+	Versione
+	1.0
+	Data
+	17/11/2025
+	Destinatario
+	Prof.ssa Filomena Ferrucci, Prof.re Fabio Palomba
+	Presentato da
+	C09 Team Sintonia
+	Approvato da
+	//
+	
+
+
+
+Revision History
+Data
+	Versione
+	Descrizione
+	Autori
+	17/11/2025
+	1.0
+	Configurazione Documento
+	Gianluca Ambrosio
+	17/11/2025
+	1.0
+	Aggiunto Architettura Del Sistema Corrente
+	Gavino De Stefano
+	17/11/2025
+	1.0
+	Aggiunti Design Goals
+	Francesco Coppola
+	17/11/2025
+	1.0
+	Aggiunto Trade-Offs
+	Gianluca Ambrosio
+	17/11/2025
+	1.0
+	Aggiunto Riferimenti
+	Alessio Del Sorbo
+	17/11/2025
+	1.0
+	Aggiunti Definizioni, acronimi e abbreviazioni
+	Mattia Fanzini
+	17/11/2025
+	1.0
+	Aggiunto Scopo del sistema
+	Francesco Di Giovanni
+	18/11/2025
+	1.0
+	Aggiunta Panoramica del sistema proposto
+	Elena Carlomagno
+	18/11/2025
+	1.0
+	Aggiunta Panoramica del documento
+	Gianni Policola
+	18/11/2025
+	1.0
+	Aggiunto Diagramma dei Sottosistemi
+	Gianni Policola
+	19/11/2025
+	1.0
+	Aggiunto Sottosistema Autenticazione
+	Francesco Di Giovanni
+	19/11/2025
+	1.0
+	Aggiunto Sottosistema Database
+	Alessio Del Sorbo
+	19/11/2025
+	1.0
+	Aggiunto Sottosistema Gestione Triage
+	Gianluca Ambrosio
+	19/11/2025
+	1.0
+	Aggiunto Sottosistema Engagement
+	Gianni Policola
+	19/11/2025
+	1.0
+	Aggiunto Sottosistema Servizio Notifiche
+	Elena Carlomagno
+	19/11/2025
+	1.0
+	Aggiunto Class Diagram
+	Mattia Fanzini
+	19/11/2025
+	1.0
+	Aggiunto Sottosistema Gestione Clinica
+	Gianni Policola
+	19/11/2025
+	1.0
+	Aggiunto
+Sottosistema
+Gestione Forum
+	Francesco Coppola
+	19/11/2025
+	1.0
+	Aggiunto
+Sottosistema
+Gestione Calendario
+	Francesco Coppola
+	19/11/2025
+	1.0
+	Aggiunto
+Sottosistema
+Gestione Stati D’Animo
+	Francesco Coppola
+	19/11/2025
+	1.0
+	Aggiunto
+Sottosistema
+Gestione Diario
+	Francesco Coppola
+	20/11/2025
+	1.0
+	Aggiunto Glossario
+	Elena Carlomagno
+	21/11/2025
+	1.0
+	Aggiunto Mapping Logico
+	Rosaria Cervino
+	23/11/2025
+	1.0
+	Revisione Finale
+	Tutto il team
+	Team Members
+Ruolo
+	Nome e Cognome
+	Acronimo
+	Contatto
+	PM
+	Gianfranco Barba
+	GB
+	g.barba14@studenti.unisa.it
+	PM
+	Francesco Corcione
+	FC
+	f.corcione5@studenti.unisa.it
+	TM
+	Gianluca Ambrosio
+	GA
+	g.ambrosio39@studenti.unisa.it
+	TM
+	Elena Carlomagno
+	EC
+	e.carlomagno1@studenti.unisa.it
+	TM
+	Rosaria Cervino
+	RC
+	r.cervino3@studenti.unisa.it
+	TM
+	Francesco Coppola
+	FCP
+	f.coppola99@studenti.unisa.it
+	TM
+	Antonio Walter De Fusco
+	ADF
+	a.defusco1@studenti.unisa.it
+	TM
+	Gavino De Stefano
+	GDS
+	g.destefano41@studenti.unisa.it
+	TM
+	Alessio Del Sorbo
+	ADS
+	a.delsorbo32@studenti.unisa.it
+	TM
+	Francesco Di Giovanni
+	FDG
+	f.digiovanni10@studenti.unisa.it
+	TM
+	Mattia Fanzini
+	MF
+	m.fanzini@studenti.unisa.it
+	TM
+	Angelo Fusco
+	AF
+	a.fusco58@studenti.unisa.it
+	TM
+	Gianni Policola
+	GP
+	g.policola@studenti.unisa.it
+	
+
+Sommario
+Sommario        6
+1 Introduzione        7
+1.1  Scopo del sistema        7
+1.2  Design Goals e Trade-Offs        8
+1.2.1  Design Goals        8
+1.2.2  Trade-Offs        9
+1.3  Definizioni, acronimi e abbreviazioni        11
+1.4  Riferimenti        11
+1.5  Panoramica del documento        12
+2 Architettura del Sistema Corrente        13
+3 Architettura del Sistema Proposto        15
+3.1  Panoramica        15
+Back-End (NestJS)        15
+Persistenza dei Dati (PostgreSQL)        16
+3.2  Decomposizione in sottosistemi        17
+3.2.1  Diagramma dei Sottosistemi        17
+3.3.2  Diagramma Architetturale        18
+3.3  Mapping Hardware/Software        19
+3.3.1 Deployment Diagram        20
+3.4  Gestione dati Persistenti        21
+3.4.1  Class Diagram        21
+3.4.2  Schema Logico        22
+4 Servizi dei sottosistemi        23
+In questa sezione vengono descritti i servizi di ogni sottosistema visto in precedenza.        23
+4 Glossario        35
+
+
+1. Introduzione
+1.1         Scopo del sistema
+Il sistema che si vuole realizzare ha come obiettivo quello di fornire una piattaforma integrata a supporto della gestione delle richieste di supporto psicologico nella sanità pubblica campana, con particolare attenzione ai pazienti inseriti in lista d’attesa.
+L’obiettivo principale è trasformare l’attuale gestione obsoleta e inefficace delle liste d’attesa in un processo dinamico e monitorato riducendo il rischio associato ai lunghi tempi di attesa e il senso di abbandono percepito dai pazienti.
+Nello specifico il sistema mira a: 
+* Supportare un triage dinamico della priorità, basato su questionari standardizzati e sui relativi punteggi, consentendo il ricalcolo della priorità in lista d’attesa in funzione dell’evoluzione clinica del paziente.
+* Mettere a disposizione del paziente (PZT) strumenti di auto-monitoraggio e coinvolgimento attivo, quali diario personale, stati d’animo e calendario delle interazioni così da permettergli di tenere traccia del proprio percorso psicologico, sentirsi più coinvolto nel processo di cura e ridurre la percezione di inattività durante l’attesa.
+* Fornire a psicologi/psicoterapeuti (PSI) e amministratori di sistema (AS) una vista centralizzata e costantemente aggiornata sull’evoluzione del percorso dei pazienti (PZT) e sullo stato delle liste d’attesa, così da supportare decisioni tempestive, una distribuzione più efficace delle risorse e un monitoraggio continuo del rischio clinico e delle situazioni potenzialmente critiche.
+* Offrire un’interfaccia utente coerente e intuitiva per tutte le tipologie di utente, in modo che pazienti (PZT), psicologi/psicoterapeuti (PSI) e amministratori di sistema (AS) possano utilizzare il sistema senza necessità di formazione avanzata, favorendo l’adozione della piattaforma e riducendo gli errori operativi.
+1.2         Design Goals e Trade-Offs
+1.2.1         Design Goals
+PRIORITÀ
+	ID DESIGN GOAL
+	DESCRIZIONE
+	CATEGORIA
+	RNF DI ORIGINE
+	1
+	DG_1
+	Il sistema deve garantire la correttezza al 100% del calcolo delle priorità e delle eventuali modifiche da parte di un amministratore (AS).
+	Affidabilità
+	RNF_A_2
+	2
+	DG_2
+	Il sistema deve garantire accessibilità continua del sistema (salvo manutenzione programmata).
+	Affidabilità
+	RNF_A_1
+	3
+	DG_3
+	Il sistema deve soddisfare il 100% dei requisiti funzionali ad alta priorità.
+	Funzionalità
+	RNF_F_1
+	4
+	DG_4
+	Il sistema deve garantire l’utilizzo intuitivo senza guida per il 95% dell'utenza.
+	Usabilità
+	RNF_U_1
+	5
+	DG_5
+	Il sistema deve supportare un carico utenti +50% rispetto al previsto.
+	Prestazioni
+	RNF_P_1
+	6
+	DG_6
+	Il sistema deve ridurre al minimo i tempi di risposta delle operazioni.
+	Prestazioni
+	RNF_P_2
+	7
+	DG_7
+	Il sistema deve garantire coerenza visiva e di navigazione nella UI.
+	Usabilità
+	RNF_U_2
+	8
+	DG_8
+	Il sistema deve garantire il riutilizzo dell’80% del codice per espansioni future.
+	Sostenibilità
+	RNF_S_1
+	9
+	DG_9
+	Il sistema deve minimizzare la frequenza delle notifiche push.
+	Usabilità
+	RNF_U_3
+	10
+	DG_10
+	Il sistema deve garantire la gestione dei dati sensibili e personali nel pieno rispetto della normativa nazionale vigente, trattandosi di dati sanitari.
+	Legali / Sicurezza
+	RNF_PF_3 
+	1.2.2         Trade-Offs
+Trade-Off
+	Descrizione
+	Affidabilità del Triage 
+vs 
+Tempi di Risposta 
+	Il sistema, per garantire l'assoluta correttezza del calcolo dello score di priorità, potrebbe impiegare alcuni istanti per ricalcolare la lista d'attesa dopo l'invio di un questionario. Si accetta una latenza nell'ordine dei secondi per assicurare che il 100% dei calcoli di priorità sia corretto.
+	Accesso Amministrativo 
+vs 
+Privacy del Paziente 
+	Per garantire la piena gestibilità del sistema, l'Amministratore (AS) dispone di permessi di accesso elevati ai dati. Questa scelta privilegia l'Operabilità, partendo dal presupposto che l'AS sia un’operatore interno dell’ASL e quindi di per sé soggetto ad operare su dati con tale riservatezza.
+	 Costi di Sviluppo 
+vs 
+Completezza Funzionale
+	Per garantire il rispetto delle scadenze, il focus principale è stato sulle funzioni "core". Tuttavia, si è scelto di implementare alcune funzionalità a priorità bassa (es. Gamification), accettando un impatto sui Costi di Sviluppo, per garantire una maggiore Completezza Funzionale e migliorare l'engagement del paziente.
+	Costi di Sviluppo 
+vs 
+Portabilità
+	Si è scelto di sviluppare il prototipo come WebApp per garantire velocità di sviluppo e compatibilità immediata. Si è sacrificata l'User Experience e le performance di un'app nativa, la cui implementazione richiederebbe tempi e risorse incompatibili con la consegna del progetto.
+	Semplicità del Prototipo
+ vs 
+Aderenza al Dominio Reale
+	Si è scelto di non implementare la suddivisione territoriale delle liste d'attesa, gestendo un'unica coda. Questo ha permesso di focalizzare lo sviluppo sul meccanismo di triage dinamico, sacrificando l'aderenza al reale dominio operativo dell'ASL, che potrà essere implementata in futuro.
+	Visione Futura 
+vs 
+Scope Minimo
+	Si è scelto di implementare l'intero ciclo di vita del paziente, anche se non strettamente richiesto per il solo triage. Questo ha aumentato i costi di sviluppo, ma garantisce una completezza funzionale che rende la piattaforma più pronta per un'adozione reale.
+	Sostenibilità 
+vs 
+Ottimizzazione
+	Il sistema è progettato per garantire un elevato grado di riutilizzabilità del codice per futuri aggiornamenti e manutenzione.
+	1.3         Definizioni, acronimi e abbreviazioni
+Definizioni: Glossario
+Acronimi:
+* AS: Amministratore di Sistema
+* PSI: Psicologo/Psicoterapeuta
+* PZT: Paziente
+* RAD: Requirement Analysis Document (Documento di Analisi dei Requisiti)
+* SDD: System Design Document
+* DG: Design Goal
+* UC: Caso d’Uso
+* SC: Scenario
+* RF: Requisito Funzionale
+* RNF: Requisito Non Funzionale        
+* API: Application Programming Interface
+* DAO: Data Access Object
+* DB: Database
+* DBMS: Database Management System
+* RDBMS: Relational Database Management System
+* ASL: Azienda Sanitaria Locale
+* SPID: Sistema Pubblico di Identità Digitale
+1.4         Riferimenti
+* Object-Oriented Software Engineering Using UML, Patterns, and Java, 3rd Edition - Bernd Bruegge & Allen H. Dutoit
+* Requirements Analysis Document - C09 SINTONIA Team
+1.5         Panoramica del documento
+Il presente documento è strutturato nel modo seguente:
+* Introduzione: Questa sezione fornisce il contesto generale del progetto. Viene definito lo Scopo del sistema, mirato all'ottimizzazione delle liste d'attesa tramite triage dinamico e vengono esposti i Design Goals e Trade-Offs che hanno guidato le scelte architetturali, bilanciando priorità come la sicurezza dei dati e l'affidabilità del calcolo delle priorità. Sono inoltre incluse le definizioni, gli acronimi e i riferimenti bibliografici utili alla comprensione del documento.
+* Architettura del Sistema Corrente: Questa sezione analizza lo stato attuale della gestione delle richieste di supporto psicologico nella sanità pubblica campana. Vengono evidenziate le criticità dell'attuale modello passivo, in particolare la gestione rigida delle priorità e la mancanza di monitoraggio durante l'attesa, che il progetto SINTONIA mira a risolvere.
+* Architettura del Sistema Proposto: Questa sezione rappresenta il cuore tecnico del documento e descrive la soluzione progettuale adottata per SINTONIA. Essa è suddivisa in:
+○  Panoramica: Una descrizione ad alto livello della nuova architettura.
+○  Decomposizione in sottosistemi: L'identificazione e la suddivisione logica delle componenti del sistema.
+○  Mapping Hardware/Software: La descrizione di come le componenti software vengono allocate sulle risorse hardware (Deployment Diagram).
+○  Gestione Dati Persistenti: L'analisi dettagliata della base di dati, comprensiva di Class Diagram e schema logico.
+* Servizi dei Sottosistemi: Questa sezione scende nel dettaglio funzionale, elencando e descrivendo le interfacce e i servizi specifici offerti da ciascun sottosistema individuato nel capitolo precedente, definendo le operazioni disponibili per gli attori (Paziente, Psicologo, Amministratore).
+* Glossario: Questa sezione elenca e definisce i termini tecnici utilizzati all’interno del documento, per garantire una comprensione univoca della terminologia adottata.
+2. Architettura del Sistema Corrente
+Questa sezione descrive l'architettura operativa preesistente, intesa come il processo di business attualmente in vigore nella sanità pubblica campana per la gestione delle richieste di supporto psicologico.
+Il modello attuale di accesso ai servizi è caratterizzato da una notevole complessità. Come verrà dimostrato, l'architettura di processo esistente genera sistematicamente lunghe liste d’attesa che possono estendersi per diversi mesi. Questo approccio fallisce nel rivalutare dinamicamente l'urgenza clinica dei pazienti, generando in loro un crescente senso di abbandono e aumentando il rischio clinico durante il periodo di attesa prima della presa in carico effettiva.
+Di seguito, viene analizzato il flusso operativo corrente, identificando gli attori coinvolti e i punti di fallimento che giustificano un intervento di reengineering.
+Il flusso operativo del processo di business del sistema corrente, coinvolge cinque attori principali: Paziente (PZT), Medico di Medicina Generale (MMG), Centro Unico di Prenotazione (CUP), Sistema (IT Esistente), Psicologo (PSI).
+Il processo si articola come segue:
+1. Il Paziente espone il proprio bisogno psicologico al MMG.
+2. Il MMG valuta lo stato clinico e, se lo ritiene necessario, genera un Numero di Ricetta Elettronica (NRE), attribuendogli un codice di priorità (U, B, D, P).
+3. Il Paziente contatta il CUP per prenotare la prestazione.
+4. Il CUP interroga il Sistema (IT Esistente), che a sua volta scansiona le agende disponibili per trovare uno slot.
+5. Il punto critico di fallimento del sistema corrente si verifica qui: nel caso in cui lo slot NON sia trovato nei tempi previsti dalla priorità, il Sistema esegue l'attività "Inserisce in lista d’attesa".
+6. Successivamente, il Sistema si limita ad "Aggiornare passivamente la lista d'attesa", entrando in un ciclo che non prevede interazioni attive né con il paziente né con lo psicologo, se non per ri-tentare la prenotazione.
+L'architettura attuale presenta gravi criticità che il progetto SINTONIA mira a risolvere, configurandosi come un progetto di reengineering. Tali criticità sono di seguito elencate:
+* Gestione Passiva e Rigida della Priorità: la priorità (U, B, D, P) assegnata inizialmente dal MMG attraverso l'NRE è fissa. Il sistema opera su un modello passivo di gestione delle liste d’attesa, basato sull'ordine di arrivo e non sulla rivalutazione dinamica dell'urgenza clinica del paziente.
+* Aumento del Rischio Clinico: la mancanza di monitoraggio dinamico e proattivo dello stato di salute mentale dei pazienti in lista d'attesa non permette di rilevare tempestivamente peggioramenti significativi. Questo espone il paziente a un rischio non gestito, aggravato dal crescente senso di abbandono.
+* Assenza di Integrazione: le piattaforme digitali di supporto psicologico esistenti (es. Serenis, Unobravo) sono di natura privata e non risultano integrate con i sistemi sanitari pubblici regionali o nazionali, operando in silos separati.
+L'analisi dell'architettura attuale dimostra un modello operativo reattivo che, nel suo punto di fallimento più comune (l'assenza di slot), si limita a relegare il paziente in una lista d'attesa non monitorata.
+3. Architettura del Sistema Proposto
+3.1         Panoramica
+Il sistema verrà sviluppato seguendo lo stile architetturale Three-Tier (a tre livelli), che garantisce una netta separazione delle responsabilità e facilita la manutenibilità del software. L'architettura si suddivide in:
+* Livello di Presentazione (Presentation Layer): Corrisponde al lato client, dove risiedono le interfacce utente che permettono l'interazione con il sistema.
+* Livello di Logica Applicativa (Application Logic Layer): Corrisponde al lato server, dove vengono elaborati i dati e implementata la logica di business tramite API.
+* Livello dei Dati (Data Layer): Responsabile della persistenza e del recupero delle informazioni.
+Di seguito vengono dettagliate le scelte tecnologiche per ogni livello:
+Front-End (React)
+Per lo sviluppo dell'interfaccia utente verrà utilizzata la libreria React. Questa scelta è motivata da diversi vantaggi strategici:
+* Component-Based Architecture: Permette il riutilizzo del codice e una gestione modulare delle interfacce.
+* Virtual DOM: Garantisce un'elevata efficienza e velocità di rendering, fondamentali per applicazioni dinamiche.
+* Ecosistema e Community: Offre un ampio supporto e librerie per facilitare lo sviluppo di interfacce responsive e user-friendly.
+Back-End (NestJS)
+Per la logica applicativa è stato scelto il framework NestJS. Costruito su NodeJS e TypeScript, NestJS è stato selezionato per:
+* Architettura Modulare: Fornisce una struttura solida e scalabile out-of-the-box, facilitando l'organizzazione del codice in moduli, controller e service.
+* Tipizzazione Forte: Grazie a TypeScript, riduce gli errori a tempo di compilazione e migliora la qualità del codice.
+* Scalabilità: Permette al sistema di evolversi e gestire carichi di lavoro crescenti mantenendo prestazioni elevate.
+Persistenza dei Dati (PostgreSQL)
+Per la gestione dei dati persistenti, come verrà approfondito nel seguito del documento, verrà utilizzato il DBMS relazionale PostgreSQL, scelto per la sua affidabilità, conformità agli standard SQL e capacità di gestire strutture dati complesse.
+3.2         Decomposizione in sottosistemi
+3.2.1         Diagramma dei Sottosistemi
+  
+
+3.3.2         Diagramma Architetturale
+Il seguente Diagramma Architetturale riporta una divisione del sistema in tre parti distinte. Più in particolare, per ogni sottosistema, si è deciso di dividerlo in: 
+* GUI: Che sviluppa il livello delle interfacce.
+* Control: Che sviluppa la logica di business. 
+* Service: che mette a disposizione i servizi dei dati persistenti alla logica di business.
+* DAO: che effettua l’accesso al database.
+  
+è possibile visualizzare il diagramma al seguente link.
+3.3         Mapping Hardware/Software
+Il sistema proposto verrà realizzato come piattaforma web‐based, accessibile principalmente tramite browser da dispositivi desktop e mobile. L’architettura logica è organizzata secondo una separazione tra client, application server e database di persistenza.
+Dal punto di vista hardware, l’interazione con il sistema avviene da dispositivi client eterogenei (PC, laptop, smartphone, tablet) che eseguono un browser. La logica applicativa (sottosistemi di GUI server-side, Control e Service) è ospitata su un Web Server, che espone i servizi dell’applicazione tramite protocollo HTTPS, così da garantire la confidenzialità dei dati sanitari in transito. I dati persistenti sono invece gestiti da un Database che esegue un DBMS relazionale (PostgreSQL), incaricato di memorizzare in modo consistente e sicuro le informazioni sensibili dei pazienti, degli psicologi e della lista d’attesa.
+Il mapping Hardware/Software prevede quindi l’allocazione dei principali sottosistemi software ai nodi fisici descritti:
+* i Client ospitano la parte di presentazione (HTML, CSS, JavaScript: React) e gestiscono l’interazione diretta con gli utenti;
+* il Web Server ospita la logica di business e i servizi applicativi responsabili del triage dinamico, del monitoraggio del percorso psicologico e della gestione amministrativa;
+* il Database gestisce la persistenza dei dati e fornisce servizi di memorizzazione e recupero alla logica applicativa.
+Di seguito è riportato un UML Deployment Diagram che rappresenta il mapping Hardware/Software descritto.
+3.3.1 Deployment Diagram
+  
+________________
+
+3.4         Gestione dati Persistenti
+3.4.1         Class Diagram
+  
+
+è possibile visualizzare il diagramma al seguente link.
+3.4.2         Schema Logico
+  
+
+è possibile visualizzare il diagramma al seguente link.
+4 Servizi dei sottosistemi
+In questa sezione vengono descritti i servizi di ogni sottosistema visto in precedenza. 
+Sottosistema Gestione Forum
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Visualizza Post 
+	Restituisce l’elenco dei post del forum, con la possibilità di applicare filtri per categoria. La visualizzazione è disponibile per tutti gli utenti autenticati.
+	ForumService
+	Crea Nuovo Post 
+	Consente al paziente (PZT) di creare un nuovo post nel forum, inserendo titolo, testo e categoria, mantenendo l’anonimato dell’utente.
+	ForumService
+	Modifica Post 
+	Consente al paziente (PZT) di modificare il contenuto di un proprio post, a condizione che tale post non abbia ancora ricevuto una risposta da parte di uno psicologo (PSI).
+	ForumService
+	Elimina Post 
+	Consente al paziente (PZT) di eliminare un proprio post dal forum.
+	ForumService
+	Pubblica Risposta 
+	Consente allo psicologo (PSI) di pubblicare una risposta a un post presente nel forum. La risposta diventa visibile a tutti gli utenti.
+	ForumService
+	Elimina Risposta
+	Consente all’amministratore di sistema (AS) di eliminare la risposta pubblicata da un PSI o un PZT.
+	ForumService
+	Sottosistema Gestione Calendario
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Visualizza Calendario
+	Permette al paziente (PZT) di visualizzare il proprio calendario, comprendente gli eventi programmati.
+	CalendarioService
+	Registra Evento Calendario
+	Permette al paziente (PZT) di registrare un nuovo evento nel calendario personale, specificando data, ora, titolo e descrizione.
+	CalendarioService
+	Modifica Evento Calendario
+	Permette al paziente (PZT) di aggiornare data, ora, titolo e descrizione di un evento già inserito nel calendario.
+	CalendarioService
+	Elimina Evento Calendario
+	Permette al paziente (PZT) di eliminare un evento esistente dal calendario personale.
+	CalendarioService
+	Sottosistema Gestione Diario
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Visualizza Pagine Diario
+	Permette al paziente (PZT) di visualizzare l’elenco delle pagine inserite nel diario personale.
+	DiarioService
+	Visualizza Singola Pagina Diario
+	Permette al paziente (PZT) di visualizzare il contenuto di una specifica pagina del diario selezionata dall’elenco.
+	DiarioService
+	Inserimento Pagina Diario
+	Permette al paziente (PZT) di aggiungere una nuova pagina al diario personale, contenente un titolo e una descrizione.
+	DiarioService
+	Modifica Pagina Diario
+	Permette al paziente (PZT) di aggiornare titolo e descrizione di una pagina esistente del diario personale.
+	DiarioService
+	Elimina Pagina Diario
+	Permette al paziente (PZT) di eliminare una pagina dal proprio diario personale.
+	DiarioService
+	Sottosistema Gestione Stati D’Animo
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Visualizza Stato D’animo
+	Permette al paziente (PZT) di visualizzare l’elenco dei propri stati d’animo registrati, organizzati per giorno.
+	StatoDAnimoService
+	Inserisci Stato D’animo
+	Permette al paziente (PZT) di registrare un nuovo stato d’animo per la data odierna, selezionando emozione, intensità e eventuali note aggiuntive.
+	StatoDAnimoService
+	Modifica Stato D’animo
+	Permette al paziente (PZT) di modificare emozione, intensità e note di uno stato d’animo registrato nella data odierna.
+	StatoDAnimoService
+	Elimina Stato D’animo
+	Permette al paziente (PZT) di eliminare uno stato d’animo registrato nella data odierna.
+	StatoDAnimoService
+	Aggiungi Note Stato D’animo
+	Permette al paziente (PZT) di aggiungere una nota ad uno stato d’animo registrato nella data odierna.
+	StatoDAnimoService
+	Visualizzazione Grafico Stato D’animo
+	Permette al paziente (PZT) di visualizzare una rappresentazione grafica dell’andamento dei propri stati d’animo nel tempo, all’interno della sezione area personale.
+	StatoDAnimoService
+	Visualizzazione Lista Stato D’animo
+	Permette allo psicologo (PSI) di visualizzare la lista completa degli stati d’animo registrati dal paziente assegnato.
+	StatoDAnimoService
+	Sottosistema Gestione Triage
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Calcolo Priorità Paziente
+	Questa funzionalità permette di calcolare automaticamente lo score di priorità del paziente dopo la compilazione di un questionario, basandosi sui punteggi standardizzati.
+	TriageService
+	Ricalcolo Dinamico Lista d’Attesa
+	Questa funzionalità permette di ricalcolare e riordinare dinamicamente l’intera lista d’attesa integrando i nuovi dati provenienti dai questionari compilati, garantendo il corretto posizionamento.
+	TriageService
+	Modifica Manuale Priorità
+	Questa funzionalità permette all’Amministratore di Sistema di modificare manualmente la priorità di un paziente fornendo una motivazione clinica.
+	TriageService
+	Visualizzazione Priorità Paziente
+	Questa funzionalità permette di visualizzare la priorità attuale, lo storico delle valutazioni e la posizione in lista d’attesa di uno specifico paziente.
+	TriageService
+	Rimozione Paziente Lista d’Attesa
+	Questa funzionalità permette di rimuovere un paziente dalla lista d’attesa e ricalcolare automaticamente le posizioni di tutti i pazienti rimanenti.
+	TriageService
+	Sottosistema Gestione Clinica
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Visualizzazione Sezione Pazienti
+	Permette allo psicologo (PSI) e all’amministratore di sistema (AS) di accedere alla lista dei pazienti, mostrando l'elenco di quelli accessibili all'utente corrente.
+	PazienteService
+	Ricerca Paziente
+	Consente allo psicologo (PSI) e all’amministratore di sistema (AS) di ricercare uno specifico paziente all'interno della lista tramite parametri come nome o ID. 
+	PazienteService
+	Visualizzazione  Sezione Questionari
+	Consente l'accesso allo psicologo (PSI) e all’amministratore di sistema (AS) alla lista completa dei questionari compilati dai pazienti.
+	QuestionarioService
+	Visualizzazione Questionario
+	Permette allo psicologo (PSI) e all’amministratore di sistema (AS)  la visualizzazione in dettaglio di un singolo questionario compilato da un paziente.
+	QuestionarioService
+	Revisione Questionario
+	Permette allo psicologo (PSI) di analizzare un questionario, aggiungere note cliniche e marcarlo come revisionato.
+	QuestionarioService
+	Richiesta Invalidazione Questionario
+	Consente allo psicologo (PSI) di inviare una richiesta all'amministratore per annullare la validità di un questionario specifico, inserendo le sue motivazioni.
+	InvalidazioneService
+	Visualizzazione Sezione Alert Clinici
+	Permette allo psicologo (PSI) di visualizzare l'elenco degli alert generati dal sistema per i pazienti a rischio.
+	AlertClinicoService
+	Accettazione Alert Clinico
+	Consente allo psicologo (PSI) di prendere in carico un alert, rendendosi disponibile per un intervento immediato.
+	AlertClinicoService
+	Generazione Report
+	Permette allo psicologo (PSI) di creare un documento riepilogativo sullo stato del paziente basato sui dati raccolti.
+	ReportService
+	Visualizzazione Report
+	Consente allo psicologo (PSI) di visualizzare il report precedentemente generato per un paziente.
+	ReportService
+	Terminazione Cura Paziente
+	Permette allo psicologo (PSI) di concludere ufficialmente il percorso terapeutico di un paziente e rimuoverlo dal carico attivo.
+	PazienteService
+	Visualizzazione Sezione Psicologi
+	Consente all'Amministratore di sistema (AS) di accedere all'elenco completo dei professionisti registrati nel sistema.
+	PsicologoService
+	Aggiunta Psicologo
+	Permette all'Amministratore di sistema (AS) di registrare un nuovo psicologo nel sistema.
+	PsicologoService
+	Visualizzazione Profilo Psicologo
+	Consente all'Amministratore di sistema (AS) di visualizzare i dettagli anagrafici e professionali di uno specifico psicologo.
+	PsicologoService
+	Modifica Dati Psicologo
+	Permette all'Amministratore di sistema (AS) di aggiornare le informazioni relative al profilo di uno psicologo esistente.
+	PsicologoService
+	Rimozione Psicologo
+	Consente all'Amministratore di sistema (AS) di eliminare l'account di uno psicologo dal sistema.
+	PsicologoService
+	Modifica Dati Paziente
+	Permette all'Amministratore di sistema (AS) di aggiornare le informazioni di un paziente.
+	PazienteService
+	Modifica Assegnazione Psicologo
+	Consente all'Amministratore di sistema (AS) di cambiare lo psicologo assegnato a un determinato paziente.
+	PazienteService
+	Aggiunta Tipologia Questionario
+	Consente all'Amministratore di Sistema (AS) di inserire nel sistema un nuovo modello di questionario somministrabile.
+	QuestionarioService
+	Visualizzazione Tipologie Questionari
+	Permette all'Amministratore di sistema (AS) di consultare l'elenco dei modelli di questionario disponibili nel sistema.
+	QuestionarioService
+	Modifica Revisione Questionario
+	Consente all'Amministratore di sistema (AS) di annullare lo stato di "revisionato" di un questionario, riportandolo allo stato precedente (es. "Da revisionare"), in caso di errore procedurale.
+	QuestionarioService
+	Visualizzazione Sezione Invalidazioni
+	Consente all'Amministratore di sistema (AS) di accedere all'area dedicata alla gestione delle richieste di invalidazione.
+	InvalidazioneService
+	Visualizzazione Richiesta Invalidazione
+	Permette all'Amministratore di sistema (AS) di esaminare le motivazioni di una specifica richiesta di invalidazione.
+	InvalidazioneService
+	Valutazione Richiesta Invalidazione
+	Consente all'Amministratore di sistema (AS) di accettare o rifiutare una richiesta di invalidazione.
+	InvalidazioneService
+	Sottosistema Servizio Notifiche
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Notifica Assegnazione/Modifica
+	Invia comunicazioni quando vengono modificati i dati o le assegnazioni di un paziente.
+	NotificheService
+	Alert e Monitoraggio Clinico
+	Genera avvisi per lo psicologo quando vengono rilevati casi critici.
+	NotificheService
+	Notifiche Account e Profilo
+	Invia conferme di recupero password o modifiche al profilo.
+	NotificheService
+	Sottosistema Engagement
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Visualizzazione Obiettivi 
+	Questa funzionalità permette al paziente (PZT) di visualizzare una sezione dedicata agli obiettivi periodici da conseguire.
+	EngagementService
+	Conseguimento Obiettivo 
+	Questa funzionalità permette al paziente (PZT) di conseguire un obiettivo periodico.
+	EngagementService
+	Visualizzazione Badge
+	Questa funzionalità permette al paziente (PZT) di visualizzare un singolo badge nel dettaglio.
+	EngagementService
+	Visualizzazione Collezione Badge
+	Questa funzionalità permette al paziente (PZT) di visualizzare la propria collezione di badge.
+	EngagementService
+	Ottenimento Badge
+	Questa funzionalità permette al paziente (PZT) di ottenere badge a seguito del raggiungimento di un traguardo.
+	EngagementService
+	Sottosistema Autenticazione
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Autenticazione
+	Questa funzionalità permette a un utente autenticato di effettuare l’accesso al sistema tramite SPID.
+	AuthService
+	Disconnessione
+	Questa funzionalità permette a un utente autenticato di effettuare la disconnessione dal sistema.
+	AuthService
+	Visualizzazione Area Personale
+	Questa funzionalità permette a un utente autenticato di visualizzare la propria area personale con i relativi dati.
+	UserService
+	Sottosistema database SINTONIA
+
+
+SERVIZIO
+	DESCRIZIONE
+	INTERFACCIA
+	Persistenza Dati
+	Garantisce il salvataggio permanente dei dati relativi a pazienti, psicologi, diari e triage.
+	DatabaseService
+	Recupero Dati
+	Permette l'interrogazione e il recupero dei dati salvati per renderli disponibili ai sottosistemi applicativi.
+	DatabaseService
+	Backup e Ripristino
+	 Gestisce le copie di sicurezza dei dati e il ripristino in caso di guasto.
+	DatabaseService
+	Connessione
+	Gestisce il pool di connessioni per permettere agli altri servizi di accedere al database in modo efficiente.
+	DatabaseService
+	4. Glossario
+Termine
+	Definizione
+	MMG (Medico di Medicina Generale)
+	Figura professionale del Sistema Sanitario Nazionale che funge da primo punto di contatto per il paziente. Nel contesto del sistema, è il responsabile della valutazione clinica iniziale e della generazione della ricetta elettronica (NRE) necessaria per la richiesta di supporto psicologico.
+	NRE (Numero Ricetta Elettronica)
+	 Identificativo univoco associato alla prescrizione medica dematerializzata generata dal MMG. Nel sistema attuale, porta con sé un codice di priorità statico (U, B, D, P) che determina l'urgenza iniziale della prestazione.
+	CUP (Centro Unico di Prenotazione)
+	Sistema centralizzato di gestione delle prenotazioni sanitarie pubbliche. Attualmente agisce come intermediario tra il paziente e le strutture erogatrici, interrogando i sistemi esistenti per la disponibilità di slot temporali.
+	Three-Tier Architecture
+	Tipo di organizzazione del software in cui l'applicazione viene divisa in tre livelli logici e fisici distinti: Presentation Layer (interfaccia utente), Application Layer (regole di business) e Data Layer (persistenza dei dati). Questa separazione garantisce modularità, manutenibilità e indipendenza tra le componenti.
+	DAO (Data Access Object)
+	Utilizzato per astrarre e incapsulare l'accesso ai dati persistenti. Il DAO fornisce un'interfaccia specifica per le operazioni CRUD verso il database, separando la logica di accesso ai dati dalla logica di business dell'applicazione.
+	CRUD (Create, Read, Update, Delete)
+	Acronimo che identifica le quattro operazioni fondamentali per la gestione persistente dei dati. Nel contesto dell'architettura proposta, queste operazioni sono incapsulate nel DAO ed esposte tramite il Service Layer per permettere la creazione, lettura, modifica e cancellazione delle risorse nel database.
+	Service Layer
+	Livello intermedio dell'architettura che contiene la logica di business dell'applicazione. I servizi orchestrano le operazioni, elaborano i dati provenienti dai controller e interagiscono con i DAO per la persistenza, agendo come punto di raccordo tra l'interfaccia e i dati.
+	React
+	Libreria JavaScript open-source utilizzata per la costruzione di interfacce utente interattive. Si basa su un'architettura a componenti riutilizzabili e sfrutta il Virtual DOM per ottimizzare il rendering delle pagine web, garantendo elevate prestazioni.
+	Virtual DOM
+	Rappresentazione leggera del DOM (Document Object Model) reale, utilizzata da librerie frontend come React. Permette di ottimizzare le prestazioni aggiornando nel browser solo le parti dell'interfaccia che sono effettivamente cambiate, migliorando l'efficienza del rendering. è uno dei vantaggi principali per cui abbiamo deciso di utilizzare React.
+	NestJS
+	Framework progressivo per la costruzione di applicazioni lato server efficienti e scalabili, basato su Node.js e TypeScript.

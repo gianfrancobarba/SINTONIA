@@ -1,352 +1,186 @@
-# 🌟 SINTONIA
-
-<p align="center">
-  <strong>Piattaforma Digitale per il Supporto alla Salute Mentale</strong>
-</p>
-
-<p align="center">
-  <a href="#-il-problema">Il Problema</a> •
-  <a href="#-la-nostra-soluzione">La Soluzione</a> •
-  <a href="#-funzionalità-principali">Funzionalità</a> •
-  <a href="#-architettura">Architettura</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-documentazione">Documentazione</a>
-</p>
+<div align="center">
+  <h1>🌟 SINTONIA</h1>
+  <h3>Piattaforma Digitale Integrata per il Supporto alla Salute Mentale</h3>
+  <p>
+    <em>Ottimizzazione delle liste d'attesa e supporto proattivo per il Sistema Sanitario Regionale della Campania.</em>
+  </p>
+  
+  <p align="center">
+    <a href="#-il-team">Il Team</a> •
+    <a href="#-visione-del-progetto">Visione</a> •
+    <a href="#-anteprima-dellapplicazione">Gallery</a> •
+    <a href="#-architettura-di-sistema">Architettura</a> •
+    <a href="#-algoritmi-chiave">Algoritmi</a> •
+    <a href="#-scelte-tecnologiche">Tech</a>
+  </p>
+</div>
 
 ---
 
-## 📖 Panoramica
+## 👥 Il Team
+
+SINTONIA è sviluppato con passione dal team **C09** dell'Università degli Studi di Salerno.
+
+
+
+<br />
+
+### Project Manager
+
+*   <a href="https://github.com/gianfrancobarba"><img src="https://github.com/gianfrancobarba.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Gianfranco Barba**</a>
+
+*   <a href="https://github.com/FCorcione02"><img src="https://github.com/FCorcione02.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Francesco Corcione**</a>
+
+### Developers
+
+*   <a href="https://github.com/gianlucaam"><img src="https://github.com/gianlucaam.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Gianluca Ambrosio**</a>
+
+*   <a href="https://github.com/elesshhhh"><img src="https://github.com/elesshhhh.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Elena Carlomagno**</a>
+
+*   <a href="https://github.com/rosx3"><img src="https://github.com/rosx3.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Rosaria Cervino**</a>
+
+*   <a href="https://github.com/KekkoCoppola"><img src="https://github.com/KekkoCoppola.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Francesco Coppola**</a>
+
+*   <a href="https://github.com/AntonioWalter"><img src="https://github.com/AntonioWalter.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Antonio Walter De Fusco**</a>
+
+*   <a href="https://github.com/Gav798"><img src="https://github.com/Gav798.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Gavino De Stefano**</a>
+
+*   <a href="https://github.com/aleds25"><img src="https://github.com/aleds25.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Alessio Del Sorbo**</a>
+
+*   <a href="https://github.com/franci1313"><img src="https://github.com/franci1313.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Francesco Di Giovanni**</a>
+
+*   <a href="https://github.com/mattFanz"><img src="https://github.com/mattFanz.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Mattia Fanzini**</a>
+
+*   <a href="https://github.com/af21-code"><img src="https://github.com/af21-code.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Angelo Fusco**</a>
+
+*   <a href="https://github.com/GiaPol"><img src="https://github.com/GiaPol.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Gianni Policola**</a>
+
+---
+
+## 📖 Visione del Progetto
 
 **SINTONIA** è una piattaforma digitale innovativa progettata per **rivoluzionare il supporto alla salute mentale** nel Sistema Sanitario della Regione Campania. Il progetto nasce dalla consapevolezza che l'accesso ai servizi di salute mentale è spesso ostacolato da lunghe liste d'attesa e mancanza di strumenti di monitoraggio continuo.
 
-La piattaforma crea un **ecosistema digitale integrato** che mette in comunicazione tre attori fondamentali:
-- **Pazienti**: cittadini campani che necessitano di supporto psicologico
-- **Psicologi**: professionisti del SSR che forniscono assistenza
-- **Amministratori**: personale che gestisce il sistema
+La piattaforma crea un **ecosistema digitale integrato** che mette in comunicazione:
+- **Pazienti**: cittadini campani che necessitano di supporto psicologico.
+- **Psicologi**: professionisti del SSR che forniscono assistenza.
+- **Amministratori**: personale che gestisce il sistema e le risorse.
 
 ---
 
-## 🎯 Il Problema
 
-Il Sistema Sanitario Regionale della Campania affronta sfide significative nella gestione della salute mentale:
 
-| Problema | Impatto |
-|----------|---------|
-| **Liste d'attesa lunghe** | Pazienti attendono mesi prima di essere assegnati a uno psicologo |
-| **Mancanza di prioritizzazione** | Non esiste un sistema oggettivo per identificare i casi più urgenti |
-| **Monitoraggio discontinuo** | Difficoltà nel tracciare l'evoluzione del paziente tra le sedute |
-| **Comunicazione frammentata** | Pazienti isolati senza canali di supporto tra un appuntamento e l'altro |
-| **Carico di lavoro sbilanciato** | Distribuzione inefficiente dei pazienti tra gli psicologi disponibili |
+## 🎯 Il Problema vs La Soluzione
 
----
-
-## 💡 La Nostra Soluzione
-
-SINTONIA affronta queste sfide con un approccio **data-driven** e **centrato sul paziente**:
-
-### 🧠 Sistema di Prioritizzazione Intelligente
-
-Il cuore di SINTONIA è un **algoritmo di scoring clinico** che valuta continuamente lo stato di salute mentale di ogni paziente. Il sistema:
-
-- **Analizza le risposte ai questionari clinici validati** per calcolare uno score di rischio
-- **Utilizza il decadimento esponenziale** per dare più peso ai dati recenti, pur mantenendo memoria della storia clinica
-- **Classifica automaticamente i pazienti** in fasce di priorità (Urgente, Breve, Differibile, Programmabile)
-- **Garantisce che nessun caso critico venga dimenticato** grazie a finestre temporali che impongono interventi entro deadline specifiche
-
-### 👥 Assegnazione Automatica Ottimizzata
-
-Quando un nuovo paziente entra nel sistema o uno psicologo si libera:
-
-- Il sistema calcola una **coda virtuale dinamica** basata sulla priorità clinica
-- I pazienti più urgenti vengono **assegnati automaticamente** agli psicologi disponibili
-- Ogni psicologo ha un **carico massimo di 8 pazienti** per garantire qualità dell'assistenza
-- Il sistema bilancia automaticamente il carico di lavoro tra i professionisti
-
-### 📊 Monitoraggio Continuo
-
-A differenza del modello tradizionale basato solo sulle sedute:
-
-- I pazienti compilano **questionari periodici** direttamente dall'app
-- Lo **stato d'animo viene tracciato quotidianamente** con un sistema semplice e veloce
-- Gli psicologi ricevono **alert clinici automatici** quando un paziente mostra segnali di peggioramento
-- Il **diario emotivo** permette ai pazienti di esprimere pensieri e sensazioni tra le sedute
-
-### 💬 Community di Supporto
-
-Per combattere l'isolamento tra le sedute:
-
-- Un **forum anonimo** permette ai pazienti di condividere esperienze e fare domande
-- Gli psicologi **rispondono pubblicamente**, creando una knowledge base di supporto
-- La community fornisce un **senso di appartenenza** e riduce lo stigma
-
-### 🏅 Gamification per l'Engagement
-
-Per incentivare l'uso costante della piattaforma:
-
-- Sistema di **streak** che premia i giorni consecutivi di check-in
-- **Badge** sbloccabili al raggiungimento di obiettivi
-- **Progress bar** e livelli che rendono tangibile il percorso di miglioramento
-
----
-
-## 🚀 Quick Start
-
-Per istruzioni dettagliate su come configurare e avviare il progetto, consulta la guida tecnica:
-
-👉 **[Guida Setup Completa](webapp/README.md)**
-
----
-
-## ✨ Funzionalità Principali
-
-### 👤 Per i Pazienti (Frontend Mobile)
-
-| Funzionalità | Descrizione |
-|--------------|-------------|
-| 🔐 **Autenticazione SPID** | Login sicuro tramite identità digitale |
-| 📋 **Questionari Clinici** | Compilazione PHQ-9, GAD-7, WHO-5, PC-PTSD-5 |
-| 📔 **Diario Emotivo** | Scrittura e consultazione del diario personale |
-| 😊 **Stato d'Animo** | Tracciamento giornaliero con storico |
-| 🔥 **Sistema Streak** | Giorni consecutivi di check-in |
-| 💬 **Forum** | Pubblicazione domande anonime |
-| 🏅 **Badge** | Sistema di gamification |
-| 📲 **Notifiche** | Alert per questionari e risposte |
-| 🎫 **Supporto Tecnico** | Apertura e gestione ticket |
-
-### 🧑‍⚕️ Per gli Psicologi (Frontend Web)
-
-| Funzionalità | Descrizione |
-|--------------|-------------|
-| 👥 **Gestione Pazienti** | Visualizzazione e monitoraggio pazienti assegnati |
-| 📊 **Questionari** | Visualizzazione risultati e storico |
-| ⚠️ **Alert Clinici** | Notifiche per cambiamenti significativi |
-| 💬 **Forum** | Risposta alle domande dei pazienti |
-| 🔄 **Invalidazione** | Richiesta di invalidazione questionari |
-| ✅ **Termina Cura** | Chiusura percorso terapeutico |
-| 👤 **Area Personale** | Gestione profilo e credenziali |
-
-### 👨‍💼 Per gli Amministratori (Frontend Web)
-
-| Funzionalità | Descrizione |
-|--------------|-------------|
-| 👥 **Gestione Pazienti** | CRUD pazienti e assegnazione psicologi |
-| 🧑‍⚕️ **Gestione Psicologi** | CRUD psicologi e credenziali |
-| 📋 **Questionari** | Overview globale e revisione |
-| ✏️ **Invalidazioni** | Approvazione/rifiuto richieste |
-| 🎫 **Supporto Tecnico** | Gestione ticket aperti |
-| 💬 **Forum** | Moderazione contenuti |
-| 👤 **Area Personale** | Gestione profilo amministratore |
+| Problema Attuale (ASL) | Soluzione SINTONIA |
+|:---:|:---:|
+| ❌ **Liste d'Attesa Statiche** <br> Priorità fissa (U/B/D/P) assegnata all'inizio e mai rivalutata. | ✅ **Triage Dinamico Intelligente** <br> Un algoritmo di scoring valuta continuamente i risultati dei questionari clinici (PHQ-9, GAD-7), aggiornando la priorità in tempo reale. |
+| ❌ **Vuoto Assistenziale** <br> Mesi di silenzio totale tra la richiesta di visita e la prima seduta effettiva. | ✅ **Supporto Proattivo Continuo** <br> Strumenti di auto-aiuto (Diario, Monitoraggio dell'Umore) e Community (Forum Anonimo) supportano il paziente 24/7. |
+| ❌ **Rischio Clinico Invisibile** <br> Un peggioramento improvviso durante l'attesa passa inosservato. | ✅ **Sistema di Alert Clinici** <br> Notifiche immediate agli psicologi quando i dati del paziente rivelano pattern critici o parole chiave a rischio. |
 
 ---
 
 ## 🔬 Algoritmi Chiave
 
-### Calcolo Score Paziente
+La logica "intelligente" di SINTONIA risiede nei suoi algoritmi clinici avanzati.
 
-Il sistema utilizza un **algoritmo di decadimento esponenziale** per calcolare lo score di rischio clinico, bilanciando:
+### Calcolo Score Paziente (Exponential Decay)
 
-- ⚡ **Sensibilità ai cambiamenti recenti** (peso maggiore ai questionari più recenti)
-- 📜 **Memoria storica** (peso minimo 20% garantito per considerazioni etiche)
-- 🎯 **Adattamento dinamico** (parametri diversi per ogni tipologia di questionario)
+Il sistema utilizza un modello matematico a **decadimento esponenziale** per calcolare il rischio clinico. Questo garantisce che gli eventi recenti abbiano più peso, senza però "dimenticare" la storia clinica del paziente (peso minimo garantito 20%).
 
-> 📄 Documentazione completa: [`docs/algoritmo-score-paziente.md`](webapp/docs/algoritmo-score-paziente.md)
+La formula utilizzata per il calcolo del peso temporale $w(t)$ è:
 
-### Sistema di Assegnazione
+$$ w(t) = \max(e^{-\lambda \cdot t}, 0.20) $$
 
-Gestisce una **coda virtuale prioritaria** dei pazienti basata su:
+Dove:
+*   $t$ è il numero di giorni trascorsi dalla compilazione.
+*   $\lambda$ è il coefficiente di decadimento, calcolato dinamicamente per ogni tipo di questionario in base alla sua frequenza clinica (es. PHQ-9 ogni 14gg).
 
-| Fascia | Score | Finestra Temporale |
-|--------|-------|--------------------|
-| 🔴 Urgente | 80-100 | 3 giorni |
-| 🟠 Breve | 60-79 | 10 giorni |
-| 🟡 Differibile | 40-59 | 30 giorni |
-| 🟢 Programmabile | 0-39 | 120 giorni |
-
-> 📄 Documentazione completa: [`docs/assegnazione-pazienti.md`](webapp/docs/assegnazione-pazienti.md)
-
----
-
-## 🛠 Tech Stack
-
-### Backend
-
-| Tecnologia | Utilizzo |
-|------------|----------|
-| **NestJS** | Framework API REST |
-| **TypeScript** | Linguaggio principale |
-| **PostgreSQL** | Database relazionale |
-| **Drizzle ORM** | Object-Relational Mapping |
-| **Passport** | Autenticazione (JWT + SAML/SPID) |
-| **bcrypt** | Hashing password |
-| **Nodemailer** | Invio email |
-| **Jest** | Testing |
-
-### Frontend Web
-
-| Tecnologia | Utilizzo |
-|------------|----------|
-| **React 19** | UI Library |
-| **TypeScript** | Linguaggio principale |
-| **Vite** | Build tool |
-| **React Router 7** | Routing |
-| **Axios** | HTTP Client |
-| **Lucide React** | Iconografia |
-| **jsPDF** | Generazione PDF |
-
-### Frontend Mobile
-
-| Tecnologia | Utilizzo |
-|------------|----------|
-| **React 19** | UI Library |
-| **TypeScript** | Linguaggio principale |
-| **Vite** | Build tool |
-| **React Router 7** | Routing |
-| **Axios** | HTTP Client |
-| **Lucide React** | Iconografia |
-
-### DevOps
-
-| Tecnologia | Utilizzo |
-|------------|----------|
-| **Docker** | Containerizzazione |
-| **Docker Compose** | Orchestrazione |
-| **npm Workspaces** | Gestione monorepo |
-
----
-
-## 📁 Struttura del Progetto
-
-```
-webapp/
-├── backend/
-│   ├── src/
-│   │   ├── amministratore/    # Moduli admin (pazienti, psicologi, invalidazioni...)
-│   │   ├── auth/              # Autenticazione JWT
-│   │   ├── dashboard/         # Dashboard endpoints
-│   │   ├── drizzle/           # Schema DB e migrations
-│   │   ├── forum-comune/      # Forum condiviso
-│   │   ├── mailer/            # Servizio email
-│   │   ├── notifications/     # Sistema notifiche
-│   │   ├── patient/           # Moduli paziente
-│   │   ├── psi/               # Moduli psicologo
-│   │   ├── questionari/       # Gestione questionari
-│   │   ├── spid-auth/         # Autenticazione SPID
-│   │   └── ticket/            # Supporto tecnico
-│   └── test/                  # Test E2E
-│
-├── frontend-web/
-│   └── src/
-│       ├── components/        # Componenti React riutilizzabili
-│       ├── css/               # Fogli di stile
-│       ├── images/            # Asset statici
-│       ├── pages/             # Pagine (Login, Dashboard...)
-│       ├── services/          # Chiamate API
-│       └── types/             # TypeScript types
-│
-├── frontend-mobile/
-│   └── src/
-│       ├── assets/            # Immagini e icone
-│       ├── components/        # Componenti React
-│       ├── contexts/          # React Context (Notifiche, Cache)
-│       ├── css/               # Fogli di stile
-│       ├── pages/             # Pagine (Home, Forum, Diario...)
-│       ├── services/          # Chiamate API
-│       └── types/             # TypeScript types
-│
-├── docs/                      # Documentazione tecnica
-├── docker-compose.yml         # Configurazione Docker
-└── package.json               # Root package (workspaces)
+```mermaid
+graph LR
+    A[Screening Periodico] --> B{Decadimento<br>Esponenziale}
+    B -->|Pesi Ricalcolati| C[Score Rischio Attuale]
+    C -->|Override Manuale?| D{Triage Engine}
+    D -->|Si| E[Priorità Forzata]
+    D -->|No| F[Coda Dinamica]
 ```
 
----
+### Coda Prioritaria Dinamica
 
-## 📄 Documentazione
+L'assegnazione è basata su **Finestre Temporali di Intervento**:
 
-La documentazione tecnica è disponibile nella cartella `webapp/docs/`:
-
-| Documento | Descrizione |
-|-----------|-------------|
-| [`algoritmo-score-paziente.md`](webapp/docs/algoritmo-score-paziente.md) | Algoritmo di calcolo score con decadimento esponenziale |
-| [`assegnazione-pazienti.md`](webapp/docs/assegnazione-pazienti.md) | Sistema di coda prioritaria e assegnazione automatica |
-| [`STREAK.md`](webapp/docs/STREAK.md) | Funzionalità di tracciamento giorni consecutivi |
-
----
-
-## 🧪 Testing
-
-### Backend
-
-```bash
-cd webapp/backend
-
-# Unit tests
-npm run test
-
-# Test con watch mode
-npm run test:watch
-
-# Test coverage
-npm run test:cov
-
-# E2E tests
-npm run test:e2e
-```
+| Fascia Priorità | Score Rischio | Target Intervento |
+|:---|:---:|:---:|
+| 🔴 **Urgente** | 80 - 100 | **3 giorni** |
+| 🟠 **Breve** | 60 - 79 | **10 giorni** |
+| 🟡 **Differibile** | 40 - 59 | **30 giorni** |
+| 🟢 **Programmabile** | 0 - 39 | **120 giorni** |
 
 ---
 
-## 📜 Script Disponibili
+## 🏗 Architettura di Sistema
 
-### Root (`webapp/`)
+SINTONIA è costruito su un'architettura **Three-Tier** robusta e scalabile.
 
-| Script | Comando | Descrizione |
-|--------|---------|-------------|
-| `install:all` | `npm run install:all` | Installa tutte le dipendenze |
-| `dev:backend` | `npm run dev:backend` | Avvia backend in dev mode |
-| `dev:web` | `npm run dev:web` | Avvia frontend web |
-| `dev:mobile` | `npm run dev:mobile` | Avvia frontend mobile |
-| `dev:all` | `npm run dev:all` | Avvia tutti i servizi |
+### ⚡ Tech Stack
 
-### Backend (`webapp/backend/`)
+<div align="center">
 
-| Script | Comando | Descrizione |
-|--------|---------|-------------|
-| `start:dev` | `npm run start:dev` | Avvia in development |
-| `build` | `npm run build` | Compila per produzione |
-| `db:generate` | `npm run db:generate` | Genera migrations Drizzle |
-| `db:migrate` | `npm run db:migrate` | Applica migrations |
-| `db:seed` | `npm run db:seed` | Popola database di test |
+| Area | Tecnologie | Dettagli |
+|:---:|:--- |:---|
+| **Frontend** | ![React](https://img.shields.io/badge/React_19-20232A?style=flat&logo=react&logoColor=61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white) | SPA moderna reattiva (Web + Mobile PWA). |
+| **Backend** | ![NestJS](https://img.shields.io/badge/NestJS_11-E0234E?style=flat&logo=nestjs&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white) | Framework server-side scalabile e modulare. |
+| **Data** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white) ![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=flat&logo=drizzle&logoColor=black) | DBMS relazionale e ORM type-safe. |
+| **Infra** | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white) ![NPM](https://img.shields.io/badge/NPM_Workspaces-CB3837?style=flat&logo=npm&logoColor=white) | Orchestrazione containerizzata e Monorepo. |
+
+</div>
+
 
 ---
 
-## 🔐 Autenticazione
+## ✨ Funzionalità per Ruolo
 
-### Psicologi e Amministratori
+### 👤 Per i Pazienti (App Mobile)
+*   **Questionari Clinici**: Compilazione test periodici (PHQ-9, GAD-7, WHO-5, PC-PTSD-5).
+*   **Diario Emotivo**: Scrittura e consultazione del diario personale e tracciamento umore.
+*   **Engagement**: Sistema di **streak** e **badge** per incentivare l'aderenza.
+*   **Community**: Forum anonimo per supporto tra pari.
+*   **Indipendenza**: Gestione autonoma del proprio profilo e supporto tecnico.
 
-- **JWT Token** con credenziali email/password
-- Login tramite `/login` nel frontend web
-- Token memorizzato in localStorage
+### 🧑‍⚕️ Per gli Psicologi (Web Dashboard)
+*   **Gestione Pazienti**: Monitoraggio carico assegnato e indicatori di rischio.
+*   **Alert Clinici**: Notifiche per cambiamenti significativi o risposte a rischio.
+*   **Revisione**: Analisi dettagliata dei questionari e invalidazione test inattendibili.
+*   **Termina Cura**: Strumenti per la chiusura formale del percorso terapeutico.
 
-### Pazienti
-
-- **SPID** (Sistema Pubblico di Identità Digitale)
-- Login tramite identity provider
-- Redirect callback a `/spid-callback`
+### 👨‍💼 Per gli Amministratori (Web Admin)
+*   **Gestione Risorse**: CRUD completo su Pazienti e Psicologi.
+*   **Supervisione**: Overview globale sulle liste d'attesa e approvazione invalidazioni.
+*   **Moderazione Forum**: Gestione dei contenuti segnalati dalla community.
 
 ---
 
-## 🤝 Contributori
+## 📂 Documentazione
 
-Progetto sviluppato come parte del corso universitario.
+> [!NOTE]
+> La documentazione completa del progetto, incluse le guide utente e i manuali di installazione, è attualmente in fase di revisione e sarà disponibile a breve.
 
 ---
 
-## 📝 Licenza
+## 🗺️ Roadmap Futura
 
-Questo progetto è rilasciato sotto licenza **GNU General Public License v3.0** (GPLv3).
-Per maggiori dettagli, consulta il file [LICENSE](LICENSE).
+- [ ] **App Mobile Nativa**: Migrazione a React Native.
+- [ ] **Suddivisione Territoriale**: Gestione code multiple per ASL.
+- [ ] **Telemedicina**: Videochiamate in-app criptate.
 
 ---
 
 <p align="center">
-  Made with ❤️ for mental health support
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status" />
+  <img src="https://img.shields.io/badge/License-ISC-blue?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/Version-1.0.0-blueviolet?style=for-the-badge" alt="Version" />
+</p>
+
+<p align="center">
+  Copyright © 2025 SINTONIA. All rights reserved.
 </p>
