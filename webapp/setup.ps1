@@ -59,7 +59,6 @@ if (Test-Path "backend") {
 }
 
 Write-Host "📦 Installing backend dependencies..." -ForegroundColor Yellow
-# Using cmd /c with quotes to ensure npm runs correctly
 cmd /c "npm install"
 
 Write-Host "🔄 Generating and applying migrations..." -ForegroundColor Yellow
@@ -74,8 +73,8 @@ Set-Location ..
 
 Write-Host "----------------------------------------------------------------" -ForegroundColor Cyan
 Write-Host "✨ Setup Complete! SINTONIA is ready." -ForegroundColor Green
-Write-Host "   Backend: http://localhost:3000"
-Write-Host "   Frontend Web: http://localhost:5173"
-Write-Host "   Frontend Mobile: http://localhost:5174"
-Write-Host "   Database: localhost:5433"
+Write-Host "   Backend: http://localhost:3000" -ForegroundColor Green
+Write-Host "   Frontend Web: http://localhost:5173" -ForegroundColor Green
+Write-Host "   Frontend Mobile: http://localhost:5174" -ForegroundColor Green
+Write-Host "   Database: localhost:5433" -ForegroundColor Green
 Write-Host "----------------------------------------------------------------" -ForegroundColor Cyan
