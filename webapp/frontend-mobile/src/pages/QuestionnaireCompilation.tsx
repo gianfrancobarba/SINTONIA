@@ -156,7 +156,9 @@ const QuestionnaireCompilation: React.FC = () => {
                     minValue={currentQuestion.scalaMin ?? 0}
                     labels={currentQuestion.opzioni}
                 />
+            </div>
 
+            <div className="questionnaire-footer">
                 <button
                     className="btn-continue"
                     onClick={handleContinue}

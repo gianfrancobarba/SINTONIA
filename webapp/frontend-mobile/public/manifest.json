@@ -10,12 +10,12 @@
         {
             "src": "/logo_senza_scritta.png",
             "sizes": "192x192",
-            "type": "image/jpeg"
+            "type": "image/png"
         },
         {
             "src": "/logo_senza_scritta.png",
             "sizes": "512x512",
-            "type": "image/jpeg"
+            "type": "image/png"
         }
     ]
 }

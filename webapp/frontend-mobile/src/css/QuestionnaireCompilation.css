@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: column;
     background-color: #eaf6f8;
-    min-height: 100vh;
+    height: 100vh; /* Fixed height for viewport */
+    overflow: hidden; /* Prevent body scroll */
 }
 
 .questionnaire-header {
@@ -13,6 +14,7 @@
     justify-content: space-between;
     padding: 1rem 1.5rem;
     background-color: transparent;
+    flex-shrink: 0; /* Keep header size fixed */
 }
 
 .questionnaire-compilation .back-button {
@@ -48,13 +50,24 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center;  Removed to allow top-aligned scrolling */
     align-items: center;
-    padding: 1rem 1.5rem 2rem;
+    padding: 1rem 1.5rem;
     gap: 2rem;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    overflow-y: auto; /* Enable internal scrolling */
+}
+
+.questionnaire-footer {
+    padding: 1.5rem;
+    background-color: #eaf6f8; /* Match background or make white/transparent */
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    /* Optional: add top border or shadow for separation */
+    /* box-shadow: 0 -4px 12px rgba(0,0,0,0.05); */
 }
 
 .btn-continue {
@@ -71,10 +84,7 @@
     cursor: pointer;
     transition: background-color 0.2s, opacity 0.2s;
     box-shadow: 0 4px 12px rgba(13, 71, 93, 0.3);
-    margin-top: auto;
-    /* Push to bottom of flex container */
-    flex-shrink: 0;
-    /* Don't shrink when content is large */
+    /* margin-top: auto; Removed as it's now in footer */
 }
 
 .btn-continue:active:not(:disabled) {
