@@ -2,7 +2,8 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/auth';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = `${BASE_URL}/auth`;
 
 interface JwtPayload {
     email: string;

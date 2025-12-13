@@ -45,7 +45,8 @@ const Login = () => {
 
     const handleSpidLogin = (providerName: string) => {
         // Redirect directly to provider login
-        window.location.href = `http://localhost:3000/spid-auth/provider-login?provider=${providerName}&frontendUrl=http://localhost:5174&userType=psychologist`;
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        window.location.href = `${apiUrl}/spid-auth/provider-login?provider=${providerName}&frontendUrl=${window.location.origin}&userType=psychologist`;
     };
 
     return (

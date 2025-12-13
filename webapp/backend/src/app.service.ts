@@ -5,4 +5,8 @@ export class AppService {
   getHealth(): string {
     return 'OK';
   }
+
+  getHello(): string {
+    return 'SINTONIA Backend is running!';
+  }
 }
