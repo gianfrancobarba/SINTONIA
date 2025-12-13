@@ -19,7 +19,8 @@ const SPIDInfo = () => {
 
     const handleSpidLogin = (providerName: string) => {
         // Redirect directly to provider login for mobile (patient)
-        window.location.href = `http://localhost:3000/spid-auth/provider-login?provider=${providerName}&frontendUrl=http://localhost:5173&userType=patient`;
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        window.location.href = `${apiUrl}/spid-auth/provider-login?provider=${providerName}&frontendUrl=${window.location.origin}&userType=patient`;
     };
 
     useEffect(() => {
