@@ -22,6 +22,7 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
 
     const handleSendResponse = async () => {
         if (!responseText.trim()) return;
+        setShowReplyConfirm(false);
 
         try {
             const userStr = localStorage.getItem('user');
@@ -43,7 +44,6 @@ const TechnicalSupportDetailModal: React.FC<TechnicalSupportDetailModalProps> = 
             if (response.ok) {
                 setToast({ message: 'Risposta inviata con successo!', type: 'success' });
                 setResponseText('');
-                setShowReplyConfirm(false);
                 if (onTicketUpdated) onTicketUpdated();
                 setTimeout(() => {
                     onClose();

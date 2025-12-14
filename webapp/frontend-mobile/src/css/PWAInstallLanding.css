@@ -2,11 +2,15 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100dvh;
+    /* Better for mobile browsers */
     background-color: #f5f9fa;
     /* Light background from mobile theme */
     color: #1a1a1a;
     font-family: var(--font-family, 'Urbanist', sans-serif);
     text-align: center;
+    padding-bottom: env(safe-area-inset-bottom);
+    /* Safe area for iPhone home bar */
 }
 
 .pwa-content {
@@ -113,8 +117,8 @@
     background: white;
     width: 100%;
     border-radius: 24px 24px 0 0;
-    padding: 2rem 1.5rem 3rem 1.5rem;
-    /* Extra padding for bottom bar */
+    padding: 2rem 1.5rem 5rem 1.5rem;
+    /* More space for the hint */
     box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.15);
     animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
@@ -182,15 +186,19 @@
 }
 
 .ios-arrow-hint {
-    margin-top: 2.5rem;
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    /* Align to the right where the dots usually are */
+    left: auto;
     text-align: center;
     color: #0D475D;
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-weight: 700;
+    font-size: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     animation: bounce 2s infinite;
 }
 

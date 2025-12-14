@@ -8,10 +8,11 @@ export class MailerService {
     constructor() {
         // Initialize transporter with environment variables or default values
         // For development, we can use a mock or a real SMTP service if credentials are provided
+        const port = parseInt(process.env.SMTP_PORT || '587');
         this.transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST || 'smtp.gmail.com',
-            port: parseInt(process.env.SMTP_PORT || '587'),
-            secure: false, // true for 465, false for other ports
+            port: port,
+            secure: port === 465, // true for 465, false for other ports
             auth: {
                 user: process.env.SMTP_USER,
                 pass: process.env.SMTP_PASS,
@@ -21,11 +22,8 @@ export class MailerService {
 
     async sendMail(to: string, subject: string, text: string): Promise<void> {
         if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-            console.log('SMTP credentials not found. Logging email to console instead.');
-            console.log(`To: ${to}`);
-            console.log(`Subject: ${subject}`);
-            console.log(`Body: ${text}`);
-            return;
+            console.error('SMTP credentials not found in environment variables!');
+            throw new Error('SMTP credentials not configured');
         }
 
         try {
