@@ -98,7 +98,7 @@ const PWAInstallLanding: React.FC = () => {
                             </div>
                         </div>
                         <div className="ios-arrow-hint">
-                            👇 Premi qui sotto
+                             Premi qui sotto 👇
                         </div>
                     </div>
                 </div>
