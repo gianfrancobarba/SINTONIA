@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SINTONIA – Sistema INtegrato per il Triage e l’Osservazione della salute mentale in CampaNIA</title>
+  <link rel="icon" type="image/png" href="brand/Icona_app.png">
+  <!-- Google Fonts for modern, clean look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0; background: #f8fbfd;
+      color: #113366;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #fff;
+      box-shadow: 0 2px 16px #1628520a;
+      padding: 36px 0 18px 0;
+      text-align: center;
+    }
+    header img {
+      width: 290px;
+      max-width: 65vw;
+      margin-bottom: 16px;
+      user-select: none;
+    }
+    nav {
+      margin: 0 auto 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    nav a {
+      color: #205294;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 22px;
+      transition: background 0.1s, color 0.2s;
+      font-size: 1.02rem;
+    }
+    nav a:hover, nav a:focus {
+      background: #daf0ff;
+      color: #135cab;
+    }
+    .acronym {
+      font-size: 1.17rem;
+      color: #2260ad;
+      max-width: 95vw;
+      font-weight: 500;
+      margin: 0 auto .8em auto;
+    }
+    main {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      flex: 1 1 auto;
+      background: none;
+      padding: 24px 14px 0 14px;
+    }
+    section {
+      margin: 48px 0 36px 0;
+    }
+    section h2 {
+      font-size: 2rem;
+      color: #19589B;
+      margin-bottom: 18px;
+      margin-top: 0;
+      letter-spacing: -1px;
+    }
+    /* Features grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(208px, 1fr));
+      gap: 28px 16px;
+      margin-top: 18px;
+    }
+    .feature {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 0 0 1px #d4e4ee, 0 7px 32px #15357714;
+      padding: 32px 22px 18px 22px;
+      text-align: center;
+      transition: transform 0.12s;
+      position: relative;
+      min-height: 185px;
+    }
+    .feature:hover {
+      transform: translateY(-7px) scale(1.025);
+      box-shadow: 0 0 0 1.5px #6cc4ffad, 0 7px 32px #19589B33;
+    }
+    .feature i {
+      font-size: 2.1rem;
+      margin-bottom: 11px;
+      color: #2196f3;
+    }
+    .feature h3 {
+      font-size: 1.17rem;
+      font-weight: 600;
+      color: #2260ad;
+      margin: 0 0 7px 0;
+    }
+    .feature p {
+      font-size: 1.03rem;
+      color: #22475d;
+      margin: 0;
+    }
+    /* Team section */
+    .team-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 27px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 18px;
+      max-width: 670px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .member {
+      text-align: center;
+      width: 118px;
+    }
+    .avatar {
+      width: 68px;
+      height: 68px;
+      background: #eaf6fa;
+      border-radius: 50%;
+      border: 2px solid #bbdefb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px auto;
+      font-size: 2rem;
+      overflow: hidden;
+      user-select: none;
+    }
+    .member span {
+      display: block;
+      font-size: 1.08rem;
+      color: #154478;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .member small {
+      font-size: 0.93rem;
+      color: #667;
+    }
+    .member a {
+      display: inline-block;
+      margin-top: 4px;
+      color: #204d85;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: color 0.12s;
+    }
+    .member a:hover, .member a:focus {
+      color: #1f8eee;
+    }
+    /* Tech badges */
+    .tech {
+      display: flex;
+      gap: 17px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 19px;
+    }
+    .tech img, .tech i {
+      height: 39px; width: 39px; object-fit: contain;
+    }
+    .tech span {
+      font-weight: 500;
+      color: #165cb8;
+      font-size: 1.08rem;
+    }
+    /* Contacts */
+    .contacts {
+      text-align: center;
+      color: #21477b;
+    }
+    .contacts a {
+      color: #2455c1;
+      text-decoration: underline;
+      transition: color 0.13s;
+      margin: 0 8px;
+    }
+    .contacts a:hover {
+      color: #0a3170;
+      text-decoration: underline wavy 1.5px #0a7fc7;
+    }
+    /* Footer */
+    footer {
+      background: #eef6fc;
+      color: #5988cc;
+      font-size: 1.08rem;
+      margin-top: 48px;
+      padding: 22px 0 18px 0;
+      text-align: center;
+      border-top: 1.5px solid #d2e7fd;
+    }
+    .footer-logo {
+      width: 90px;
+      opacity: .8;
+      margin-bottom: 7px;
+      margin-top: 5px;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      header img {
+        width: 85vw;
+      }
+      .feature {
+        min-height: auto;
+        padding: 22px 12px 18px 12px;
+      }
+      .member {width: 95px;}
+      .avatar {width: 52px; height: 52px; font-size: 1.2rem;}
+      section {margin: 34px 0 18px 0;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="brand/Logo_con_scritta.png" alt="Logo SINTONIA" draggable="false"/>
+    <div class="acronym">
+      Sistema INtegrato per il Triage e l’Osservazione della salute mentale in CampaNIA
+    </div>
+    <nav>
+      <a href="#cosesintonia">Cos’è SINTONIA</a>
+      <a href="#caratteristiche">Caratteristiche</a>
+      <a href="#team">Team</a>
+      <a href="#techstack">Tech</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+  </header>
+  <main>
+    <section id="cosesintonia">
+      <h2>Cos’è SINTONIA</h2>
+      <p style="font-size:1.15rem;max-width:700px;line-height:1.55;color:#183a5e;">SINTONIA è un'iniziativa digitale che trasforma il modo in cui la salute mentale pubblica viene gestita nella Regione Campania. Il progetto vuole <b>abbattere il silenzio dell’attesa</b> tra richiesta d’aiuto e presa in carico clinica, accompagnando persone e famiglie con strumenti di monitoraggio continuo, coinvolgimento attivo e risposta tempestiva alle necessità più critiche.</p>
+      <p style="color:#1c486b;max-width:670px;margin-top:15px;">Attraverso un sistema intelligente di triage basato su dati reali e questionari clinici validati, SINTONIA fornisce supporto proattivo e personalizzato durante tutto il periodo di attesa, coinvolgendo attivamente i pazienti e dando agli operatori clinici informazioni aggiornate e chiave per l’intervento.</p>
+    </section>
+
+    <section id="caratteristiche">
+      <h2>Caratteristiche Principali</h2>
+      <div class="features">
+        <div class="feature">
+          <i class="fa-solid fa-heart-pulse"></i>
+          <h3>Triage Dinamico</h3>
+          <p>Priorità sempre aggiornata grazie alla valutazione continua tramite questionari clinici autosomministrati.</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-users-rays"></i>
+          <h3>Forum Anonimo</h3>
+          <p>Community dove confrontarsi e ricevere supporto anche da personale clinico, in modo sicuro e protetto.</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-bell-on"></i>
+          <h3>Alert Clinici Automatici</h3>
+          <p>Allerta immediata degli operatori quando emerge un rischio, per un intervento tempestivo sulle situazioni prioritarie.</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-medal"></i>
+          <h3>Gamification e Engagement</h3>
+          <p>Obiettivi, badge e diario personale per mantenere alta la motivazione e il benessere mentale durante l’attesa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="team">
+      <h2>Il Team</h2>
+      <div class="team-wrap">
+        <div class="member"><div class="avatar"><img src="https://github.com/gianfrancobarba.png" width="100%" /></div><span>Gianfranco Barba</span><small>Project Manager</small><a href="https://github.com/gianfrancobarba" target="_blank" title="GitHub Gianfranco"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/FCorcione02.png" width="100%" /></div><span>Francesco Corcione</span><small>Project Manager</small><a href="https://github.com/FCorcione02" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/gianlucaam.png" width="100%" /></div><span>Gianluca Ambrosio</span><small>Developer</small><a href="https://github.com/gianlucaam" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/elesshhhh.png" width="100%" /></div><span>Elena Carlomagno</span><small>Developer</small><a href="https://github.com/elesshhhh" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/rosx3.png" width="100%" /></div><span>Rosaria Cervino</span><small>Developer</small><a href="https://github.com/rosx3" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/KekkoCoppola.png" width="100%" /></div><span>Francesco Coppola</span><small>Developer</small><a href="https://github.com/KekkoCoppola" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/AntonioWalter.png" width="100%" /></div><span>Antonio Walter De Fusco</span><small>Developer</small><a href="https://github.com/AntonioWalter" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/Gav798.png" width="100%" /></div><span>Gavino De Stefano</span><small>Developer</small><a href="https://github.com/Gav798" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/aleds25.png" width="100%" /></div><span>Alessio Del Sorbo</span><small>Developer</small><a href="https://github.com/aleds25" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/franci1313.png" width="100%" /></div><span>Francesco Di Giovanni</span><small>Developer</small><a href="https://github.com/franci1313" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/mattFanz.png" width="100%" /></div><span>Mattia Fanzini</span><small>Developer</small><a href="https://github.com/mattFanz" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/af21-code.png" width="100%" /></div><span>Angelo Fusco</span><small>Developer</small><a href="https://github.com/af21-code" target="_blank"><i class="fab fa-github"></i></a></div>
+        <div class="member"><div class="avatar"><img src="https://github.com/GiaPol.png" width="100%" /></div><span>Gianni Policola</span><small>Developer</small><a href="https://github.com/GiaPol" target="_blank"><i class="fab fa-github"></i></a></div>
+      </div>
+    </section>
+
+    <section id="techstack">
+      <h2>Tech Stack</h2>
+      <div class="tech">
+        <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/NestJS_11-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
+        <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+        <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+        <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+        <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black" alt="Drizzle ORM" />
+      </div>
+    </section>
+
+    <section id="contatti">
+      <h2>Contatti & Info</h2>
+      <div class="contacts">
+        <p>Scopri il progetto su <a href="https://github.com/<your-organization-or-user>/SINTONIA" target="_blank">GitHub</a><br/>
+          Email del coordinamento: <a href="mailto:contatto@progettosintonia.it">contatto@progettosintonia.it</a></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <img src="brand/Logo_senza_scritta.png" class="footer-logo" alt="Logo SINTONIA small" />
+    <div>Copyright © 2025 Team SINTONIA. Tutti i diritti riservati.</div>
+  </footer>
+</body>
+</html>
