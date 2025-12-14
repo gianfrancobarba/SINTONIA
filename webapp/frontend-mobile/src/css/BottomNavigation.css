@@ -28,8 +28,10 @@
     justify-content: space-around;
     align-items: center;
     padding: 12px 20px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
     gap: 8px;
-    height: 80px;
+    height: auto;
+    min-height: 80px;
     box-sizing: border-box;
 }
 

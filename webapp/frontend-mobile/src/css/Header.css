@@ -2,6 +2,7 @@
     background-color: var(--primary-dark);
     color: var(--white);
     padding: 40px 20px 30px;
+    padding-top: calc(40px + env(safe-area-inset-top));
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
     position: relative;
