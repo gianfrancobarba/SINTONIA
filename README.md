@@ -29,9 +29,9 @@ SINTONIA è sviluppato con passione dal team **C09** dell'Università degli Stud
 
 *   <a href="https://github.com/gianfrancobarba"><img src="https://github.com/gianfrancobarba.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Gianfranco Barba**</a>
 
-*   <a href="https://github.com/FCorcione02"><img src="https://github.com/FCorcione02.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Francesco Corcione**</a>
+*   <a href="https://github.com/fra-02"><img src="https://github.com/fra-02.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Francesco Corcione**</a>
 
-### Developers
+### Team Members
 
 *   <a href="https://github.com/gianlucaam"><img src="https://github.com/gianlucaam.png" width="25" style="border-radius: 50%; vertical-align: middle;" /> **Gianluca Ambrosio**</a>
 
