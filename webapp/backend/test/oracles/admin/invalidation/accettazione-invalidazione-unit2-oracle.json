@@ -1,0 +1,96 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF21_7",
+            "description": "Errore: L’id del paziente non è inserito",
+            "input": {
+                "idPaziente": "",
+                "data": "2023-01-01T10:00:00.000Z"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Paziente obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF21_8",
+            "description": "Errore: La data del questionario invalidato non è inserita",
+            "input": {
+                "idPaziente": "paziente-1",
+                "data": null
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Data Invalidazione obbligatoria"
+            }
+        },
+        {
+            "id": "TC_RF21_9",
+            "description": "Errore: La data del questionario invalidato non è valida (Futura)",
+            "input": {
+                "idPaziente": "paziente-1",
+                "data": "FUTURE_DATE"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Data futura non consentita"
+            }
+        },
+        {
+            "id": "TC_RF21_10",
+            "description": "Errore: Il paziente non esiste",
+            "input": {
+                "idPaziente": "unknown-paziente",
+                "data": "2023-01-01T10:00:00.000Z"
+            },
+            "mockData": {
+                "pazienteEsiste": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "non trovato"
+            }
+        },
+        {
+            "id": "TC_RF21_11",
+            "description": "Corretto: Non è stato trovato nessun questionario precedente",
+            "input": {
+                "idPaziente": "paziente-1",
+                "data": "2023-01-01T10:00:00.000Z"
+            },
+            "mockData": {
+                "queryResult": []
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "result": null
+            }
+        },
+        {
+            "id": "TC_RF21_12",
+            "description": "Corretto: Questionario con cambiamento=true trovato",
+            "input": {
+                "idPaziente": "paziente-1",
+                "data": "2023-01-01T10:00:00.000Z"
+            },
+            "mockData": {
+                "queryResult": [
+                    {
+                        "id": "prev-q",
+                        "data": "2022-12-31T10:00:00.000Z"
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "result": {
+                    "id": "prev-q",
+                    "data": "2022-12-31T10:00:00.000Z"
+                }
+            }
+        }
+    ]
+}

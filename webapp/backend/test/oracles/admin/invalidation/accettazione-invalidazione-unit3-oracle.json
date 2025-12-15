@@ -1,0 +1,135 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF21_13",
+            "description": "Errore: L’id del paziente non è inserito",
+            "input": {
+                "idPaziente": "",
+                "data": "2023-01-01"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Paziente obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF21_14",
+            "description": "Errore: La data del questionario invalidato non è inserita",
+            "input": {
+                "idPaziente": "paz",
+                "data": null
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Data Inizio obbligatoria"
+            }
+        },
+        {
+            "id": "TC_RF21_15",
+            "description": "Errore: La data del questionario invalidato non è valida (Futura)",
+            "input": {
+                "idPaziente": "paz",
+                "data": "FUTURE"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Data futura non consentita"
+            }
+        },
+        {
+            "id": "TC_RF21_16",
+            "description": "Errore: Il paziente non esiste",
+            "input": {
+                "idPaziente": "unknown",
+                "data": "2023-01-01"
+            },
+            "mockData": {
+                "pazienteExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "non trovato"
+            }
+        },
+        {
+            "id": "TC_RF21_17",
+            "description": "Corretto: TREND_DOWN (Fascia persa)",
+            "input": {
+                "idPaziente": "paz",
+                "data": "2023-01-01"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "fasciaMin": 80,
+                "questionari": [
+                    {
+                        "id": "q1",
+                        "data": "2023-02-01",
+                        "scorePre": 82,
+                        "scorePost": 70
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "result": false,
+                "dbChange": false
+            }
+        },
+        {
+            "id": "TC_RF21_18",
+            "description": "Corretto: TREND_UP (Nuova fascia raggiunta)",
+            "input": {
+                "idPaziente": "paz",
+                "data": "2023-01-01"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "fasciaMin": 80,
+                "questionari": [
+                    {
+                        "id": "q1",
+                        "data": "2023-02-01",
+                        "scorePre": 75,
+                        "scorePost": 85
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "result": true,
+                "dbChange": true,
+                "changeValue": true
+            }
+        },
+        {
+            "id": "TC_RF21_19",
+            "description": "Corretto: TREND_STABLE (Fascia mantenuta)",
+            "input": {
+                "idPaziente": "paz",
+                "data": "2023-01-01"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "fasciaMin": 80,
+                "questionari": [
+                    {
+                        "id": "q1",
+                        "data": "2023-02-01",
+                        "scorePre": 82,
+                        "scorePost": 85
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "result": true,
+                "dbChange": true,
+                "changeValue": false
+            }
+        }
+    ]
+}

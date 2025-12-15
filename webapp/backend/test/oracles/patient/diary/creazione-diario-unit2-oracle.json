@@ -1,0 +1,72 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "description": "Unit 2: Creazione pagina diario Service (UC_PZT_19)",
+        "createdAt": "2025-12-09"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF19_5",
+            "description": "DB1 - Errato: Inserimento nel DB fallito",
+            "category": "error",
+            "input": {
+                "dto": {
+                    "title": "Titolo valido",
+                    "content": "Contenuto valido"
+                },
+                "patientId": "paziente-123"
+            },
+            "mockData": {
+                "dbReturn": []
+            },
+            "expectedBehavior": {
+                "exception": "BadRequestException",
+                "message": "Impossibile creare la pagina del diario"
+            }
+        },
+        {
+            "id": "TC_RF19_6",
+            "description": "DB2, BDG1 - Errato: Servizio badge non chiamato (Simulated)",
+            "category": "error",
+            "input": {
+                "dto": {
+                    "title": "Titolo valido",
+                    "content": "Contenuto valido"
+                },
+                "patientId": "paziente-123"
+            },
+            "mockData": {
+                "newPageId": "pagina-uuid",
+                "badgeServiceCalled": false
+            },
+            "expectedBehavior": {
+                "exception": "Error",
+                "message": "Servizio badge non chiamato"
+            }
+        },
+        {
+            "id": "TC_RF19_7",
+            "description": "DB2, BDG2 - Corretto: Pagina inserita correttamente, servizio badge chiamato",
+            "category": "success",
+            "input": {
+                "dto": {
+                    "title": "Titolo valido",
+                    "content": "Contenuto valido"
+                },
+                "patientId": "paziente-123"
+            },
+            "mockData": {
+                "newPageId": "pagina-uuid",
+                "awardedBadges": [
+                    "Scrittore"
+                ],
+                "badgeServiceCalled": true
+            },
+            "expectedOutput": {
+                "id": "pagina-uuid",
+                "title": "Titolo valido",
+                "content": "Contenuto valido"
+            }
+        }
+    ]
+}

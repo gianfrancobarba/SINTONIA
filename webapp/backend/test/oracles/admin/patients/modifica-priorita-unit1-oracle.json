@@ -1,0 +1,73 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF10_1",
+            "description": "Errore: La priorità non può essere vuota.",
+            "input": {
+                "idPaziente": "paziente-valido",
+                "nuovaPriorita": ""
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Priorità non valida"
+            }
+        },
+        {
+            "id": "TC_RF10_2",
+            "description": "Errore: La priorità deve essere compresa tra le priorità ammissibili.",
+            "input": {
+                "idPaziente": "paziente-valido",
+                "nuovaPriorita": "Inesistente"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Priorità non valida"
+            }
+        },
+        {
+            "id": "TC_RF10_3",
+            "description": "Errore: l’ID del paziente non può essere vuoto.",
+            "input": {
+                "idPaziente": "",
+                "nuovaPriorita": "Urgente"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente con ID  non trovato"
+            }
+        },
+        {
+            "id": "TC_RF10_4",
+            "description": "Errore: Il paziente non è stato trovato.",
+            "input": {
+                "idPaziente": "paziente-inesistente",
+                "nuovaPriorita": "Urgente"
+            },
+            "mockData": {
+                "patientExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente con ID paziente-inesistente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF10_5",
+            "description": "Corretto: I campi inseriti rispettano tutti i vincoli formali.",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "nuovaPriorita": "Urgente"
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Urgente"
+            }
+        }
+    ]
+}

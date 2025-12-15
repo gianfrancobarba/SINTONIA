@@ -1,0 +1,47 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 4",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_12",
+            "description": "Esecuzione Score - Valori non validi/vuoti",
+            "input": {
+                "nomeTipologia": "Test",
+                "risposte": []
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": 0
+            },
+            "mockData": {
+                "punteggioConfig": "0;1;2",
+                "domandeConfig": "D1;D2;D3"
+            }
+        },
+        {
+            "id": "TC_RF3_13",
+            "description": "Esecuzione Score - Successo",
+            "input": {
+                "nomeTipologia": "Test",
+                "risposte": [
+                    {
+                        "idDomanda": "q1",
+                        "valore": 2
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": 100
+            },
+            "mockData": {
+                "punteggioConfig": "0;1;2",
+                "domandeConfig": "D1"
+            }
+        }
+    ]
+}

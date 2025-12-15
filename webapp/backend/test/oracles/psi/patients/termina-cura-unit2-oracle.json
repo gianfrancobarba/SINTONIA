@@ -1,0 +1,48 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_7",
+            "description": "Update del DB fallito",
+            "input": {
+                "idPaziente": "paz-1",
+                "codiceFiscalePsicologo": "psi-1"
+            },
+            "mockData": {
+                "dbShouldFail": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Database Error"
+            }
+        },
+        {
+            "id": "TC_RF4_8",
+            "description": "Servizio assegnazione non chiamato correttamente",
+            "input": {
+                "idPaziente": "paz-1",
+                "codiceFiscalePsicologo": "psi-1"
+            },
+            "mockData": {
+                "delegationShouldFail": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Delegation Error"
+            }
+        },
+        {
+            "id": "TC_RF4_9",
+            "description": "Corretto: Update avvenuto con successo e servizio assegnazione chiamato con successo",
+            "input": {
+                "idPaziente": "paz-1",
+                "codiceFiscalePsicologo": "psi-1"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "success",
+                "shouldDelegate": true,
+                "delegationResult": "new-patient-id"
+            }
+        }
+    ]
+}

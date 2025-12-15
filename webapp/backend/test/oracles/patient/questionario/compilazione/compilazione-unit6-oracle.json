@@ -1,0 +1,56 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "description": "Oracle for Compilazione Questionario Unit 6",
+        "createdAt": "2025-12-10",
+        "author": "Antigravity"
+    },
+    "testCases": [
+        {
+            "id": "TC_RF3_18",
+            "description": "Esecuzione Invio - Errore DB",
+            "input": {
+                "idPaziente": "paz1",
+                "nomeTipologia": "Tipo",
+                "risposte": [
+                    {
+                        "idDomanda": "q1",
+                        "valore": 1
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Impossibile salvare il questionario"
+            },
+            "mockData": {
+                "insertSuccess": false
+            }
+        },
+        {
+            "id": "TC_RF3_19",
+            "description": "Esecuzione Invio - Successo",
+            "input": {
+                "idPaziente": "paz1",
+                "nomeTipologia": "Tipo",
+                "risposte": [
+                    {
+                        "idDomanda": "q1",
+                        "valore": 1
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedResult": {
+                    "idQuestionario": "new-quest-id",
+                    "score": 50
+                }
+            },
+            "mockData": {
+                "insertSuccess": true,
+                "calculatedScore": 50
+            }
+        }
+    ]
+}

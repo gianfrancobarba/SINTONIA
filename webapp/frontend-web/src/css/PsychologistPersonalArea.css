@@ -1,0 +1,348 @@
+.personal-area-container {
+    background: #FFFFFF;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Hero Banner - fixed percentage */
+.profile-hero-banner {
+    background: linear-gradient(135deg, #0D475D 0%, #1a6b7a 50%, #2B8A8A 100%);
+    height: 15%;
+    min-height: 50px;
+    flex-shrink: 0;
+}
+
+/* Profile Photo Container */
+.profile-photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -25px;
+    flex-shrink: 0;
+}
+
+.profile-image-wrapper {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.profile-image-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 16px rgba(13, 71, 93, 0.25);
+}
+
+.profile-name-display {
+    margin-top: 4px;
+    text-align: center;
+}
+
+.profile-name-display h2 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0D475D;
+}
+
+.profile-name-display p {
+    margin: 0;
+    font-size: 11px;
+    color: #6FA8AF;
+}
+
+/* Image upload overlay */
+.image-upload-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(13, 71, 93, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.image-upload-overlay:hover {
+    opacity: 1;
+}
+
+.image-upload-overlay svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Edit mode indicator on profile image */
+.profile-image-wrapper.editing {
+    box-shadow: 0 0 0 3px #2B8A8A, 0 0 12px rgba(43, 138, 138, 0.4);
+    border-radius: 50%;
+}
+
+/* Content Section - FILLS remaining space */
+.personal-area-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 16px 12px;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Info Cards Grid - FILLS available space in content */
+.info-cards-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    min-height: 0;
+    align-content: start;
+}
+
+.info-card {
+    background: linear-gradient(135deg, #F8FCFC 0%, #F0F8F8 100%);
+    border-radius: 6px;
+    padding: 4px 8px;
+    border: 1px solid #E5F2F2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.info-card:hover {
+    border-color: #D0E8E8;
+}
+
+.info-card-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #6FA8AF;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.info-card-value {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0D475D;
+}
+
+/* Editable Card - Teal theme for consistency */
+.info-card.editable {
+    background: linear-gradient(135deg, #E0F2F2 0%, #D4ECEC 100%);
+    border: 2px solid #2B8A8A;
+    box-shadow: 0 0 0 3px rgba(43, 138, 138, 0.2), 0 4px 12px rgba(43, 138, 138, 0.15);
+}
+
+.info-card.editable .info-card-label {
+    color: #1a6b7a;
+    font-weight: 700;
+}
+
+.info-card-input {
+    width: 100%;
+    padding: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0D475D;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: inherit;
+}
+
+.info-card-input:disabled {
+    color: #0D475D;
+    cursor: default;
+}
+
+/* Full width card */
+.info-card.full-width {
+    grid-column: span 2;
+}
+
+/* Actions Section - fixed at bottom */
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 8px;
+    flex-shrink: 0;
+}
+
+/* Action Buttons */
+.btn-edit {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #0D475D 0%, #1a6378 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(13, 71, 93, 0.2);
+}
+
+.btn-edit:hover {
+    transform: translateY(-1px);
+}
+
+.btn-group {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-cancel {
+    background-color: #f5f5f5;
+    color: #666;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #83B9C1 0%, #5a9aa5 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(131, 185, 193, 0.3);
+}
+
+/* Email error */
+.email-error-message {
+    color: #ef4444;
+    font-size: 10px;
+}
+
+/* Responsive - larger screens */
+@media (min-height: 700px) {
+    .profile-hero-banner {
+        height: 18%;
+    }
+
+    .profile-photo-container {
+        margin-top: -35px;
+    }
+
+    .profile-image-wrapper {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-name-display h2 {
+        font-size: 18px;
+    }
+
+    .profile-name-display p {
+        font-size: 13px;
+    }
+
+    .personal-area-content {
+        padding: 12px 24px 16px;
+    }
+
+    .info-cards-grid {
+        gap: 8px;
+    }
+
+    .info-card {
+        padding: 8px 12px;
+        border-radius: 10px;
+    }
+
+    .info-card-label {
+        font-size: 11px;
+    }
+
+    .info-card-value,
+    .info-card-input {
+        font-size: 14px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 10px 18px;
+        font-size: 13px;
+    }
+}
+
+@media (min-height: 900px) {
+    .profile-hero-banner {
+        height: 20%;
+    }
+
+    .profile-photo-container {
+        margin-top: -50px;
+    }
+
+    .profile-image-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name-display {
+        margin-top: 8px;
+    }
+
+    .profile-name-display h2 {
+        font-size: 22px;
+    }
+
+    .personal-area-content {
+        padding: 16px 32px 24px;
+    }
+
+    .info-cards-grid {
+        gap: 12px;
+    }
+
+    .info-card {
+        padding: 12px 16px;
+        border-radius: 12px;
+    }
+
+    .info-card-label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .info-card-value,
+    .info-card-input {
+        font-size: 15px;
+    }
+
+    .profile-actions {
+        padding-top: 16px;
+    }
+
+    .btn-edit,
+    .btn-cancel,
+    .btn-save {
+        padding: 12px 24px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF3_1",
+            "description": "Errore: Errore durante la lettura dei dati",
+            "input": {},
+            "mockData": {
+                "dbError": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Database Error"
+            }
+        },
+        {
+            "id": "TC_RF3_2",
+            "description": "Corretto: Lettura dei dati avvenuta correttamente",
+            "input": {},
+            "mockData": {
+                "dbError": false,
+                "result": [
+                    {
+                        "idAlert": "a1",
+                        "dataAlert": "2023-01-01",
+                        "stato": false
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "resultLength": 1
+            }
+        }
+    ]
+}

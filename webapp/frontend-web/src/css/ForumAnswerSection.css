@@ -1,0 +1,134 @@
+/* Forum Answer Section - Modern Design with Avatar */
+
+.forum-answer-section {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* Header with Avatar */
+.answer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.answer-author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0D475D 0%, #1A5F5F 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-initials {
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.author-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0D475D;
+}
+
+.answer-time {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.answer-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.action-button {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: none;
+    background: white;
+    color: #9ca3af;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.action-button:hover {
+    transform: scale(1.1);
+}
+
+.edit-button:hover {
+    color: #0D475D;
+    background: #e0f2fe;
+}
+
+.delete-button:hover {
+    color: #ef4444;
+    background: #fee2e2;
+}
+
+/* Body */
+.answer-body {
+    padding-left: 46px;
+    /* Align with text after avatar */
+}
+
+.answer-text {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.expand-text-button {
+    background: none;
+    border: none;
+    color: #0D475D;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 6px;
+}
+
+.expand-text-button:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .answer-body {
+        padding-left: 0;
+        margin-top: 12px;
+    }
+}

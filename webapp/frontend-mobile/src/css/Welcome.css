@@ -1,0 +1,98 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #4a8490;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.welcome-container.fade-in {
+    opacity: 1;
+}
+
+.welcome-container.fade-out {
+    opacity: 0;
+}
+
+.welcome-content {
+    max-width: 400px;
+}
+
+.quote-section {
+    margin-bottom: 50px;
+}
+
+.quote {
+    font-size: 19px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.welcome-btn {
+    background-color: #2d5a63;
+    color: white;
+    border: none;
+    padding: 15px 60px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.welcome-btn:active {
+    background-color: #1f3f46;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .welcome-container {
+        padding: 16px;
+    }
+
+    .quote-section {
+        margin-bottom: 40px;
+    }
+
+    .quote {
+        font-size: 18px;
+    }
+
+    .welcome-btn {
+        padding: 14px 50px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 320px) {
+    .welcome-container {
+        padding: 12px;
+    }
+
+    .welcome-content {
+        max-width: 100%;
+    }
+
+    .quote-section {
+        margin-bottom: 32px;
+    }
+
+    .quote {
+        font-size: 16px;
+        margin: 4px 0;
+    }
+
+    .welcome-btn {
+        padding: 13px 40px;
+        font-size: 14px;
+        border-radius: 22px;
+    }
+}

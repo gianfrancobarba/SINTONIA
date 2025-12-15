@@ -1,0 +1,143 @@
+﻿\
+  
+ Immagine che contiene cerchio, Elementi grafici, logo, Carattere
+
+Il contenuto generato dall'IA potrebbe non essere corretto. 
+
+
+
+
+
+ Test Incident Report
+C-09 SINTONIA
+  
+
+
+
+
+
+Riferimento
+	2025_C09_TP
+	Versione
+	1.0
+	Data
+	23/11/2025
+	Destinatario
+	Prof.ssa Filomena Ferrucci, Prof.re Fabio Palomba
+	Presentato da
+	C09 Team Sintonia
+	Approvato da
+	//
+	________________
+
+
+Revision History
+Data
+	Versione
+	Descrizione
+	Autori
+	23/11/2025
+	1.0
+	Configurazione Documento
+	Mattia Fanzini
+	08/12/2025
+	1.0
+	Restyling del documento
+	Francesco Coppola
+	________________
+
+
+Team Members
+Ruolo
+	Nome e Cognome
+	Acronimo
+	Contatto
+	PM
+	Gianfranco Barba
+	GB
+	g.barba14@studenti.unisa.it
+	PM
+	Francesco Corcione
+	FC
+	f.corcione5@studenti.unisa.it
+	TM
+	Gianluca Ambrosio
+	GA
+	g.ambrosio39@studenti.unisa.it
+	TM
+	Elena Carlomagno
+	EC
+	e.carlomagno1@studenti.unisa.it
+	TM
+	Rosaria Cervino
+	RC
+	r.cervino3@studenti.unisa.it
+	TM
+	Francesco Coppola
+	FCP
+	f.coppola99@studenti.unisa.it
+	TM
+	Antonio Walter De Fusco
+	ADF
+	a.defusco1@studenti.unisa.it
+	TM
+	Gavino De Stefano
+	GDS
+	g.destefano41@studenti.unisa.it
+	TM
+	Alessio Del Sorbo
+	ADS
+	a.delsorbo32@studenti.unisa.it
+	TM
+	Francesco Di Giovanni
+	FDG
+	f.digiovanni10@studenti.unisa.it
+	TM
+	Mattia Fanzini
+	MF
+	m.fanzini@studenti.unisa.it
+	TM
+	Angelo Fusco
+	AF
+	a.fusco58@studenti.unisa.it
+	TM
+	Gianni Policola
+	GP
+	g.policola@studenti.unisa.it
+	Sommario
+Sommario        4
+1 Introduzione        5
+1.1 Scopo del sistema        5
+1.2 Scopo del Documento        5
+2 Relazione con altri documenti        6
+3. Ambiente di esecuzione        7
+3.1 Applicazione e Database        7
+3.2 Strumenti di Testing        7
+4. Resoconto dei Test (Test Incident Report)        8
+________________
+
+
+1. Introduzione
+   1. Scopo del sistema
+Il sistema SINTONIA ha l'obiettivo di ottimizzare la gestione delle liste d’attesa per il supporto psicologico nella sanità pubblica campana. La piattaforma supera il modello passivo (ordine di arrivo) introducendo un triage dinamico basato su questionari self-report periodici che rivalutano costantemente le priorità cliniche. Il sistema consente agli psicologi un monitoraggio proattivo e offre ai pazienti strumenti di supporto (diario, inserimento stati d'animo, forum) per ridurre il senso di abbandono durante l'attesa.
+1.2 Scopo del Documento
+Il presente documento (Test Incident Report) ha lo scopo di documentare i risultati dell'esecuzione dei test definiti nel Test Case Specification, evidenziando eventuali incidenti, anomalie o discrepanze riscontrate rispetto ai risultati attesi. Esso funge da registro formale dell'esito della fase di verifica e validazione.
+2 Relazione con altri documenti
+Questo documento è strettamente correlato ai seguenti artefatti del progetto SINTONIA:
+* Test Plan (TP): Definisce la strategia, l'approccio (Requirements-Based) e i criteri di Pass/Fail utilizzati per guidare l'esecuzione riportata in questo documento.
+* Test Case Specification (TCS): Fornisce il dettaglio passo-passo dei casi di test, gli input specifici e gli oracoli utilizzati per verificare il comportamento del sistema.
+* Requirements Analysis Document (RAD): Definisce i requisiti funzionali e gli Use Case a cui ogni test fa riferimento.
+3. Ambiente di esecuzione
+I test sono stati eseguiti in un ambiente che replica le condizioni operative previste per il deployment.
+3.1 Applicazione e Database
+* Backend: Il server applicativo è basato sul framework NestJS (Node.js + TypeScript).
+* Database: La persistenza dei dati è gestita tramite PostgreSQL, popolato con dati di mock per simulare pazienti, psicologi e questionari in diversi stati.
+* Frontend: L'interfaccia utente è realizzata in React.
+3.2 Strumenti di Testing
+In conformità con il Test Plan, sono stati utilizzati i seguenti strumenti:
+* Jest: Utilizzato come framework principale per l'esecuzione dei test di unità e di integrazione sui Service e Controller.
+* Mocking: Sono stati utilizzati oggetti Mock per isolare le unità sotto test e simulare il comportamento del Repository e del Database.
+* Browser: I test manuali di sistema (Black-Box) sono stati eseguiti utilizzando le ultime versioni stabili dei browser Google Chrome e Mozilla Firefox.
+4. Resoconto dei Test (Test Incident Report)
+Di seguito viene riportata la tabella riassuntiva degli incidenti e degli esiti dei test eseguiti, basati sui casi definiti nel documento Test Case Specification.
+Nota: "Pass" indica che il risultato ottenuto coincide con l'oracolo. "Fail" indica una discrepanza (Incidente).Conclusioni del Report:

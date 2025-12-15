@@ -1,0 +1,56 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF10_8",
+            "description": "Errato: Service non chiamato correttamente.",
+            "input": {
+                "id": "paziente-esistente",
+                "body": {}
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Il campo idPriorita è obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF10_9",
+            "description": "Errato: Nessun risultato restituito (Service Failure).",
+            "input": {
+                "id": "paziente-esistente",
+                "body": {
+                    "idPriorita": "Urgente"
+                }
+            },
+            "mockData": {
+                "serviceSuccess": false,
+                "errorMessage": "Service validation failed"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Service validation failed"
+            }
+        },
+        {
+            "id": "TC_RF10_10",
+            "description": "Corretto: Service chiamato correttamente, risultato restituito.",
+            "input": {
+                "id": "paziente-esistente",
+                "body": {
+                    "idPriorita": "Urgente"
+                }
+            },
+            "mockData": {
+                "serviceSuccess": true,
+                "result": {
+                    "success": true,
+                    "message": "Priorità paziente aggiornata con successo"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Priorità paziente aggiornata con successo"
+            }
+        }
+    ]
+}

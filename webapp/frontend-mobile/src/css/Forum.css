@@ -1,0 +1,205 @@
+.forum-page {
+    background-color: var(--secondary-bg);
+    padding-bottom: 100px;
+}
+
+/* Filter Toggle Section */
+.forum-filter-section {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.forum-filter-toggle {
+    display: flex;
+    gap: 8px;
+    background: #E5E7EB;
+    padding: 4px;
+    border-radius: 20px;
+}
+
+.filter-btn {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+    color: #6B7280;
+}
+
+.filter-btn.active {
+    background: var(--primary-dark);
+    color: white;
+}
+
+.filter-btn:active:not(.active) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.forum-content {
+    padding: 16px 20px;
+}
+
+.forum-section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0 0 16px 0;
+    padding: 0 4px;
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-gray);
+}
+
+.no-posts {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-gray);
+}
+
+.no-posts p {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.no-posts-hint {
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.forum-fab {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--primary-dark);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 150;
+    box-shadow: 0 6px 16px rgba(30, 74, 95, 0.4);
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.forum-fab img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+}
+
+.forum-fab:active {
+    transform: scale(0.95);
+    background: #163A4A;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .forum-filter-section {
+        padding: 10px 16px;
+    }
+
+    .forum-filter-toggle {
+        gap: 6px;
+        padding: 3px;
+    }
+
+    .filter-btn {
+        padding: 7px 18px;
+        font-size: 13px;
+    }
+
+    .forum-content {
+        padding: 14px 16px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+
+    .forum-fab {
+        width: 54px;
+        height: 54px;
+        bottom: 85px;
+        right: 16px;
+    }
+
+    .forum-fab img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 320px) {
+    .forum-filter-section {
+        padding: 8px 12px;
+    }
+
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+
+    .forum-content {
+        padding: 12px 12px;
+    }
+
+    .section-title {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .no-posts {
+        padding: 40px 16px;
+    }
+
+    .no-posts p {
+        font-size: 14px;
+    }
+
+    .no-posts-hint {
+        font-size: 12px;
+    }
+
+    .forum-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 80px;
+        right: 12px;
+    }
+
+    .forum-fab img {
+        width: 24px;
+        height: 24px;
+    }
+}

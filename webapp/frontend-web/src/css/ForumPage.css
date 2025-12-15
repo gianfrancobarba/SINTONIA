@@ -1,0 +1,496 @@
+/* Forum Page - Clean Modern Design */
+
+/* Fixed Header */
+.forum-fixed-header {
+    flex-shrink: 0;
+    margin-bottom: 20px;
+}
+
+/* Compact Filter Pills - Inline Row */
+.forum-filters {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 8px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.filter-pill:hover:not(.active) {
+    border-color: #0D475D;
+    color: #0D475D;
+}
+
+.filter-pill.active {
+    background: #0D475D;
+    border-color: #0D475D;
+    color: white;
+}
+
+/* Scrollable Content */
+.forum-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* Questions List */
+.forum-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Loading */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #9ca3af;
+}
+
+.spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #0D475D;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error */
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.error-state p {
+    color: #ef4444;
+    margin: 0 0 16px 0;
+}
+
+.retry-button {
+    padding: 10px 20px;
+    background: #0D475D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.retry-button:hover {
+    background: #1A5F5F;
+}
+
+/* Modern Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    flex: 1;
+    min-height: 300px;
+}
+
+.empty-icon-container {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(13, 71, 93, 0.1) 0%, rgba(26, 95, 95, 0.1) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 6px 0;
+}
+
+.empty-state p {
+    font-size: 13px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* Old pagination styles removed - now using CompactPagination component */
+
+/* Delete Dialog */
+.delete-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirm-dialog {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.delete-confirm-dialog h3 {
+    margin: 0 0 8px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.delete-confirm-dialog p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.cancel-button,
+.confirm-delete-button {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.cancel-button {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.cancel-button:hover {
+    background: #e5e7eb;
+}
+
+.confirm-delete-button {
+    background: #ef4444;
+    color: white;
+}
+
+.confirm-delete-button:hover {
+    background: #dc2626;
+}
+
+/* Responsive */
+
+/* Large Desktop - 1200px */
+@media (max-width: 1200px) {
+    .forum-filters {
+        gap: 6px;
+    }
+
+    .filter-pill {
+        padding: 7px 14px;
+        font-size: 12px;
+    }
+
+    .forum-questions-list {
+        gap: 14px;
+    }
+
+    .pagination {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .empty-icon-container {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+    .filter-pill {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .forum-questions-list {
+        gap: 12px;
+    }
+
+    .pagination {
+        margin: 0 -20px -20px -20px;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .delete-confirm-dialog {
+        padding: 20px;
+        max-width: 340px;
+    }
+}
+
+/* Mobile - 768px */
+@media (max-width: 768px) {
+    .forum-fixed-header {
+        margin-bottom: 16px;
+    }
+
+    .forum-filters {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-pill {
+        text-align: center;
+        padding: 10px 16px;
+    }
+
+    .forum-questions-list {
+        gap: 10px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .empty-state {
+        padding: 40px 16px;
+        min-height: 200px;
+    }
+
+    .delete-confirm-dialog {
+        padding: 18px;
+    }
+
+    .delete-confirm-dialog h3 {
+        font-size: 16px;
+    }
+
+    .delete-confirm-dialog p {
+        font-size: 13px;
+    }
+
+    .delete-confirm-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-button,
+    .confirm-delete-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .forum-fixed-header {
+        margin-bottom: 24px;
+    }
+
+    .forum-filters {
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .filter-pill {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .forum-questions-list {
+        gap: 20px;
+    }
+
+    .empty-icon-container {
+        width: 90px;
+        height: 90px;
+    }
+
+    .empty-state h3 {
+        font-size: 18px;
+    }
+
+    .empty-state p {
+        font-size: 14px;
+    }
+
+    .delete-confirm-dialog {
+        max-width: 420px;
+        padding: 28px;
+    }
+
+    .delete-confirm-dialog h3 {
+        font-size: 19px;
+    }
+
+    .delete-confirm-dialog p {
+        font-size: 15px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .forum-filters {
+        gap: 12px;
+    }
+
+    .filter-pill {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+
+    .forum-questions-list {
+        gap: 24px;
+    }
+
+    .empty-icon-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .empty-state {
+        padding: 80px 24px;
+        min-height: 360px;
+    }
+
+    .empty-state h3 {
+        font-size: 20px;
+    }
+
+    .delete-confirm-dialog {
+        max-width: 460px;
+        padding: 32px;
+        border-radius: 20px;
+    }
+
+    .cancel-button,
+    .confirm-delete-button {
+        padding: 12px 22px;
+        font-size: 15px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .forum-fixed-header {
+        margin-bottom: 28px;
+    }
+
+    .forum-filters {
+        gap: 14px;
+        margin-top: 24px;
+    }
+
+    .filter-pill {
+        padding: 12px 26px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .forum-questions-list {
+        gap: 28px;
+    }
+
+    .loading-state {
+        padding: 80px 28px;
+    }
+
+    .spinner {
+        width: 44px;
+        height: 44px;
+    }
+
+    .empty-icon-container {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 20px;
+    }
+
+    .empty-state {
+        padding: 100px 32px;
+        min-height: 400px;
+    }
+
+    .empty-state h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        font-size: 16px;
+    }
+
+    .retry-button {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+
+    .delete-confirm-overlay {
+        backdrop-filter: blur(2px);
+    }
+
+    .delete-confirm-dialog {
+        max-width: 520px;
+        padding: 36px;
+        border-radius: 24px;
+        /* 4K Performance: simpler shadow */
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .delete-confirm-dialog h3 {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    .delete-confirm-dialog p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .delete-confirm-actions {
+        gap: 14px;
+    }
+
+    .cancel-button,
+    .confirm-delete-button {
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+}

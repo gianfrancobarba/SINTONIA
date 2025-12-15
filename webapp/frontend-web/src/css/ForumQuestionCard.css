@@ -1,0 +1,453 @@
+/* Forum Question Card - Clean Modern Design */
+
+.forum-question-card {
+    background: white;
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+    padding: 14px;
+    transition: all 0.2s ease;
+}
+
+.forum-question-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+.header-left {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Category - Small colored dot only */
+.category-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.category-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.category-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.question-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.patient-name {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.time-ago {
+    font-size: 11px;
+    color: #d1d5db;
+}
+
+/* Body */
+.card-body {
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.expand-text-button {
+    background: none;
+    border: none;
+    color: #0D475D;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 6px;
+}
+
+.expand-text-button:hover {
+    text-decoration: underline;
+}
+
+/* Answers */
+.answers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.toggle-answers-button {
+    background: none;
+    border: none;
+    color: #0D475D;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.toggle-answers-button:hover {
+    text-decoration: underline;
+}
+
+/* Collapsed toggle - styled like a subtle button */
+.collapsed-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f3f4f6;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #0D475D;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.collapsed-toggle:hover {
+    background: #e5e7eb;
+    text-decoration: none;
+}
+
+.answers-section {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Footer */
+.card-footer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Modern Answer Button */
+.answer-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #0D475D 0%, #1A5F5F 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(13, 71, 93, 0.2);
+}
+
+.answer-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.3);
+}
+
+.answer-button:active {
+    transform: scale(0.98);
+}
+
+.button-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Inline Reply Form */
+.inline-reply-form {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.inline-reply-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    min-height: 140px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.inline-reply-textarea:focus {
+    border-color: #83B9C1;
+}
+
+.inline-reply-error {
+    color: #E57373;
+    font-size: 13px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #fef2f2;
+    border-radius: 8px;
+}
+
+.inline-reply-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    gap: 12px;
+}
+
+.char-count {
+    font-size: 12px;
+    color: #666;
+}
+
+.inline-reply-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.inline-cancel-btn,
+.inline-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.inline-cancel-btn {
+    background: #f3f4f6;
+    color: #666;
+}
+
+.inline-cancel-btn:hover {
+    background: #e5e7eb;
+}
+
+.inline-submit-btn {
+    background: linear-gradient(135deg, #0D475D 0%, #1A5F5F 100%);
+    color: white;
+    box-shadow: 0 2px 6px rgba(13, 71, 93, 0.2);
+}
+
+.inline-submit-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.3);
+}
+
+.inline-submit-btn:disabled {
+    background: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .forum-question-card {
+        padding: 16px;
+    }
+
+    .card-header {
+        flex-direction: column;
+    }
+
+    .header-right {
+        flex-direction: row;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .answer-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   LARGE SCREEN BREAKPOINTS (min-width, ascending order)
+   ========================================================================== */
+
+/* Large Desktop - 1600px */
+@media (min-width: 1600px) {
+    .forum-question-card {
+        padding: 24px;
+        border-radius: 18px;
+    }
+
+    .question-title {
+        font-size: 17px;
+    }
+
+    .question-text {
+        font-size: 15px;
+    }
+
+    .answer-button {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+
+    .category-label {
+        font-size: 12px;
+    }
+}
+
+/* Full HD+ Desktop - 1920px */
+@media (min-width: 1920px) {
+    .forum-question-card {
+        padding: 28px;
+        border-radius: 20px;
+    }
+
+    .card-header {
+        margin-bottom: 16px;
+    }
+
+    .question-title {
+        font-size: 18px;
+    }
+
+    .question-text {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .patient-name {
+        font-size: 13px;
+    }
+
+    .time-ago {
+        font-size: 12px;
+    }
+
+    .answer-button {
+        padding: 12px 26px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .button-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .toggle-answers-button,
+    .expand-text-button {
+        font-size: 14px;
+    }
+}
+
+/* 4K / Ultrawide - 2560px+ */
+@media (min-width: 2560px) {
+    .forum-question-card {
+        padding: 32px;
+        border-radius: 24px;
+        /* 4K Performance: simpler shadow */
+    }
+
+    .forum-question-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header {
+        margin-bottom: 18px;
+        gap: 16px;
+    }
+
+    .category-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .category-label {
+        font-size: 12px;
+    }
+
+    .question-title {
+        font-size: 20px;
+        line-height: 1.5;
+    }
+
+    .card-body {
+        margin-bottom: 20px;
+    }
+
+    .question-text {
+        font-size: 17px;
+    }
+
+    .patient-name {
+        font-size: 14px;
+    }
+
+    .time-ago {
+        font-size: 13px;
+    }
+
+    .answers-list {
+        gap: 16px;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+
+    .card-footer {
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+
+    .answer-button {
+        padding: 14px 30px;
+        font-size: 15px;
+        border-radius: 14px;
+    }
+
+    .button-icon {
+        width: 20px;
+        height: 20px;
+    }
+}

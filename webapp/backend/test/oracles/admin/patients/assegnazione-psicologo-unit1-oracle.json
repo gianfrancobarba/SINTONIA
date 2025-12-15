@@ -1,0 +1,79 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF11_1",
+            "description": "L’Id del paziente non può essere nullo",
+            "input": {
+                "idPaziente": "",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'ID del paziente è obbligatorio."
+            }
+        },
+        {
+            "id": "TC_RF11_2",
+            "description": "L’Id fornito deve corrispondere con un paziente esistente",
+            "input": {
+                "idPaziente": "paziente-inesistente",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente con ID paziente-inesistente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF11_3",
+            "description": "L’Id dello psicologo non può essere nullo",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "idPsicologo": ""
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'ID dello psicologo è obbligatorio."
+            }
+        },
+        {
+            "id": "TC_RF11_4",
+            "description": "L’Id fornito deve corrispondere ad uno psicologo esistente",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "idPsicologo": "CF_INESISTENTE"
+            },
+            "mockData": {
+                "patientExists": true,
+                "psychologistExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Psicologo con codice fiscale CF_INESISTENTE non trovato"
+            }
+        },
+        {
+            "id": "TC_RF11_5",
+            "description": "Corretto: I campi inseriti rispettano tutti i vincoli formali",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientExists": true,
+                "psychologistExists": true
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "OK"
+            }
+        }
+    ]
+}

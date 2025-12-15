@@ -1,1 +1,0 @@
-ALTER TABLE "psicologo" ADD COLUMN "email" varchar(64) NOT NULL;

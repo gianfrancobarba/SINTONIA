@@ -1,0 +1,132 @@
+.confirm-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.confirm-modal-box {
+    background: white;
+    padding: 30px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 12px 0;
+}
+
+.confirm-modal-message {
+    font-size: 16px;
+    color: #6B7280;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
+
+.confirm-modal-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.confirm-modal-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.cancel-btn {
+    background: #F3F4F6;
+    color: #4B5563;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.confirm-modal-btn.delete-btn {
+    background: #DC2626;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .confirm-modal-box {
+        padding: 24px;
+        border-radius: 20px;
+        max-width: 320px;
+    }
+
+    .confirm-modal-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .confirm-modal-message {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .confirm-modal-buttons {
+        gap: 10px;
+    }
+
+    .confirm-modal-btn {
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 14px;
+    }
+}
+
+@media (max-width: 320px) {
+    .confirm-modal-box {
+        padding: 20px;
+        border-radius: 18px;
+        width: 95%;
+    }
+
+    .confirm-modal-title {
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+
+    .confirm-modal-message {
+        font-size: 14px;
+        margin-bottom: 18px;
+    }
+
+    .confirm-modal-buttons {
+        gap: 8px;
+    }
+
+    .confirm-modal-btn {
+        padding: 11px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .cancel-btn,
+    .confirm-modal-btn.delete-btn {
+        font-size: 14px;
+    }
+}

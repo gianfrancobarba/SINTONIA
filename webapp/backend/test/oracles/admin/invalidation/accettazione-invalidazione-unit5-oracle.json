@@ -1,0 +1,35 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF21_26",
+            "description": "Errore DB Update",
+            "input": {
+                "idQuestionario": "valid-id",
+                "email": "admin@test.com"
+            },
+            "mockData": {
+                "validationOk": true,
+                "dbError": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Database Error"
+            }
+        },
+        {
+            "id": "TC_RF21_27",
+            "description": "Successo",
+            "input": {
+                "idQuestionario": "valid-id",
+                "email": "admin@test.com"
+            },
+            "mockData": {
+                "validationOk": true,
+                "dbError": false
+            },
+            "expectedBehavior": {
+                "type": "success"
+            }
+        }
+    ]
+}

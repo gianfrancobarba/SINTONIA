@@ -1,0 +1,114 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF1_1",
+            "description": "L’ID del questionario non può essere vuoto",
+            "input": {
+                "idQuestionario": "",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Questionario obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF1_2",
+            "description": "L’ID dello psicologo non può essere vuoto",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": ""
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Psicologo obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF1_3",
+            "description": "Questionario non trovato",
+            "input": {
+                "idQuestionario": "not-found-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "questionarioExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "non trovato"
+            }
+        },
+        {
+            "id": "TC_RF1_4",
+            "description": "Non si può revisionare un questionario già revisionato",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "questionarioExists": true,
+                "revisionato": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "già stato revisionato"
+            }
+        },
+        {
+            "id": "TC_RF1_5",
+            "description": "Non si può revisionare un questionario che è stato invalidato",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "questionarioExists": true,
+                "revisionato": false,
+                "invalidato": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "stato invalidato"
+            }
+        },
+        {
+            "id": "TC_RF1_6",
+            "description": "Non si può revisionare un questionario per cui è stata richiesta l’invalidazione",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "questionarioExists": true,
+                "revisionato": false,
+                "invalidato": false,
+                "richiestaInvalidazione": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "richiesta l'invalidazione"
+            }
+        },
+        {
+            "id": "TC_RF1_6_OK",
+            "description": "Corretto: Tutti i campi rispettano le regole formali",
+            "input": {
+                "idQuestionario": "valid-id",
+                "idPsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "questionarioExists": true,
+                "revisionato": false,
+                "invalidato": false,
+                "richiestaInvalidazione": false
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "OK"
+            }
+        }
+    ]
+}

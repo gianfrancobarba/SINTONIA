@@ -1,0 +1,97 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_1",
+            "description": "L’ID del paziente non può essere vuoto",
+            "input": {
+                "idPaziente": "",
+                "codiceFiscalePsicologo": "CF_VALIDO"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Paziente obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF4_2",
+            "description": "Il paziente non è stato trovato",
+            "input": {
+                "idPaziente": "paziente-inesistente",
+                "codiceFiscalePsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente con ID paziente-inesistente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF4_3",
+            "description": "L’ID dello psicologo non può essere vuoto",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "codiceFiscalePsicologo": ""
+            },
+            "mockData": {
+                "patientExists": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Codice Fiscale Psicologo obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF4_4",
+            "description": "Il paziente deve essere assegnato allo psicologo",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "codiceFiscalePsicologo": "CF_ALTRO"
+            },
+            "mockData": {
+                "patientExists": true,
+                "assignedPsychologist": "CF_DIFFERENTE"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Non sei autorizzato a terminare la cura di questo paziente"
+            }
+        },
+        {
+            "id": "TC_RF4_5",
+            "description": "La cura del paziente è già stata terminata",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "codiceFiscalePsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientExists": true,
+                "assignedPsychologist": "CF_VALIDO",
+                "stato": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "già stata terminata"
+            }
+        },
+        {
+            "id": "TC_RF4_6",
+            "description": "Corretto: I campi inseriti rispettano tutti i vincoli formali",
+            "input": {
+                "idPaziente": "paziente-esistente",
+                "codiceFiscalePsicologo": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientExists": true,
+                "assignedPsychologist": "CF_VALIDO",
+                "stato": true
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "OK"
+            }
+        }
+    ]
+}

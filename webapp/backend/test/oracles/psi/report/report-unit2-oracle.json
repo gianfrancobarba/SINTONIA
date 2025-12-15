@@ -1,0 +1,84 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_4",
+            "description": "Errore: Il report non può essere generato vuoto (Nessun dato presente).",
+            "input": {
+                "patientId": "paziente-esistente",
+                "psychologistId": "CF_VALIDO"
+            },
+            "mockData": {
+                "validationResult": {
+                    "nome": "Mario",
+                    "cognome": "Rossi"
+                },
+                "moodData": [],
+                "questionnaireData": [],
+                "diaryData": [],
+                "forumData": []
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Nessun dato presente per generare il report"
+            }
+        },
+        {
+            "id": "TC_RF4_5",
+            "description": "Errore: Errore durante il salvataggio del report.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "psychologistId": "CF_VALIDO"
+            },
+            "mockData": {
+                "validationResult": {
+                    "nome": "Mario",
+                    "cognome": "Rossi"
+                },
+                "moodData": [
+                    {
+                        "umore": "Felice",
+                        "intensita": 8,
+                        "dataInserimento": "2023-01-01"
+                    }
+                ],
+                "questionnaireData": [],
+                "diaryData": [],
+                "forumData": [],
+                "dbError": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "DB Insert Failed"
+            }
+        },
+        {
+            "id": "TC_RF4_6",
+            "description": "Corretto: Report generato e salvato correttamente.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "psychologistId": "CF_VALIDO"
+            },
+            "mockData": {
+                "validationResult": {
+                    "nome": "Mario",
+                    "cognome": "Rossi"
+                },
+                "moodData": [
+                    {
+                        "umore": "Felice",
+                        "intensita": 8,
+                        "dataInserimento": "2023-01-01"
+                    }
+                ],
+                "questionnaireData": [],
+                "diaryData": [],
+                "forumData": [],
+                "dbError": false
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Report generato con successo"
+            }
+        }
+    ]
+}

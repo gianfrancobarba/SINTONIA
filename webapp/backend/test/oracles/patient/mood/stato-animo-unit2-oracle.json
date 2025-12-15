@@ -1,0 +1,64 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF5_10",
+            "description": "Errore: Errore inserimento DB.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 8
+                }
+            },
+            "mockData": {
+                "validationResult": true,
+                "dbError": true,
+                "badgeError": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "DB Insert Failed"
+            }
+        },
+        {
+            "id": "TC_RF5_11",
+            "description": "Errore: Assegnazione fallita (Badge Service Error).",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 8
+                }
+            },
+            "mockData": {
+                "validationResult": true,
+                "dbError": false,
+                "badgeError": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Badge Service Failed"
+            }
+        },
+        {
+            "id": "TC_RF5_12",
+            "description": "Corretto: Inserimento riuscito.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "dto": {
+                    "umore": "Felice",
+                    "intensita": 8
+                }
+            },
+            "mockData": {
+                "validationResult": true,
+                "dbError": false,
+                "badgeError": false
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Stato d'animo creato"
+            }
+        }
+    ]
+}

@@ -1,0 +1,363 @@
+.personal-info-page {
+    background-color: var(--secondary-bg);
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+.personal-info-header {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.personal-info-page .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.personal-info-page .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.personal-info-page .back-button:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.personal-info-page .back-button:active {
+    transform: scale(0.95);
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+    flex: 1;
+}
+
+.edit-button,
+.cancel-button {
+    justify-self: end;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.edit-button:active,
+.cancel-button:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.edit-button:active,
+.cancel-button:active {
+    transform: scale(0.95);
+}
+
+.personal-info-content {
+    padding: 30px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-left: 10px;
+}
+
+.title-input-container {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.title-input-container.disabled {
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: none;
+}
+
+.title-input-container.editable {
+    background-color: var(--white);
+    border-color: #e5e7eb;
+}
+
+.title-input-container.editable:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 4px 20px rgba(74, 157, 111, 0.15);
+    transform: translateY(-2px);
+}
+
+.title-input-container.modified {
+    border-color: var(--primary-light);
+    background-color: rgba(74, 157, 111, 0.05);
+}
+
+.title-input-container.error {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.title-input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--text-dark);
+    width: 100%;
+    background: transparent;
+    font-family: var(--font-family);
+}
+
+.title-input-container.disabled .title-input {
+    color: var(--text-gray);
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 12px;
+    color: #991B1B;
+    font-size: 14px;
+    font-weight: 500;
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.submit-button {
+    border: none;
+    padding: 16px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    font-family: var(--font-family);
+    width: 100%;
+    text-align: center;
+}
+
+.submit-button.active {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button.active:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    background-color: #3a8d5f;
+}
+
+.submit-button.active:active {
+    transform: scale(0.98);
+}
+
+.submit-button.disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.loading,
+.error {
+    text-align: center;
+    margin-top: 50px;
+    font-weight: 600;
+    color: var(--text-gray);
+}
+
+.error {
+    color: #ef4444;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .personal-info-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .header-content {
+        gap: 12px;
+    }
+
+    .personal-info-page .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .personal-info-page .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .header-title {
+        font-size: 20px;
+    }
+
+    .edit-button,
+    .cancel-button {
+        padding: 7px 14px;
+        font-size: 13px;
+    }
+
+    .personal-info-content {
+        padding: 24px 16px;
+        gap: 16px;
+    }
+
+    .form-label {
+        font-size: 14px;
+    }
+
+    .title-input-container {
+        padding: 13px 18px;
+        border-radius: 18px;
+    }
+
+    .title-input {
+        font-size: 15px;
+    }
+
+    .submit-button {
+        padding: 14px;
+        font-size: 15px;
+        border-radius: 26px;
+    }
+}
+
+@media (max-width: 320px) {
+    .personal-info-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .header-content {
+        gap: 10px;
+    }
+
+    .personal-info-page .back-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .personal-info-page .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .header-title {
+        font-size: 18px;
+    }
+
+    .edit-button,
+    .cancel-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .personal-info-content {
+        padding: 20px 12px;
+        gap: 14px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        margin-left: 8px;
+    }
+
+    .title-input-container {
+        padding: 12px 16px;
+        border-radius: 16px;
+    }
+
+    .title-input {
+        font-size: 14px;
+    }
+
+    .error-message {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    .submit-button {
+        padding: 13px;
+        font-size: 14px;
+        border-radius: 24px;
+        margin-top: 16px;
+    }
+}

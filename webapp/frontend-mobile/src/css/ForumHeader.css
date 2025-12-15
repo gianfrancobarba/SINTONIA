@@ -1,0 +1,172 @@
+.forum-header {
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.forum-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.forum-title-section {
+    text-align: center;
+}
+
+.forum-title {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.forum-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.add-post-button {
+    position: absolute;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    color: white;
+    font-size: 32px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+    line-height: 1;
+    padding: 0;
+}
+
+.add-post-button:active {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.add-post-button:active {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* Forum Filter Toggle */
+.forum-filter-toggle {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px;
+    border-radius: 20px;
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.filter-btn.active {
+    background: white;
+    color: var(--primary-dark);
+}
+
+.filter-btn:active:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .forum-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .forum-header-content {
+        gap: 14px;
+    }
+
+    .forum-title {
+        font-size: 24px;
+    }
+
+    .forum-subtitle {
+        font-size: 13px;
+    }
+
+    .add-post-button {
+        width: 44px;
+        height: 44px;
+        font-size: 28px;
+    }
+
+    .forum-filter-toggle {
+        gap: 6px;
+        padding: 3px;
+    }
+
+    .filter-btn {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .forum-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .forum-header-content {
+        gap: 12px;
+    }
+
+    .forum-title {
+        font-size: 22px;
+    }
+
+    .forum-subtitle {
+        font-size: 12px;
+    }
+
+    .add-post-button {
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
+    }
+
+    .forum-filter-toggle {
+        gap: 4px;
+        padding: 3px;
+        border-radius: 18px;
+    }
+
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+}

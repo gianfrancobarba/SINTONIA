@@ -1,0 +1,90 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF21_20",
+            "description": "Errore: ID Paziente mancante",
+            "input": {
+                "idPaziente": ""
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "ID Paziente obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF21_21",
+            "description": "Errore: Paziente non esiste",
+            "input": {
+                "idPaziente": "unknown"
+            },
+            "mockData": {
+                "pazienteExists": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "non trovato"
+            }
+        },
+        {
+            "id": "TC_RF21_22",
+            "description": "Urgente -> Breve",
+            "input": {
+                "idPaziente": "paz"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "priorita": "Urgente"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedPriorita": "Breve"
+            }
+        },
+        {
+            "id": "TC_RF21_23",
+            "description": "Breve -> Differibile",
+            "input": {
+                "idPaziente": "paz"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "priorita": "Breve"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedPriorita": "Differibile"
+            }
+        },
+        {
+            "id": "TC_RF21_24",
+            "description": "Differibile -> Programmabile",
+            "input": {
+                "idPaziente": "paz"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "priorita": "Differibile"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedPriorita": "Programmabile"
+            }
+        },
+        {
+            "id": "TC_RF21_25",
+            "description": "Programmabile -> Programmabile",
+            "input": {
+                "idPaziente": "paz"
+            },
+            "mockData": {
+                "pazienteExists": true,
+                "priorita": "Programmabile"
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "expectedPriorita": "Programmabile"
+            }
+        }
+    ]
+}

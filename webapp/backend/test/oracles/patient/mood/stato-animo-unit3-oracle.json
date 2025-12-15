@@ -1,0 +1,72 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF5_13",
+            "description": "Errato: Service non chiamato correttamente (Parametri mancanti).",
+            "input": {
+                "req": {
+                    "user": {
+                        "sub": "paziente-esistente"
+                    }
+                },
+                "body": {}
+            },
+            "mockData": {
+                "errorMessage": "L'umore è obbligatorio"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "L'umore è obbligatorio"
+            }
+        },
+        {
+            "id": "TC_RF5_14",
+            "description": "Errato: Nessun risultato restituito (Service Failure).",
+            "input": {
+                "req": {
+                    "user": {
+                        "sub": "paziente-esistente"
+                    }
+                },
+                "body": {
+                    "umore": "Felice",
+                    "intensita": 8
+                }
+            },
+            "mockData": {
+                "serviceSuccess": false,
+                "errorMessage": "DB Insert Failed"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "DB Insert Failed"
+            }
+        },
+        {
+            "id": "TC_RF5_15",
+            "description": "Corretto: Service chiamato correttamente, risultato restituito.",
+            "input": {
+                "req": {
+                    "user": {
+                        "sub": "paziente-esistente"
+                    }
+                },
+                "body": {
+                    "umore": "Felice",
+                    "intensita": 8
+                }
+            },
+            "mockData": {
+                "serviceSuccess": true,
+                "result": {
+                    "id": "new-mood-id",
+                    "dataInserimento": "2023-01-01T00:00:00.000Z"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "new-mood-id"
+            }
+        }
+    ]
+}

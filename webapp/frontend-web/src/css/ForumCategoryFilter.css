@@ -1,0 +1,66 @@
+/* Forum Category Filter - Clean Pills */
+
+.forum-category-filter {
+    margin-top: 8px;
+}
+
+.filter-label {
+    display: none;
+    /* Hide label for cleaner alignment */
+}
+
+.category-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.category-pill {
+    padding: 8px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.category-pill:hover:not(.active) {
+    border-color: #9ca3af;
+}
+
+.category-pill.active {
+    background: #0D475D;
+    border-color: #0D475D;
+    color: white;
+}
+
+/* Category specific colors */
+.category-pill.category-ansia.active {
+    background: #eab308;
+    border-color: #eab308;
+}
+
+.category-pill.category-stress.active {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+.category-pill.category-tristezza.active {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+.category-pill.category-vita-di-coppia.active {
+    background: #ec4899;
+    border-color: #ec4899;
+}
+
+.category-count {
+    margin-left: 4px;
+    font-size: 11px;
+    opacity: 0.8;
+}

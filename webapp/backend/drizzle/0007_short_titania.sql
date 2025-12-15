@@ -1,0 +1,1 @@
+ALTER TABLE "psicologo" ALTER COLUMN "immagine_profilo" SET DATA TYPE text;

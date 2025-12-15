@@ -1,0 +1,229 @@
+.personal-area-container {
+    background: #FFFFFF;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Hero Banner with gradient */
+.profile-hero-banner {
+    background: linear-gradient(135deg, #0D475D 0%, #1a6b7a 50%, #2B8A8A 100%);
+    height: 140px;
+    position: relative;
+}
+
+/* Profile Photo - Overlapping banner */
+.profile-photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -60px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-image-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.profile-image-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 32px rgba(13, 71, 93, 0.25);
+    border: none;
+}
+
+.profile-name-display {
+    margin-top: 12px;
+    text-align: center;
+}
+
+.profile-name-display h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0D475D;
+}
+
+.profile-name-display p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #6FA8AF;
+    font-weight: 500;
+}
+
+/* Content Section */
+.personal-area-content {
+    padding: 24px 32px 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Info Cards Grid */
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.info-card {
+    background: linear-gradient(135deg, #F8FCFC 0%, #F0F8F8 100%);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid #E5F2F2;
+    transition: all 0.2s ease;
+}
+
+.info-card:hover {
+    box-shadow: 0 4px 16px rgba(13, 71, 93, 0.08);
+    border-color: #D0E8E8;
+}
+
+.info-card-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6FA8AF;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.info-card-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0D475D;
+}
+
+/* Full width card */
+.info-card.full-width {
+    grid-column: span 2;
+}
+
+/* Actions Section */
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #E5F2F2;
+}
+
+/* Change Password Button */
+.change-password-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #0D475D 0%, #1a6378 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(13, 71, 93, 0.25);
+}
+
+.change-password-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 71, 93, 0.35);
+}
+
+.change-password-button:active {
+    transform: translateY(0);
+}
+
+.change-password-button svg {
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-hero-banner {
+        height: 120px;
+    }
+
+    .profile-photo-container {
+        margin-top: -50px;
+    }
+
+    .profile-image-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .info-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-card.full-width {
+        grid-column: span 1;
+    }
+
+    .personal-area-content {
+        padding: 20px 20px 28px;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1600px) {
+    .profile-hero-banner {
+        height: 160px;
+    }
+
+    .profile-image-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .profile-photo-container {
+        margin-top: -70px;
+    }
+
+    .profile-name-display h2 {
+        font-size: 26px;
+    }
+
+    .info-card {
+        padding: 22px 26px;
+    }
+
+    .info-card-value {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .profile-hero-banner {
+        height: 180px;
+    }
+
+    .profile-image-wrapper {
+        width: 160px;
+        height: 160px;
+    }
+
+    .profile-photo-container {
+        margin-top: -80px;
+    }
+
+    .personal-area-content {
+        padding: 28px 40px 40px;
+    }
+
+    .info-cards-grid {
+        gap: 20px;
+    }
+}

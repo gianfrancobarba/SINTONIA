@@ -1,0 +1,648 @@
+.mood-history-page {
+    min-height: 100vh;
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Header - matching NewDiaryPage style */
+.mood-history-header {
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mood-history-header .header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mood-history-header .back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.mood-history-header .back-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+    display: block;
+}
+
+.mood-history-header .back-button:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.mood-history-header .back-button:active {
+    transform: scale(0.95);
+}
+
+.mood-history-header .header-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Main Content Card */
+.mood-history-main-card {
+    background-color: white;
+    border-radius: 50px;
+    margin: 20px 16px 100px;
+    padding: 20px 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Month Navigator - Calendar style */
+.month-navigator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0 24px;
+    gap: 20px;
+}
+
+.month-navigator .nav-arrow {
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.month-navigator .nav-arrow:active:not(.disabled) {
+    opacity: 1;
+}
+
+.month-navigator .nav-arrow.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.month-navigator .nav-arrow img {
+    width: 28px;
+    height: 28px;
+}
+
+.month-display {
+    min-width: 180px;
+    text-align: center;
+}
+
+.month-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C2C2C;
+}
+
+/* Content - Scrollable */
+.mood-history-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 4px 80px;
+}
+
+.mood-history-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.mood-history-empty p {
+    color: #666;
+    font-size: 16px;
+    margin: 0 0 8px;
+}
+
+.empty-hint {
+    font-size: 14px !important;
+    color: #999 !important;
+}
+
+/* Grid Layout - 2 columns that fit */
+.mood-entries-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Mood Entry Card */
+.mood-entry-card {
+    background: #F8F9FA;
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.card-date {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.card-mood-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.mood-icon-wrapper {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+}
+
+.mood-icon-wrapper svg {
+    width: 100%;
+    height: 100%;
+}
+
+.mood-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.mood-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2C2C2C;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Intensity Bar */
+.intensity-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.intensity-bar {
+    flex: 1;
+    height: 5px;
+    background: #E0E0E0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.intensity-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.intensity-value {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    min-width: 14px;
+}
+
+/* Notes - Always visible */
+.card-notes {
+    padding-top: 8px;
+    border-top: 1px solid #E8E8E8;
+}
+
+.card-notes .notes-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+/* FAB */
+.mood-fab {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #2C5F6F;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 6px 16px rgba(44, 95, 111, 0.4);
+    transition: all 0.3s ease;
+}
+
+.mood-fab:active {
+    transform: scale(1.1);
+    background: #1F4554;
+}
+
+.mood-fab:active {
+    transform: scale(0.95);
+}
+
+/* Loading */
+.loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 375px) {
+    .mood-history-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .mood-history-header .header-title {
+        font-size: 20px;
+    }
+
+    .mood-history-header .back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mood-history-header .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mood-history-header .back-button img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mood-fab {
+        width: 50px;
+        height: 50px;
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .mood-history-main-card {
+        margin: 16px 12px 90px;
+        padding: 16px 12px;
+        border-radius: 40px;
+    }
+
+    .mood-entries-grid {
+        gap: 10px;
+    }
+
+    .mood-entry-card {
+        padding: 12px;
+        border-radius: 16px;
+        gap: 8px;
+    }
+
+    .card-mood-row {
+        gap: 8px;
+    }
+
+    .mood-icon-wrapper {
+        width: 40px;
+        height: 40px;
+    }
+
+    .mood-name {
+        font-size: 13px;
+    }
+
+    .card-date {
+        font-size: 12px;
+    }
+
+    .intensity-row {
+        gap: 5px;
+    }
+
+    .intensity-value {
+        font-size: 11px;
+    }
+}
+
+/* Detail Modal */
+.mood-detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.mood-detail-modal {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    width: 100%;
+    max-width: 340px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #F0F0F0;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s ease;
+}
+
+.modal-close-btn:active {
+    background: #E0E0E0;
+    color: #333;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-mood-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2C2C2C;
+    margin: 12px 0 4px;
+}
+
+.modal-date {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* Modal Intensity */
+.modal-intensity {
+    background: #F8F9FA;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.modal-intensity .intensity-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal-intensity-bar {
+    height: 8px;
+    background: #E0E0E0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.modal-intensity-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.modal-intensity-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2C2C2C;
+}
+
+/* Modal Notes */
+.modal-notes {
+    background: #F8F9FA;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.modal-notes .notes-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal-notes-text {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Card clickable */
+.mood-entry-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mood-entry-card:active {
+    transform: scale(0.98);
+}
+
+/* 320px breakpoint */
+@media (max-width: 320px) {
+    .mood-history-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .mood-history-header .header-title {
+        font-size: 18px;
+    }
+
+    .mood-history-header .back-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .mood-history-header .back-button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .mood-fab {
+        width: 44px;
+        height: 44px;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .mood-fab svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mood-history-main-card {
+        margin: 12px 10px 85px;
+        padding: 14px 10px;
+        border-radius: 35px;
+    }
+
+    .mood-entries-grid {
+        gap: 6px;
+    }
+
+    .mood-entry-card {
+        padding: 8px 6px;
+        border-radius: 12px;
+        gap: 4px;
+    }
+
+    .card-mood-row {
+        gap: 4px;
+    }
+
+    .card-date {
+        font-size: 11px;
+    }
+
+    .mood-icon-wrapper {
+        width: 28px;
+        height: 28px;
+    }
+
+    .mood-name {
+        font-size: 11px;
+    }
+
+    .intensity-row {
+        gap: 4px;
+        margin-top: 2px;
+    }
+
+    .intensity-bar {
+        height: 4px;
+    }
+
+    .intensity-value {
+        font-size: 11px;
+    }
+
+    .mood-detail-modal {
+        padding: 20px;
+        border-radius: 20px;
+        max-width: 92%;
+    }
+
+    .modal-mood-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .modal-mood-name {
+        font-size: 20px;
+    }
+
+    .modal-close-btn {
+        width: 32px;
+        height: 32px;
+    }
+}

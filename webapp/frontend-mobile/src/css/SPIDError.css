@@ -1,0 +1,195 @@
+/* SPIDError Page - Mobile App Design System */
+.spid-error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #8ab6b6;
+    padding: 24px;
+    box-sizing: border-box;
+    font-family: 'Urbanist', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    opacity: 0;
+    animation: fadeInError 0.5s ease-out forwards;
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Main Card */
+.spid-error-card {
+    background: white;
+    border-radius: 30px;
+    padding: 40px 28px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Icon Container */
+.error-icon-container {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 24px;
+    background: linear-gradient(145deg, #fff5f0 0%, #ffeee5 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 8px 20px rgba(232, 155, 120, 0.2),
+        inset 0 -2px 8px rgba(232, 155, 120, 0.1);
+    animation: pulseIcon 2s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+}
+
+.error-icon {
+    width: 44px;
+    height: 44px;
+    color: #e89b78;
+}
+
+/* Title */
+.error-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-dark, #0f3e4d);
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+/* Message Container */
+.spid-error-message-container {
+    background: linear-gradient(145deg, #f5fafa 0%, #ebf3f3 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 28px;
+    border-left: 4px solid #88b7b5;
+}
+
+.spid-error-message {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4a6a6e;
+    margin: 0;
+}
+
+/* Primary Button */
+.error-btn-primary {
+    width: 100%;
+    padding: 16px 28px;
+    background: linear-gradient(145deg, var(--primary-dark, #0f3e4d) 0%, #1a5a6e 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(15, 62, 77, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.error-btn-primary:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 10px rgba(15, 62, 77, 0.3);
+}
+
+.error-btn-primary svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Secondary Link */
+.error-link-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--primary-light, #88b7b5);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    padding: 8px 0;
+}
+
+.error-link-secondary:active {
+    color: var(--primary-dark, #0f3e4d);
+}
+
+.error-link-secondary svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Footer Divider */
+.error-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #eef3f3;
+}
+
+.error-footer-text {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.5;
+}
+
+.error-footer-text a {
+    color: var(--primary-light, #88b7b5);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.error-footer-text a:active {
+    text-decoration: underline;
+}
+
+/* Logo */
+.error-logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+/* Special styling for "already assigned" message - positive variant */
+.spid-error-card .error-icon-container.info-variant {
+    background: linear-gradient(145deg, #e8f4f4 0%, #d5ebeb 100%);
+    box-shadow:
+        0 8px 20px rgba(136, 183, 181, 0.25),
+        inset 0 -2px 8px rgba(136, 183, 181, 0.15);
+}
+
+.spid-error-card .error-icon-container.info-variant .error-icon {
+    color: #4a8490;
+}

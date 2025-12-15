@@ -1,0 +1,60 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_7",
+            "description": "Errato: Service non chiamato correttamente (Parametri mancanti).",
+            "input": {
+                "patientId": "",
+                "query": {
+                    "cf": "CF_VALIDO"
+                }
+            },
+            "mockData": {
+                "errorMessage": "Paziente non trovato"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF4_8",
+            "description": "Errato: Nessun risultato restituito (Service Failure).",
+            "input": {
+                "patientId": "paziente-esistente",
+                "query": {
+                    "cf": "CF_VALIDO"
+                }
+            },
+            "mockData": {
+                "serviceSuccess": false,
+                "errorMessage": "Service validation failed"
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Service validation failed"
+            }
+        },
+        {
+            "id": "TC_RF4_9",
+            "description": "Corretto: Service chiamato correttamente, risultato restituito.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "query": {
+                    "cf": "CF_VALIDO"
+                }
+            },
+            "mockData": {
+                "serviceSuccess": true,
+                "result": {
+                    "message": "Report generato con successo",
+                    "content": "REPORT CONTENT..."
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Report generato con successo"
+            }
+        }
+    ]
+}

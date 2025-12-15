@@ -1,0 +1,56 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF4_1",
+            "description": "Errore: l’ID del paziente non può essere vuoto.",
+            "input": {
+                "patientId": "",
+                "psychologistId": "CF_VALIDO"
+            },
+            "mockData": {},
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF4_2",
+            "description": "Errore: Il paziente non è stato trovato.",
+            "input": {
+                "patientId": "paziente-inesistente",
+                "psychologistId": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientFound": false
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "message": "Paziente non trovato"
+            }
+        },
+        {
+            "id": "TC_RF4_3",
+            "description": "Corretto: I campi inseriti rispettano tutti i vincoli formali.",
+            "input": {
+                "patientId": "paziente-esistente",
+                "psychologistId": "CF_VALIDO"
+            },
+            "mockData": {
+                "patientFound": true,
+                "patientData": {
+                    "nome": "Mario",
+                    "cognome": "Rossi",
+                    "codFiscale": "RSSMRA...",
+                    "dataNascita": "1990-01-01",
+                    "residenza": "Roma",
+                    "score": 50,
+                    "idPriorita": "Urgente"
+                }
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "message": "Validation OK"
+            }
+        }
+    ]
+}

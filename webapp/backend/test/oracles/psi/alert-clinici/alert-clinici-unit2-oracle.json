@@ -1,0 +1,44 @@
+{
+    "testCases": [
+        {
+            "id": "TC_RF3_3",
+            "description": "Errato: Service non chiamato correttamente",
+            "input": {},
+            "mockData": {
+                "simulateBadRequest": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 400
+            }
+        },
+        {
+            "id": "TC_RF3_4",
+            "description": "Errato: Nessun risultato restituito (Errore Interno)",
+            "input": {},
+            "mockData": {
+                "serviceError": true
+            },
+            "expectedBehavior": {
+                "type": "exception",
+                "status": 500
+            }
+        },
+        {
+            "id": "TC_RF3_5",
+            "description": "Corretto: Service chiamato correttamente, risultato restituito",
+            "input": {},
+            "mockData": {
+                "serviceResult": [
+                    {
+                        "id": "a1"
+                    }
+                ]
+            },
+            "expectedBehavior": {
+                "type": "success",
+                "status": 200
+            }
+        }
+    ]
+}

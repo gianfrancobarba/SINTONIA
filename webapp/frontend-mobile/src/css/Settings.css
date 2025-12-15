@@ -1,0 +1,235 @@
+.settings-page {
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header - matching NewDiaryPage style */
+.settings-header {
+    background-color: var(--primary-dark);
+    padding: 48px 20px 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.settings-header .header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.settings-back-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.settings-back-btn:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.settings-back-btn:active {
+    transform: scale(0.95);
+}
+
+.settings-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    flex: 1;
+}
+
+/* Content */
+.settings-content {
+    flex: 1;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Sections */
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin-bottom: 16px;
+    padding-left: 8px;
+}
+
+/* Items */
+.settings-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    background: white;
+    border: none;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.settings-item:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.settings-item:active {
+    transform: translateY(0);
+}
+
+.settings-item-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.settings-item-icon {
+    color: var(--primary-dark);
+}
+
+.settings-item-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2C2C2C;
+}
+
+.settings-item-arrow {
+    color: #9CA3AF;
+}
+
+/* Logout Item */
+.settings-item-logout .settings-item-icon,
+.settings-item-logout .settings-item-text {
+    color: #DC2626;
+}
+
+/* Modal */
+/* Modal styles removed - using ConfirmDeleteModal */
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 375px) {
+    .settings-header {
+        padding: 40px 16px 24px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .settings-title {
+        font-size: 22px;
+    }
+
+    .settings-back-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .settings-back-btn img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .settings-content {
+        padding: 16px 16px 32px;
+    }
+
+    .settings-section-title {
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+
+    .settings-item {
+        padding: 16px 18px;
+        border-radius: 18px;
+        margin-bottom: 10px;
+    }
+
+    .settings-item-text {
+        font-size: 15px;
+    }
+
+
+}
+
+@media (max-width: 320px) {
+    .settings-header {
+        padding: 36px 12px 20px;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+    }
+
+    .settings-title {
+        font-size: 20px;
+    }
+
+    .settings-back-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    .settings-back-btn img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .settings-content {
+        padding: 14px 12px 28px;
+    }
+
+    .settings-section {
+        margin-bottom: 24px;
+    }
+
+    .settings-section-title {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .settings-item {
+        padding: 14px 16px;
+        border-radius: 16px;
+        margin-bottom: 8px;
+    }
+
+    .settings-item-left {
+        gap: 12px;
+    }
+
+    .settings-item-text {
+        font-size: 14px;
+    }
+
+
+}
