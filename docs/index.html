@@ -8,19 +8,12 @@
   <meta name="description"
     content="SINTONIA trasforma la gestione della salute mentale pubblica in Campania. Sistema di triage dinamico, supporto continuo e alert clinici automatici.">
   <link rel="icon" type="image/png" href="brand/Icona_app.png">
-
-  <!-- Google Fonts - Urbanist (matching the app) + Inter for fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    /* ============================================
-       CSS VARIABLES - Matching App Design System
-       ============================================ */
     :root {
       --primary-dark: #0f3e4d;
       --primary-light: #88b7b5;
@@ -29,13 +22,11 @@
       --text-dark: #1a1a1a;
       --text-gray: #666666;
 
-      /* Gradient colors from app */
       --gradient-teal: linear-gradient(135deg, #1A5F5F 0%, #0F3E4D 100%);
       --gradient-green: linear-gradient(135deg, #7FB99C 0%, #6DA88E 100%);
       --gradient-light-teal: linear-gradient(135deg, #88B7B5 0%, #6DA5A5 100%);
       --gradient-organic: linear-gradient(180deg, #A5D6A7 0%, #88B7B5 100%);
 
-      /* Shadows from app */
       --shadow-card: 0 10px 10px -5px rgba(0, 0, 0, 0.35);
       --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.1);
       --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
@@ -46,9 +37,6 @@
       --border-radius-sm: 24px;
     }
 
-    /* ============================================
-       RESET & BASE STYLES
-       ============================================ */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -70,20 +58,24 @@
       overflow-x: hidden;
     }
 
-    /* ============================================
-       NAVIGATION
-       ============================================ */
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: none;
+      transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    }
+
+    .navbar.scrolled {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       box-shadow: 0 2px 30px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .nav-container {
@@ -91,8 +83,9 @@
       margin: 0 auto;
       padding: 16px 24px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      position: relative;
     }
 
     .nav-logo {
@@ -111,16 +104,27 @@
     }
 
     .nav-links a {
-      color: var(--primary-dark);
+      color: var(--white);
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
       padding: 10px 18px;
       border-radius: 25px;
       transition: all 0.3s ease;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar.scrolled .nav-links a {
+      color: var(--primary-dark);
+      text-shadow: none;
     }
 
     .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+    }
+
+    .navbar.scrolled .nav-links a:hover {
       background: var(--primary-dark);
       color: var(--white);
     }
@@ -136,7 +140,6 @@
       box-shadow: 0 8px 20px rgba(15, 62, 77, 0.3);
     }
 
-    /* Mobile menu toggle */
     .nav-toggle {
       display: none;
       background: none;
@@ -146,9 +149,6 @@
       cursor: pointer;
     }
 
-    /* ============================================
-       HERO SECTION
-       ============================================ */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -159,7 +159,6 @@
       overflow: hidden;
     }
 
-    /* Organic blob backgrounds - matching app Profile page */
     .hero-bg {
       position: absolute;
       inset: 0;
@@ -237,8 +236,15 @@
       width: 320px;
       max-width: 80%;
       margin-bottom: 24px;
-      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15));
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
       animation: fadeInUp 1s ease-out;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 28px 36px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     }
 
     .hero-subtitle {
@@ -301,7 +307,6 @@
       }
     }
 
-    /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
       bottom: 30px;
@@ -336,9 +341,6 @@
       }
     }
 
-    /* ============================================
-       SECTION COMMON STYLES
-       ============================================ */
     section {
       padding: 100px 24px;
     }
@@ -368,9 +370,6 @@
       margin: 0 auto;
     }
 
-    /* ============================================
-       PROBLEM/SOLUTION SECTION
-       ============================================ */
     .problem-solution {
       background: var(--white);
     }
@@ -452,9 +451,6 @@
       color: var(--primary-light);
     }
 
-    /* ============================================
-       FEATURES SECTION
-       ============================================ */
     .features {
       background: var(--secondary-bg);
     }
@@ -463,6 +459,13 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
+      justify-content: center;
+      justify-items: center;
+    }
+
+    .feature-card {
+      max-width: 340px;
+      width: 100%;
     }
 
     .feature-card {
@@ -523,9 +526,6 @@
       line-height: 1.6;
     }
 
-    /* ============================================
-       STATS SECTION
-       ============================================ */
     .stats {
       background: var(--gradient-teal);
       position: relative;
@@ -594,19 +594,33 @@
       font-weight: 500;
     }
 
-    /* ============================================
-       TEAM SECTION
-       ============================================ */
     .team {
       background: var(--white);
     }
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
       gap: 20px;
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
+      justify-content: center;
+    }
+
+    .team-member {
+      text-align: center;
+      padding: 24px 12px;
+      background: var(--secondary-bg);
+      border-radius: var(--border-radius-sm);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .team-name {
+      white-space: nowrap;
     }
 
     .team-member {
@@ -615,6 +629,10 @@
       background: var(--secondary-bg);
       border-radius: var(--border-radius-sm);
       transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: inherit;
     }
 
     .team-member:hover {
@@ -681,9 +699,6 @@
       transform: scale(1.2);
     }
 
-    /* ============================================
-       TECH STACK SECTION
-       ============================================ */
     .tech-stack {
       background: var(--secondary-bg);
     }
@@ -720,9 +735,6 @@
       color: var(--primary-dark);
     }
 
-    /* ============================================
-       CTA SECTION
-       ============================================ */
     .cta-section {
       background: var(--gradient-organic);
       text-align: center;
@@ -795,9 +807,6 @@
       box-shadow: var(--shadow-card);
     }
 
-    /* ============================================
-       FOOTER
-       ============================================ */
     footer {
       background: var(--primary-dark);
       color: var(--white);
@@ -878,18 +887,63 @@
       font-size: 0.9rem;
     }
 
-    /* ============================================
-       RESPONSIVE DESIGN
-       ============================================ */
+    .footer-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .footer-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .footer-cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-links.mobile-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 20px;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+
+    .nav-links.mobile-open a {
+      color: var(--primary-dark) !important;
+      text-shadow: none !important;
+      padding: 12px 20px;
+      text-align: center;
+    }
+
+    .nav-links.mobile-open .nav-cta {
+      background: var(--gradient-teal) !important;
+      color: var(--white) !important;
+      border-radius: 25px;
+      margin-top: 8px;
+    }
+
+    .nav-toggle.active i:before {
+      content: "\f00d";
+    }
+
     @media (max-width: 1024px) {
-      .nav-links {
-        display: none;
-      }
-
-      .nav-toggle {
-        display: block;
-      }
-
       .comparison-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -901,6 +955,25 @@
 
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .team-grid {
+        max-width: 900px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: block;
+        order: -1;
       }
     }
 
@@ -931,7 +1004,34 @@
       }
 
       .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .feature-card {
+        padding: 20px 16px;
+        text-align: center;
+      }
+
+      .feature-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+        margin: 0 auto 12px;
+      }
+
+      .feature-card h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+      }
+
+      .feature-card p {
+        font-size: 0.85rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
       .stats-grid {
@@ -946,6 +1046,7 @@
       .team-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
+        max-width: 100%;
       }
 
       .team-member {
@@ -963,6 +1064,12 @@
 
       .cta-title {
         font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -997,15 +1104,34 @@
       }
 
       .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
       }
 
       .stat-item {
-        padding: 24px 16px;
+        padding: 20px 12px;
+      }
+
+      .stat-icon {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+      }
+
+      .stat-number {
+        font-size: 1.8rem;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
       }
 
       .team-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feature-card p {
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
       }
 
       .cta-btn {
@@ -1021,12 +1147,8 @@
 </head>
 
 <body>
-  <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="#">
-        <img src="brand/Logo_senza_scritta.png" alt="SINTONIA" class="nav-logo">
-      </a>
       <ul class="nav-links">
         <li><a href="#problema">Il Problema</a></li>
         <li><a href="#caratteristiche">Caratteristiche</a></li>
@@ -1042,7 +1164,7 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
+
   <section class="hero">
     <div class="hero-bg">
       <div class="organic-shape shape-1"></div>
@@ -1067,7 +1189,7 @@
     </div>
   </section>
 
-  <!-- Problem vs Solution -->
+
   <section class="problem-solution" id="problema">
     <div class="section-container">
       <div class="section-header">
@@ -1125,7 +1247,7 @@
     </div>
   </section>
 
-  <!-- Features -->
+
   <section class="features" id="caratteristiche">
     <div class="section-container">
       <div class="section-header">
@@ -1186,7 +1308,7 @@
     </div>
   </section>
 
-  <!-- Stats -->
+
   <section class="stats">
     <div class="section-container">
       <div class="section-header">
@@ -1220,7 +1342,7 @@
     </div>
   </section>
 
-  <!-- Team -->
+
   <section class="team" id="team">
     <div class="section-container">
       <div class="section-header">
@@ -1230,92 +1352,76 @@
         </p>
       </div>
       <div class="team-grid">
-        <div class="team-member">
+        <a href="https://github.com/gianfrancobarba" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/gianfrancobarba.png" alt="Gianfranco Barba"></div>
           <div class="team-name">Gianfranco Barba</div>
           <div class="team-role pm">PM</div>
-          <a href="https://github.com/gianfrancobarba" target="_blank" class="team-github"><i
-              class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/fra-02" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/fra-02.png" alt="Francesco Corcione"></div>
           <div class="team-name">Francesco Corcione</div>
           <div class="team-role pm">PM</div>
-          <a href="https://github.com/fra-02" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/gianlucaam" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/gianlucaam.png" alt="Gianluca Ambrosio"></div>
           <div class="team-name">Gianluca Ambrosio</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/gianlucaam" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/elesshhhh" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/elesshhhh.png" alt="Elena Carlomagno"></div>
           <div class="team-name">Elena Carlomagno</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/elesshhhh" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/rosx3" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/rosx3.png" alt="Rosaria Cervino"></div>
           <div class="team-name">Rosaria Cervino</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/rosx3" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/KekkoCoppola" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/KekkoCoppola.png" alt="Francesco Coppola"></div>
           <div class="team-name">Francesco Coppola</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/KekkoCoppola" target="_blank" class="team-github"><i
-              class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/AntonioWalter" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/AntonioWalter.png" alt="Antonio W. De Fusco"></div>
           <div class="team-name">Antonio W. De Fusco</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/AntonioWalter" target="_blank" class="team-github"><i
-              class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/Gav798" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/Gav798.png" alt="Gavino De Stefano"></div>
           <div class="team-name">Gavino De Stefano</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/Gav798" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/aleds25" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/aleds25.png" alt="Alessio Del Sorbo"></div>
           <div class="team-name">Alessio Del Sorbo</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/aleds25" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/franci1313" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/franci1313.png" alt="Francesco Di Giovanni"></div>
           <div class="team-name">Francesco Di Giovanni</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/franci1313" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/mattFanz" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/mattFanz.png" alt="Mattia Fanzini"></div>
           <div class="team-name">Mattia Fanzini</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/mattFanz" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/af21-code" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/af21-code.png" alt="Angelo Fusco"></div>
           <div class="team-name">Angelo Fusco</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/af21-code" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
-        <div class="team-member">
+        </a>
+        <a href="https://github.com/GiaPol" target="_blank" class="team-member">
           <div class="team-avatar"><img src="https://github.com/GiaPol.png" alt="Gianni Policola"></div>
           <div class="team-name">Gianni Policola</div>
           <div class="team-role tm">TM</div>
-          <a href="https://github.com/GiaPol" target="_blank" class="team-github"><i class="fab fa-github"></i></a>
-        </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Tech Stack -->
+
   <section class="tech-stack" id="tech">
     <div class="section-container">
       <div class="section-header">
@@ -1355,39 +1461,20 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="organic-shape shape-1"></div>
-    <div class="organic-shape shape-2"></div>
-    <div class="cta-content">
-      <h2 class="cta-title">Esplora il Progetto</h2>
-      <p class="cta-description">
-        SINTONIA è un progetto open source. Scopri il codice, la documentazione e contribuisci allo sviluppo.
+
+  <footer>
+    <div class="footer-content">
+      <img src="brand/Logo_senza_scritta.png" class="footer-logo" alt="SINTONIA">
+      <h2 class="footer-title">Esplora il Progetto</h2>
+      <p class="footer-description">
+        Scopri il codice e la documentazione del progetto SINTONIA.
       </p>
-      <div class="cta-buttons">
+      <div class="footer-cta-buttons">
         <a href="https://github.com/gianfrancobarba/SINTONIA" target="_blank" class="cta-btn primary">
           <i class="fab fa-github"></i> Visualizza su GitHub
         </a>
         <a href="mailto:contatto@progettosintonia.it" class="cta-btn secondary">
           <i class="fas fa-envelope"></i> Contattaci
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <img src="brand/Logo_senza_scritta.png" class="footer-logo" alt="SINTONIA">
-      <div class="footer-links">
-        <a href="#problema">Il Problema</a>
-        <a href="#caratteristiche">Caratteristiche</a>
-        <a href="#team">Team</a>
-        <a href="#tech">Tech Stack</a>
-      </div>
-      <div class="footer-social">
-        <a href="https://github.com/gianfrancobarba/SINTONIA" target="_blank" title="GitHub">
-          <i class="fab fa-github"></i>
         </a>
       </div>
       <div class="footer-bottom">
@@ -1397,6 +1484,39 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    const navbar = document.querySelector('.navbar');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    function handleScroll() {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+
+
+    window.addEventListener('scroll', handleScroll);
+
+    handleScroll();
+
+
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('mobile-open');
+      navToggle.classList.toggle('active');
+    });
+
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('mobile-open');
+        navToggle.classList.remove('active');
+      });
+    });
+  </script>
 </body>
 
 </html>
