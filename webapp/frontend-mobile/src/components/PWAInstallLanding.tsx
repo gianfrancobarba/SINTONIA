@@ -66,18 +66,6 @@ const PWAInstallLanding: React.FC = () => {
                     <p className="pwa-note">
                         Installa l'applicazione per un'esperienza completa e senza distrazioni.
                     </p>
-
-                    <div className="credentials-box">
-                        <p className="credentials-title">🔐 Credenziali Demo</p>
-                        <div className="credentials-row">
-                            <span className="credentials-label">Email</span>
-                            <span className="credentials-value">chiara.conti@gmail.com</span>
-                        </div>
-                        <div className="credentials-row">
-                            <span className="credentials-label">Password</span>
-                            <span className="credentials-value">password123</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 

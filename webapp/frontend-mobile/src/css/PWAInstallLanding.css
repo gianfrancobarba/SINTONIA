@@ -86,54 +86,6 @@
     padding: 0 1rem;
 }
 
-/* Credentials Box */
-.credentials-box {
-    margin-top: 1.5rem;
-    padding: 1rem 1.25rem;
-    background: linear-gradient(135deg, #ffffff 0%, #f8fbfc 100%);
-    border-radius: 16px;
-    border: 1px solid rgba(13, 71, 93, 0.12);
-    box-shadow: 0 4px 12px rgba(13, 71, 93, 0.08);
-}
-
-.credentials-title {
-    margin: 0 0 0.75rem 0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #0D475D;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.credentials-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(13, 71, 93, 0.06);
-}
-
-.credentials-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.credentials-label {
-    font-size: 0.8rem;
-    color: #798e96;
-    font-weight: 500;
-}
-
-.credentials-value {
-    font-size: 0.85rem;
-    color: #1a1a1a;
-    font-weight: 600;
-    font-family: 'SF Mono', 'Menlo', monospace;
-    background: rgba(13, 71, 93, 0.06);
-    padding: 4px 8px;
-    border-radius: 6px;
-}
-
 .pwa-footer {
     padding: 1.5rem;
     background-color: #0f3e4d;
